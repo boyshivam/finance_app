@@ -1,7 +1,6 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/models/home_dashboard/continue_where_left_model.dart";
 import "package:aprreciate/widgets/helper_widgets/size_config.dart";
-import "package:aprreciate/widgets/module_widgets/home_dashboard_widgets/continue_where_you_left_widgets/continue_left_pill_box.dart";
 import "package:flutter/material.dart";
 
 import "../../../../core/utils/asset_helpers/asset_image_helpers.dart";
@@ -59,7 +58,7 @@ class ContinueWhereLeftCard extends StatelessWidget {
         Positioned(
           left: 170,
             top: 60,
-            child: ContinueLeftPillBox())
+            child: Text("hello"),)
       ],
       
     );

@@ -34,26 +34,26 @@ class AppTheme {
     scaffoldBackgroundColor: scaffoldColor,
 
     // input decoration theme
-    inputDecorationTheme: InputDecorationTheme(
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: theColor, width: 2.0)
-        ),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: theColor, width: 2.0 )
-        ),
-
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16),
-          borderSide: BorderSide(color: Colors.red, width: 2.0)
-        ),
-
-        border: OutlineInputBorder(
-        borderSide: BorderSide(color: theColor, width: 2.0),
-          borderRadius: BorderRadius.circular(16)
-    ),
-    ),
+    // inputDecorationTheme: InputDecorationTheme(
+    //     enabledBorder: OutlineInputBorder(
+    //         borderRadius: BorderRadius.circular(16),
+    //         borderSide: BorderSide(color: theColor, width: 2.0)
+    //     ),
+    //     focusedBorder: OutlineInputBorder(
+    //         borderRadius: BorderRadius.circular(16),
+    //         borderSide: BorderSide(color: theColor, width: 2.0 )
+    //     ),
+    //
+    //     errorBorder: OutlineInputBorder(
+    //       borderRadius: BorderRadius.circular(16),
+    //       borderSide: BorderSide(color: Colors.red, width: 2.0)
+    //     ),
+    //
+    //     border: OutlineInputBorder(
+    //     borderSide: BorderSide(color: theColor, width: 2.0),
+    //       borderRadius: BorderRadius.circular(16)
+    // ),
+    // ),
 
 
     // elevated button theme
