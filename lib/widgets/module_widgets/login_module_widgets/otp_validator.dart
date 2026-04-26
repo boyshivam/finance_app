@@ -10,57 +10,75 @@ class OtpValidator extends StatefulWidget {
     required this.focusNodes,
     required this.otpLength,
     required this.otpNavigator,
+    required this.defaultBorderColor,
+    required this.errorMessage,
+    required this.wrongOtp
   });
 
   final List<TextEditingController> controllers;
   final List<FocusNode> focusNodes;
   final int otpLength;
-  final void Function(String otpVal, int index ) otpNavigator;
+  final void Function(String otpVal, int index) otpNavigator;
+  final Color defaultBorderColor;
+  final String errorMessage;
+  final bool wrongOtp;
 
   @override
   State<OtpValidator> createState() => _OtpValidatorState();
 }
 
-
 class _OtpValidatorState extends State<OtpValidator> {
-  //border
-  final Color neutralBorderColor = Color(0xFFE1ECFC);
+
+  // input box BG color
   final Color inputBoxBGColor = Color(0xFFFFFFFF);
+
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: List.generate(
-        widget.otpLength,
-        (index) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: 48,
-            height: 52,
-            decoration: BoxDecoration(
-              color: inputBoxBGColor,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: inputBoxBGColor, width: 2),
-            ),
-            child: TextField(
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              textAlign: TextAlign.center,
-              controller: widget.controllers[index],
-              focusNode: widget.focusNodes[index],
-              maxLength: 1,
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                counterText: "",
-                border: InputBorder.none,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: List.generate(
+            widget.otpLength,
+            (index) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 48,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: inputBoxBGColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: widget.defaultBorderColor, width: 1.5),
+                ),
+                child: TextField(
+                  focusNode: widget.focusNodes[index],
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  textAlign: TextAlign.center,
+                  controller: widget.controllers[index],
+                  // focusNode: widget.focusNodes[index],
+                  maxLength: 1,
+                  maxLines: 1,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    counterText: "",
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    widget.otpNavigator(value, index);
+                  },
+                ),
               ),
-              onChanged: (value){widget.otpNavigator(value, index);},
             ),
           ),
         ),
-      ),
+        if(widget.wrongOtp)
+        const SizedBox(height: 10),
+        Text(widget.errorMessage, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: Colors.red
+        ),
+        textAlign: TextAlign.left,),
+      ],
     );
   }
 }

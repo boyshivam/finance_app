@@ -82,6 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
+
+            // top container with logo and support -
             Container(
               // height: 80,
               padding: const EdgeInsets.symmetric(
@@ -101,7 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            // login screen content
+
+            // Container with number field
             Expanded(
               child: Container(
                 width: double.infinity,

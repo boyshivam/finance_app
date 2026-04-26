@@ -1,13 +1,20 @@
 import 'package:aprreciate/core/constants/app_assets/app_strings.dart';
 import 'package:aprreciate/router/app_navigators.dart';
+import 'package:aprreciate/widgets/helper_widgets/countdown_timer.dart';
 import 'package:aprreciate/widgets/helper_widgets/custom_elevated_button.dart';
-import 'package:aprreciate/widgets/helper_widgets/size_config.dart';
 import 'package:aprreciate/widgets/module_widgets/login_module_widgets/otp_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import "package:aprreciate/core/themes/app_theme/app_theme.dart";
 import '../../../core/constants/app_assets/app_assets.dart';
 import '../../../core/utils/asset_helpers/asset_image_helpers.dart';
+
+
+
+// box border colors
+const  Color incorrectBorderColor = Color(0xFFEA3636);
+const  Color neutralBorderColor = Color(0xFFE1ECFC);
+
 
 class LoginOTPScreen extends StatefulWidget {
   const LoginOTPScreen({super.key});
@@ -19,14 +26,32 @@ class LoginOTPScreen extends StatefulWidget {
 class _LoginOTPScreenState extends State<LoginOTPScreen> {
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
+
+
+  // length of otp
   int otpLength = 6;
-  String? otpVal;
+
+  // 1 pf 6 chars in each box
+  String? finalOtp ;
+
+  // correct otp
+  final String correctOTP = "666666";
+
+  // input box border color
+  Color? defaultBorderColor = neutralBorderColor;
+
+  // otp error message
+  String? errorMsg = "";
+
+  // conditional show otp message
+  bool wrongOtp = false;
 
   // initialise controllers and focus nodes of otp validator
   @override
   void initState() {
     controllers = List.generate(otpLength, (index) => TextEditingController());
     focusNodes = List.generate(otpLength, (index) => FocusNode());
+
     super.initState();
   }
 
@@ -43,33 +68,46 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
   }
 
   // movement of cursor in the otp field
-  void navigateOtp(String otpVal, int index) {
-    if (otpVal.isNotEmpty) {
-      if (index < otpLength - 1) {
-        WidgetsBinding.instance.addPostFrameCallback((_){
+  void navigateOtp(String otp, int index) {
+    if (otp.isNotEmpty) {
+      if (index < otpLength - 1 ) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           focusNodes[index + 1].requestFocus();
         });
+      }else {
+        focusNodes[index].unfocus();
+      }
+    }else if (otp.isEmpty) {
+      if(index > 0) {
+        focusNodes[index - 1].requestFocus();
+      }
+    }
 
-      }
-    } else if (otpVal.isEmpty) {
-      if (index > 0) {
-        WidgetsBinding.instance.addPostFrameCallback((_){
-          focusNodes[index - 1].requestFocus();
-        });
-      }
+    // final otp entered by user -
+    finalOtp = controllers.map((c) => c.text).join();
+  }
+
+  // verify the OTP entered by user
+  void verifyOtp(){
+    if(finalOtp == correctOTP){
+      setState(() {
+        wrongOtp = false;
+      });
+      AppNavigators.goToHomeDashBoard(context);
+    }else{
+      setState(() {
+        wrongOtp = true;
+        errorMsg = "Incorrect OTP entered, please retry";
+        defaultBorderColor = incorrectBorderColor;
+      });
     }
   }
 
-  // resend OTP
-  void resendOTP() {}
+
 
   @override
   Widget build(BuildContext context) {
     final userNumber = GoRouterState.of(context).extra as String;
-
-    void goToPasscodeScreen() {
-      AppNavigators.goToPasscodeScreen;
-    }
 
     return Scaffold(
       backgroundColor: scaffoldColor,
@@ -110,11 +148,11 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                       ),
                       const SizedBox(height: 20),
 
-                      // main body with validator
+                      // main body with otp validator
                       Container(
                         // height: SizeConfig.height(context) * 0.4,
                         // width: SizeConfig.width(context) * 0.87,
-                        padding: EdgeInsets.only(left: 20, right: 20),
+                        padding: EdgeInsets.only(left: 25, right: 25),
                         decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,10 +210,16 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                               ],
                             ),
                             const SizedBox(height: 20),
+
+
+                            // Widget contains the otp UI
                             OtpValidator(
                               controllers: controllers,
                               focusNodes: focusNodes,
+                              defaultBorderColor: defaultBorderColor!,
+                              errorMessage: errorMsg!,
                               otpLength: otpLength,
+                              wrongOtp: wrongOtp,
                               otpNavigator: (otpVal, index) {
                                 navigateOtp(otpVal, index);
                               },
@@ -187,6 +231,10 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                                   AppStrings.log_otp_resend_txt,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
+                                const SizedBox(width: 5),
+
+                                //resend OTP countdown timer
+                                Expanded(child: OtpTimer())
                               ],
                             ),
                           ],
@@ -199,8 +247,8 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: CustomElevatedButton(function: () {}, text: "Confirm"),
+                padding: EdgeInsets.only(left: 25, right: 25, bottom: 20),
+                child: CustomElevatedButton(function: verifyOtp, text: "Confirm"),
               ),
             ],
           ),
