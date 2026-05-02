@@ -24,7 +24,8 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(seedColor: theColor).copyWith(
       primary: theColor,
       secondary: theColor,
-      surface: theColor
+      surface: theColor,
+
     ),
 
     // text theme

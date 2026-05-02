@@ -41,32 +41,35 @@ class _OtpValidatorState extends State<OtpValidator> {
         Row(
           children: List.generate(
             widget.otpLength,
-            (index) => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 48,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: inputBoxBGColor,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: widget.defaultBorderColor, width: 1.5),
-                ),
-                child: TextField(
-                  focusNode: widget.focusNodes[index],
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  textAlign: TextAlign.center,
-                  controller: widget.controllers[index],
-                  // focusNode: widget.focusNodes[index],
-                  maxLength: 1,
-                  maxLines: 1,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    counterText: "",
-                    border: InputBorder.none,
+            (index) => Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AspectRatio(
+                  aspectRatio: .92,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: inputBoxBGColor,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: widget.defaultBorderColor, width: 1.5),
+                    ),
+                    child: TextField(
+                      focusNode: widget.focusNodes[index],
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      textAlign: TextAlign.center,
+                      controller: widget.controllers[index],
+                      // focusNode: widget.focusNodes[index],
+                      maxLength: 1,
+                      maxLines: 1,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        counterText: "",
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (value) {
+                        widget.otpNavigator(value, index);
+                      },
+                    ),
                   ),
-                  onChanged: (value) {
-                    widget.otpNavigator(value, index);
-                  },
                 ),
               ),
             ),

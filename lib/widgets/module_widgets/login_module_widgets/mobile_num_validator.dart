@@ -18,7 +18,7 @@ class MobileNumValidator extends StatefulWidget {
     required this.onController,
     required this.errorString,
     required this.borderColor,
-    required this.onChanged
+    required this.onChanged,
   });
 
   final TextEditingController onController;
@@ -36,6 +36,7 @@ class _MNumValidatorState extends State<MobileNumValidator> {
     return Stack(
       clipBehavior: Clip.none,
       children: [
+        // this is the info text container
         Container(
           height: 176,
           width: SizeConfig.width(context) * 0.87,
@@ -69,6 +70,8 @@ class _MNumValidatorState extends State<MobileNumValidator> {
             ],
           ),
         ),
+
+        // this the number input textfield
         Positioned(
           bottom: 60,
           child: Container(
@@ -96,20 +99,24 @@ class _MNumValidatorState extends State<MobileNumValidator> {
                   enabled: true,
                   controller: widget.onController,
                   keyboardType: TextInputType.number,
-                  onChanged: (value){widget.onChanged(value);},
+                  onChanged: (value) {
+                    widget.onChanged(value);
+                  },
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  onTap: () {},
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                   ),
                   decoration: InputDecoration(
                     counterText: "",
-                    prefix: Text(
-                      "+91 ",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                    prefixIcon: Padding(
+                      padding: EdgeInsets.only(left: 4, top: 4),
+                      child: Text(
+                        "+91",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                     border: InputBorder.none,

@@ -31,7 +31,7 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
   // length of otp
   int otpLength = 6;
 
-  // 1 pf 6 chars in each box
+  // final otp entered by user
   String? finalOtp ;
 
   // correct otp
@@ -71,9 +71,7 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
   void navigateOtp(String otp, int index) {
     if (otp.isNotEmpty) {
       if (index < otpLength - 1 ) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          focusNodes[index + 1].requestFocus();
-        });
+        focusNodes[index + 1].requestFocus();
       }else {
         focusNodes[index].unfocus();
       }
@@ -82,19 +80,47 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
         focusNodes[index - 1].requestFocus();
       }
     }
-
     // final otp entered by user -
     finalOtp = controllers.map((c) => c.text).join();
+
+    // this is to prevent throwing an
+    no_error_when_fieldsEmpty_without_submit();
+
   }
+
+
+  // error text removed when the text fields are empty without clicking on submit-
+  void no_error_when_fieldsEmpty_without_submit(){
+
+    bool isOtpEmpty = controllers.every((c) => c.text.isEmpty);
+    if(isOtpEmpty){
+      setState(() {
+        wrongOtp = true;
+        errorMsg = "";
+        defaultBorderColor = neutralBorderColor;
+      });
+    }
+
+  }
+
 
   // verify the OTP entered by user
   void verifyOtp(){
+
     if(finalOtp == correctOTP){
       setState(() {
         wrongOtp = false;
+        errorMsg = "";
+        defaultBorderColor = neutralBorderColor;
       });
-      AppNavigators.goToHomeDashBoard(context);
-    }else{
+      AppNavigators.goToPasscodeScreen(context);
+    }else if( finalOtp!.isEmpty) {
+      setState(() {
+        errorMsg = "Otp cannot be empty";
+        defaultBorderColor = incorrectBorderColor;
+      });
+    }
+    else{
       setState(() {
         wrongOtp = true;
         errorMsg = "Incorrect OTP entered, please retry";
@@ -102,7 +128,6 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
       });
     }
   }
-
 
 
   @override
@@ -124,28 +149,28 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                       const SizedBox(height: 20),
 
                       // top section with appreciate logo and support icon
-                      Container(
-                        // height: 80,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 25,
+                     Container(
+                          // height: 80,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 20,
+                            horizontal: 25,
+                          ),
+                          decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
+                          child: Row(
+                            children: [
+                              AssetImageHelper.image(
+                                AppAssets.lo_ap_logo,
+                                height: 24,
+                              ),
+                              const Spacer(),
+                              AssetImageHelper.image(
+                                AppAssets.lo_support,
+                                height: 24,
+                                width: 24,
+                              ),
+                            ],
+                          ),
                         ),
-                        decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-                        child: Row(
-                          children: [
-                            AssetImageHelper.image(
-                              AppAssets.lo_ap_logo,
-                              height: 24,
-                            ),
-                            const Spacer(),
-                            AssetImageHelper.image(
-                              AppAssets.lo_support,
-                              height: 24,
-                              width: 24,
-                            ),
-                          ],
-                        ),
-                      ),
                       const SizedBox(height: 20),
 
                       // main body with otp validator
@@ -162,14 +187,13 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                               style: Theme.of(context).textTheme.headlineLarge,
                             ),
                             const SizedBox(height: 20),
-                            Row(
+                            Wrap(
                               children: [
-                                // subtext of otp
                                 Text(
                                   AppStrings.log_otp_subt,
                                   style: Theme.of(
                                     context,
-                                  ).textTheme.bodySmall!.copyWith(fontSize: 19),
+                                  ).textTheme.bodySmall!.copyWith(fontSize: 18),
                                 ),
                                 const SizedBox(width: 3),
 
@@ -200,9 +224,9 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                              color: theColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                          color: theColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ],
                                   ),

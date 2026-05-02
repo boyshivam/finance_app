@@ -21,6 +21,7 @@ class AppStrings {
   // passcode texts
   static const String passcode_subtext = "Signing in as appreciate@gmail.com";
   static const String passcode_enter_pass = "Enter Passcode";
+  static const String passcode_sign_out = "Sign out";
 
   // HOME DASHBOARD MODULE-
 

@@ -10,31 +10,31 @@ class ContinueWhereLeftBuilder extends StatefulWidget {
   final List<ContinueWhereLeftModel> cards;
 
   @override
-  State<ContinueWhereLeftBuilder> createState() => _ContinueWhereLeftBuilderState();
+  State<ContinueWhereLeftBuilder> createState() =>
+      _ContinueWhereLeftBuilderState();
 }
 
 class _ContinueWhereLeftBuilderState extends State<ContinueWhereLeftBuilder> {
-
   int currentIndex = 0;
 
   final PageController _pageViewController = PageController();
-
-
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: SizeConfig.height(context) * 0.1,
       child: PageView.builder(
-          controller: _pageViewController,
-          scrollDirection: Axis.horizontal,
-          itemCount: widget.cards.length,
-          onPageChanged: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
-          itemBuilder: (context, index) => ContinueWhereLeftCard(card: widget.cards[index])),
+        controller: _pageViewController,
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.cards.length,
+        onPageChanged: (index) {
+          setState(() {
+            currentIndex = index;
+          });
+        },
+        itemBuilder: (context, index) =>
+            ContinueWhereLeftCard(card: widget.cards[index]),
+      ),
     );
   }
 }

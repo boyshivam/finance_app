@@ -1,0 +1,34 @@
+import "package:flutter/material.dart";
+
+
+class AppColors {
+
+  static const appreciateThemeColor = Color(0xFF0461E5);
+
+
+  // passcode screen
+  static const passcodeContainerBGColor = Color(0xFFFFFFFF);
+
+  // passcode container color
+  static const passcodeDefaultContainerBorderColor = Color(0xFF0461E5);
+  static const passcodeIncorrectContainerBorderColor = Color(0xFFEA3636);
+
+  // passcode circle colors for 3 default, active and incorrect states
+  static const passcodeDefaultCircleBGColor = Color(0xFFF6F6F9);
+  static const passcodeDefaultCircleBorderColor = Color(0xFFE1ECFC);
+
+  static const passcodeActiveCircleBGColor = Color(0xFFE1ECFC);
+  static const passcodeActiveCircleBorderColor = Color(0xFF0461E5);
+
+  static const passcodeIncorrectCircleBGColor = Color(0xFFFFE3E3);
+  static const passcodeIncorrectCircleBorderColor = Color(0xFFEA3636);
+
+
+
+  // continue where you left card
+  static const crossCtaColor = Color(0xFFA3A2AF);
+  static const crossCtaBorderColor =Color(0xFFF6F6F9);
+  static const crossCtaBgColor = Color(0xFFEFF1F4);
+
+
+}
