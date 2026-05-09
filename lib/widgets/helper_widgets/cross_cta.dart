@@ -1,4 +1,4 @@
-import "package:aprreciate/core/themes/app_theme/AppColors.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:flutter/material.dart";
 
 class CrossCta extends CustomPainter {
@@ -7,7 +7,7 @@ class CrossCta extends CustomPainter {
   void paint(Canvas canvas,Size size) {
 
     final paint = Paint()
-        ..color = AppColors.crossCtaColor
+        ..color = AppColorsModule.crossCtaColor
         ..strokeWidth = 2
         ..strokeCap = StrokeCap.round;
 

@@ -1,36 +1,45 @@
-
 import "dart:async";
 import "package:flutter/material.dart";
 
-class OtpTimer extends StatefulWidget {
-  const OtpTimer({super.key});
+class CountdownTimer extends StatefulWidget {
+  const CountdownTimer(
+  {
+    super.key,
+    required this.initialSeconds,
+    required this.resetTimerText,
+    this.onBlockedChanged,
+  });
+
+  final int initialSeconds;
+  final String resetTimerText;
+  final ValueChanged<bool>? onBlockedChanged;
 
   @override
-  State<OtpTimer> createState() => _OtpTimerState();
+  State<CountdownTimer> createState() => _OtpTimerState();
 }
 
-class _OtpTimerState extends State<OtpTimer> {
-
-  static const int initialSeconds = 120;
-
-  int secondsLeft = initialSeconds;
+class _OtpTimerState extends State<CountdownTimer> {
+  late int secondsLeft;
   Timer? timer;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
+    secondsLeft = widget.initialSeconds;
     startTimer();
   }
 
   void startTimer() {
     timer?.cancel();
 
-    timer = Timer.periodic(const Duration(seconds: 1), (t) {
-      if (!mounted) return ;
+    widget.onBlockedChanged?.call(true);
 
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (!mounted) return;
       if (secondsLeft == 0) {
+        widget.onBlockedChanged?.call(false);
         t.cancel();
-      }else {
+      } else {
         setState(() {
           secondsLeft--;
         });
@@ -40,13 +49,12 @@ class _OtpTimerState extends State<OtpTimer> {
 
   void restartTimer() {
     setState(() {
-      secondsLeft = initialSeconds;
+      secondsLeft = widget.initialSeconds;
     });
     startTimer();
   }
 
-
-  String formatTime(){
+  String formatTime() {
     final min = secondsLeft ~/ 60;
     final seconds = secondsLeft % 60;
     return "${min.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
@@ -58,27 +66,30 @@ class _OtpTimerState extends State<OtpTimer> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     final bool canResend = secondsLeft == 0;
 
     return Row(
       children: [
-        if(!canResend)
-          Text(formatTime(), style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              color: Theme.of(context).colorScheme.primary
-          ),)
+        if (!canResend)
+          Text(
+            formatTime(),
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          )
         else
           InkWell(
             onTap: restartTimer,
-            child: Text("Resend OTP", style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: Theme.of(context).colorScheme.primary
-            )),
-          )
+            child: Text(
+              widget.resetTimerText,
+              style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
       ],
     );
-
   }
 }

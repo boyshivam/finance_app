@@ -1,5 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
-import "package:aprreciate/core/themes/app_theme/AppColors.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/models/home_dashboard/continue_where_left_model.dart";
 import "package:aprreciate/widgets/helper_widgets/cross_cta.dart";
 import "package:aprreciate/widgets/helper_widgets/size_config.dart";
@@ -64,10 +64,10 @@ class ContinueWhereLeftCard extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-            color: AppColors.crossCtaBgColor ,
+            color: AppColorsModule.crossCtaBgColor ,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: AppColors.crossCtaBorderColor,
+              color: AppColorsModule.crossCtaBorderColor,
               width: 2
             )
           ),

@@ -71,7 +71,7 @@ class _MNumValidatorState extends State<MobileNumValidator> {
           ),
         ),
 
-        // this the number input textfield
+        // this the number input  textfield
         Positioned(
           bottom: 60,
           child: Container(
@@ -123,13 +123,15 @@ class _MNumValidatorState extends State<MobileNumValidator> {
                     contentPadding: EdgeInsets.symmetric(vertical: 4),
                   ),
                 ),
-                if (widget.errorString != null)
+                if (widget.errorString != null)...[
                   Text(
                     widget.errorString!,
                     style: Theme.of(
                       context,
                     ).textTheme.bodySmall!.copyWith(color: Colors.red),
                   ),
+                ]
+
               ],
             ),
           ),

@@ -68,30 +68,20 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
   }
 
   // movement of cursor in the otp field
-  void navigateOtp(String otp, int index) {
-    if (otp.isNotEmpty) {
-      if (index < otpLength - 1 ) {
-        focusNodes[index + 1].requestFocus();
-      }else {
-        focusNodes[index].unfocus();
-      }
-    }else if (otp.isEmpty) {
-      if(index > 0) {
-        focusNodes[index - 1].requestFocus();
-      }
-    }
-    // final otp entered by user -
-    finalOtp = controllers.map((c) => c.text).join();
-
-    // this is to prevent throwing an
-    no_error_when_fieldsEmpty_without_submit();
-
+  void navigateOtp(String value, int index) {
+     if(value.length == 1) {
+       if (index < otpLength - 1) {
+         focusNodes[index + 1].requestFocus();
+       } else {
+         focusNodes[index].unfocus();
+       }
+     }
+     finalOtp = controllers.map((c) => c.text).join();
   }
 
 
   // error text removed when the text fields are empty without clicking on submit-
   void no_error_when_fieldsEmpty_without_submit(){
-
     bool isOtpEmpty = controllers.every((c) => c.text.isEmpty);
     if(isOtpEmpty){
       setState(() {
@@ -258,7 +248,7 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                                 const SizedBox(width: 5),
 
                                 //resend OTP countdown timer
-                                Expanded(child: OtpTimer())
+                                Expanded(child: CountdownTimer(initialSeconds: 120, resetTimerText: "resend OTP",))
                               ],
                             ),
                           ],

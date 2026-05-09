@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 
 
-class AppColors {
+class AppColorsModule {
 
   static const appreciateThemeColor = Color(0xFF0461E5);
 
@@ -30,5 +30,7 @@ class AppColors {
   static const crossCtaBorderColor =Color(0xFFF6F6F9);
   static const crossCtaBgColor = Color(0xFFEFF1F4);
 
+
+  //
 
 }

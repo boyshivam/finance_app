@@ -52,22 +52,33 @@ class _OtpValidatorState extends State<OtpValidator> {
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: widget.defaultBorderColor, width: 1.5),
                     ),
-                    child: TextField(
-                      focusNode: widget.focusNodes[index],
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      textAlign: TextAlign.center,
-                      controller: widget.controllers[index],
-                      // focusNode: widget.focusNodes[index],
-                      maxLength: 1,
-                      maxLines: 1,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        counterText: "",
-                        border: InputBorder.none,
-                      ),
-                      onChanged: (value) {
-                        widget.otpNavigator(value, index);
+                    child: Focus(
+                      onKeyEvent: (node, event) {
+                        if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.backspace) {
+
+                          if(index > 0 && widget.controllers[index].text.isEmpty){
+                            widget.focusNodes[index - 1].requestFocus();
+                          }
+                        }
+                        return KeyEventResult.ignored;
                       },
+                      child: TextField(
+                        focusNode: widget.focusNodes[index],
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        textAlign: TextAlign.center,
+                        controller: widget.controllers[index],
+                        // focusNode: widget.focusNodes[index],
+                        maxLength: 1,
+                        maxLines: 1,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          counterText: "",
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (value) {
+                          widget.otpNavigator(value, index);
+                        },
+                      ),
                     ),
                   ),
                 ),

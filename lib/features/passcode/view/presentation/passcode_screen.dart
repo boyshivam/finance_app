@@ -1,17 +1,13 @@
-import "package:aprreciate/core/constants/app_assets/app_assets.dart"
-    show AppAssets;
-import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
+import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
-import "package:aprreciate/core/themes/app_theme/app_theme.dart";
-import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
+import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart" show AssetImageHelper;
 import "package:aprreciate/router/app_navigators.dart";
-import "package:aprreciate/widgets/module_widgets/login_module_widgets/passcode_numpad/passcode_numpad.dart";
 import "package:aprreciate/widgets/module_widgets/login_module_widgets/passcodeUI.dart";
-import "package:aprreciate/widgets/module_widgets/login_module_widgets/passcode_numpad/passcode_verified_snackbar_container.dart";
 import "package:flutter/material.dart";
+import "package:aprreciate/core/themes/app_theme/app_theme.dart";
 
+import "../widgets/passcode_numpad.dart";
 
 
 class PasscodeScreen extends StatefulWidget {
@@ -23,47 +19,6 @@ class PasscodeScreen extends StatefulWidget {
 
 class _PasscodeScreenState extends State<PasscodeScreen> {
 
-  // entered passcode by user
-  String passcode = "";
-
-  // delete char const
-  static const deleteChar = "backSpace";
-
-  // passcode length
-  static const reqPasscodeLength = 4;
-
-  // correct passcode
-  static const correctPasscode = "6666";
-
-
-  // user enters the passcode via numpad
-  void enterPasscode(String value){
-
-    if(value == deleteChar){
-      if(passcode.isNotEmpty){
-        setState(() {
-          passcode = passcode.substring(0, (passcode.length - 1));
-        });
-      }
-    }else if(passcode.length < reqPasscodeLength){
-      setState(() {
-        passcode += value;
-      });
-      if(passcode.length == reqPasscodeLength){
-        verifyPasscode();
-      }
-    }
-  }
-
-  // verify entered passcode
-  void verifyPasscode(){
-    if(passcode == correctPasscode){
-      AppNavigators.goToHomeDashBoard(context);
-      print("Correct");
-    }else{
-      print("incorrect");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +67,8 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                             AppStrings.passcode_sign_out,
                             style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(
-                                  color: AppColorsModule.appreciateThemeColor,
-                                ),
+                              color: AppColorsModule.appreciateThemeColor,
+                            ),
                           ),
                         ),
                       ],
@@ -130,7 +85,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
 
             // This is the numpad
             PasscodeNumpad(
-                enteredPasscode: enterPasscode,
+              enteredPasscode: enterPasscode,
             ),
           ],
         ),

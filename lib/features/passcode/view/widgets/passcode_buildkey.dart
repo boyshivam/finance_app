@@ -23,16 +23,16 @@ class BuildKey extends StatelessWidget {
               if(value == "backSpace")
                 Icon(Icons.backspace)
               else
-              Text(
-                value,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 24,
+                Text(
+                  value,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 24,
+                  ),
                 ),
-              ),
             ],
           )
-        ),
-      );
+      ),
+    );
   }
 }
