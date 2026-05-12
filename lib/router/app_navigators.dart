@@ -23,5 +23,4 @@ class AppNavigators {
   static void goToHomeDashBoard(BuildContext context, {Object? extra}) {
     context.push(AppRoutes.homeDashboardScreen, extra: extra);
 }
-
 }

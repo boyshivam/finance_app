@@ -1,19 +1,32 @@
 import 'package:aprreciate/core/constants/app_assets/app_strings.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart';
-import 'package:aprreciate/widgets/helper_widgets/countdown_timer.dart';
+import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
+import 'package:aprreciate/features/passcode/view/extensions/passcode_extensions.dart';
+import 'package:aprreciate/features/passcode/view/widgets/passcode_retry_timer.dart';
+import 'package:aprreciate/features/passcode/view_model/passcode_view_model.dart';
 import 'package:aprreciate/widgets/helper_widgets/size_config.dart';
-import 'package:aprreciate/widgets/module_widgets/login_module_widgets/passcode_numpad/passcode_numpad.dart';
 import 'package:flutter/material.dart';
 
 class PasscodeUI extends StatelessWidget {
   const PasscodeUI({
     super.key,
+    required this.onBlocked,
     required this.reqPasscodeLength,
     required this.passcode,
-  });
+    required this.vm,
+    required this.numpadLocked,
+    required this.incorrectPasscode,
+    required this.resetPasscode,
 
+  });
+  final void Function(bool) onBlocked;
   final int reqPasscodeLength;
   final String passcode;
+  final PasscodeViewModel vm;
+  final bool numpadLocked;
+  final bool incorrectPasscode;
+  // final void Function(int) attemptNum;
+  final void Function() resetPasscode;
 
 
   @override
@@ -24,7 +37,9 @@ class PasscodeUI extends StatelessWidget {
         color: AppColorsModule.passcodeContainerBGColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: AppColorsModule.passcodeDefaultContainerBorderColor,
+          color: vm.hasError
+              ? PasscodeContainerState.error.borderColor
+              : PasscodeContainerState.active.borderColor,
           width: 2,
         ),
       ),
@@ -52,10 +67,20 @@ class PasscodeUI extends StatelessWidget {
                   width: SizeConfig.width(context) * 0.056,
                   height: SizeConfig.width(context) * 0.056,
                   decoration: BoxDecoration(
-                    color: isFilled ? AppColorsModule.passcodeActiveCircleBGColor : AppColorsModule.passcodeDefaultCircleBGColor,
+                    color: vm.hasError
+                        ? PasscodeCircleBackgroundState.error.backgroundColor
+                        : isFilled
+                        ? PasscodeCircleBackgroundState.active.backgroundColor
+                        : PasscodeCircleBackgroundState
+                              .inactive
+                              .backgroundColor,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color:isFilled ? AppColorsModule.passcodeActiveCircleBorderColor : AppColorsModule.passcodeDefaultCircleBorderColor,
+                      color: vm.hasError
+                          ? PasscodeCircleBorderState.error.borderColor
+                          : isFilled
+                          ? PasscodeCircleBorderState.active.borderColor
+                          : PasscodeCircleBorderState.inactive.borderColor,
                       width: 1.5,
                     ),
                   ),
@@ -63,6 +88,37 @@ class PasscodeUI extends StatelessWidget {
               );
             }),
           ),
+          if (incorrectPasscode)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  PasscodeErrorMessageState.wrongPasscode.errorText,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColorsModule.passcodeIncorrectCircleBorderColor,
+                  ),
+                ),
+              ],
+            ),
+          if (numpadLocked)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  PasscodeErrorMessageState.numpadLocked.errorText,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColorsModule.passcodeIncorrectCircleBorderColor,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                PasscodeRetryTimer(
+                  initialTime: PasscodeViewModel.timerDuration,
+                  onBlocked: onBlocked,
+                  resetPasscode: resetPasscode,
+
+                ),
+              ],
+            ),
         ],
       ),
     );

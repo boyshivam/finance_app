@@ -6,6 +6,7 @@ class PasscodeNumpad extends StatelessWidget {
   const  PasscodeNumpad({
     super.key,
     required this.enteredPasscode,
+
   });
 
   final void Function(String) enteredPasscode;

@@ -1,14 +1,15 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
-import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart" show AssetImageHelper;
+import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart"
+    show AssetImageHelper;
+import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
+import "package:aprreciate/features/passcode/view_model/passcode_view_model.dart";
 import "package:aprreciate/router/app_navigators.dart";
-import "package:aprreciate/widgets/module_widgets/login_module_widgets/passcodeUI.dart";
 import "package:flutter/material.dart";
 import "package:aprreciate/core/themes/app_theme/app_theme.dart";
 
 import "../widgets/passcode_numpad.dart";
-
 
 class PasscodeScreen extends StatefulWidget {
   const PasscodeScreen({super.key});
@@ -18,7 +19,27 @@ class PasscodeScreen extends StatefulWidget {
 }
 
 class _PasscodeScreenState extends State<PasscodeScreen> {
+  final vm = PasscodeViewModel();
 
+  void onKeyTap(String value) {
+    setState(() {
+      vm.enterPasscode(value);
+    });
+    if(vm.passcode.length == PasscodeViewModel.reqPasscodeLength){
+      verification();
+    }
+  }
+
+  void verification() {
+    setState(() {
+      bool isVerified = vm.verifyPasscode(vm.passcode);
+      if (isVerified) {
+        AppNavigators.goToHomeDashBoard(context);
+      } else {
+        vm.passcodeAttemptCount();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +66,6 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                 ],
               ),
             ),
-
             // This container has the passcode UI
             Expanded(
               child: Padding(
@@ -67,16 +87,27 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                             AppStrings.passcode_sign_out,
                             style: Theme.of(context).textTheme.bodySmall!
                                 .copyWith(
-                              color: AppColorsModule.appreciateThemeColor,
-                            ),
+                                  color: AppColorsModule.appreciateThemeColor,
+                                ),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 30),
                     PasscodeUI(
-                      reqPasscodeLength: reqPasscodeLength,
-                      passcode: passcode,
+                      onBlocked: (locked) {
+                        setState(() {
+                          vm.numpadLocked = locked;
+                        });
+                      },
+                      reqPasscodeLength: PasscodeViewModel.reqPasscodeLength,
+                      passcode: vm.passcode,
+                      vm: vm,
+                      numpadLocked: vm.numpadLocked,
+                      incorrectPasscode: vm.incorrectPasscode,
+                      resetPasscode: (){
+                        vm.resetPasscode();
+                      }
                     ),
                   ],
                 ),
@@ -84,9 +115,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
             ),
 
             // This is the numpad
-            PasscodeNumpad(
-              enteredPasscode: enterPasscode,
-            ),
+            PasscodeNumpad(enteredPasscode: onKeyTap),
           ],
         ),
       ),
