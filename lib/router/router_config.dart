@@ -1,3 +1,4 @@
+import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
 import "package:aprreciate/presentation/screens/home_dashboard/home_dashboard_screen.dart";
 import "package:aprreciate/presentation/screens/login_module/login_otp_screen.dart";
 import "package:aprreciate/features/passcode/view/presentation/passcode_screen.dart";
@@ -10,7 +11,7 @@ import "package:aprreciate/presentation/screens/login_module/login_number_screen
 
 final GoRouter appRouter = GoRouter(
   routes: <RouteBase>[
-    GoRoute(path: AppRoutes.loginScreen, builder: (context, state) => LoginScreen()),
+    GoRoute(path: AppRoutes.loginScreen, builder: (context, state) => MobileNumScreen()),
     GoRoute(path: AppRoutes.otpScreen, builder: (context, state) => LoginOTPScreen()),
     GoRoute(path: AppRoutes.passcodeScreen, builder: (context, state) => PasscodeScreen()),
     GoRoute(path: AppRoutes.homeDashboardScreen, builder: (context, state) => HomeDashboardScreen())

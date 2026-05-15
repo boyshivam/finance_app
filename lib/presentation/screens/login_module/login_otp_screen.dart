@@ -122,7 +122,7 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userNumber = GoRouterState.of(context).extra as String;
+    // final userNumber = GoRouterState.of(context).extra as String;
 
     return Scaffold(
       backgroundColor: scaffoldColor,
@@ -189,7 +189,7 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
 
                                 // users number
                                 Text(
-                                  userNumber,
+                                  "userNumber",
                                   style: Theme.of(context).textTheme.bodySmall!
                                       .copyWith(fontWeight: FontWeight.w600),
                                 ),

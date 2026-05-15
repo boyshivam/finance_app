@@ -1,0 +1,144 @@
+import "package:aprreciate/core/constants/app_assets/app_assets.dart";
+import "package:aprreciate/core/constants/app_assets/app_strings.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
+import "package:aprreciate/features/mobile_num_validator/view_model/mobile_number_view_model.dart";
+import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/widgets/helper_widgets/custom_elevated_button.dart";
+import "package:flutter/material.dart";
+
+import "../widgets/mobile_num_validator.dart";
+
+class MobileNumScreen extends StatefulWidget {
+  const MobileNumScreen({super.key});
+
+  @override
+  State<MobileNumScreen> createState() => _MobileNumScreenState();
+}
+
+class _MobileNumScreenState extends State<MobileNumScreen> {
+
+
+  late TextEditingController controller;
+
+  final  vm = MobileNumViewModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    controller = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  String deriveMobileNum(){
+    final user_num = controller.text.trim();
+    return user_num;
+  }
+
+
+
+  void validate(){
+    final checkNum = vm.validateNumber(deriveMobileNum());
+    setState(() {});
+
+    if(checkNum) {
+      AppNavigators.goToOTPScreen(context);
+    }
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+
+              // top container with logo and support -
+              Container(
+                // height: 80,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 25,
+                ),
+                decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
+                child: Row(
+                  children: [
+                    AssetImageHelper.image(AppAssets.lo_ap_logo, height: 24),
+                    const Spacer(),
+                    AssetImageHelper.image(
+                      AppAssets.lo_support,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ],
+                ),
+              ),
+
+              // Container with number field
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.fromLTRB(25, 30, 25, 20),
+                  decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.log_header,
+                        style: Theme.of(context).textTheme.headlineLarge!
+                            .copyWith(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        AppStrings.log_subt,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium!.copyWith(fontSize: 19),
+                      ),
+                      const SizedBox(height: 25),
+
+                      // Mobile number widget -
+
+                      MobileNumValidator(
+                        onController: controller,
+                        onChanged: (value){
+                          vm.onChanged(value);
+                          setState(() {
+
+                          });
+                        },
+                        wrongNumber: vm.wrongNumber,
+                        errorString: vm.errorString,
+                      ),
+
+                      const Spacer(),
+                      CustomElevatedButton(
+                        function: (){validate();} ,
+                        text: "Confirm",
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ]
+          ),
+        ),
+      );
+    }
+  }
+

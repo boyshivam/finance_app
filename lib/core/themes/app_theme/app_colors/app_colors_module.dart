@@ -24,6 +24,10 @@ class AppColorsModule {
   static const passcodeIncorrectCircleBorderColor = Color(0xFFEA3636);
 
 
+  // mobile num validator colors -
+  static const mobileNumContainerActiveColor = Color(0xFF0461E5);
+  static const mobileNumContainerErrorColor = Color(0xFFEA3636);
+
 
   // continue where you left card
   static const crossCtaColor = Color(0xFFA3A2AF);
