@@ -1,4 +1,4 @@
-import "package:aprreciate/widgets/module_widgets/login_module_widgets/passcode_numpad/passcode_buildkey.dart";
+import "package:aprreciate/features/passcode/view/widgets/passcode_buildkey.dart";
 import "package:flutter/material.dart";
 
 
@@ -23,7 +23,7 @@ class PasscodeNumpad extends StatelessWidget {
         ),
         children: List.generate(12, (index) {
           if(index == 9){return SizedBox();}
-          if(index == 10){return BuildKey(value: "0",  enteredPasscode: enteredPasscode);}
+          if(index == 10){return BuildKey(value: "0", enteredPasscode: enteredPasscode,);}
           if(index == 11){return BuildKey(value: "backSpace",  enteredPasscode: enteredPasscode);}
           return BuildKey(value: (index + 1).toString(), enteredPasscode: enteredPasscode);
         }),

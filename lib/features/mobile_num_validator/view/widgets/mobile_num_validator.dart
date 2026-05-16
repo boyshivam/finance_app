@@ -1,38 +1,26 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
-import "package:aprreciate/core/themes/app_theme/app_theme.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
 import "package:aprreciate/features/mobile_num_validator/enums/mobile_number_enums.dart";
 import "package:aprreciate/features/mobile_num_validator/view/extensions/mobile_num_extensions.dart";
-import "package:aprreciate/widgets/helper_widgets/size_config.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
-const Color sub_text_Container = Color(0xFFE1ECFC);
-const Color colorContainer = Color(0xFFE1ECFC);
-const Color mNumTextColor = Colors.black54;
-const Color textFieldBGColor = Colors.white;
-const Color defaultColor = theColor;
-
-class MobileNumValidator extends StatefulWidget {
+class MobileNumValidator extends StatelessWidget {
   const MobileNumValidator({
     super.key,
     required this.onController,
     required this.onChanged,
-    required this.wrongNumber,
-    required this.errorString,
+
+    required this.validationState
   });
 
   final TextEditingController onController;
   final void Function(String value) onChanged;
-  final bool wrongNumber;
-  final String errorString;
 
-  @override
-  State<MobileNumValidator> createState() => _MNumValidatorState();
-}
+  final MobileNumValidationState validationState;
 
-class _MNumValidatorState extends State<MobileNumValidator> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -41,10 +29,10 @@ class _MNumValidatorState extends State<MobileNumValidator> {
         // this is the info text container
         Container(
           height: 176,
-          width: SizeConfig.width(context) * 0.87,
+          width: MediaQuery.of(context).size.width * 87,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           decoration: BoxDecoration(
-            color: sub_text_Container,
+            color: AppColorsModule.mobileNumSubTextContainer,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -79,14 +67,12 @@ class _MNumValidatorState extends State<MobileNumValidator> {
           child: Container(
             padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
             height: 120,
-            width: SizeConfig.width(context) * 0.87,
+            width: MediaQuery.of(context).size.width * 0.87,
             decoration: BoxDecoration(
-              color: textFieldBGColor,
+              color: AppColorsModule.mobileNumColorTextFieldBGColor,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: widget.wrongNumber
-                    ? MobileNumContainerState.error.stateColor
-                    : MobileNumContainerState.active.stateColor,
+                color: validationState.borderColor,
                 width: 2.5,
               ),
             ),
@@ -104,10 +90,10 @@ class _MNumValidatorState extends State<MobileNumValidator> {
                   maxLength: 10,
                   maxLines: 1,
                   enabled: true,
-                  controller: widget.onController,
+                  controller: onController,
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
-                    widget.onChanged(value);
+                    onChanged(value);
                   },
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -131,11 +117,11 @@ class _MNumValidatorState extends State<MobileNumValidator> {
                   ),
                 ),
 
-                if(widget.wrongNumber)
+                if(validationState.hasError)
                   Row(
                     children: [
                       Text(
-                        widget.errorString,
+                        validationState.errorText,
                         style: Theme.of(
                           context,
                         ).textTheme.bodySmall!.copyWith(color: Colors.red),

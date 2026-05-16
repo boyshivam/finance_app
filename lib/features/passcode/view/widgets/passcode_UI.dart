@@ -4,7 +4,6 @@ import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
 import 'package:aprreciate/features/passcode/view/extensions/passcode_extensions.dart';
 import 'package:aprreciate/features/passcode/view/widgets/passcode_retry_timer.dart';
 import 'package:aprreciate/features/passcode/view_model/passcode_view_model.dart';
-import 'package:aprreciate/widgets/helper_widgets/size_config.dart';
 import 'package:flutter/material.dart';
 
 class PasscodeUI extends StatelessWidget {
@@ -64,8 +63,8 @@ class PasscodeUI extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  width: SizeConfig.width(context) * 0.056,
-                  height: SizeConfig.width(context) * 0.056,
+                  width: MediaQuery.of(context).size.width * 0.056,
+                  height: MediaQuery.of(context).size.width * 0.056,
                   decoration: BoxDecoration(
                     color: vm.hasError
                         ? PasscodeCircleBackgroundState.error.backgroundColor

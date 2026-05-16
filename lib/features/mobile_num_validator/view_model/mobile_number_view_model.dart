@@ -11,37 +11,32 @@ class MobileNumViewModel {
 
   static const reqMobileNumLength = 10;
 
-  bool wrongNumber = false;
+  MobileNumValidationState validationState = MobileNumValidationState.active;
 
-  String errorString = "";
 
   bool validateNumber(String mNum) {
     if (mNum.isEmpty) {
-      wrongNumber = true;
-      errorString = MobileNumErrorMsgState.empty.errorText;
+     validationState = MobileNumValidationState.empty;
       return false;
     } else if (mNum.length < 10) {
-      wrongNumber = true;
-      errorString  = MobileNumErrorMsgState.lesserThanTenDigits.errorText;
+      validationState = MobileNumValidationState.lesserThanTenDigits;
       return false;
     } else if (!validNumInitials.contains(mNum[0])) {
-      wrongNumber = true;
-      errorString = MobileNumErrorMsgState.invalidNumber.errorText;
+      validationState = MobileNumValidationState.invalidNumber;
       return false;
     } else {
       reset();
+      validationState = MobileNumValidationState.active;
       return true;
     }
   }
 
   void reset(){
-    errorString = "";
-    wrongNumber = false;
+    validationState = MobileNumValidationState.active;
   }
 
   void onChanged(String value){
     reset();
-
     if(value.length == reqMobileNumLength){
       validateNumber(value);
     }

@@ -4,7 +4,6 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
 import "package:aprreciate/features/mobile_num_validator/view_model/mobile_number_view_model.dart";
 import "package:aprreciate/router/app_navigators.dart";
-import "package:aprreciate/widgets/helper_widgets/custom_elevated_button.dart";
 import "package:flutter/material.dart";
 
 import "../widgets/mobile_num_validator.dart";
@@ -122,15 +121,13 @@ class _MobileNumScreenState extends State<MobileNumScreen> {
 
                           });
                         },
-                        wrongNumber: vm.wrongNumber,
-                        errorString: vm.errorString,
+                        validationState: vm.validationState,
                       ),
 
                       const Spacer(),
-                      CustomElevatedButton(
-                        function: (){validate();} ,
-                        text: "Confirm",
-                      ),
+                      SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(onPressed: validate, child: Text("Confirm")))
                     ],
                   ),
                 ),

@@ -5,36 +5,50 @@ import "package:aprreciate/features/mobile_num_validator/enums/mobile_number_enu
 import "package:flutter/material.dart";
 
 
-extension MobileNumErrorMsgStateText on MobileNumErrorMsgState {
+extension MobileNumValidationExtension on MobileNumValidationState {
 
   String get errorText {
 
-    switch (this){
+    switch (this) {
 
-      case MobileNumErrorMsgState.empty:
-        return "Enter a mobile number";
+      case MobileNumValidationState.empty:
+        return "Number cannot be empty";
 
-      case MobileNumErrorMsgState.lesserThanTenDigits:
-        return "Number should be 10 digits";
+      case MobileNumValidationState.lesserThanTenDigits:
+        return "Number cannot be lesser than 10 digits";
 
-      case MobileNumErrorMsgState.invalidNumber:
-        return "Enter a valid number !";
+      case MobileNumValidationState.invalidNumber:
+        return "Enter a valid number";
+
+      default:
+        return "";
     }
+
   }
-}
 
+  Color get borderColor {
 
-extension MobileNumContainerStateColors on MobileNumContainerState {
+    switch (this) {
 
-  Color get stateColor {
-
-    switch(this) {
-
-      case MobileNumContainerState.active:
+      case MobileNumValidationState.active:
         return AppColorsModule.mobileNumContainerActiveColor;
 
-      case MobileNumContainerState.error:
+      default:
         return AppColorsModule.mobileNumContainerErrorColor;
+    }
+
+  }
+
+
+  bool get hasError {
+
+    switch (this) {
+
+      case MobileNumValidationState.active:
+        return false;
+
+      default:
+        return true;
 
     }
 

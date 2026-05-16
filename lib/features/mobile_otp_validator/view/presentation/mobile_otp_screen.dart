@@ -1,56 +1,39 @@
-import 'package:aprreciate/core/constants/app_assets/app_strings.dart';
-import 'package:aprreciate/router/app_navigators.dart';
-import 'package:aprreciate/widgets/helper_widgets/countdown_timer.dart';
-import 'package:aprreciate/widgets/helper_widgets/custom_elevated_button.dart';
-import 'package:aprreciate/widgets/module_widgets/login_module_widgets/otp_validator.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import "package:aprreciate/core/themes/app_theme/app_theme.dart";
-import '../../../core/constants/app_assets/app_assets.dart';
-import '../../../core/utils/asset_helpers/asset_image_helpers.dart';
+import "package:aprreciate/core/constants/app_assets/app_assets.dart";
+import "package:aprreciate/core/constants/app_assets/app_strings.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
+import "package:aprreciate/features/mobile_otp_validator/enums/mobile_otp_enum.dart";
+import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
+import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
+import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_view_model.dart";
+import "package:aprreciate/router/app_navigators.dart";
+import "package:flutter/material.dart";
 
-
-
-// box border colors
-const  Color incorrectBorderColor = Color(0xFFEA3636);
-const  Color neutralBorderColor = Color(0xFFE1ECFC);
-
-
-class LoginOTPScreen extends StatefulWidget {
-  const LoginOTPScreen({super.key});
+class MobileOtpScreen extends StatefulWidget {
+  const MobileOtpScreen({super.key});
 
   @override
-  State<LoginOTPScreen> createState() => _LoginOTPScreenState();
+  State<MobileOtpScreen> createState() => _MobileOtpScreenState();
 }
 
-class _LoginOTPScreenState extends State<LoginOTPScreen> {
+class _MobileOtpScreenState extends State<MobileOtpScreen> {
+  final vm = MobileOtpViewModel();
+
+  // declare controllers and focus nodes
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
-
-
-  // length of otp
-  int otpLength = 6;
-
-  // final otp entered by user
-  String? finalOtp ;
-
-  // correct otp
-  final String correctOTP = "666666";
-
-  // input box border color
-  Color? defaultBorderColor = neutralBorderColor;
-
-  // otp error message
-  String? errorMsg = "";
-
-  // conditional show otp message
-  bool wrongOtp = false;
 
   // initialise controllers and focus nodes of otp validator
   @override
   void initState() {
-    controllers = List.generate(otpLength, (index) => TextEditingController());
-    focusNodes = List.generate(otpLength, (index) => FocusNode());
+    controllers = List.generate(
+      MobileOtpViewModel.otpLength,
+      (index) => TextEditingController(),
+    );
+    focusNodes = List.generate(
+      MobileOtpViewModel.otpLength,
+      (index) => FocusNode(),
+    );
 
     super.initState();
   }
@@ -67,65 +50,57 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
     super.dispose();
   }
 
-  // movement of cursor in the otp field
-  void navigateOtp(String value, int index) {
-     if(value.length == 1) {
-       if (index < otpLength - 1) {
-         focusNodes[index + 1].requestFocus();
-       } else {
-         focusNodes[index].unfocus();
-       }
-     }
-     finalOtp = controllers.map((c) => c.text).join();
-  }
-
-
-  // error text removed when the text fields are empty without clicking on submit-
-  void no_error_when_fieldsEmpty_without_submit(){
-    bool isOtpEmpty = controllers.every((c) => c.text.isEmpty);
-    if(isOtpEmpty){
-      setState(() {
-        wrongOtp = true;
-        errorMsg = "";
-        defaultBorderColor = neutralBorderColor;
-      });
+  // map the forward movement of the cursor
+  void cursorMovementInOtp(String value, int index) {
+    if (controllers[index].text.isNotEmpty &&
+        index < MobileOtpViewModel.otpLength - 1) {
+      focusNodes[index + 1].requestFocus();
     }
+  }
+
+  // reset OTP
+  void resetOtp(){
+    Future.delayed(
+      Duration(seconds: 2),
+        (){
+          for (final c in controllers){
+            c.clear();
+          }
+          focusNodes.first.requestFocus();
+          vm.validationState = MobileOtpValidationState.inactive;
+          setState(() {
+
+          });
+        }
+    );
 
   }
 
+  // getter to derive OTP from users input
+  String get derivedOtp => controllers.map((c) => c.text).join();
 
-  // verify the OTP entered by user
-  void verifyOtp(){
-
-    if(finalOtp == correctOTP){
-      setState(() {
-        wrongOtp = false;
-        errorMsg = "";
-        defaultBorderColor = neutralBorderColor;
-      });
+  // proceed to next screen if otp is correct
+  void proceedToNextScreen() {
+    bool validate = vm.validateOtp(derivedOtp);
+    setState(() {});
+    if (validate) {
       AppNavigators.goToPasscodeScreen(context);
-    }else if( finalOtp!.isEmpty) {
-      setState(() {
-        errorMsg = "Otp cannot be empty";
-        defaultBorderColor = incorrectBorderColor;
-      });
     }
-    else{
-      setState(() {
-        wrongOtp = true;
-        errorMsg = "Incorrect OTP entered, please retry";
-        defaultBorderColor = incorrectBorderColor;
-      });
+    else {
+       resetOtp();
+
     }
   }
 
+  // go to mobileNum screen to edit number
+  void gotoMobileNumScreen() {
+    AppNavigators.goToLogin(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // final userNumber = GoRouterState.of(context).extra as String;
-
     return Scaffold(
-      backgroundColor: scaffoldColor,
+      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SafeArea(
@@ -137,30 +112,29 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
-
                       // top section with appreciate logo and support icon
-                     Container(
-                          // height: 80,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 20,
-                            horizontal: 25,
-                          ),
-                          decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-                          child: Row(
-                            children: [
-                              AssetImageHelper.image(
-                                AppAssets.lo_ap_logo,
-                                height: 24,
-                              ),
-                              const Spacer(),
-                              AssetImageHelper.image(
-                                AppAssets.lo_support,
-                                height: 24,
-                                width: 24,
-                              ),
-                            ],
-                          ),
+                      Container(
+                        // height: 80,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 25,
                         ),
+                        decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
+                        child: Row(
+                          children: [
+                            AssetImageHelper.image(
+                              AppAssets.lo_ap_logo,
+                              height: 24,
+                            ),
+                            const Spacer(),
+                            AssetImageHelper.image(
+                              AppAssets.lo_support,
+                              height: 24,
+                              width: 24,
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 20),
 
                       // main body with otp validator
@@ -197,9 +171,7 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
 
                                 // edit the users number
                                 InkWell(
-                                  onTap: () {
-                                    context.push("/");
-                                  },
+                                  onTap: gotoMobileNumScreen,
                                   child: Row(
                                     children: [
                                       AssetImageHelper.image(
@@ -214,9 +186,10 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                          color: theColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                              color: AppColorsCommon
+                                                  .appreciateThemeColor,
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                       ),
                                     ],
                                   ),
@@ -225,18 +198,13 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                             ),
                             const SizedBox(height: 20),
 
-
                             // Widget contains the otp UI
                             OtpValidator(
+                              validationState: vm.validationState,
                               controllers: controllers,
                               focusNodes: focusNodes,
-                              defaultBorderColor: defaultBorderColor!,
-                              errorMessage: errorMsg!,
-                              otpLength: otpLength,
-                              wrongOtp: wrongOtp,
-                              otpNavigator: (otpVal, index) {
-                                navigateOtp(otpVal, index);
-                              },
+                              otpLength: MobileOtpViewModel.otpLength,
+                              otpNavigator: cursorMovementInOtp,
                             ),
                             const SizedBox(height: 20),
                             Row(
@@ -248,7 +216,12 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
                                 const SizedBox(width: 5),
 
                                 //resend OTP countdown timer
-                                Expanded(child: CountdownTimer(initialSeconds: 120, resetTimerText: "resend OTP",))
+                                Expanded(
+                                  child: OtpTimer(
+                                    initialTime: 120,
+                                    resendText: 'resend OTP',
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -262,7 +235,13 @@ class _LoginOTPScreenState extends State<LoginOTPScreen> {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 25, right: 25, bottom: 20),
-                child: CustomElevatedButton(function: verifyOtp, text: "Confirm"),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: proceedToNextScreen,
+                    child: Text("Confirm"),
+                  ),
+                ),
               ),
             ],
           ),

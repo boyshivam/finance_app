@@ -1,38 +1,32 @@
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
+import "package:aprreciate/features/mobile_otp_validator/enums/mobile_otp_enum.dart";
+import "package:aprreciate/features/mobile_otp_validator/view/extensions/mobile_otp_extensions.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
 // 6 box otp text field
 
-class OtpValidator extends StatefulWidget {
+class OtpValidator extends StatelessWidget {
   const OtpValidator({
     super.key,
     required this.controllers,
     required this.focusNodes,
     required this.otpLength,
     required this.otpNavigator,
-    required this.defaultBorderColor,
-    required this.errorMessage,
-    required this.wrongOtp
+    required this.validationState,
+
+
   });
 
   final List<TextEditingController> controllers;
   final List<FocusNode> focusNodes;
   final int otpLength;
   final void Function(String otpVal, int index) otpNavigator;
-  final Color defaultBorderColor;
-  final String errorMessage;
-  final bool wrongOtp;
+  final MobileOtpValidationState validationState;
 
-  @override
-  State<OtpValidator> createState() => _OtpValidatorState();
-}
 
-class _OtpValidatorState extends State<OtpValidator> {
 
   // input box BG color
-  final Color inputBoxBGColor = Color(0xFFFFFFFF);
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,33 +34,33 @@ class _OtpValidatorState extends State<OtpValidator> {
       children: [
         Row(
           children: List.generate(
-            widget.otpLength,
-            (index) => Expanded(
+            otpLength,
+                (index) => Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AspectRatio(
                   aspectRatio: .92,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: inputBoxBGColor,
+                      color: AppColorsModule.otpBoxBackgroundColor,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: widget.defaultBorderColor, width: 1.5),
+                      border: Border.all(color: validationState.validationColor, width: 1.5),
                     ),
                     child: Focus(
                       onKeyEvent: (node, event) {
                         if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.backspace) {
 
-                          if(index > 0 && widget.controllers[index].text.isEmpty){
-                            widget.focusNodes[index - 1].requestFocus();
+                          if(index > 0 && controllers[index].text.isEmpty){
+                            focusNodes[index - 1].requestFocus();
                           }
                         }
                         return KeyEventResult.ignored;
                       },
                       child: TextField(
-                        focusNode: widget.focusNodes[index],
+                        focusNode: focusNodes[index],
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         textAlign: TextAlign.center,
-                        controller: widget.controllers[index],
+                        controller: controllers[index],
                         // focusNode: widget.focusNodes[index],
                         maxLength: 1,
                         maxLines: 1,
@@ -76,7 +70,7 @@ class _OtpValidatorState extends State<OtpValidator> {
                           border: InputBorder.none,
                         ),
                         onChanged: (value) {
-                          widget.otpNavigator(value, index);
+                          otpNavigator(value, index);
                         },
                       ),
                     ),
@@ -86,12 +80,12 @@ class _OtpValidatorState extends State<OtpValidator> {
             ),
           ),
         ),
-        if(widget.wrongOtp)
-        const SizedBox(height: 10),
-        Text(widget.errorMessage, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+        if(validationState.hasError)
+          const SizedBox(height: 10),
+        Text(validationState.errorText, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: Colors.red
         ),
-        textAlign: TextAlign.left,),
+          textAlign: TextAlign.left,),
       ],
     );
   }

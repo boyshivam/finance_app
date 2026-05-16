@@ -1,11 +1,7 @@
 
-enum MobileNumErrorMsgState {
+enum MobileNumValidationState {
+  active,
   empty,
   lesserThanTenDigits,
-  invalidNumber
-}
-
-enum MobileNumContainerState {
-  active,
-  error
+  invalidNumber,
 }

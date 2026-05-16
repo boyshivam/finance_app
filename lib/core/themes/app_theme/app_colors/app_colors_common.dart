@@ -2,6 +2,12 @@ import "package:flutter/material.dart";
 
 class AppColorsCommon {
 
+  // appreciate theme color
+  static const appreciateThemeColor = Color(0xFF0461E5);
+
+  // app error color -
+  static const appreciateThemeError = Color(0xFFEA3636);
+
   // scaffold background color
   static const scaffoldBackGroundColor = Color(0xFFEFF1F4);
 
