@@ -42,7 +42,9 @@ class AppColorsModule {
   static const passcodeIncorrectCircleBorderColor = Color(0xFFEA3636);
 
 
-
+  // greet user top section -
+  static const greetContainerGradientColor1 = Color(0xFFE1ECFC);
+  static const greetContainerGradientColor2 = Color(0xFFFFFFFF);
 
   // continue where you left card
   static const crossCtaColor = Color(0xFFA3A2AF);

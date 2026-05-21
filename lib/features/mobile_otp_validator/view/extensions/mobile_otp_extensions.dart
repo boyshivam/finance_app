@@ -31,10 +31,10 @@ extension MobileOtpExtensions on MobileOtpValidationState {
     switch(this) {
 
       case MobileOtpValidationState.active:
-        return AppColorsModule.otpBoxActiveStateColor;
+        return AppColorsModule.otpBoxDefaultStateColor;
 
       case MobileOtpValidationState.inactive:
-        return AppColorsModule.otpBoxDefaultStateColor;
+        return AppColorsModule.otpBoxActiveStateColor;
 
       default:
         return AppColorsModule.otpBoxErrorStateColor;

@@ -1,4 +1,4 @@
-import "package:aprreciate/features/home_dashboard/view/home_dashboard_screen.dart";
+import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/presentation/mobile_otp_screen.dart";
 import "package:aprreciate/features/passcode/view/presentation/passcode_screen.dart";

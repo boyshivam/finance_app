@@ -1,0 +1,34 @@
+import "package:aprreciate/features/home_dashboard/view/widgets/greetUser_section.dart";
+import "package:aprreciate/features/home_dashboard/view/widgets/market_indices_ticker.dart";
+import "package:flutter/material.dart";
+
+class HomeDashboardScreen extends StatefulWidget {
+  const HomeDashboardScreen({super.key});
+
+  @override
+  State<HomeDashboardScreen> createState() => _HomeDashboardScreenState();
+}
+
+class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GreetUserSection(),
+            MarketIndicesTicker()
+            // market indices
+            // Our offerings section
+            //Trading signals
+            // Continue where your left
+            // Buy top US stocks
+            // Invest in TOP mutual funds
+            // Invest in TOP ETFs
+            //
+          ],
+        ),
+      )
+    );
+  }
+}

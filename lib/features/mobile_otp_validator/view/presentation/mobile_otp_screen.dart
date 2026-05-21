@@ -59,21 +59,15 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
   }
 
   // reset OTP
-  void resetOtp(){
-    Future.delayed(
-      Duration(seconds: 2),
-        (){
-          for (final c in controllers){
-            c.clear();
-          }
-          focusNodes.first.requestFocus();
-          vm.validationState = MobileOtpValidationState.inactive;
-          setState(() {
-
-          });
-        }
-    );
-
+  void resetOtp() {
+    Future.delayed(Duration(seconds: 2), () {
+      for (final c in controllers) {
+        c.clear();
+      }
+      focusNodes.first.requestFocus();
+      vm.validationState = MobileOtpValidationState.inactive;
+      setState(() {});
+    });
   }
 
   // getter to derive OTP from users input
@@ -85,10 +79,8 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
     setState(() {});
     if (validate) {
       AppNavigators.goToPasscodeScreen(context);
-    }
-    else {
-       resetOtp();
-
+    } else {
+      resetOtp();
     }
   }
 
@@ -204,25 +196,13 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
                               controllers: controllers,
                               focusNodes: focusNodes,
                               otpLength: MobileOtpViewModel.otpLength,
-                              otpNavigator: cursorMovementInOtp,
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Text(
-                                  AppStrings.log_otp_resend_txt,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                const SizedBox(width: 5),
+                              otpNavigator: cursorMovementInOtp,),
 
-                                //resend OTP countdown timer
-                                Expanded(
-                                  child: OtpTimer(
-                                    initialTime: 120,
-                                    resendText: 'resend OTP',
-                                  ),
-                                ),
-                              ],
+
+                            //resend OTP countdown timer
+                            OtpTimer(
+                              initialTime: 10,
+                              resendText: 'resend OTP',
                             ),
                           ],
                         ),

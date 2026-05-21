@@ -18,4 +18,8 @@ class AppColorsCommon {
   // snackbar message colors
   static const snackBarMsgBlue = Color(0xFF181636);
   static const snackBarTick = Color(0xFF3EE3C5);
+
+  // positive color
+  static const positiveGreen = Color(0xFF00B871);
+  static const negativeRed = Color(0xFFEA3636);
 }
