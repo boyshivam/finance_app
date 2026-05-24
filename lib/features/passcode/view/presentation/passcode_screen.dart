@@ -1,9 +1,9 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart"
     show AssetImageHelper;
+import "package:aprreciate/features/passcode/enums/passcode_enums.dart";
 import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
 import "package:aprreciate/features/passcode/view_model/passcode_view_model.dart";
 import "package:aprreciate/router/app_navigators.dart";
@@ -22,24 +22,24 @@ class PasscodeScreen extends StatefulWidget {
 class _PasscodeScreenState extends State<PasscodeScreen> {
   final vm = PasscodeViewModel();
 
-  void onKeyTap(String value) {
-    setState(() {
-      vm.enterPasscode(value);
-    });
-    if(vm.passcode.length == PasscodeViewModel.reqPasscodeLength){
-      verification();
-    }
-  }
+  Future<void> onKeyPressed(String value) async {
 
-  void verification() {
-    setState(() {
-      bool isVerified = vm.verifyPasscode(vm.passcode);
-      if (isVerified) {
+    final enteredPasscode = vm.onKeyPress(value);
+    setState(() {});
+    if(vm.passcodeFullLength(enteredPasscode)){
+      final verifyPasscode = vm.validatePasscode(enteredPasscode);
+      if(verifyPasscode){
         AppNavigators.goToHomeDashBoard(context);
-      } else {
-        vm.passcodeAttemptCount();
+      }else{
+        if(!vm.locked){
+          await Future.delayed(Duration(seconds: 1));
+          vm.resetPasscode(PasscodeValidationState.empty);
+          setState(() {});
+        }else{
+          setState(() {});
+        }
       }
-    });
+    }
   }
 
   @override
@@ -95,28 +95,14 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                       ],
                     ),
                     const SizedBox(height: 30),
-                    PasscodeUI(
-                      onBlocked: (locked) {
-                        setState(() {
-                          vm.numpadLocked = locked;
-                        });
-                      },
-                      reqPasscodeLength: PasscodeViewModel.reqPasscodeLength,
-                      passcode: vm.passcode,
-                      vm: vm,
-                      numpadLocked: vm.numpadLocked,
-                      incorrectPasscode: vm.incorrectPasscode,
-                      resetPasscode: (){
-                        vm.resetPasscode();
-                      }
-                    ),
+                    PasscodeUI(vm: vm),
                   ],
                 ),
               ),
             ),
 
             // This is the numpad
-            PasscodeNumpad(enteredPasscode: onKeyTap),
+            PasscodeNumpad(enteredPasscode: onKeyPressed),
           ],
         ),
       ),

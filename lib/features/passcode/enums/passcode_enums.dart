@@ -1,25 +1,12 @@
 
 
-enum PasscodeCircleBorderState {
-  inactive,
+enum PasscodeValidationState {
+  empty,
+  incorrect,
   active,
-  error
+  locked,
 }
 
-enum PasscodeCircleBackgroundState{
-  inactive,
-  active,
-  error,
-}
 
-enum PasscodeContainerState {
-  active,
-  error
-}
-
-enum PasscodeErrorMessageState {
-  wrongPasscode,
-  numpadLocked
-}
 
 

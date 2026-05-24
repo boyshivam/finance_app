@@ -1,4 +1,5 @@
 import 'package:aprreciate/core/constants/app_assets/app_strings.dart';
+import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart';
 import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
 import 'package:aprreciate/features/passcode/view/extensions/passcode_extensions.dart';
@@ -6,28 +7,16 @@ import 'package:aprreciate/features/passcode/view/widgets/passcode_retry_timer.d
 import 'package:aprreciate/features/passcode/view_model/passcode_view_model.dart';
 import 'package:flutter/material.dart';
 
-class PasscodeUI extends StatelessWidget {
-  const PasscodeUI({
-    super.key,
-    required this.onBlocked,
-    required this.reqPasscodeLength,
-    required this.passcode,
-    required this.vm,
-    required this.numpadLocked,
-    required this.incorrectPasscode,
-    required this.resetPasscode,
+class PasscodeUI extends StatefulWidget {
+  const PasscodeUI({super.key, required this.vm});
 
-  });
-  final void Function(bool) onBlocked;
-  final int reqPasscodeLength;
-  final String passcode;
   final PasscodeViewModel vm;
-  final bool numpadLocked;
-  final bool incorrectPasscode;
-  // final void Function(int) attemptNum;
-  final void Function() resetPasscode;
 
+  @override
+  State<PasscodeUI> createState() => _PasscodeUIState();
+}
 
+class _PasscodeUIState extends State<PasscodeUI> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,9 +25,7 @@ class PasscodeUI extends StatelessWidget {
         color: AppColorsModule.passcodeContainerBGColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: vm.hasError
-              ? PasscodeContainerState.error.borderColor
-              : PasscodeContainerState.active.borderColor,
+          color: widget.vm.validationState.validationColorsContainerBorder,
           width: 2,
         ),
       ),
@@ -52,13 +39,14 @@ class PasscodeUI extends StatelessWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 10),
-
           // Row of passcode circles ie passcode UI
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(reqPasscodeLength, (index) {
+            children: List.generate(PasscodeViewModel.reqPasscodeLength, (
+              index,
+            ) {
               // fills individual circles of the passcode
-              bool isFilled = index < passcode.length;
+              final circleState = widget.vm.circleStates[index];
 
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -66,20 +54,10 @@ class PasscodeUI extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.056,
                   height: MediaQuery.of(context).size.width * 0.056,
                   decoration: BoxDecoration(
-                    color: vm.hasError
-                        ? PasscodeCircleBackgroundState.error.backgroundColor
-                        : isFilled
-                        ? PasscodeCircleBackgroundState.active.backgroundColor
-                        : PasscodeCircleBackgroundState
-                              .inactive
-                              .backgroundColor,
                     borderRadius: BorderRadius.circular(20),
+                    color: circleState.validationColorsCircleBG,
                     border: Border.all(
-                      color: vm.hasError
-                          ? PasscodeCircleBorderState.error.borderColor
-                          : isFilled
-                          ? PasscodeCircleBorderState.active.borderColor
-                          : PasscodeCircleBorderState.inactive.borderColor,
+                      color: circleState.validationColorsCircleBorder,
                       width: 1.5,
                     ),
                   ),
@@ -87,37 +65,43 @@ class PasscodeUI extends StatelessWidget {
               );
             }),
           ),
-          if (incorrectPasscode)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  PasscodeErrorMessageState.wrongPasscode.errorText,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: AppColorsModule.passcodeIncorrectCircleBorderColor,
-                  ),
-                ),
-              ],
+          if (widget.vm.validationState == PasscodeValidationState.incorrect) ...[
+            const SizedBox(height: 5),
+            Text(
+              widget.vm.validationState.errorText,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: AppColorsCommon.appreciateThemeError,
+              ),
             ),
-          if (numpadLocked)
+          ],
+          if (widget.vm.validationState == PasscodeValidationState.locked) ...[
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  PasscodeErrorMessageState.numpadLocked.errorText,
+                  widget.vm.validationState.errorText,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: AppColorsModule.passcodeIncorrectCircleBorderColor,
+                    color: AppColorsCommon.appreciateThemeError,
                   ),
                 ),
-                const SizedBox(width: 5),
+                const SizedBox(width:5),
                 PasscodeRetryTimer(
-                  initialTime: PasscodeViewModel.timerDuration,
-                  onBlocked: onBlocked,
-                  resetPasscode: resetPasscode,
-
+                  reset: (){
+                    setState(() {
+                      widget.vm.resetPasscode(PasscodeValidationState.empty);
+                    });
+                  },
+                  numPadLocked: (value){
+                    widget.vm.locked = value;
+                  },
+                  initialTime: 10,
+                  vm : widget.vm
                 ),
+                // PasscodeRetryTimer(resetPasscode: resetPasscode)
               ],
             ),
+          ],
         ],
       ),
     );

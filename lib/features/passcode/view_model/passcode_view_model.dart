@@ -1,89 +1,106 @@
-import 'package:aprreciate/features/passcode/view/extensions/passcode_extensions.dart';
-import 'package:aprreciate/router/app_navigators.dart';
-import 'package:flutter/cupertino.dart';
-
-import '../enums/passcode_enums.dart';
+import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
 
 class PasscodeViewModel {
-  String passcode = "";
+  // length of passcode
+  static const int reqPasscodeLength = 4;
 
-  // delete char const
-  static const deleteChar = "backSpace";
-
-  // passcode length
-  static const reqPasscodeLength = 4;
+  // users passcode
+  String userPasscode = "";
 
   // correct passcode
-  static const correctPasscode = "6666";
+  final correctPasscode = "6666";
 
-  // incorrect passcode
-  bool incorrectPasscode = false;
+  // incorrect pass count
+  int wrongCount = 0;
 
-  // numpad Locked
-  bool numpadLocked = false;
+  // passcode maxAttempts
+  int maxAttempts = 3;
 
-  // max passcode attempts
-  int maxPasscodeAttempts = 3;
+  // locked
+  bool locked = false;
 
-  // current passcode attempt count
-  int attemptNum = 0;
+  // validation state
+  PasscodeValidationState validationState = PasscodeValidationState.empty;
 
-  // passcode timer duration
-  static const timerDuration = 5;
+  // validation state of individual circles-
+  List<PasscodeValidationState> circleStates = List.generate(
+    reqPasscodeLength,
+    (_) => PasscodeValidationState.empty,
+  );
 
-  // error incorrect passcode -
-  bool get hasError {
-    return incorrectPasscode || numpadLocked;
-  }
-
-  // user enters the passcode via numpad
-  void enterPasscode(String value) {
-    // if > 3 incorrect passcode attempts, then user cannot access the passcod
-    if(value == deleteChar){
-      removeChar(value);
-      incorrectPasscode = false;
-    }else{
-      addChar(value);
-    }
-  }
-
-  // delete char from passcode
-  void removeChar(String value) {
-      if (passcode.isNotEmpty) {
-        passcode = passcode.substring(0, (passcode.length - 1));
-      }
-  }
-
-  // add char to passcode
-  void addChar(String value) {
-    if(passcode.length <= reqPasscodeLength){
-      passcode += value;
-    }
-  }
-
-  // verify entered passcode
-  bool verifyPasscode(String passcode) {
-      if (passcode == correctPasscode) {
-        return true;
-      } else {
-        return false;
+  // update circle colors
+  void updateCircleState(){
+    for(int i =0; i < reqPasscodeLength ; i++){
+      if(i < userPasscode.length){
+        circleStates[i] = PasscodeValidationState.active;
+      }else{
+        circleStates[i] = PasscodeValidationState.empty;
       }
     }
-
-  // reset passcode -
-  void resetPasscode(){
-    attemptNum = 0;
-    passcode = "";
   }
 
-  // passcode attempt counter
-  void passcodeAttemptCount() {
-    attemptNum += 1;
-    passcode = "";
-    if (attemptNum < maxPasscodeAttempts) {
-      incorrectPasscode = true;
-    } else if (attemptNum == maxPasscodeAttempts) {
-      numpadLocked = true;
+  // change all circle colors as per validation
+  void updateAllCircleStates(PasscodeValidationState state){
+    for(int i = 0; i < reqPasscodeLength ; i++){
+      if(userPasscode.length == reqPasscodeLength){
+        circleStates[i] = state;
+      }
+    }
+  }
+
+  // register users input from keypad
+  String onKeyPress(String value) {
+    if (value == 'backSpace') {
+      if (userPasscode.isNotEmpty) {
+        userPasscode = userPasscode.substring(0, userPasscode.length - 1);
+      }
+    } else {
+      if (userPasscode.length >= reqPasscodeLength) {
+        return userPasscode;
+      }
+      userPasscode += value;
+    }
+    updateCircleState();
+    return userPasscode;
+  }
+
+ // validate the user passcode
+  bool validatePasscode(String value){
+    if(value == correctPasscode){
+      validationState = PasscodeValidationState.active;
+      updateAllCircleStates(PasscodeValidationState.active);
+      return true;
+    }else if(value != correctPasscode) {
+      wrongPasscodeCount();
+      return false;
+    }
+    return false;
+  }
+
+  // verify if the length of passcode is as per requirement
+  bool passcodeFullLength(String passcode){
+    if(passcode.length == reqPasscodeLength){
+      return true;
+    }
+     return false;
+  }
+
+  // reset passcode
+  void resetPasscode(PasscodeValidationState state) {
+    updateAllCircleStates(state);
+    validationState = PasscodeValidationState.empty;
+    userPasscode = "";
+  }
+
+  void wrongPasscodeCount(){
+    wrongCount += 1;
+    if(wrongCount == maxAttempts){
+      locked = true;
+      validationState = PasscodeValidationState.locked;
+      updateAllCircleStates(PasscodeValidationState.locked);
+    }else {
+      validationState = PasscodeValidationState.incorrect;
+      updateAllCircleStates(PasscodeValidationState.incorrect);
     }
   }
 }

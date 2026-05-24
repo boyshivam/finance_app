@@ -1,21 +1,22 @@
 import "dart:async";
 
+import "package:aprreciate/features/passcode/enums/passcode_enums.dart";
+import "package:aprreciate/features/passcode/view_model/passcode_view_model.dart";
 import "package:flutter/material.dart";
 
 
 class PasscodeRetryTimer extends StatefulWidget {
   const PasscodeRetryTimer({
-    super.key, required this.initialTime,
-    required this.onBlocked,
-    required this.resetPasscode,
+    super.key,
+    required this.numPadLocked,
+    required this.initialTime,
+    required this.vm,
+    required this.reset,
   });
-
+  final void Function(bool ) numPadLocked;
   final int initialTime;
-  final void Function(bool) onBlocked;
-  final void Function() resetPasscode;
-
-
-
+  final PasscodeViewModel  vm;
+  final void Function() reset;
 
   @override
   State<PasscodeRetryTimer> createState() => _PasscodeRetryTimerState();
@@ -23,51 +24,46 @@ class PasscodeRetryTimer extends StatefulWidget {
 
 class _PasscodeRetryTimerState extends State<PasscodeRetryTimer> {
 
-  late int secondsLeft;
-  Timer? timer;
+  late int timeLeft;
+  Timer ? timer;
 
   @override
-  void initState(){
+  void initState() {
+    // TODO: implement initState
     super.initState();
-    secondsLeft = widget.initialTime;
+    timeLeft = widget.initialTime;
     startTimer();
   }
 
   void startTimer(){
-
     timer?.cancel();
-
-    timer = Timer.periodic(Duration(seconds: 1), (t) {
-      if(secondsLeft == 0){
-        widget.onBlocked.call(false);
-        // widget.resetAttempts.call(0);
-        widget.resetPasscode();
+    timer = Timer.periodic(Duration(seconds: 1), (t){
+      if(timeLeft == 0){
+        widget.numPadLocked.call(false);
+        widget.reset();
         t.cancel();
       }else{
         setState(() {
-          secondsLeft--;
+          timeLeft --;
         });
       }
     });
   }
 
-  @override
-  void dispose(){
-    timer?.cancel();
-    super.dispose();
-  }
-
   void resetTimer(){
-    setState(() {
-      widget.onBlocked.call(true);
-      secondsLeft = widget.initialTime;
-    });
+    timeLeft = widget.initialTime;
     startTimer();
   }
 
-  String formatTime(){
-    final minutes = secondsLeft ~/ 60;
-    final seconds = secondsLeft % 60;
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
+
+  String formatTime() {
+    final int minutes = timeLeft ~/ 60;
+    final int seconds = timeLeft % 60;
     return "${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
   }
 
