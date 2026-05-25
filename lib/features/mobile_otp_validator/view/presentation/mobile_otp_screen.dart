@@ -95,136 +95,135 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      // top section with appreciate logo and support icon
-                      Container(
-                        // height: 80,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 25,
-                        ),
-                        decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-                        child: Row(
-                          children: [
-                            AssetImageHelper.image(
-                              AppAssets.lo_ap_logo,
-                              height: 24,
-                            ),
-                            const Spacer(),
-                            AssetImageHelper.image(
-                              AppAssets.lo_support,
-                              height: 24,
-                              width: 24,
-                            ),
-                          ],
-                        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    // top section with appreciate logo and support icon
+                    Container(
+                      // height: 80,
+                      padding:  EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 20,
+                        bottom: 20,
+                        right: 25,
+                        left: 25,
                       ),
-                      const SizedBox(height: 20),
-
-                      // main body with otp validator
-                      Container(
-                        // height: SizeConfig.height(context) * 0.4,
-                        // width: SizeConfig.width(context) * 0.87,
-                        padding: EdgeInsets.only(left: 25, right: 25),
-                        decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppStrings.log_otp_header,
-                              style: Theme.of(context).textTheme.headlineLarge,
-                            ),
-                            const SizedBox(height: 20),
-                            Wrap(
-                              children: [
-                                Text(
-                                  AppStrings.log_otp_subt,
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.bodySmall!.copyWith(fontSize: 18),
-                                ),
-                                const SizedBox(width: 3),
-
-                                // users number
-                                Text(
-                                  "userNumber",
-                                  style: Theme.of(context).textTheme.bodySmall!
-                                      .copyWith(fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(width: 7),
-
-                                // edit the users number
-                                InkWell(
-                                  onTap: gotoMobileNumScreen,
-                                  child: Row(
-                                    children: [
-                                      AssetImageHelper.image(
-                                        AppAssets.lo_edit,
-                                        width: 13,
-                                        height: 13,
-                                      ),
-                                      const SizedBox(width: 7),
-                                      Text(
-                                        "Edit",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: AppColorsCommon
-                                                  .appreciateThemeColor,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-
-                            // Widget contains the otp UI
-                            OtpValidator(
-                              validationState: vm.validationState,
-                              controllers: controllers,
-                              focusNodes: focusNodes,
-                              otpLength: MobileOtpViewModel.otpLength,
-                              otpNavigator: cursorMovementInOtp,),
-
-
-                            //resend OTP countdown timer
-                            OtpTimer(
-                              initialTime: 10,
-                              resendText: 'resend OTP',
-                            ),
-                          ],
-                        ),
+                      decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
+                      child: Row(
+                        children: [
+                          AssetImageHelper.image(
+                            AppAssets.lo_ap_logo,
+                            height: 24,
+                          ),
+                          const Spacer(),
+                          AssetImageHelper.image(
+                            AppAssets.lo_support,
+                            height: 24,
+                            width: 24,
+                          ),
+                        ],
                       ),
+                    ),
+                    const SizedBox(height: 20),
 
-                      // const Spacer(),
-                    ],
-                  ),
+                    // main body with otp validator
+                    Container(
+                      // height: SizeConfig.height(context) * 0.4,
+                      // width: SizeConfig.width(context) * 0.87,
+                      padding: EdgeInsets.only(left: 25, right: 25),
+                      decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppStrings.log_otp_header,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                          const SizedBox(height: 20),
+                          Wrap(
+                            children: [
+                              Text(
+                                AppStrings.log_otp_subt,
+                                style: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall!.copyWith(fontSize: 18),
+                              ),
+                              const SizedBox(width: 3),
+
+                              // users number
+                              Text(
+                                "userNumber",
+                                style: Theme.of(context).textTheme.bodySmall!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              const SizedBox(width: 7),
+
+                              // edit the users number
+                              InkWell(
+                                onTap: gotoMobileNumScreen,
+                                child: Row(
+                                  children: [
+                                    AssetImageHelper.image(
+                                      AppAssets.lo_edit,
+                                      width: 13,
+                                      height: 13,
+                                    ),
+                                    const SizedBox(width: 7),
+                                    Text(
+                                      "Edit",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall!
+                                          .copyWith(
+                                            color: AppColorsCommon
+                                                .appreciateThemeColor,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+
+                          // Widget contains the otp UI
+                          OtpValidator(
+                            validationState: vm.validationState,
+                            controllers: controllers,
+                            focusNodes: focusNodes,
+                            otpLength: MobileOtpViewModel.otpLength,
+                            otpNavigator: cursorMovementInOtp,),
+
+
+                          //resend OTP countdown timer
+                          OtpTimer(
+                            initialTime: 10,
+                            resendText: 'resend OTP',
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // const Spacer(),
+                  ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 25, right: 25, bottom: 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: proceedToNextScreen,
-                    child: Text("Confirm"),
-                  ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 25, right: 25, bottom: MediaQuery.of(context).padding.bottom + 20),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: proceedToNextScreen,
+                  child: Text("Confirm"),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

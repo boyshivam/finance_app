@@ -57,83 +57,86 @@ class _MobileNumScreenState extends State<MobileNumScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // top container with logo and support -
+            Container(
+              // height: 80,
+              padding:  EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 15,
+                bottom: 20,
+                right: 25,
+                left: 25
+              ),
+              decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
+              child: Row(
+                children: [
+                  AssetImageHelper.image(AppAssets.lo_ap_logo, height: 24),
+                  const Spacer(),
+                  AssetImageHelper.image(
+                    AppAssets.lo_support,
+                    height: 24,
+                    width: 24,
+                  ),
+                ],
+              ),
+            ),
 
-              // top container with logo and support -
-              Container(
-                // height: 80,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 25,
-                ),
-                decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-                child: Row(
+            // Container with number field
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.fromLTRB(25, 30, 25, 20),
+                decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AssetImageHelper.image(AppAssets.lo_ap_logo, height: 24),
-                    const Spacer(),
-                    AssetImageHelper.image(
-                      AppAssets.lo_support,
-                      height: 24,
-                      width: 24,
+                    Text(
+                      AppStrings.log_header,
+                      style: Theme.of(context).textTheme.headlineLarge!
+                          .copyWith(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.start,
                     ),
+                    const SizedBox(height: 20),
+                    Text(
+                      AppStrings.log_subt,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium!.copyWith(fontSize: 19),
+                    ),
+                    const SizedBox(height: 25),
+
+                    // Mobile number widget -
+
+                    MobileNumValidator(
+                      onController: controller,
+                      onChanged: (value){
+                        vm.onChanged(value);
+                        setState(() {
+
+                        });
+                      },
+                      validationState: vm.validationState,
+                    ),
+
+                    const Spacer(),
+                    Padding(
+                      padding:  EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom + 10
+                      ),
+                      child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(onPressed: validate, child: Text("Confirm"))),
+                    )
                   ],
                 ),
               ),
-
-              // Container with number field
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.fromLTRB(25, 30, 25, 20),
-                  decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.log_header,
-                        style: Theme.of(context).textTheme.headlineLarge!
-                            .copyWith(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        AppStrings.log_subt,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium!.copyWith(fontSize: 19),
-                      ),
-                      const SizedBox(height: 25),
-
-                      // Mobile number widget -
-
-                      MobileNumValidator(
-                        onController: controller,
-                        onChanged: (value){
-                          vm.onChanged(value);
-                          setState(() {
-
-                          });
-                        },
-                        validationState: vm.validationState,
-                      ),
-
-                      const Spacer(),
-                      SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(onPressed: validate, child: Text("Confirm")))
-                    ],
-                  ),
-                ),
-              ),
-            ]
-          ),
+            ),
+          ]
         ),
       );
     }

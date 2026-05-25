@@ -46,65 +46,67 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: scaffoldColor,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // top header section with appreciate text and logo
-            Container(
-              // height: 80,
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-              decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-              child: Row(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // top header section with appreciate text and logo
+          Container(
+            // height: 80,
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 15,
+                bottom: 20,
+                left: 25,
+                right: 25),
+            decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
+            child: Row(
+              children: [
+                AssetImageHelper.image(AppAssets.lo_ap_logo, height: 24),
+                const Spacer(),
+                AssetImageHelper.image(
+                  AppAssets.lo_support,
+                  height: 24,
+                  width: 24,
+                ),
+              ],
+            ),
+          ),
+          // This container has the passcode UI
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(25, 40, 25, 0),
+              child: Column(
                 children: [
-                  AssetImageHelper.image(AppAssets.lo_ap_logo, height: 24),
-                  const Spacer(),
-                  AssetImageHelper.image(
-                    AppAssets.lo_support,
-                    height: 24,
-                    width: 24,
+                  Row(
+                    children: [
+                      Text(
+                        AppStrings.passcode_subtext,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      const SizedBox(width: 10),
+                      InkWell(
+                        onTap: () {
+                          AppNavigators.goToLogin(context);
+                        },
+                        child: Text(
+                          AppStrings.passcode_sign_out,
+                          style: Theme.of(context).textTheme.bodySmall!
+                              .copyWith(
+                                color: AppColorsCommon.appreciateThemeColor,
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 30),
+                  PasscodeUI(vm: vm),
                 ],
               ),
             ),
-            // This container has the passcode UI
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(25, 40, 25, 0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          AppStrings.passcode_subtext,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        const SizedBox(width: 10),
-                        InkWell(
-                          onTap: () {
-                            AppNavigators.goToLogin(context);
-                          },
-                          child: Text(
-                            AppStrings.passcode_sign_out,
-                            style: Theme.of(context).textTheme.bodySmall!
-                                .copyWith(
-                                  color: AppColorsCommon.appreciateThemeColor,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    PasscodeUI(vm: vm),
-                  ],
-                ),
-              ),
-            ),
+          ),
 
-            // This is the numpad
-            PasscodeNumpad(enteredPasscode: onKeyPressed),
-          ],
-        ),
+          // This is the numpad
+          PasscodeNumpad(enteredPasscode: onKeyPressed),
+        ],
       ),
     );
   }

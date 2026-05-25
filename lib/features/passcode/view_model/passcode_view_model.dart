@@ -98,6 +98,7 @@ class PasscodeViewModel {
       locked = true;
       validationState = PasscodeValidationState.locked;
       updateAllCircleStates(PasscodeValidationState.locked);
+      wrongCount = 0;
     }else {
       validationState = PasscodeValidationState.incorrect;
       updateAllCircleStates(PasscodeValidationState.incorrect);
