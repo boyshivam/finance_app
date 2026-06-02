@@ -41,6 +41,7 @@ class PasscodeNotifier extends Notifier<PasscodeState> {
       }
   }
 
+
   // register users input from keypad
   String onKeyPress(String value) {
     var passcode = state.userPasscode;
@@ -60,15 +61,18 @@ class PasscodeNotifier extends Notifier<PasscodeState> {
     return passcode;
   }
 
+  // validate passcode
   bool validatePasscode(String value) {
     if (value == correctPasscode) {
       state = state.copyWith(
         validationState: PasscodeValidationState.active,
         circleStates: List.generate(4, (_) => PasscodeValidationState.active),
       );
+      updateAllCircleStates(PasscodeValidationState.active);
       return true;
     } else if (value != correctPasscode) {
       wrongPasscodeCount();
+      updateAllCircleStates(PasscodeValidationState.incorrect);
       return false;
     }
     return false;
@@ -91,6 +95,7 @@ class PasscodeNotifier extends Notifier<PasscodeState> {
     );
   }
 
+  // keep count of wrong attempts
   void wrongPasscodeCount() {
     final count = state.wrongCount + 1;
     if (count >= 3) {

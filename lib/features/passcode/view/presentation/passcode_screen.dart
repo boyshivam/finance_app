@@ -39,8 +39,6 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
           .read(passcodeProvider.notifier)
           .validatePasscode(enteredPasscode);
 
-      final notifier = ref.read(passcodeProvider.notifier);
-
       if (verifyPasscode) {
         AppNavigators.goToHomeDashBoard(context);
       } else {

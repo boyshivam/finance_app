@@ -1,6 +1,5 @@
 
 import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
-import 'package:flutter/material.dart';
 
 class PasscodeState {
   const PasscodeState({
