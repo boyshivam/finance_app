@@ -5,37 +5,54 @@ import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart"
     show AssetImageHelper;
 import "package:aprreciate/features/passcode/enums/passcode_enums.dart";
 import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
-import "package:aprreciate/features/passcode/view_model/passcode_view_model.dart";
+import "package:aprreciate/features/passcode/view_model/passcodeState.dart";
+import "package:aprreciate/features/passcode/view_model/passcode_provider/passcode_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:aprreciate/core/themes/app_theme/app_theme.dart";
-
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import "../widgets/passcode_numpad.dart";
 
-class PasscodeScreen extends StatefulWidget {
+class PasscodeScreen extends ConsumerStatefulWidget {
   const PasscodeScreen({super.key});
 
   @override
-  State<PasscodeScreen> createState() => _PasscodeScreenState();
+  ConsumerState<PasscodeScreen> createState() => _PasscodeScreenState();
 }
 
-class _PasscodeScreenState extends State<PasscodeScreen> {
-  final vm = PasscodeViewModel();
+class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
+
 
   Future<void> onKeyPressed(String value) async {
 
-    final enteredPasscode = vm.onKeyPress(value);
-    setState(() {});
-    if(vm.passcodeFullLength(enteredPasscode)){
-      final verifyPasscode = vm.validatePasscode(enteredPasscode);
-      if(verifyPasscode){
+
+    // save the users input after every key press
+    final enteredPasscode = ref
+        .read(passcodeProvider.notifier)
+        .onKeyPress(value);
+
+
+    if (ref
+        .read(passcodeProvider.notifier)
+        .passcodeFullLength(enteredPasscode)) {
+      final verifyPasscode = ref
+          .read(passcodeProvider.notifier)
+          .validatePasscode(enteredPasscode);
+
+      final notifier = ref.read(passcodeProvider.notifier);
+
+      if (verifyPasscode) {
         AppNavigators.goToHomeDashBoard(context);
-      }else{
-        if(!vm.locked){
+      } else {
+
+        final isLocked = ref.read(passcodeProvider).locked;
+
+        if (!isLocked) {
           await Future.delayed(Duration(seconds: 1));
-          vm.resetPasscode(PasscodeValidationState.empty);
-          setState(() {});
-        }else{
+          ref
+              .read(passcodeProvider.notifier)
+              .resetPasscode(PasscodeValidationState.empty);
+        } else {
           setState(() {});
         }
       }
@@ -44,6 +61,8 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final validationState = ref.watch(passcodeProvider);
+
     return Scaffold(
       backgroundColor: scaffoldColor,
       body: Column(
@@ -53,10 +72,11 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
           Container(
             // height: 80,
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 15,
-                bottom: 20,
-                left: 25,
-                right: 25),
+              top: MediaQuery.of(context).padding.top + 15,
+              bottom: 20,
+              left: 25,
+              right: 25,
+            ),
             decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
             child: Row(
               children: [
@@ -98,7 +118,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  PasscodeUI(vm: vm),
+                  const PasscodeUI(),
                 ],
               ),
             ),

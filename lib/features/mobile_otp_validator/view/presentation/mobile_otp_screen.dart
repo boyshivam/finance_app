@@ -5,19 +5,21 @@ import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
 import "package:aprreciate/features/mobile_otp_validator/enums/mobile_otp_enum.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
+import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_provider/mobile_otp_provider.dart";
 import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_view_model.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class MobileOtpScreen extends StatefulWidget {
+class MobileOtpScreen extends ConsumerStatefulWidget {
   const MobileOtpScreen({super.key});
 
   @override
-  State<MobileOtpScreen> createState() => _MobileOtpScreenState();
+  ConsumerState<MobileOtpScreen> createState() => _MobileOtpScreenState();
 }
 
-class _MobileOtpScreenState extends State<MobileOtpScreen> {
-  final vm = MobileOtpViewModel();
+class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
+
 
   // declare controllers and focus nodes
   late List<TextEditingController> controllers;
@@ -65,8 +67,8 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
         c.clear();
       }
       focusNodes.first.requestFocus();
-      vm.validationState = MobileOtpValidationState.inactive;
-      setState(() {});
+      ref.read(mobileOtpProvider.notifier).resetOtp();
+
     });
   }
 
@@ -75,12 +77,11 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
 
   // proceed to next screen if otp is correct
   void proceedToNextScreen() {
-    bool validate = vm.validateOtp(derivedOtp);
-    setState(() {});
+    bool validate = ref.read(mobileOtpProvider.notifier).validateOtp(derivedOtp);
     if (validate) {
       AppNavigators.goToPasscodeScreen(context);
     } else {
-      resetOtp();
+      ref.read(mobileOtpProvider.notifier).resetOtp();
     }
   }
 
@@ -91,6 +92,9 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final validationState = ref.watch(mobileOtpProvider);
+
     return Scaffold(
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: GestureDetector(
@@ -192,7 +196,7 @@ class _MobileOtpScreenState extends State<MobileOtpScreen> {
 
                           // Widget contains the otp UI
                           OtpValidator(
-                            validationState: vm.validationState,
+                            validationState: validationState,
                             controllers: controllers,
                             focusNodes: focusNodes,
                             otpLength: MobileOtpViewModel.otpLength,

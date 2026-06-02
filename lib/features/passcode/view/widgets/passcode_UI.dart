@@ -4,28 +4,30 @@ import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.da
 import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
 import 'package:aprreciate/features/passcode/view/extensions/passcode_extensions.dart';
 import 'package:aprreciate/features/passcode/view/widgets/passcode_retry_timer.dart';
+import 'package:aprreciate/features/passcode/view_model/passcode_provider/passcode_provider.dart';
 import 'package:aprreciate/features/passcode/view_model/passcode_view_model.dart';
 import 'package:flutter/material.dart';
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class PasscodeUI extends StatefulWidget {
-  const PasscodeUI({super.key, required this.vm});
-
-  final PasscodeViewModel vm;
+class PasscodeUI extends ConsumerWidget {
+  const PasscodeUI({super.key});
 
   @override
-  State<PasscodeUI> createState() => _PasscodeUIState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _PasscodeUIState extends State<PasscodeUI> {
-  @override
-  Widget build(BuildContext context) {
+    final currentState = ref.watch(passcodeProvider);
+
+    final validationState = currentState.validationState;
+
+    final notifier = ref.read(passcodeProvider.notifier);
+
     return Container(
       padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
       decoration: BoxDecoration(
         color: AppColorsModule.passcodeContainerBGColor,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: widget.vm.validationState.validationColorsContainerBorder,
+          color: currentState.validationState.validationColorsContainerBorder,
           width: 2,
         ),
       ),
@@ -46,7 +48,7 @@ class _PasscodeUIState extends State<PasscodeUI> {
               index,
             ) {
               // fills individual circles of the passcode
-              final circleState = widget.vm.circleStates[index];
+              final circleState = currentState.circleStates[index];
 
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -65,38 +67,43 @@ class _PasscodeUIState extends State<PasscodeUI> {
               );
             }),
           ),
-          if (widget.vm.validationState == PasscodeValidationState.incorrect) ...[
+          if (validationState == PasscodeValidationState.incorrect) ...[
             const SizedBox(height: 5),
             Text(
-              widget.vm.validationState.errorText,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              validationState.errorText,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(
                 color: AppColorsCommon.appreciateThemeError,
               ),
             ),
           ],
-          if (widget.vm.validationState == PasscodeValidationState.locked) ...[
+          if (validationState == PasscodeValidationState.locked) ...[
             const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  widget.vm.validationState.errorText,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  validationState.errorText,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(
                     color: AppColorsCommon.appreciateThemeError,
                   ),
                 ),
-                const SizedBox(width:5),
+                const SizedBox(width: 5),
                 PasscodeRetryTimer(
-                  reset: (){
-                    setState(() {
-                      widget.vm.resetPasscode(PasscodeValidationState.empty);
-                    });
+                  reset: () {
+                    notifier.resetPasscode(PasscodeValidationState.empty);
                   },
-                  numPadLocked: (value){
-                    widget.vm.locked = value;
+                  numPadLocked: (value) {
+                    notifier.setLocked(value);
                   },
                   initialTime: 10,
-                  vm : widget.vm
                 ),
                 // PasscodeRetryTimer(resetPasscode: resetPasscode)
               ],

@@ -10,12 +10,11 @@ class PasscodeRetryTimer extends StatefulWidget {
     super.key,
     required this.numPadLocked,
     required this.initialTime,
-    required this.vm,
     required this.reset,
   });
   final void Function(bool ) numPadLocked;
   final int initialTime;
-  final PasscodeViewModel  vm;
+
   final void Function() reset;
 
   @override

@@ -2,25 +2,26 @@ import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
-import "package:aprreciate/features/mobile_num_validator/view_model/mobile_number_view_model.dart";
+import "package:aprreciate/features/mobile_num_validator/view_model/provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+
 
 import "../widgets/mobile_num_validator.dart";
 
-class MobileNumScreen extends StatefulWidget {
+
+class MobileNumScreen extends ConsumerStatefulWidget {
   const MobileNumScreen({super.key});
 
   @override
-  State<MobileNumScreen> createState() => _MobileNumScreenState();
+  ConsumerState<MobileNumScreen> createState() => _MobileNumScreenState();
 }
 
-class _MobileNumScreenState extends State<MobileNumScreen> {
+class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
 
 
   late TextEditingController controller;
-
-  final  vm = MobileNumViewModel();
 
   @override
   void initState() {
@@ -35,39 +36,43 @@ class _MobileNumScreenState extends State<MobileNumScreen> {
     super.dispose();
   }
 
-  String deriveMobileNum(){
+  String deriveMobileNum() {
     final user_num = controller.text.trim();
     return user_num;
   }
 
 
-
-  void validate(){
-    final checkNum = vm.validateNumber(deriveMobileNum());
+  void validate() {
+    final checkNum = ref.watch(mobileNumProvider.notifier).validateNumber(
+        deriveMobileNum());
     setState(() {});
 
-    if(checkNum) {
+    if (checkNum) {
       AppNavigators.goToOTPScreen(context);
     }
   }
 
 
-
   @override
   Widget build(BuildContext context) {
+    final validationState = ref.watch(mobileNumProvider);
+
     return Scaffold(
-        backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
-        body: Column(
+      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
+      body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // top container with logo and support -
             Container(
               // height: 80,
-              padding:  EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 15,
-                bottom: 20,
-                right: 25,
-                left: 25
+              padding: EdgeInsets.only(
+                  top: MediaQuery
+                      .of(context)
+                      .padding
+                      .top + 15,
+                  bottom: 20,
+                  right: 25,
+                  left: 25
               ),
               decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
               child: Row(
@@ -94,7 +99,10 @@ class _MobileNumScreenState extends State<MobileNumScreen> {
                   children: [
                     Text(
                       AppStrings.log_header,
-                      style: Theme.of(context).textTheme.headlineLarge!
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headlineLarge!
                           .copyWith(
                         fontSize: 35,
                         fontWeight: FontWeight.bold,
@@ -104,9 +112,13 @@ class _MobileNumScreenState extends State<MobileNumScreen> {
                     const SizedBox(height: 20),
                     Text(
                       AppStrings.log_subt,
-                      style: Theme.of(
+                      style: Theme
+                          .of(
                         context,
-                      ).textTheme.bodyMedium!.copyWith(fontSize: 19),
+                      )
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(fontSize: 19),
                     ),
                     const SizedBox(height: 25),
 
@@ -114,31 +126,32 @@ class _MobileNumScreenState extends State<MobileNumScreen> {
 
                     MobileNumValidator(
                       onController: controller,
-                      onChanged: (value){
-                        vm.onChanged(value);
-                        setState(() {
-
-                        });
+                      onChanged: (value) {
+                        ref.read(mobileNumProvider.notifier).onChanged(value);
                       },
-                      validationState: vm.validationState,
+                      validationState: validationState,
                     ),
 
                     const Spacer(),
                     Padding(
-                      padding:  EdgeInsets.only(
-                        bottom: MediaQuery.of(context).padding.bottom + 10
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery
+                              .of(context)
+                              .padding
+                              .bottom + 10
                       ),
                       child: SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton(onPressed: validate, child: Text("Confirm"))),
+                          child: ElevatedButton(
+                              onPressed: validate, child: Text("Confirm"))),
                     )
                   ],
                 ),
               ),
             ),
           ]
-        ),
-      );
-    }
+      ),
+    );
   }
+}
 

@@ -17,10 +17,11 @@ class PasscodeNumpad extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).padding.bottom + 20
+        bottom: MediaQuery.of(context).padding.bottom + 10
       ),
-      child: SizedBox(height: 400,
+      child: SizedBox(height: MediaQuery.sizeOf(context).height * 0.45,
         child: GridView(
+          // physics: NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             childAspectRatio: 1.5,
             crossAxisCount: 3,
