@@ -98,7 +98,7 @@ class PasscodeUI extends ConsumerWidget {
                 const SizedBox(width: 5),
                 PasscodeRetryTimer(
                   reset: () {
-                    notifier.resetPasscode(PasscodeValidationState.empty);
+                    notifier.resetPasscode();
                   },
                   numPadLocked: (value) {
                     notifier.setLocked(value);

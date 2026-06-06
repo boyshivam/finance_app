@@ -1,11 +1,10 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
+import "package:aprreciate/core/constants/features/passcode/passcode_constants.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart"
     show AssetImageHelper;
-import "package:aprreciate/features/passcode/enums/passcode_enums.dart";
 import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
-import "package:aprreciate/features/passcode/view_model/passcodeState.dart";
 import "package:aprreciate/features/passcode/view_model/passcode_provider/passcode_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
@@ -23,44 +22,37 @@ class PasscodeScreen extends ConsumerStatefulWidget {
 class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
 
 
-  Future<void> onKeyPressed(String value) async {
-
-
-    // save the users input after every key press
-    final enteredPasscode = ref
-        .read(passcodeProvider.notifier)
-        .onKeyPress(value);
-
-
-    if (ref
-        .read(passcodeProvider.notifier)
-        .passcodeFullLength(enteredPasscode)) {
-      final verifyPasscode = ref
-          .read(passcodeProvider.notifier)
-          .validatePasscode(enteredPasscode);
-
-      if (verifyPasscode) {
-        AppNavigators.goToHomeDashBoard(context);
-      } else {
-
-        final isLocked = ref.read(passcodeProvider).locked;
-
-        if (!isLocked) {
-          await Future.delayed(Duration(seconds: 1));
-          ref
-              .read(passcodeProvider.notifier)
-              .resetPasscode(PasscodeValidationState.empty);
-        } else {
-          setState(() {});
-        }
+  // validate passcode with every key press
+  void onKeyPress(String char) {
+    final notifier = ref.read(passcodeProvider.notifier);
+    notifier.enterPasscode(char);
+    final passcode = ref.read(passcodeProvider).userPasscode;
+    if (passcode.length == PasscodeConstants.reqPasscodeLength) {
+      final isCorrect = ref.read(passcodeProvider.notifier).validatePasscode(passcode);
+      if(isCorrect){
+        proceedToNextScreen();
       }
+      ref.read(passcodeProvider.notifier).resetPasscode();
     }
   }
 
+
+ // proceed to next screen
+  Future<void> proceedToNextScreen() async {
+    await Future.delayed(Duration(seconds: 1));
+    if(!context.mounted) return;
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Center(
+          child: Text("Passcode verified"),
+        ))
+    );
+    AppNavigators.goToHomeDashBoard(context);
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    final validationState = ref.watch(passcodeProvider);
-
     return Scaffold(
       backgroundColor: scaffoldColor,
       body: Column(
@@ -123,7 +115,7 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
           ),
 
           // This is the numpad
-          PasscodeNumpad(enteredPasscode: onKeyPressed),
+          PasscodeNumpad(enteredPasscode: onKeyPress),
         ],
       ),
     );
