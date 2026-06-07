@@ -1,4 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
+import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_assets/app_strings.dart";
 import "package:aprreciate/core/constants/features/passcode/passcode_constants.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
@@ -37,18 +38,41 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
   }
 
 
- // proceed to next screen
-  Future<void> proceedToNextScreen() async {
-    await Future.delayed(Duration(seconds: 1));
-    if(!context.mounted) return;
+ // // proceed to next screen
+ //  Future<void> proceedToNextScreen() async {
+ //    await Future.delayed(Duration(seconds: 1));
+ //    if(!context.mounted) return;
+ //    ScaffoldMessenger.of(context).clearSnackBars();
+ //    ScaffoldMessenger.of(context).showSnackBar(
+ //        SnackBar(content: Center(
+ //          child: Text("Passcode verified"),
+ //        ))
+ //    );
+ //    AppNavigators.goToHomeDashBoard(context);
+ //  }
+
+
+  void proceedToNextScreen() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Center(
-          child: Text("Passcode verified"),
-        ))
+        SnackBar(
+          backgroundColor: AppColorsCommon.snackBarMsgBlue,
+
+            duration: Duration(seconds: 1),
+            content: Row(
+              children: [
+                AssetImageHelper.image(AppAssetsCommon.snackBarTick,
+                width: 24, height: 24),
+                const SizedBox(width: 10),
+                Text("Mobile number verified successfully!", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Colors.white
+                ),),
+              ],
+            ))
     );
     AppNavigators.goToHomeDashBoard(context);
   }
+
 
 
   @override

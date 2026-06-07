@@ -1,5 +1,6 @@
 import "package:aprreciate/features/home_dashboard/view/widgets/greetUser_section.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/market_indices_ticker.dart";
+import "package:aprreciate/features/home_dashboard/view/widgets/market_indices_tickerV2.dart";
 import "package:flutter/material.dart";
 
 class HomeDashboardScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
         child: Column(
           children: [
             GreetUserSection(),
-            MarketIndicesTicker()
+            MarketIndicesTickerV2()
             // market indices
             // Our offerings section
             //Trading signals
