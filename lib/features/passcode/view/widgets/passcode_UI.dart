@@ -1,4 +1,4 @@
-import 'package:aprreciate/core/constants/app_assets/app_strings.dart';
+import 'package:aprreciate/core/constants/app_assets/app_strings/app_strings.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart';
 import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
