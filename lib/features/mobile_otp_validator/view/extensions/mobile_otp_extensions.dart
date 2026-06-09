@@ -48,10 +48,6 @@ extension MobileOtpExtensions on MobileOtpValidationState {
 
       case MobileOtpValidationState.active:
         return false;
-
-      case MobileOtpValidationState.inactive:
-        return false;
-
       default:
         return true;
 

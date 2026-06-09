@@ -1,12 +1,11 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
-import "package:aprreciate/core/constants/app_assets/app_strings/app_strings.dart";
+import "package:aprreciate/core/constants/app_strings/app_strings.dart";
+import "package:aprreciate/core/constants/app_strings/features/mobile_otp/mobile_otp_constants.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
-import "package:aprreciate/features/mobile_otp_validator/enums/mobile_otp_enum.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
 import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_provider/mobile_otp_provider.dart";
-import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_view_model.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -29,11 +28,11 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
   @override
   void initState() {
     controllers = List.generate(
-      MobileOtpViewModel.otpLength,
+      MobileOtpConstants.requiredPasscodeLength,
       (index) => TextEditingController(),
     );
     focusNodes = List.generate(
-      MobileOtpViewModel.otpLength,
+      MobileOtpConstants.requiredPasscodeLength,
       (index) => FocusNode(),
     );
 
@@ -55,7 +54,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
   // map the forward movement of the cursor
   void cursorMovementInOtp(String value, int index) {
     if (controllers[index].text.isNotEmpty &&
-        index < MobileOtpViewModel.otpLength - 1) {
+        index < MobileOtpConstants.requiredPasscodeLength - 1) {
       focusNodes[index + 1].requestFocus();
     }
   }
@@ -76,11 +75,12 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
   String get derivedOtp => controllers.map((c) => c.text).join();
 
   // proceed to next screen if otp is correct
-  void proceedToNextScreen() {
+  Future<void> proceedToNextScreen() async {
     bool validate = ref.read(mobileOtpProvider.notifier).validateOtp(derivedOtp);
     if (validate) {
       AppNavigators.goToPasscodeScreen(context);
     } else {
+      await Future.delayed(Duration(seconds: 2));
       ref.read(mobileOtpProvider.notifier).resetOtp();
     }
   }
@@ -199,7 +199,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                             validationState: validationState,
                             controllers: controllers,
                             focusNodes: focusNodes,
-                            otpLength: MobileOtpViewModel.otpLength,
+                            otpLength: MobileOtpConstants.requiredPasscodeLength,
                             otpNavigator: cursorMovementInOtp,),
 
 

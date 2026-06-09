@@ -25,7 +25,7 @@ class OurOfferingsCard extends StatelessWidget {
                 card.title,
                 style: Theme.of(
                   context,
-                ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w900),
+                ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.start,
               ),
               const SizedBox(height: 10),

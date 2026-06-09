@@ -1,5 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
-import "package:aprreciate/core/constants/app_assets/app_strings/app_strings.dart";
+import "package:aprreciate/core/constants/app_strings/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
 import "package:aprreciate/features/mobile_num_validator/enums/mobile_number_enums.dart";
