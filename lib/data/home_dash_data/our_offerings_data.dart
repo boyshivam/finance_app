@@ -1,5 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
-import "package:aprreciate/core/constants/app_strings/app_strings.dart" show AppStrings;
+import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart" show AppStrings;
 import "package:aprreciate/models/home_dashboard/our_offering_model.dart";
 
 const ourOfferingsData = [

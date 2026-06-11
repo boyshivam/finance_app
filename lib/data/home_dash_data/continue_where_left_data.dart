@@ -1,5 +1,5 @@
 
-import "package:aprreciate/core/constants/app_strings/app_strings.dart";
+import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
 import "package:aprreciate/models/home_dashboard/continue_where_left_model.dart";
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 

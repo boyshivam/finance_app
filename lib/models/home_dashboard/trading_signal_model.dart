@@ -7,14 +7,16 @@ class TradingSignalModel {
     required this.currentPrice,
     required this.entryPrice,
     required this.exitPrice,
-    required this.gain
+    required this.gain,
+    required this.verdict
 });
 
   final String stockIcon;
   final String stockSymbol;
-  final double currentPrice;
-  final double entryPrice;
-  final double exitPrice;
-  final double gain;
+  final String  currentPrice;
+  final String entryPrice;
+  final String exitPrice;
+  final String gain;
+  final String verdict;
 
 }

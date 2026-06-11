@@ -1,3 +1,4 @@
+import "package:aprreciate/features/home_dashboard/view/widgets/banners/banner.dart";
 import "package:aprreciate/models/home_dashboard/banners_model.dart";
 import "package:flutter/material.dart";
 
@@ -8,8 +9,13 @@ class BannerViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-        itemCount: banners.length,
-        itemBuilder: (context, index) => Banner());
+    return SizedBox(
+      height: 200,
+      child: PageView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: banners.length,
+          itemBuilder: (context, index) => BannerApp(banner: banners[index],)
+      ),
+    );
   }
 }

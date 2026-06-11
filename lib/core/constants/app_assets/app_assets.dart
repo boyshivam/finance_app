@@ -21,7 +21,7 @@ class AppAssets {
 
   // our offerings and top section
   static const ho_bell_icon = "${_homedash_path}ho_notification_bell.png";
-  static const ho_blue_icon = "${_homedash_path}ho_blue_forward.png";
+  static const ho_blue_forward_icon = "${_homedash_path}ho_blue_forward.png";
   static const ho_goals_icon = "${_homedash_path}ho_goals.png";
   static const value_growth_icon = "${_homedash_path}ho_growth_sym.png";
   static const ho_us_stocks_icon = "${_homedash_path}ho_us_stocks.png";

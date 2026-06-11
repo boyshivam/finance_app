@@ -35,14 +35,14 @@ class OurOfferingsCard extends StatelessWidget {
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              const SizedBox(width: 26),
+              const SizedBox(width: 10),
             ],
           ),
         ),
         Positioned(
             right: 0,
             bottom: 0,
-            child: Image.asset(card.iconPath, width: 40, height: 40)),
+            child: Image.asset(card.iconPath, width: 50, height: 50)),
       ],
     );
   }

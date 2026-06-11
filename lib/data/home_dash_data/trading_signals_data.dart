@@ -5,41 +5,29 @@ const trading_signals_data = [
   TradingSignalModel(
     stockIcon: AppAssets.apple_icon,
     stockSymbol: "APPL",
-    currentPrice: 19000,
-    entryPrice: 20000,
-    exitPrice: 21000,
-    gain: 5,
+    currentPrice: '19,000',
+    entryPrice: '20,000',
+    exitPrice: '21,000',
+    gain: '5',
+    verdict: 'BUY'
   ),
   TradingSignalModel(
     stockIcon: AppAssets.tesla_icon,
     stockSymbol: "TSLA",
-    currentPrice: 25000,
-    entryPrice: 24000,
-    exitPrice: 26000,
-    gain: 7,
+    currentPrice: '25,000',
+    entryPrice: '24,000',
+    exitPrice: '26,000',
+    gain: '7',
+    verdict: 'BUY'
+
   ),
   TradingSignalModel(
     stockIcon: AppAssets.google_icon,
     stockSymbol: "GOOGL",
-    currentPrice: 31000,
-    entryPrice: 29000,
-    exitPrice: 33000,
-    gain: 9,
-  ),
-  TradingSignalModel(
-    stockIcon: AppAssets.microsoft_icon,
-    stockSymbol: "MSFT",
-    currentPrice: 22000,
-    entryPrice: 21000,
-    exitPrice: 23000,
-    gain: 6,
-  ),
-  TradingSignalModel(
-    stockIcon: AppAssets.amazon_icon,
-    stockSymbol: "AMZN",
-    currentPrice: 19000,
-    entryPrice: 20000,
-    exitPrice: 21000,
-    gain: 5,
+    currentPrice: '31,000',
+    entryPrice: '29,000',
+    exitPrice: '33,000',
+    gain: '9',
+    verdict: 'BUY'
   ),
 ];
