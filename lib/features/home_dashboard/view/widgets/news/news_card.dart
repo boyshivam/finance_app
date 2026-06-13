@@ -1,6 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/home_dashboard/news/news_assets.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/home_dashboard/enums/news_enum.dart";
 import "package:aprreciate/features/home_dashboard/view/extensions/news_sentiment_extension.dart";
 import "package:aprreciate/models/home_dashboard/news_model.dart";
 import "package:flutter/material.dart";
@@ -13,7 +12,7 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25),
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
       decoration: BoxDecoration(
         color: AppColorsCommon.appWhite,

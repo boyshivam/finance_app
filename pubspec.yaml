@@ -64,6 +64,7 @@ flutter:
     - assets/images/login_UI/
     - assets/images/common_UI/
     - assets/images/homedash_UI/
+    - assets/images/homedash_UI/bottom_nav_bar_icons/
     - assets/images/homedash_UI/banner_icons/
     - "assets/images/homedash_UI/news_icons/"
 
