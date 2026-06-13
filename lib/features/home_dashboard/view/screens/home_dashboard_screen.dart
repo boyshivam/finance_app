@@ -1,7 +1,9 @@
 import "package:aprreciate/data/home_dash_data/banner_data/banner_data.dart";
+import "package:aprreciate/data/home_dash_data/news_data/news_data.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/banners/banner_viewer.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/greeting/greetUser_section.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/market_indices/market_indices_ticker.dart";
+import "package:aprreciate/features/home_dashboard/view/widgets/news/new_cards_carousel.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/our_offerings/our_offerings.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/trading_signals/TradingSignalsCarousel.dart";
 import "package:flutter/material.dart";
@@ -24,7 +26,8 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
             MarketIndicesTicker(),
             BannerViewer(banners: bannerData),
             TradingSignalsCarousel(),
-            OurOfferings()
+            OurOfferings(),
+            NewsCarousel(news: newsData)
             // market indices
             // Our offerings section
             //Trading signals

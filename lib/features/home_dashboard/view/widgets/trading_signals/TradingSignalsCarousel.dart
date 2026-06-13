@@ -1,7 +1,6 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_features/app_colors_home_dashboard.dart";
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/data/home_dash_data/trading_signals_data.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/trading_signals/trading_signals_card.dart";
 import "package:flutter/material.dart";
@@ -23,7 +22,7 @@ class _TradingSignalsCarouselState extends State<TradingSignalsCarousel> {
     // TODO: implement initState
     super.initState();
 
-    controller = PageController(viewportFraction: 0.8);
+    controller = PageController(viewportFraction: 0.7);
 
     controller.addListener(() {
       setState(() {
