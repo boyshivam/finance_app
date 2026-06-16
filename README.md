@@ -1,16 +1,14 @@
-# aprreciate
+A practice replica of a trading app-
 
-A new Flutter project.
+features build -
+1. Number validation
+2. Otpvalidation
+3. Passcode validation
+4. Trading Signals UI
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+   <img width="534" height="1172" alt="image" src="https://github.com/user-attachments/assets/1982b571-5466-4499-aa8d-02ae4ede2e85" />
 
-A few resources to get you started if this is your first Flutter project:
+   <img width="534" height="1156" alt="image" src="https://github.com/user-attachments/assets/720dae87-7715-41ca-82c3-668561575472" />
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
