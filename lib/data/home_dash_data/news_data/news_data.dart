@@ -1,4 +1,4 @@
-import "package:aprreciate/core/constants/app_assets/home_dashboard/news/news_assets.dart";
+import "package:aprreciate/core/constants/app_assets/home_dashboard/news_assets/news_assets.dart";
 import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings_news.dart";
 import "package:aprreciate/features/home_dashboard/enums/news_enum.dart";
 import "package:aprreciate/models/home_dashboard/news_model.dart";

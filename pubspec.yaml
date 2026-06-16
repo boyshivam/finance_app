@@ -66,7 +66,9 @@ flutter:
     - assets/images/homedash_UI/
     - assets/images/homedash_UI/bottom_nav_bar_icons/
     - assets/images/homedash_UI/banner_icons/
-    - "assets/images/homedash_UI/news_icons/"
+    - assets/images/homedash_UI/news_icons/
+    - assets/images/homedash_UI/etf_category_icons/
+    - assets/images/homedash_UI/etf_icons/
 
 
   # To add assets to your application, add an assets section, like this:

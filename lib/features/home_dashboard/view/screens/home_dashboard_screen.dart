@@ -1,5 +1,3 @@
-import "package:aprreciate/core/constants/app_assets/home_dashboard/bottom_nav_bar_icons/bottom_nav_bar_icons.dart";
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/data/home_dash_data/banner_data/banner_data.dart";
 import "package:aprreciate/data/home_dash_data/news_data/news_data.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/banners/banner_viewer.dart";
@@ -8,6 +6,7 @@ import "package:aprreciate/features/home_dashboard/view/widgets/greeting/greetUs
 import "package:aprreciate/features/home_dashboard/view/widgets/market_indices/market_indices_ticker.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/news/new_cards_carousel.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/our_offerings/our_offerings.dart";
+import "package:aprreciate/features/home_dashboard/view/widgets/top%20ETFs/etf_section.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/trading_signals/TradingSignalsCarousel.dart";
 import "package:flutter/material.dart";
 
@@ -30,6 +29,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
             BannerViewer(banners: bannerData),
             TradingSignalsCarousel(),
             OurOfferings(),
+            EtfSection(),
             NewsCarousel(news: newsData),
             const SizedBox(height: 100),
 
