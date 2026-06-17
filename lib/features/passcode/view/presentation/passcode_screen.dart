@@ -70,7 +70,7 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
               ],
             ))
     );
-    AppNavigators.goToHomeDashBoard(context);
+    AppNavigators.goToHomeScreen(context);
   }
 
 

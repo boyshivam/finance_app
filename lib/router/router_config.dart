@@ -1,4 +1,5 @@
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
+import "package:aprreciate/features/home_screen/home_screen.dart";
 import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/presentation/mobile_otp_screen.dart";
 import "package:aprreciate/features/passcode/view/presentation/passcode_screen.dart";
@@ -26,6 +27,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => HomeDashboardScreen(),
     ),
     GoRoute(path: AppRoutes.searchDashboardScreen,
-    builder: (context, state) => SearchDashboardScreen())
+    builder: (context, state) => SearchDashboardScreen()),
+    GoRoute(path: AppRoutes.homeScreen,
+        builder: (context, state) => HomeScreen()),
   ],
 );

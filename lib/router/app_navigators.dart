@@ -28,4 +28,8 @@ class AppNavigators {
   static void goToSearchDashboard(BuildContext context, {Object? extra}) {
     context.push(AppRoutes.searchDashboardScreen, extra: extra);
   }
+
+  static void goToHomeScreen(BuildContext context, {Object? extra}) {
+    context.push(AppRoutes.homeScreen, extra: extra);
+  }
 }
