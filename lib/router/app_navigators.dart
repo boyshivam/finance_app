@@ -23,4 +23,9 @@ class AppNavigators {
   static void goToHomeDashBoard(BuildContext context, {Object? extra}) {
     context.push(AppRoutes.homeDashboardScreen, extra: extra);
 }
+
+  // Search Dashboard
+  static void goToSearchDashboard(BuildContext context, {Object? extra}) {
+    context.push(AppRoutes.searchDashboardScreen, extra: extra);
+  }
 }

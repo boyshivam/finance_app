@@ -20,13 +20,13 @@ class EtfCategoryPill extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
         border: Border.all(
-          width: 2,
+          width: 2.5,
           color: isSelected
               ? AppColorsHomeDashboard.activeCategoryBorderColor
               : AppColorsHomeDashboard.inactiveCategoryBorderColor,
         ),
         borderRadius: BorderRadius.circular(30),
-        color: AppColorsCommon.appWhite,
+        color: isSelected ? AppColorsHomeDashboard.activeCategoryBGColor : AppColorsHomeDashboard.inactiveCategoryBGColor,
       ),
       child: Row(
         children: [

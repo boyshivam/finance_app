@@ -13,4 +13,7 @@ class AppRoutes {
   // home dashboard screen
   static const String homeDashboardScreen = '/homeDashboardScreen';
 
+  // Search dashboard
+  static const String searchDashboardScreen = "/searchDashboardScreen";
+
 }
