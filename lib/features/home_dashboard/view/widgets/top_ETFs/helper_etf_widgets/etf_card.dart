@@ -1,5 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/models/home_dashboard/top_etfs_model.dart";
+import "package:aprreciate/models/home_dashboard_models/top_etfs_model.dart";
 import "package:flutter/material.dart";
 
 class EtfCard extends StatelessWidget {

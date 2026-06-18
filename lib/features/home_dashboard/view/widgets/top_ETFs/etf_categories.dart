@@ -1,5 +1,5 @@
-import "package:aprreciate/features/home_dashboard/view/widgets/top%20ETFs/helper_etf_widgets/etf_category_pill.dart";
-import "package:aprreciate/models/home_dashboard/etf_category_model.dart";
+import "package:aprreciate/features/home_dashboard/view/widgets/top_ETFs/helper_etf_widgets/etf_category_pill.dart";
+import "package:aprreciate/models/home_dashboard_models/etf_category_model.dart";
 import "package:flutter/material.dart";
 
 class EtfCategories extends StatelessWidget {

@@ -1,5 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
-import "package:aprreciate/models/home_dashboard/trading_signal_model.dart";
+import "package:aprreciate/models/home_dashboard_models//trading_signal_model.dart";
 
 const trading_signals_data = [
   TradingSignalModel(

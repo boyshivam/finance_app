@@ -1,7 +1,7 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/news/news_card.dart";
-import "package:aprreciate/models/home_dashboard/news_model.dart";
+import "package:aprreciate/models/home_dashboard_models/news_model.dart";
 import "package:flutter/material.dart";
 
 class NewsCarousel extends StatelessWidget {

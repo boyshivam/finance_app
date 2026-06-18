@@ -2,8 +2,9 @@ import 'package:aprreciate/core/constants/app_assets/home_dashboard/top_etf_icon
 import 'package:aprreciate/core/constants/app_assets/home_dashboard/top_etf_icons_assets/etf_icons_assets.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/etfs/app_strings_etf.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/etfs/app_strings_etf_category.dart';
-import 'package:aprreciate/models/home_dashboard/etf_category_model.dart';
-import 'package:aprreciate/models/home_dashboard/top_etfs_model.dart';
+import 'package:aprreciate/models/home_dashboard_models/etf_category_model.dart';
+import 'package:aprreciate/models/home_dashboard_models/top_etfs_model.dart';
+
 
 const Map<EtfCategoryModel, List<TopEtfModel>> etfs_Data = {
   EtfCategoryModel(

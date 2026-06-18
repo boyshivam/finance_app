@@ -1,5 +1,5 @@
 import "package:aprreciate/features/home_dashboard/view/widgets/banners/banner.dart";
-import "package:aprreciate/models/home_dashboard/banners_model.dart";
+import "package:aprreciate/models/home_dashboard_models/banners_model.dart";
 import "package:flutter/material.dart";
 
 class BannerViewer extends StatelessWidget {

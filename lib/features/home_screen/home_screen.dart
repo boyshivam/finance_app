@@ -1,5 +1,5 @@
-import "package:aprreciate/core/constants/app_assets/home_dashboard/bottom_nav_bar_icons/bottom_nav_bar_icons.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
+import "package:aprreciate/features/home_screen/bottom_nav_bar/bottom_nav_bar.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
 import "package:flutter/material.dart";
 
@@ -15,27 +15,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final pages = [HomeDashboardScreen(), SearchDashboardScreen()];
 
+
+  // function to switch between bottom nav icons
+  void onTap(int index) {
+    setState(() {
+      selectedPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: selectedPageIndex, children: pages),
+      body: pages[selectedPageIndex],
 
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          setState(() {
-            selectedPageIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Image.asset(BottomNavBarIcons.homeActiveIcon),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(BottomNavBarIcons.searchInactiveIcon),
-            label: "Search",
-          ),
-        ],
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: selectedPageIndex,
+        onTap: onTap,
       ),
     );
   }

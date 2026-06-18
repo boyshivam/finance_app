@@ -1,6 +1,6 @@
 import 'package:aprreciate/core/constants/app_assets/home_dashboard/banners_assets/app_assets_banners.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings_banners.dart';
-import 'package:aprreciate/models/home_dashboard/banners_model.dart';
+import 'package:aprreciate/models/home_dashboard_models/banners_model.dart';
 
 
 const List<BannersModel> bannerData = [

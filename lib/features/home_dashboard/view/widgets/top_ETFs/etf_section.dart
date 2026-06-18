@@ -1,8 +1,10 @@
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/data/home_dash_data/etf_data/etf_data.dart";
-import "package:aprreciate/features/home_dashboard/view/widgets/top%20ETFs/etf_categories.dart";
-import "package:aprreciate/features/home_dashboard/view/widgets/top%20ETFs/etfs_list.dart";
-import "package:flutter/material.dart";
+
+
+import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
+import 'package:aprreciate/data/home_dash_data/etf_data/etf_data.dart';
+import 'package:aprreciate/features/home_dashboard/view/widgets/top_ETFs/etf_categories.dart';
+import 'package:aprreciate/features/home_dashboard/view/widgets/top_ETFs/etfs_list.dart';
+import 'package:flutter/material.dart';
 
 class EtfSection extends StatefulWidget {
   const EtfSection({super.key});

@@ -1,6 +1,5 @@
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_features/app_colors_home_dashboard.dart";
-import "package:aprreciate/models/home_dashboard/etf_category_model.dart";
+import "package:aprreciate/models/home_dashboard_models/etf_category_model.dart";
 import "package:flutter/material.dart";
 
 class EtfCategoryPill extends StatelessWidget {
