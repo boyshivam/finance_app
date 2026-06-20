@@ -1,9 +1,8 @@
-import "package:aprreciate/data/search_dashboard_data/search_dashboard_cards.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/recently%20viewed/recently_viewed_section.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_bar.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_dash_top_section.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_tabs.dart";
-import "package:aprreciate/models/search_dashboard_models/search_dashboard_card_model.dart";
+import "package:aprreciate/features/search_dashboard/view_model/view_model_searchdashboard.dart";
 import "package:flutter/material.dart";
 
 class SearchDashboardScreen extends StatefulWidget {
@@ -14,69 +13,22 @@ class SearchDashboardScreen extends StatefulWidget {
 }
 
 class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
-  // index for tab in search dashboard
-  int selectedTabIndex = 0;
 
-  bool userSearched = false;
-
-  // focus node for the text field
-  final iconFocusNode = FocusNode();
-
-  // store the results of searched stocks
-  List<SearchDashboardCardModel> results = [];
-
-  // in case of no search results, toggle
-  bool noSearchResults = false;
+  final vm = ViewModelSearchDashboard();
 
   // controller for text field
   final searchBarController = TextEditingController();
-
-  // scroll controller
+  final iconFocusNode = FocusNode();
   late ScrollController searchTabController;
 
   // read entered text
   String get userInput => searchBarController.text;
 
-  // validate search
-  List<SearchDashboardCardModel> validateStocks() {
-    final query = userInput.toLowerCase();
-    return searchDashboardCards
-        .where((item) => item.itemName.toLowerCase().contains(query))
-        .toList();
-  }
 
-  // show search results based on users input
-  void showSearchResult() {
-    if (validateStocks().isNotEmpty) {
-      setState(() {
-        results = validateStocks();
-        userSearched = validateStocks().isNotEmpty;
-        noSearchResults = false;
-      });
-    } else {
-      setState(() {
-        noSearchResults = true;
-      });
-    }
-    if (userInput.isEmpty) {
-      userSearched = false;
-    }
-  }
-
-  // clear entered text
-  void clearEnteredText() {
-    setState(() {
-      searchBarController.clear();
-      results = [];
-      userSearched = false;
-      noSearchResults = false;
-    });
-  }
-
-  // select a tab
+  //  tabs selection functionality
   void onSelectTab(int index) {
     setState(() {
-      selectedTabIndex = index;
+      vm.selectedTabIndex = index;
     });
     searchTabController.animateTo(
       index * 150,
@@ -85,6 +37,15 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
     );
   }
 
+  // clear the search bar
+  void clearEnteredText() {
+    setState(() {
+      searchBarController.clear();
+      vm.clearSearch();
+    });
+  }
+
+  // initialize controllers and focus nodes
   @override
   void initState() {
     // TODO: implement initState
@@ -112,20 +73,22 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
           SearchTabs(
             scrollController: searchTabController,
             onSelectTab: onSelectTab,
-            selectedTabIndex: selectedTabIndex,
+            selectedTabIndex: vm.selectedTabIndex,
           ),
           SearchBarCustom(
             iconFocusNode: iconFocusNode,
             searchBarController: searchBarController,
             showSearchResults: () {
-              showSearchResult();
+              setState(() {
+                vm.showSearchResult(userInput);
+              });
             },
             clearText: clearEnteredText,
           ),
           RecentlyViewedSection(
-            userSearched: userSearched,
-            results: results,
-            noSearchResults: noSearchResults,
+            userSearched: vm.userSearched,
+            results: vm.results,
+            noSearchResults: vm.noSearchResults,
           ),
         ],
       ),
