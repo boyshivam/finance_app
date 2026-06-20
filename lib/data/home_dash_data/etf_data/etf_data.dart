@@ -1,5 +1,5 @@
-import 'package:aprreciate/core/constants/app_assets/home_dashboard/top_etf_icons_assets/etf_categories.dart';
-import 'package:aprreciate/core/constants/app_assets/home_dashboard/top_etf_icons_assets/etf_icons_assets.dart';
+import 'package:aprreciate/core/constants/app_assets/assets_home_dashboard/top_etf_icons_assets/etf_categories.dart';
+import 'package:aprreciate/core/constants/app_assets/assets_home_dashboard/top_etf_icons_assets/etf_icons_assets.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/etfs/app_strings_etf.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/etfs/app_strings_etf_category.dart';
 import 'package:aprreciate/models/home_dashboard_models/etf_category_model.dart';

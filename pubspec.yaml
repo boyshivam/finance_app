@@ -69,6 +69,8 @@ flutter:
     - assets/images/homedash_UI/news_icons/
     - assets/images/homedash_UI/etf_category_icons/
     - assets/images/homedash_UI/etf_icons/
+    - assets/images/searchDashboard_UI/
+
 
 
   # To add assets to your application, add an assets section, like this:

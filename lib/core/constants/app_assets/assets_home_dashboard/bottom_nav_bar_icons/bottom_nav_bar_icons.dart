@@ -8,6 +8,11 @@ class BottomNavBarIcons {
   // active icon
   static const homeActiveIcon = "${bottomNavBarPath}home_active_icon.png";
   static const searchActiveIcon = "${bottomNavBarPath}search_active_icon.png";
+  static const portfolioActiveIcon = "${bottomNavBarPath}portfolio_active_icon.png";
+  static const profileActiveIcon = "${bottomNavBarPath}profile_active_icon.png";
+  static const watchlistActiveIcon = "${bottomNavBarPath}watchlist_active_icon.png";
+
+
 
   // inactive icon
   static const homeInactiveIcon = "${bottomNavBarPath}home_inactive_icon.png";

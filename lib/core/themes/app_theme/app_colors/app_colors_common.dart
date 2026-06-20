@@ -22,4 +22,8 @@ class AppColorsCommon {
   // positive color
   static const positiveGreen = Color(0xFF00B871);
   static const negativeRed = Color(0xFFEA3636);
+
+
+  // colors text grey -
+  static const textGrey = Color(0xFF55555A);
 }

@@ -1,4 +1,4 @@
-import "package:aprreciate/core/constants/app_assets/home_dashboard/news_assets/news_assets.dart";
+import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/news_assets/news_assets.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/home_dashboard/view/extensions/news_sentiment_extension.dart";
 import "package:aprreciate/models/home_dashboard_models/news_model.dart";
