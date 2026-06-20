@@ -16,9 +16,7 @@ Currently working on creating the search module and bottom nave bar -
 <img width="200" height="400" alt="Screenshot 2026-06-18 at 1 14 05 AM" src="https://github.com/user-attachments/assets/747bd66f-70b5-45a0-8473-7b5eeab9c692" />
 
 
-20th June '26 -
-
-Completed search bar functionality -
+ Search bar functionality -
 
 normal state -
 <img width="100" height="200" alt="Screenshot 2026-06-20 at 11 50 40 AM" src="https://github.com/user-attachments/assets/94b896d9-b745-4cb4-a61e-3e499e828f1e" />
