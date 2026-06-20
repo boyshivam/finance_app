@@ -1,48 +1,50 @@
-
-
 import 'package:aprreciate/data/search_dashboard_data/search_dashboard_cards.dart';
 import 'package:aprreciate/models/search_dashboard_models/search_dashboard_card_model.dart';
 
 class ViewModelSearchDashboard {
 
-  // index for tab in search dashboard
+
+  // index of the current selected tab
   int selectedTabIndex = 0;
 
-  // if user searched
+  // did user search anything
   bool userSearched = false;
 
-  // store the results of searched stocks
-  List<SearchDashboardCardModel> results = [];
+  // if any match for users query
+  bool noSearchResult = false;
 
-  // in case of no search results, toggle
-  bool noSearchResults = false;
+  // store the matched search result
+  List<SearchDashboardCardModel> searchResults = [];
 
-  // validate search
-  List<SearchDashboardCardModel> validateStocks(String query) {
+  // validate of user's input has a match in database
+  List<SearchDashboardCardModel> validateSearchQuery(String input) {
+    final query = input.toLowerCase();
     return searchDashboardCards
-        .where((item) => item.itemName.toLowerCase().contains(query))
+        .where((stock) => stock.itemName.toLowerCase().contains(query))
         .toList();
   }
 
-  // show search results based on users input
-  void showSearchResult(String query) {
-    if(query.isEmpty){
-      results = [];
+  // show search result for valid query
+  void showSearchResults(String input){
+
+    if(input.isEmpty){
+      searchResults = [];
       userSearched = false;
-      noSearchResults = false;
+      noSearchResult = false;
       return;
     }
+    searchResults = validateSearchQuery(input);
+    userSearched = validateSearchQuery(input).isNotEmpty;
+    noSearchResult = searchResults.isEmpty;
 
-    results = validateStocks(query);
-    userSearched = true;
-    noSearchResults = results.isEmpty;
   }
 
 
-  void clearSearch() {
-    results = [];
+  void clearSearch(){
+    searchResults = [];
+    noSearchResult = false;
     userSearched = false;
-    noSearchResults = false;
   }
+
 
 }

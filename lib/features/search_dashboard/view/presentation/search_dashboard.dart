@@ -16,52 +16,54 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
 
   final vm = ViewModelSearchDashboard();
 
-  // controller for text field
-  final searchBarController = TextEditingController();
-  final iconFocusNode = FocusNode();
-  late ScrollController searchTabController;
+  // controllers and focus nodes
+  late FocusNode selectTabFocus;
+  late ScrollController tabScrollControl;
+  late TextEditingController searchBarTextControl;
 
-  // read entered text
-  String get userInput => searchBarController.text;
+  // get user input
+  String get userInput => searchBarTextControl.text;
+
+  // validate user input
 
 
-  //  tabs selection functionality
-  void onSelectTab(int index) {
+  void onSelectTab(int index){
     setState(() {
       vm.selectedTabIndex = index;
     });
-    searchTabController.animateTo(
-      index * 150,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
   }
 
-  // clear the search bar
-  void clearEnteredText() {
+  void checkSearchResult(){
     setState(() {
-      searchBarController.clear();
+      vm.showSearchResults(userInput);
+    });
+  }
+
+
+  void clearEnteredText(){
+    setState(() {
+      searchBarTextControl.clear();
       vm.clearSearch();
     });
   }
 
-  // initialize controllers and focus nodes
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    searchTabController = ScrollController();
-    iconFocusNode.addListener(() {
-      setState(() {});
-    });
+    selectTabFocus = FocusNode();
+    tabScrollControl = ScrollController();
+    searchBarTextControl = TextEditingController();
   }
 
+
   @override
-  void dispose() {
+  void dispose(){
+    selectTabFocus.dispose();
+    tabScrollControl.dispose();
+    searchBarTextControl.dispose();
     super.dispose();
-    iconFocusNode.dispose();
-    searchTabController.dispose();
-    searchBarController.dispose();
   }
 
   @override
@@ -71,24 +73,22 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
         children: [
           SearchDashTopSection(),
           SearchTabs(
-            scrollController: searchTabController,
+            scrollController: tabScrollControl,
             onSelectTab: onSelectTab,
             selectedTabIndex: vm.selectedTabIndex,
           ),
           SearchBarCustom(
-            iconFocusNode: iconFocusNode,
-            searchBarController: searchBarController,
-            showSearchResults: () {
-              setState(() {
-                vm.showSearchResult(userInput);
-              });
+            iconFocusNode: selectTabFocus,
+            searchBarController: searchBarTextControl,
+            showSearchResults: (){
+              checkSearchResult();
             },
             clearText: clearEnteredText,
           ),
           RecentlyViewedSection(
             userSearched: vm.userSearched,
-            results: vm.results,
-            noSearchResults: vm.noSearchResults,
+            results: vm.searchResults,
+            noSearchResults: vm.noSearchResult,
           ),
         ],
       ),

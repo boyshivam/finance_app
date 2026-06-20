@@ -18,5 +18,16 @@ const List<BottomNavBarItemModel> bottomNavBarItems = [
     itemActiveIcon: BottomNavBarIcons.searchActiveIcon,
     itemInactiveIcon: BottomNavBarIcons.searchInactiveIcon,
   ),
+  BottomNavBarItemModel(
+    itemLabel: AppStringsHomeScreen.watchDashBoardLabel,
+    itemActiveIcon: BottomNavBarIcons.watchlistActiveIcon,
+    itemInactiveIcon: BottomNavBarIcons.watchlistInactiveIcon,
+  ),
+  BottomNavBarItemModel(
+    itemLabel: AppStringsHomeScreen.profileLabel,
+    itemActiveIcon: BottomNavBarIcons.profileActiveIcon,
+    itemInactiveIcon: BottomNavBarIcons.profileInactiveIcon,
+  ),
+
 
 ];

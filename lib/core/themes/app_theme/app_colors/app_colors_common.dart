@@ -26,4 +26,7 @@ class AppColorsCommon {
 
   // colors text grey -
   static const textGrey = Color(0xFF55555A);
+
+  // colors common light green
+  static const lightGreen  = Color(0xFFDFF4DF);
 }
