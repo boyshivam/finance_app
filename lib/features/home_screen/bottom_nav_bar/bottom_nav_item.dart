@@ -11,7 +11,7 @@ class BottomNavItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(iconText),
+        Image.asset(iconText, width: 40, height: 40,),
         const SizedBox(height: 5),
         Text(labelText, style: Theme.of(context).textTheme.bodySmall),
       ],

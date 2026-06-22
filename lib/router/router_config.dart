@@ -4,6 +4,7 @@ import "package:aprreciate/features/mobile_num_validator/view/presentations/mobi
 import "package:aprreciate/features/mobile_otp_validator/view/presentation/mobile_otp_screen.dart";
 import "package:aprreciate/features/passcode/view/presentation/passcode_screen.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
+import "package:aprreciate/features/trade_dashboard/presentation/trade_screen.dart";
 
 import "package:aprreciate/router/app_routes.dart";
 import "package:go_router/go_router.dart";
@@ -28,7 +29,12 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(path: AppRoutes.searchDashboardScreen,
     builder: (context, state) => SearchDashboardScreen()),
+
     GoRoute(path: AppRoutes.homeScreen,
         builder: (context, state) => HomeScreen()),
+
+    GoRoute(path: AppRoutes.tradeScreen,
+      builder: (context, state) => TradeScreen()
+    )
   ],
 );

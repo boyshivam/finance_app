@@ -29,4 +29,7 @@ class AppColorsCommon {
 
   // colors common light green
   static const lightGreen  = Color(0xFFDFF4DF);
+
+  // colors light blue background
+  static const lightBlueBackground = Color(0xFFE1ECFC);
 }

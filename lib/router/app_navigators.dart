@@ -32,4 +32,9 @@ class AppNavigators {
   static void goToHomeScreen(BuildContext context, {Object? extra}) {
     context.push(AppRoutes.homeScreen, extra: extra);
   }
+
+  static void goToTradeScreen(BuildContext context, {Object? extra}) {
+    context.push(AppRoutes.tradeScreen, extra: extra);
+  }
+
 }

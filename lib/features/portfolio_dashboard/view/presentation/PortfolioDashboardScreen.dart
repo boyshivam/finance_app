@@ -1,5 +1,5 @@
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dashboard_tabs.dart";
-import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_status_viewer.dart";
+import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dash_viewer_widgets/portfolio_status_viewer.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_topsection.dart";
 import "package:flutter/material.dart";
 
