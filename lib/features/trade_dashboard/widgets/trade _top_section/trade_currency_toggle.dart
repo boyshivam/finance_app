@@ -39,7 +39,7 @@ class CurrencyToggle extends StatelessWidget {
                 color: AppColorsCommon.appWhite,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(color: Colors.black,
+                  BoxShadow(color: Colors.black45,
                       blurRadius: 5,
                       spreadRadius: 1,
                       offset: Offset(0, 3))

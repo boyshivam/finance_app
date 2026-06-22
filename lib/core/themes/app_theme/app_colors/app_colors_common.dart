@@ -32,4 +32,7 @@ class AppColorsCommon {
 
   // colors light blue background
   static const lightBlueBackground = Color(0xFFE1ECFC);
+
+  // inactive border color for text fields
+  static const inactiveTextFieldBorderColor = Color(0xFFE1ECFC);
 }
