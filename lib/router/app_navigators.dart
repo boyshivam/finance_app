@@ -37,4 +37,8 @@ class AppNavigators {
     context.push(AppRoutes.tradeScreen, extra: extra);
   }
 
+  static void gotToOrderPlacedScreen(BuildContext context, {Object? extra}) {
+    context.push(AppRoutes.orderPlacedScreen, extra: extra);
+  }
+
 }

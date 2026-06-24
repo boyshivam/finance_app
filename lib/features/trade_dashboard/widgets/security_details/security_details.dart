@@ -1,4 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
+import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:flutter/material.dart";
 
@@ -46,7 +47,7 @@ class SecurityDetails extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "\$9,921.06",
+                  "\$ ${AppStringsCommon.stockTeslaPrice}",
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(

@@ -1,7 +1,9 @@
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/home_screen/bottom_nav_bar/bottom_nav_bar.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/presentation/PortfolioDashboardScreen.dart";
+import "package:aprreciate/features/profile_dashboard/view/presentation/profile_screen.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/presentation/watchlist_dashboard.dart";
 import "package:flutter/material.dart";
 
 class HomeScreen extends StatefulWidget {
@@ -14,8 +16,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedPageIndex = 0;
 
-  final pages = [HomeDashboardScreen(), PortfolioDashboardScreen(), SearchDashboardScreen()];
-
+  final pages = [
+    HomeDashboardScreen(),
+    PortfolioDashboardScreen(),
+    SearchDashboardScreen(),
+    WatchlistDashboard(),
+    ProfileScreen(),
+  ];
 
   // function to switch between bottom nav icons
   void onTap(int index) {

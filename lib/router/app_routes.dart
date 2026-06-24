@@ -22,4 +22,6 @@ class AppRoutes {
   // Trade screen
   static const String tradeScreen = "/tradeScreen";
 
+  // Trade order placed screen
+  static const String orderPlacedScreen = "/orderPlacedScreen";
 }

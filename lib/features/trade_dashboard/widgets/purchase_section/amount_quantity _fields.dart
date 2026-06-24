@@ -1,8 +1,12 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 
 class FractionAmountQuantityFields extends StatelessWidget {
-  const FractionAmountQuantityFields({super.key});
+  const FractionAmountQuantityFields({super.key, required this.amountController, required this.quantityController});
+
+  final TextEditingController amountController;
+  final TextEditingController quantityController;
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +16,16 @@ class FractionAmountQuantityFields extends StatelessWidget {
         Column(
           children: [
             TextField(
-              
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly
+              ],
               decoration: InputDecoration(
-                suffix: Text("Amount"),
+                hint: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text("Amount"),
+                ),
                 border: InputBorder.none,
 
                 enabledBorder: OutlineInputBorder(
@@ -41,11 +52,23 @@ class FractionAmountQuantityFields extends StatelessWidget {
                   ),
                 ),
               ),
+              onChanged: (value){
+                print(value);
+              },
             ),
             const SizedBox(height: 20),
             TextField(
+              controller: quantityController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly
+              ],
               decoration: InputDecoration(
-                suffix: Text("Qty"),
+                hint: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text("Qty"),
+                ),
+
                 border: InputBorder.none,
 
                 enabledBorder: OutlineInputBorder(
@@ -72,6 +95,9 @@ class FractionAmountQuantityFields extends StatelessWidget {
                   ),
                 ),
               ),
+              onChanged: (value){
+                print(value);
+              },
             ),
           ],
         ),

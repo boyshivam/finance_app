@@ -4,7 +4,15 @@ import "package:aprreciate/features/trade_dashboard/widgets/purchase_section/ord
 import "package:flutter/material.dart";
 
 class PurchaseSection extends StatelessWidget {
-  const PurchaseSection({super.key});
+  const PurchaseSection({
+    super.key,
+    required this.amountController,
+    required this.quantityController,
+  });
+
+  final TextEditingController amountController;
+  final TextEditingController quantityController;
+
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +22,25 @@ class PurchaseSection extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         decoration: BoxDecoration(
           color: AppColorsCommon.appWhite,
-          borderRadius: BorderRadius.circular(18)
+          borderRadius: BorderRadius.circular(18),
         ),
         child: Column(
           children: [
             OrderTypeToggle(),
             Row(
               children: [
-                Text("Buy in Rupees", style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  fontWeight: FontWeight.bold
-                ),),
-                const SizedBox(width: 5,),
-                Icon(Icons.info_outline, size: 25,)
+                Text(
+                  "Buy in Rupees",
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(width: 5),
+                Icon(Icons.info_outline, size: 25),
               ],
             ),
-            const SizedBox(height: 15,),
-            FractionAmountQuantityFields()
-
+            const SizedBox(height: 15),
+            FractionAmountQuantityFields(amountController: amountController, quantityController: quantityController),
           ],
         ),
       ),
