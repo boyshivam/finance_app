@@ -3,10 +3,16 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
 class FractionAmountQuantityFields extends StatelessWidget {
-  const FractionAmountQuantityFields({super.key, required this.amountController, required this.quantityController});
+  const FractionAmountQuantityFields({
+    super.key,
+    required this.toggledINR,
+    required this.amountController,
+    required this.quantityController,
+  });
 
   final TextEditingController amountController;
   final TextEditingController quantityController;
+  final bool toggledINR;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +24,21 @@ class FractionAmountQuantityFields extends StatelessWidget {
             TextField(
               controller: amountController,
               keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
+                prefix: toggledINR
+                    ? Text(
+                        "₹ ",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : Text("\$ ",  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),),
                 hint: Align(
                   alignment: Alignment.centerRight,
-                  child: Text("Amount"),
+                  child: Text("Amount",),
                 ),
                 border: InputBorder.none,
 
@@ -52,7 +66,7 @@ class FractionAmountQuantityFields extends StatelessWidget {
                   ),
                 ),
               ),
-              onChanged: (value){
+              onChanged: (value) {
                 print(value);
               },
             ),
@@ -60,9 +74,7 @@ class FractionAmountQuantityFields extends StatelessWidget {
             TextField(
               controller: quantityController,
               keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 hint: Align(
                   alignment: Alignment.centerRight,
@@ -95,7 +107,7 @@ class FractionAmountQuantityFields extends StatelessWidget {
                   ),
                 ),
               ),
-              onChanged: (value){
+              onChanged: (value) {
                 print(value);
               },
             ),

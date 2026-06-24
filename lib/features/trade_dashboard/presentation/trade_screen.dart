@@ -1,3 +1,4 @@
+import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/trade_dashboard/widgets/fees_section/trade_fees_section.dart";
@@ -16,7 +17,6 @@ class TradeScreen extends StatefulWidget {
 }
 
 class _TradeScreenState extends State<TradeScreen> {
-
   // currency toggled to INR
   bool toggledINR = false;
 
@@ -25,6 +25,9 @@ class _TradeScreenState extends State<TradeScreen> {
 
   // insufficient_US_wallet_balance
   bool inSufficientFunds = false;
+
+  // current INR value
+  double convertedValue = 0;
 
   // text editing controllers
   late TextEditingController amountController;
@@ -47,15 +50,48 @@ class _TradeScreenState extends State<TradeScreen> {
     quantityController.dispose();
   }
 
+  // function to toggle currency and convert entered amount
   void toggleCurrency(bool change) {
+
+    final enteredAmount = double.parse(amountController.text);
+
+    if (change) {
+      convertedValue =
+          enteredAmount * double.parse(AppStringsCommon.currentFxRate);
+    } else {
+      convertedValue =
+          enteredAmount / double.parse(AppStringsCommon.currentFxRate);
+    }
     setState(() {
       toggledINR = change;
+      amountController.text = convertedValue.toStringAsFixed(2).toString();
+      currencyToggleSnackBarMessage();
     });
   }
 
+  // this is to show snack bar message on currency toggle
+  void  currencyToggleSnackBarMessage() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Row(
+
+        children: [
+          Image.asset(AppAssetsCommon.snackBarTick, width: 25, height: 25,),
+          const SizedBox(width: 10),
+          Text("Currency exchange rate: \$1 = ₹${AppStringsCommon.currentFxRate}")
+        ],
+      ),
+      duration: Duration(seconds: 2),)
+    );
+    
+  }
+  
+  
+
+  // check if order can be placed based on balance in US wallet and
   void checkOrderValidity() {
     double enteredAmount = double.parse(amountController.text);
-    if(enteredAmount > double.parse(AppStringsCommon.USWalletBalance)){
+    if (enteredAmount > double.parse(AppStringsCommon.USWalletBalance)) {
       setState(() {
         inSufficientFunds = true;
       });
@@ -63,8 +99,6 @@ class _TradeScreenState extends State<TradeScreen> {
     if (enteredAmount <= double.parse(AppStringsCommon.stockTeslaPrice)) {
       AppNavigators.gotToOrderPlacedScreen(context);
       inSufficientFunds = false;
-    }else{
-      print("insufficient balance");
     }
   }
 
@@ -80,6 +114,7 @@ class _TradeScreenState extends State<TradeScreen> {
           ),
           SecurityDetails(),
           PurchaseSection(
+            toggledINR: toggledINR,
             amountController: amountController,
             quantityController: quantityController,
           ),

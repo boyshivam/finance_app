@@ -8,4 +8,7 @@ class AppStringsCommon {
 
   static const USWalletBalance = "778";
 
+  // current FX rate, $1 = INR 97.21
+  static const currentFxRate = "97.21";
+
 }

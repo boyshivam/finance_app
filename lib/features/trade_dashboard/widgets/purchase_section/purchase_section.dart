@@ -8,10 +8,12 @@ class PurchaseSection extends StatelessWidget {
     super.key,
     required this.amountController,
     required this.quantityController,
+    required this.toggledINR
   });
 
   final TextEditingController amountController;
   final TextEditingController quantityController;
+  final bool toggledINR;
 
 
   @override
@@ -40,7 +42,7 @@ class PurchaseSection extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            FractionAmountQuantityFields(amountController: amountController, quantityController: quantityController),
+            FractionAmountQuantityFields(toggledINR: toggledINR,amountController: amountController, quantityController: quantityController),
           ],
         ),
       ),
