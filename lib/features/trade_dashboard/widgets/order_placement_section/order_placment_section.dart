@@ -42,7 +42,17 @@ class OrderPlacementSection extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           if (inSufficientFunds)
-            Row(children: [Text("insufficient Funds")]),
+            Row(
+              children: [
+                Text(
+                  "insufficient Funds",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColorsCommon.negativeRed,
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 10),
           OrderSlider(checkOrderValidity: checkOrderValidity),
         ],
       ),

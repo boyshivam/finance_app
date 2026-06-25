@@ -23,6 +23,12 @@ class _TradeScreenState extends State<TradeScreen> {
   // price of the tesla stock
   double stockTeslaPrice = 999;
 
+  // quantity as per entered amount
+  double quantityPurchasedByAmount = 0;
+
+  // amount as per entered quantity
+  double amountEnteredByQuantity = 0;
+
   // insufficient_US_wallet_balance
   bool inSufficientFunds = false;
 
@@ -50,9 +56,30 @@ class _TradeScreenState extends State<TradeScreen> {
     quantityController.dispose();
   }
 
+  // units purchased as per amount entered
+  void deriveQuantityByAmount() {
+
+    if(amountController.text.trim().isEmpty){
+      quantityController.clear();
+    }
+    double amount = double.parse(amountController.text);
+    quantityController.text = (amount / stockTeslaPrice).toStringAsFixed(2);
+  }
+
+
+  // derive quantity out of amount
+  void deriveAmountByQuantity() {
+
+    if(quantityController.text.trim().isEmpty){
+      amountController.clear();
+    }
+    double quantity = double.parse(quantityController.text);
+    amountController.text = (quantity * stockTeslaPrice).toStringAsFixed(2);
+
+  }
+
   // function to toggle currency and convert entered amount
   void toggleCurrency(bool change) {
-
     final enteredAmount = double.parse(amountController.text);
 
     if (change) {
@@ -64,29 +91,29 @@ class _TradeScreenState extends State<TradeScreen> {
     }
     setState(() {
       toggledINR = change;
-      amountController.text = convertedValue.toStringAsFixed(2).toString();
+      amountController.text = convertedValue.toStringAsFixed(2);
       currencyToggleSnackBarMessage();
     });
   }
 
   // this is to show snack bar message on currency toggle
-  void  currencyToggleSnackBarMessage() {
+  void currencyToggleSnackBarMessage() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Row(
-
-        children: [
-          Image.asset(AppAssetsCommon.snackBarTick, width: 25, height: 25,),
-          const SizedBox(width: 10),
-          Text("Currency exchange rate: \$1 = ₹${AppStringsCommon.currentFxRate}")
-        ],
+      SnackBar(
+        content: Row(
+          children: [
+            Image.asset(AppAssetsCommon.snackBarTick, width: 25, height: 25),
+            const SizedBox(width: 10),
+            Text(
+              "Currency exchange rate: \$1 = ₹${AppStringsCommon.currentFxRate}",
+            ),
+          ],
+        ),
+        duration: Duration(seconds: 2),
       ),
-      duration: Duration(seconds: 2),)
     );
-    
   }
-  
-  
 
   // check if order can be placed based on balance in US wallet and
   void checkOrderValidity() {
@@ -117,6 +144,8 @@ class _TradeScreenState extends State<TradeScreen> {
             toggledINR: toggledINR,
             amountController: amountController,
             quantityController: quantityController,
+            quantityPurchasedByAmount: deriveQuantityByAmount,
+            amountEnteredByQuantity: deriveAmountByQuantity,
           ),
           TradeFeesSection(),
         ],

@@ -8,10 +8,14 @@ class FractionAmountQuantityFields extends StatelessWidget {
     required this.toggledINR,
     required this.amountController,
     required this.quantityController,
+    required this.quantityPurchasedByAmount,
+    required this.amountEnteredByQuantity
   });
 
   final TextEditingController amountController;
   final TextEditingController quantityController;
+  final void Function() quantityPurchasedByAmount;
+  final void Function() amountEnteredByQuantity;
   final bool toggledINR;
 
   @override
@@ -22,6 +26,9 @@ class FractionAmountQuantityFields extends StatelessWidget {
         Column(
           children: [
             TextField(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.bold
+              ),
               controller: amountController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -66,16 +73,21 @@ class FractionAmountQuantityFields extends StatelessWidget {
                   ),
                 ),
               ),
-              onChanged: (value) {
-                print(value);
+
+              onChanged: (_){
+                quantityPurchasedByAmount();
               },
+
             ),
             const SizedBox(height: 20),
             TextField(
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold),
               controller: quantityController,
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
+                prefix: Text("    "),
                 hint: Align(
                   alignment: Alignment.centerRight,
                   child: Text("Qty"),
@@ -107,8 +119,8 @@ class FractionAmountQuantityFields extends StatelessWidget {
                   ),
                 ),
               ),
-              onChanged: (value) {
-                print(value);
+              onChanged: (_) {
+                amountEnteredByQuantity();
               },
             ),
           ],
