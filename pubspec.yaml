@@ -70,6 +70,8 @@ flutter:
     - assets/images/homedash_UI/etf_category_icons/
     - assets/images/homedash_UI/etf_icons/
     - assets/images/searchDashboard_UI/
+    - assets/images/tradeDashBoard_UI/
+    - assets/images/tradeDashBoard_UI/order_placed_icons/
 
 
 

@@ -8,10 +8,12 @@ class OrderPlacementSection extends StatelessWidget {
     super.key,
     required this.checkOrderValidity,
     required this.inSufficientFunds,
+    required this.checkIfFieldsEmpty
   });
 
   final void Function() checkOrderValidity;
   final bool inSufficientFunds;
+  final bool Function() checkIfFieldsEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,9 @@ class OrderPlacementSection extends StatelessWidget {
               ],
             ),
           const SizedBox(height: 10),
-          OrderSlider(checkOrderValidity: checkOrderValidity),
+          OrderSlider(
+              checkIfFieldsEmpty: checkIfFieldsEmpty,
+              checkOrderValidity: checkOrderValidity),
         ],
       ),
     );

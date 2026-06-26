@@ -35,6 +35,9 @@ class _TradeScreenState extends State<TradeScreen> {
   // current INR value
   double convertedValue = 0;
 
+  // check for empty fields
+  bool isFieldEmpty = false;
+
   // text editing controllers
   late TextEditingController amountController;
   late TextEditingController quantityController;
@@ -56,26 +59,50 @@ class _TradeScreenState extends State<TradeScreen> {
     quantityController.dispose();
   }
 
+
+
+
+  // check if amount or quantity fields are empty
+  bool checkIfFieldsEmpty() {
+    if (amountController.text.trim().isEmpty ||
+        quantityController.text.trim().isEmpty) {
+      setState(() {
+        isFieldEmpty = true;
+      });
+      return true;
+    }
+    setState(() {
+      isFieldEmpty = false;
+    });
+    return false;
+  }
+
   // units purchased as per amount entered
   void deriveQuantityByAmount() {
+    // set the insufficient funds toggle to false whenever typing
+    setState(() {
+      inSufficientFunds = false;
+    });
 
-    if(amountController.text.trim().isEmpty){
+    if (amountController.text.trim().isEmpty) {
       quantityController.clear();
     }
     double amount = double.parse(amountController.text);
     quantityController.text = (amount / stockTeslaPrice).toStringAsFixed(2);
   }
 
-
   // derive quantity out of amount
   void deriveAmountByQuantity() {
+    // set the insufficient funds toggle to false whenever typing
+    setState(() {
+      inSufficientFunds = false;
+    });
 
-    if(quantityController.text.trim().isEmpty){
+    if (quantityController.text.trim().isEmpty) {
       amountController.clear();
     }
     double quantity = double.parse(quantityController.text);
     amountController.text = (quantity * stockTeslaPrice).toStringAsFixed(2);
-
   }
 
   // function to toggle currency and convert entered amount
@@ -146,12 +173,14 @@ class _TradeScreenState extends State<TradeScreen> {
             quantityController: quantityController,
             quantityPurchasedByAmount: deriveQuantityByAmount,
             amountEnteredByQuantity: deriveAmountByQuantity,
+            isFieldEmpty: isFieldEmpty
           ),
           TradeFeesSection(),
         ],
       ),
       bottomNavigationBar: OrderPlacementSection(
         inSufficientFunds: inSufficientFunds,
+        checkIfFieldsEmpty: checkIfFieldsEmpty,
 
         checkOrderValidity: checkOrderValidity,
       ),

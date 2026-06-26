@@ -9,7 +9,8 @@ class FractionAmountQuantityFields extends StatelessWidget {
     required this.amountController,
     required this.quantityController,
     required this.quantityPurchasedByAmount,
-    required this.amountEnteredByQuantity
+    required this.amountEnteredByQuantity,
+    required this.isFieldEmpty
   });
 
   final TextEditingController amountController;
@@ -17,6 +18,7 @@ class FractionAmountQuantityFields extends StatelessWidget {
   final void Function() quantityPurchasedByAmount;
   final void Function() amountEnteredByQuantity;
   final bool toggledINR;
+  final bool isFieldEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,8 @@ class FractionAmountQuantityFields extends StatelessWidget {
       children: [
         Column(
           children: [
+
+            // Amount text field
             TextField(
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontWeight: FontWeight.bold
@@ -52,7 +56,7 @@ class FractionAmountQuantityFields extends StatelessWidget {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide(
-                    color: AppColorsCommon.inactiveTextFieldBorderColor,
+                    color: isFieldEmpty ? AppColorsCommon.negativeRed : AppColorsCommon.inactiveTextFieldBorderColor,
                     width: 2,
                   ),
                 ),
@@ -80,6 +84,9 @@ class FractionAmountQuantityFields extends StatelessWidget {
 
             ),
             const SizedBox(height: 20),
+
+
+            // quantity text field
             TextField(
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.bold),

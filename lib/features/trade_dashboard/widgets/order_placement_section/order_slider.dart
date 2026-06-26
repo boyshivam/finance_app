@@ -2,9 +2,14 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:flutter/material.dart";
 
 class OrderSlider extends StatefulWidget {
-  const OrderSlider({super.key, required this.checkOrderValidity});
+  const OrderSlider({
+    super.key,
+    required this.checkOrderValidity,
+    required this.checkIfFieldsEmpty,
+  });
 
   final void Function() checkOrderValidity;
+  final bool Function() checkIfFieldsEmpty;
 
   @override
   State<OrderSlider> createState() => _OrderSliderState();
@@ -14,6 +19,11 @@ class _OrderSliderState extends State<OrderSlider> {
   double offset = 0;
 
   void placeOrder(double maxWidth) {
+    if(widget.checkIfFieldsEmpty()){
+      setState(() {
+        offset = 0;
+      });
+    }
     if (offset >= maxWidth - 20) {
       widget.checkOrderValidity();
       setState(() {
@@ -21,7 +31,6 @@ class _OrderSliderState extends State<OrderSlider> {
       });
     } else {
       setState(() {
-        print("Insufficient balance");
         offset = 0;
       });
     }
@@ -36,7 +45,6 @@ class _OrderSliderState extends State<OrderSlider> {
           const double thumb = 50;
           final max = constrains.maxWidth - thumb;
           return GestureDetector(
-
             onHorizontalDragEnd: (_) {
               placeOrder(max);
             },

@@ -10,7 +10,8 @@ class PurchaseSection extends StatelessWidget {
     required this.quantityController,
     required this.toggledINR,
     required this.quantityPurchasedByAmount,
-    required this.amountEnteredByQuantity
+    required this.amountEnteredByQuantity,
+    required this.isFieldEmpty
   });
 
   final TextEditingController amountController;
@@ -18,6 +19,7 @@ class PurchaseSection extends StatelessWidget {
   final void Function() quantityPurchasedByAmount;
   final void Function() amountEnteredByQuantity;
   final bool toggledINR;
+  final bool isFieldEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +52,8 @@ class PurchaseSection extends StatelessWidget {
               amountController: amountController,
               quantityController: quantityController,
               quantityPurchasedByAmount: quantityPurchasedByAmount,
-              amountEnteredByQuantity: amountEnteredByQuantity
-
+              amountEnteredByQuantity: amountEnteredByQuantity,
+              isFieldEmpty: isFieldEmpty
             ),
           ],
         ),
