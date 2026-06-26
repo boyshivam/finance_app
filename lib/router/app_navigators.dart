@@ -41,4 +41,8 @@ class AppNavigators {
     context.push(AppRoutes.orderPlacedScreen, extra: extra);
   }
 
+  static void gotoAddFundsToWalletScreen(BuildContext context, {Object? extra}) {
+    context.push(AppRoutes.addFundsToWallet, extra: extra);
+  }
+
 }

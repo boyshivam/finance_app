@@ -1,6 +1,8 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/trade_dashboard/widgets/order_placement_section/add_funds_to_wallet.dart";
 import "package:aprreciate/features/trade_dashboard/widgets/order_placement_section/order_slider.dart";
+import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 
 class OrderPlacementSection extends StatelessWidget {
@@ -8,7 +10,7 @@ class OrderPlacementSection extends StatelessWidget {
     super.key,
     required this.checkOrderValidity,
     required this.inSufficientFunds,
-    required this.checkIfFieldsEmpty
+    required this.checkIfFieldsEmpty,
   });
 
   final void Function() checkOrderValidity;
@@ -55,9 +57,20 @@ class OrderPlacementSection extends StatelessWidget {
               ],
             ),
           const SizedBox(height: 10),
-          OrderSlider(
+          if (inSufficientFunds)
+            SizedBox(
+              height: 50,
+              child: InkWell(
+                  onTap: (){
+                    AppNavigators.gotoAddFundsToWalletScreen(context);
+                  },
+                  child: AddFundsToWalletCta()),
+            )
+          else
+            OrderSlider(
               checkIfFieldsEmpty: checkIfFieldsEmpty,
-              checkOrderValidity: checkOrderValidity),
+              checkOrderValidity: checkOrderValidity,
+            ),
         ],
       ),
     );

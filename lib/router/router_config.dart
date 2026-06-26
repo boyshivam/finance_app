@@ -1,3 +1,4 @@
+import "package:aprreciate/features/LRS_flow/add_funds_to_wallet.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/home_screen/home_screen.dart";
 import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
@@ -39,6 +40,9 @@ final GoRouter appRouter = GoRouter(
     ),
 
     GoRoute(path: AppRoutes.orderPlacedScreen,
-    builder: (context, state) => OrderPlacedScreen())
+    builder: (context, state) => OrderPlacedScreen()),
+
+    GoRoute(path: AppRoutes.addFundsToWallet,
+    builder: (context, state) => AddFundsToWallet())
   ],
 );
