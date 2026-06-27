@@ -1,11 +1,12 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/fees_section/trade_fees_section.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/order_placement_section/order_placment_section.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/purchase_section/purchase_section.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/security_details/security_details.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/trade%20_top_section/trade_top_section.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/fees_section/trade_fees_section.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_placment_section.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/purchase_section.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/security_details/security_details.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_top_section.dart";
+
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 
@@ -58,9 +59,6 @@ class _TradeScreenState extends State<TradeScreen> {
     amountController.dispose();
     quantityController.dispose();
   }
-
-
-
 
   // check if amount or quantity fields are empty
   bool checkIfFieldsEmpty() {
@@ -176,6 +174,7 @@ class _TradeScreenState extends State<TradeScreen> {
             isFieldEmpty: isFieldEmpty
           ),
           TradeFeesSection(),
+        
         ],
       ),
       bottomNavigationBar: OrderPlacementSection(

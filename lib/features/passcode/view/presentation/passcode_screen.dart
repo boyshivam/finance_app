@@ -38,18 +38,6 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
   }
 
 
- // // proceed to next screen
- //  Future<void> proceedToNextScreen() async {
- //    await Future.delayed(Duration(seconds: 1));
- //    if(!context.mounted) return;
- //    ScaffoldMessenger.of(context).clearSnackBars();
- //    ScaffoldMessenger.of(context).showSnackBar(
- //        SnackBar(content: Center(
- //          child: Text("Passcode verified"),
- //        ))
- //    );
- //    AppNavigators.goToHomeDashBoard(context);
- //  }
 
 
   void proceedToNextScreen() {

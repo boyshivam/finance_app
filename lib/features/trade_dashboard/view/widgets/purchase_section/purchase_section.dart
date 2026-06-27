@@ -1,6 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/purchase_section/amount_quantity%20_fields.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/purchase_section/order_type_toggle.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/order_details_screen/order_details_container.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/amount_quantity%20_fields.dart";
 import "package:flutter/material.dart";
 
 class PurchaseSection extends StatelessWidget {
@@ -33,7 +33,7 @@ class PurchaseSection extends StatelessWidget {
         ),
         child: Column(
           children: [
-            OrderTypeToggle(),
+            OrderDetailsContainer(),
             Row(
               children: [
                 Text(

@@ -41,9 +41,12 @@ class BottomSectionLrs extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 3),
-                  Text("YES BANK XX 4321", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold
-                  ),),
+                  Text(
+                    "YES BANK XX 4321",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
               const Spacer(),
@@ -56,15 +59,18 @@ class BottomSectionLrs extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 10),
           Row(
             children: [
               Text("Current Balance"),
-              const SizedBox(width: 10,),
-              Text("₹12,000", style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 22,
-                fontWeight: FontWeight.w600
-              ),)
+              const SizedBox(width: 10),
+              Text(
+                "₹12,000",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 15),
@@ -76,11 +82,15 @@ class BottomSectionLrs extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 color: AppColorsCommon.appreciateThemeColor,
               ),
-              child: Text("Transfer 10,000",style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: AppColorsCommon.appWhite
-              ), textAlign: TextAlign.center,)
+              child: Text(
+                "Transfer 10,000",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColorsCommon.appWhite,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

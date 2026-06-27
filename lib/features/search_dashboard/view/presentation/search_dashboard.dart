@@ -2,19 +2,21 @@ import "package:aprreciate/features/search_dashboard/view/widgets/recently%20vie
 import "package:aprreciate/features/search_dashboard/view/widgets/search_bar.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_dash_top_section.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_tabs.dart";
+import "package:aprreciate/features/search_dashboard/view_model/search_dashboard_provider/search_dashboard_provider.dart";
 import "package:aprreciate/features/search_dashboard/view_model/view_model_searchdashboard.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:riverpod/riverpod.dart";
 import "package:flutter/material.dart";
 
-class SearchDashboardScreen extends StatefulWidget {
+class SearchDashboardScreen extends ConsumerStatefulWidget {
   const SearchDashboardScreen({super.key});
 
   @override
-  State<SearchDashboardScreen> createState() => _SearchDashboardScreenState();
+  ConsumerState<SearchDashboardScreen> createState() => _SearchDashboardScreenState();
 }
 
-class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
+class _SearchDashboardScreenState extends ConsumerState<SearchDashboardScreen> {
 
-  final vm = ViewModelSearchDashboard();
 
   // controllers and focus nodes
   late FocusNode selectTabFocus;
@@ -24,27 +26,22 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
   // get user input
   String get userInput => searchBarTextControl.text;
 
-  // validate user input
+
 
 
   void onSelectTab(int index){
-    setState(() {
-      vm.selectedTabIndex = index;
-    });
+    ref.read(searchDashboardProvider.notifier).changeSelectedTab(index);
   }
 
   void checkSearchResult(){
-    setState(() {
-      vm.showSearchResults(userInput);
-    });
+    ref.read(searchDashboardProvider.notifier).showSearchResults(userInput);
   }
 
 
   void clearEnteredText(){
-    setState(() {
-      searchBarTextControl.clear();
-      vm.clearSearch();
-    });
+    searchBarTextControl.clear();
+    ref.read(searchDashboardProvider.notifier).clearSearch();
+
   }
 
 
@@ -68,6 +65,9 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final vm = ref.watch(searchDashboardProvider);
+
     return Scaffold(
       body: Column(
         children: [
@@ -86,9 +86,10 @@ class _SearchDashboardScreenState extends State<SearchDashboardScreen> {
             clearText: clearEnteredText,
           ),
           RecentlyViewedSection(
-            userSearched: vm.userSearched,
+            searchState: vm.searchState,
+            userInput: vm.userInputState,
             results: vm.searchResults,
-            noSearchResults: vm.noSearchResult,
+
           ),
         ],
       ),

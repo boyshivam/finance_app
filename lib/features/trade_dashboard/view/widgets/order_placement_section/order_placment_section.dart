@@ -1,7 +1,7 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/order_placement_section/add_funds_to_wallet.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/order_placement_section/order_slider.dart";
+import "package:aprreciate/features/LRS_flow/view/presentation/add_funds_to_wallet.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 
@@ -64,7 +64,7 @@ class OrderPlacementSection extends StatelessWidget {
                   onTap: (){
                     AppNavigators.gotoAddFundsToWalletScreen(context);
                   },
-                  child: AddFundsToWalletCta()),
+                  child: AddFundsToWallet()),
             )
           else
             OrderSlider(
