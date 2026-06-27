@@ -9,6 +9,9 @@ class AppAssetsCommon {
   static const likedHeart = "${common_assets_path}liked_heart.png";
 
 
+  // YES bank icon
+
+
   static const generic_back_cta = "${common_assets_path}back_cta_icon.png";
 
   static const liveMarketIcon = "${common_assets_path}live_market_icon.png";
