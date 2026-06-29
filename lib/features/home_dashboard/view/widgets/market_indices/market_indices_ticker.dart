@@ -33,11 +33,11 @@ class _MarketIndicesTickerState extends State<MarketIndicesTicker> {
   Future<void> startScrollingAnimation() async {
     while (mounted) {
       await Future.delayed(const Duration(milliseconds: 14));
-      double scrollOffset = _scrollController.offset + 1;
-      double maxExtent = _scrollController.position.maxScrollExtent;
+      double scrollOffset = _scrollController.offset - 1;
+      double minExtent = _scrollController.position.minScrollExtent;
 
       if (_scrollController.hasClients) {
-        if (scrollOffset >= maxExtent) {
+        if (scrollOffset <= minExtent) {
           scrollOffset = 0;
         }
         _scrollController.jumpTo(scrollOffset);

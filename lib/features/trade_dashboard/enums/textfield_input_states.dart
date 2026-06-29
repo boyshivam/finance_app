@@ -1,0 +1,8 @@
+
+
+enum TextFieldInputStates {
+
+  empty,
+  notEmpty
+
+}

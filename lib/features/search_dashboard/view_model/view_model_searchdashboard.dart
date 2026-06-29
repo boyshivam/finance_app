@@ -26,7 +26,6 @@ class ViewModelSearchDashboard {
 
   // show search result for valid query
   void showSearchResults(String input){
-
     if(input.isEmpty){
       searchResults = [];
       userSearched = false;
@@ -39,12 +38,9 @@ class ViewModelSearchDashboard {
 
   }
 
-
   void clearSearch(){
     searchResults = [];
     noSearchResult = false;
     userSearched = false;
   }
-
-
 }

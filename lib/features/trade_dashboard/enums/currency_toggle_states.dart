@@ -1,0 +1,7 @@
+
+
+enum CurrencyToggleState{
+
+  toggledInr,
+  toggledUsd
+}

@@ -1,0 +1,5 @@
+enum UsWalletFundsState{
+  insufficientFunds,
+  sufficientFunds,
+
+}

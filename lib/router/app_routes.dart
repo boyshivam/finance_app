@@ -22,9 +22,14 @@ class AppRoutes {
   // Trade screen
   static const String tradeScreen = "/tradeScreen";
 
+  // stock details screen
+  static const String stockDetailsScreen = "/stockDetailsScreen";
+
   // Trade order placed screen
   static const String orderPlacedScreen = "/orderPlacedScreen";
 
   // LRS , add funds to wallet
   static const String addFundsToWallet = "/addFundsToWallet";
+
+
 }

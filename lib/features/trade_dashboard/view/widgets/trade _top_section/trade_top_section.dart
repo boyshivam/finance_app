@@ -1,5 +1,5 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
-import "package:aprreciate/features/trade_dashboard/widgets/trade%20_top_section/trade_currency_toggle.dart";
+import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_currency_toggle.dart";
 import "package:flutter/material.dart";
 
 class TradeTopSection extends StatelessWidget {

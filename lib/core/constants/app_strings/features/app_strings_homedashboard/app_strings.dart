@@ -46,7 +46,7 @@ class AppStrings {
   static const String continue_LRS = "Resume transferring ₹99,999 to US Wallet";
   static const String continue_LRS_CTA = "Transfer now >";
 
-  static const String continue_TRADE = "Resume buying APPL";
+  static const String continue_TRADE = "Resume buying TSLA";
   static const String continue_TRADE_CTA = "Buy now >";
 
   static const String continue_where_you_left_title =  "Continue Where You Left";

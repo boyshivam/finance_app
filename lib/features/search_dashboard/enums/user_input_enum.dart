@@ -1,0 +1,5 @@
+
+enum UserInputState {
+  enteredInput,
+  notEnteredInput
+}

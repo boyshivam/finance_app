@@ -9,7 +9,7 @@ class OrderSlider extends StatefulWidget {
   });
 
   final void Function() checkOrderValidity;
-  final bool Function() checkIfFieldsEmpty;
+  final void Function() checkIfFieldsEmpty;
 
   @override
   State<OrderSlider> createState() => _OrderSliderState();
@@ -19,11 +19,7 @@ class _OrderSliderState extends State<OrderSlider> {
   double offset = 0;
 
   void placeOrder(double maxWidth) {
-    if(widget.checkIfFieldsEmpty()){
-      setState(() {
-        offset = 0;
-      });
-    }
+    widget.checkIfFieldsEmpty;
     if (offset >= maxWidth - 20) {
       widget.checkOrderValidity();
       setState(() {

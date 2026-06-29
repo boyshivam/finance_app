@@ -1,5 +1,7 @@
+import "package:aprreciate/data/home_dash_data/continue_where_left_data.dart";
 import "package:aprreciate/data/home_dash_data/news_data/news_data.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/banners/banner_viewer.dart";
+import "package:aprreciate/features/home_dashboard/view/widgets/continue_where_you_left/continue_where_you_left_viewer.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/greeting/greetUser_section.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/market_indices/market_indices_ticker.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/news/new_cards_carousel.dart";
@@ -29,6 +31,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
             BannerViewer(banners: bannerData),
             TradingSignalsCarousel(),
             OurOfferings(),
+            ContinueWhereYouLeftViewer(items: continue_where_left_data),
             EtfSection(),
             NewsCarousel(news: newsData),
             const SizedBox(height: 100),
