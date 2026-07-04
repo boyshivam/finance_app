@@ -8,7 +8,6 @@ import "package:aprreciate/features/trade_dashboard/view/widgets/security_detail
 import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_top_section.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 
 class TradeScreen extends ConsumerStatefulWidget {
@@ -19,9 +18,16 @@ class TradeScreen extends ConsumerStatefulWidget {
 }
 
 class _TradeScreenState extends ConsumerState<TradeScreen> {
+
+
+
   // text editing controllers
   late TextEditingController amountController;
   late TextEditingController quantityController;
+
+  late FocusNode amountNode;
+  late FocusNode quantityNode;
+
 
   // initialise controller
   @override
@@ -30,6 +36,9 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
     super.initState();
     amountController = TextEditingController();
     quantityController = TextEditingController();
+
+    amountNode = FocusNode();
+    quantityNode = FocusNode();
   }
 
   // dispose controllers
@@ -38,6 +47,8 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
     super.dispose();
     amountController.dispose();
     quantityController.dispose();
+    amountNode.dispose();
+    quantityNode.dispose();
   }
 
   // fetch the current text in amount controller
@@ -46,27 +57,8 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
   // fetch the current text in quantity controller
   get quantityControllerText => quantityController.text;
 
-  // check empty field
-  void checkEmptyField() {
-    ref
-        .read(tradeScreenProvider.notifier)
-        .checkIfFieldsEmpty(amountControllerText, quantityControllerText);
-  }
 
-  // reflect quantity for the entered amount
-  void quantByAmount() {
-    ref
-        .read(tradeScreenProvider.notifier)
-        .deriveQuantityByAmount(amountControllerText);
-    quantityController.text = ref.watch(tradeScreenProvider);
-  }
 
-  // reflect amount for entered quant
-  void amountByQuant() {
-    amountController.text = ref
-        .read(tradeScreenProvider.notifier)
-        .deriveAmountByQuantity2(quantityControllerText);
-  }
 
   // this is to show snack bar message on currency toggle
   void currencyToggleSnackBarMessage() {
@@ -89,33 +81,41 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final vm = ref.watch(tradeScreenProvider);
+    ref.listen(tradeScreenProvider, (previous, next) {
+      if (!amountNode.hasFocus  &&  amountController.text != next.amountText) {
+        amountController.text = next.amountText;
+
+        amountController.selection = TextSelection.fromPosition(
+          TextPosition(offset: amountController.text.length),
+        );
+      }
+
+      if (!quantityNode.hasFocus && quantityController.text != next.quantityText) {
+        quantityController.text = next.quantityText;
+
+        quantityController.selection = TextSelection.fromPosition(
+          TextPosition(offset: quantityController.text.length)
+        );
+      }
+
+    });
 
     return Scaffold(
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: Column(
         children: [
-          TradeTopSection(
-            toggleCurrency: toggleCurrency,
-            toggledUSD: toggledINR,
-          ),
+          TradeTopSection(),
           SecurityDetails(),
           PurchaseSection(
-            toggledINR: toggledINR,
             amountController: amountController,
             quantityController: quantityController,
-            quantityPurchasedByAmount: deriveQuantityByAmount,
-            amountEnteredByQuantity: deriveAmountByQuantity,
-            isFieldEmpty: isFieldEmpty,
+            amountNode: amountNode,
+            quantityNode: quantityNode,
           ),
           TradeFeesSection(),
         ],
       ),
-      bottomNavigationBar: OrderPlacementSection(
-        inSufficientFunds: inSufficientFunds,
-        checkIfFieldsEmpty: checkIfFieldsEmpty,
-        checkOrderValidity: checkOrderValidity,
-      ),
+      bottomNavigationBar: OrderPlacementSection(),
     );
   }
 }

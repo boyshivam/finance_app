@@ -3,14 +3,7 @@ import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_se
 import "package:flutter/material.dart";
 
 class TradeTopSection extends StatelessWidget {
-  const TradeTopSection({
-    super.key,
-    required this.toggleCurrency,
-    required this.toggledUSD,
-  });
-
-  final void Function(bool toggled) toggleCurrency;
-  final bool toggledUSD;
+  const TradeTopSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +20,12 @@ class TradeTopSection extends StatelessWidget {
                 width: 30,
                 height: 20,
               ),
-              const SizedBox(width: 5,),
+              const SizedBox(width: 5),
               Text("Live Market"),
             ],
           ),
           const Spacer(),
-          CurrencyToggle(currencyToggled: toggleCurrency, toggled: toggledUSD),
+          CurrencyToggle(),
         ],
       ),
     );

@@ -1,27 +1,26 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class OrderSlider extends StatefulWidget {
+class OrderSlider extends ConsumerStatefulWidget {
   const OrderSlider({
     super.key,
-    required this.checkOrderValidity,
-    required this.checkIfFieldsEmpty,
+
   });
 
-  final void Function() checkOrderValidity;
-  final void Function() checkIfFieldsEmpty;
 
   @override
-  State<OrderSlider> createState() => _OrderSliderState();
+  ConsumerState<OrderSlider> createState() => _OrderSliderState();
 }
 
-class _OrderSliderState extends State<OrderSlider> {
+class _OrderSliderState extends ConsumerState<OrderSlider> {
+
   double offset = 0;
 
   void placeOrder(double maxWidth) {
-    widget.checkIfFieldsEmpty;
     if (offset >= maxWidth - 20) {
-      widget.checkOrderValidity();
       setState(() {
         offset = 0;
       });

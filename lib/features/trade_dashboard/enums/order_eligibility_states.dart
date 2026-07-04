@@ -1,0 +1,1 @@
+enum OrderEligibilityStates { valid, invalid }

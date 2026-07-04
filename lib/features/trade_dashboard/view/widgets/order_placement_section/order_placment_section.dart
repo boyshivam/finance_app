@@ -1,24 +1,22 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/LRS_flow/view/presentation/add_funds_to_wallet.dart";
+import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class OrderPlacementSection extends StatelessWidget {
+class OrderPlacementSection extends ConsumerWidget {
   const OrderPlacementSection({
     super.key,
-    required this.checkOrderValidity,
-    required this.inSufficientFunds,
-    required this.checkIfFieldsEmpty,
   });
 
-  final void Function() checkOrderValidity;
-  final bool inSufficientFunds;
-  final void Function() checkIfFieldsEmpty;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final vmState = ref.watch(tradeScreenProvider);
+
     return Container(
       padding: EdgeInsets.fromLTRB(25, 20, 25, 40),
       decoration: BoxDecoration(
@@ -37,7 +35,7 @@ class OrderPlacementSection extends StatelessWidget {
               const Spacer(),
               Row(
                 children: [
-                  Text("\$ ${AppStringsCommon.USWalletBalance}"),
+                  Text("\$ ${AppStringsCommon.usWalletBalance}"),
                   const SizedBox(width: 5),
                   Icon(Icons.arrow_drop_down_circle_outlined),
                 ],
@@ -45,7 +43,7 @@ class OrderPlacementSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          if (inSufficientFunds)
+          if (vmState.usWalletFundsState == UsWalletFundsState.insufficientFunds)
             Row(
               children: [
                 Text(
@@ -57,7 +55,7 @@ class OrderPlacementSection extends StatelessWidget {
               ],
             ),
           const SizedBox(height: 10),
-          if (inSufficientFunds)
+          if (vmState.usWalletFundsState == UsWalletFundsState.insufficientFunds)
             SizedBox(
               height: 50,
               child: InkWell(
@@ -83,8 +81,6 @@ class OrderPlacementSection extends StatelessWidget {
             )
           else
             OrderSlider(
-              checkIfFieldsEmpty: checkIfFieldsEmpty,
-              checkOrderValidity: checkOrderValidity,
             ),
         ],
       ),

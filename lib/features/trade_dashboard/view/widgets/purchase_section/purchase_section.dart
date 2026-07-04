@@ -8,18 +8,16 @@ class PurchaseSection extends StatelessWidget {
     super.key,
     required this.amountController,
     required this.quantityController,
-    required this.toggledINR,
-    required this.quantityPurchasedByAmount,
-    required this.amountEnteredByQuantity,
-    required this.isFieldEmpty
+    required this.amountNode,
+    required this.quantityNode,
+
   });
 
   final TextEditingController amountController;
   final TextEditingController quantityController;
-  final void Function() quantityPurchasedByAmount;
-  final void Function() amountEnteredByQuantity;
-  final bool toggledINR;
-  final bool isFieldEmpty;
+  final FocusNode amountNode;
+  final FocusNode quantityNode;
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +45,10 @@ class PurchaseSection extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             FractionAmountQuantityFields(
-              toggledINR: toggledINR,
               amountController: amountController,
               quantityController: quantityController,
-              quantityPurchasedByAmount: quantityPurchasedByAmount,
-              amountEnteredByQuantity: amountEnteredByQuantity,
-              isFieldEmpty: isFieldEmpty
+              amountNode: amountNode,
+              quantityNode: quantityNode
             ),
           ],
         ),
