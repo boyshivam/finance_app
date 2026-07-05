@@ -1,11 +1,13 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_provider.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class EnterAmountContainer extends StatelessWidget {
+class EnterAmountContainer extends ConsumerWidget {
   const EnterAmountContainer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
       child: Container(
@@ -18,21 +20,32 @@ class EnterAmountContainer extends StatelessWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Enter transfer amount", style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontSize: 24,
-                color: AppColorsCommon.textGrey
-              )),
+              child: Text(
+                "Enter transfer amount",
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontSize: 24,
+                  color: AppColorsCommon.textGrey,
+                ),
+              ),
             ),
             const SizedBox(height: 20),
+
+            // Amount text field
             TextField(
+              maxLength: 10,
               decoration: InputDecoration(
-                prefix:Text(" \$   ", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                counterText: "",
+                prefix: Text(
+                  " \$   ",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold
-                ),) ,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
 
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: 20, horizontal: 0
+                  vertical: 20,
+                  horizontal: 0,
                 ),
                 border: InputBorder.none,
 
@@ -52,6 +65,10 @@ class EnterAmountContainer extends StatelessWidget {
                   ),
                 ),
               ),
+              onChanged: (value) {
+                final notifier = ref.read(lrsProvider.notifier);
+                notifier.deriveAmountEntered(value);
+              },
             ),
             const SizedBox(height: 20),
             Row(

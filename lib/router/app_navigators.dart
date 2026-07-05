@@ -46,7 +46,7 @@ class AppNavigators {
   }
 
   static void gotoAddFundsToWalletScreen(BuildContext context, {Object? extra}) {
-    context.push(AppRoutes.addFundsToWallet, extra: extra);
+    context.push(AppRoutes.lrsScreen, extra: extra);
   }
 
 }

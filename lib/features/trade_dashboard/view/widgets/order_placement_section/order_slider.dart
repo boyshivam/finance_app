@@ -21,6 +21,14 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
 
   void placeOrder(double maxWidth) {
     if (offset >= maxWidth - 20) {
+      ref.read(tradeScreenProvider.notifier).placeOrder();
+
+      final valid = ref.read(tradeScreenProvider.notifier).validatePurchase();
+
+      if(valid) {
+        AppNavigators.gotToOrderPlacedScreen(context);
+      }
+
       setState(() {
         offset = 0;
       });

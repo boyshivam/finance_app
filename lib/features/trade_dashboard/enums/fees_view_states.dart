@@ -1,0 +1,5 @@
+
+enum FeesViewStates {
+  partialView,
+  fullView
+}

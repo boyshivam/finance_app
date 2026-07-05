@@ -1,4 +1,5 @@
 import 'package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart';
+import 'package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart';
@@ -18,8 +19,14 @@ class TradeScreenState {
     required this.amountText,
     required this.quantityText,
     required this.orderValueText,
+    required this.transactionFee,
+    required this.platformFee,
+    required this.amountPayable,
     required this.usWalletBalance,
     required this.orderEligibility,
+    required this.feesViewStates,
+    required this.totalFees,
+    required this.stockPrice,
   });
 
   final UsWalletFundsState usWalletFundsState;
@@ -35,7 +42,13 @@ class TradeScreenState {
   final String amountText;
   final String quantityText;
   final String orderValueText;
+  final String amountPayable;
+  final String transactionFee;
+  final String platformFee;
   final OrderEligibilityStates orderEligibility;
+  final FeesViewStates feesViewStates;
+  final String totalFees;
+  final double stockPrice;
 
   TradeScreenState copyWith({
     UsWalletFundsState? usWalletFundsState,
@@ -52,8 +65,14 @@ class TradeScreenState {
     String? amountText,
     String? quantityText,
     String? orderValueText,
+    String? amountPayable,
+    String? transactionFee,
+    String? platformFee,
 
     OrderEligibilityStates? orderEligibility,
+    FeesViewStates? feesViewStates,
+    String? totalFees,
+    double? stockPrice,
   }) {
     return TradeScreenState(
       usWalletFundsState: usWalletFundsState ?? this.usWalletFundsState,
@@ -72,9 +91,19 @@ class TradeScreenState {
       amountByQuantity: amountByQuantity ?? this.amountByQuantity,
       convertedValue: convertedValue ?? this.convertedValue,
       usWalletBalance: usWalletBalance ?? this.usWalletBalance,
+
+      // amount texts
       amountText: amountText ?? this.amountText,
       quantityText: quantityText ?? this.quantityText,
       orderValueText: orderValueText ?? this.orderValueText,
+      amountPayable: amountPayable ?? this.amountPayable,
+      transactionFee: transactionFee ?? this.transactionFee,
+      platformFee: platformFee ?? this.platformFee,
+
+      // fees in full view
+      feesViewStates: feesViewStates ?? this.feesViewStates,
+      totalFees: totalFees ?? this.totalFees,
+      stockPrice: stockPrice ?? this.stockPrice,
     );
   }
 }

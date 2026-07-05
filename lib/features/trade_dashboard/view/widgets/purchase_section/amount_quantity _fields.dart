@@ -41,6 +41,7 @@ class FractionAmountQuantityFields extends ConsumerWidget {
                   controller: amountController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                   inputFormatters: [
+                    LengthLimitingTextInputFormatter(10),
                     FilteringTextInputFormatter.allow(
                       RegExp(r'^\d*\.?\d{0,2}$'),
                     ),
@@ -94,7 +95,8 @@ class FractionAmountQuantityFields extends ConsumerWidget {
                     final notifier = ref.read(tradeScreenProvider.notifier);
                     notifier.deriveAmount(value);
                     notifier.quantityByAmount();
-                    notifier.checkOrderValidity();
+                    notifier.checkSufficientUsWalletBalance();
+                    notifier.calculateFees();
                   },
                 ),
                 const SizedBox(height: 5),

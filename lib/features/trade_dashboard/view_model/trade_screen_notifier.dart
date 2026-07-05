@@ -1,11 +1,13 @@
+import "dart:math";
+
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
+import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_ screen_state.dart";
-import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
@@ -26,9 +28,19 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       amountText: "",
       quantityText: "",
       orderValueText: "",
-      orderEligibility: OrderEligibilityStates.invalid
+      amountPayable: "",
+      transactionFee: "",
+      platformFee: "",
+      orderEligibility: OrderEligibilityStates.invalid,
+      feesViewStates: FeesViewStates.partialView,
+      totalFees: "",
+      stockPrice: AppStringsCommon.stockTeslaPrice
     );
   }
+
+  get enteredAmount => double.tryParse(state.amountText) ?? 0;
+
+  get enteredQuantity => double.tryParse(state.quantityText) ?? 0;
 
   // this alters the state of currency toggle
   void toggleCurrency() {
@@ -49,6 +61,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
+
+
   // derive quantity from quantity controller
   void deriveQuantity(String value) {
     state = state.copyWith(quantityText: value);
@@ -61,34 +75,32 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // shown quantity secured for the entered amount in the quantity textfield -
   void quantityByAmount() {
-    // entered amount
-    final enteredAmount = double.tryParse(state.amountText) ?? 0;
-
-    // current price of the stock
-    final stockPrice = double.tryParse(AppStringsCommon.stockTeslaPrice) ?? 0;
-
     // quantity to be display in quantity field
-    final securedQuantity = (enteredAmount / stockPrice).toStringAsFixed(2);
+    final securedQuantity = (enteredAmount / state.stockPrice).toStringAsFixed(2);
 
     state = state.copyWith(quantityText: securedQuantity);
   }
 
   // show amount secured by entered quantity in the quantity textfield
   void amountByQuantity() {
-    // this is hte entered quantity
-    final enteredQuantity = double.tryParse(state.quantityText) ?? 0;
-
-    // current price of stock
-    final stockPrice = double.tryParse(AppStringsCommon.stockTeslaPrice) ?? 0;
 
     // this is amount to be displayed in the amount field
-    final securedAmount = (enteredQuantity * stockPrice).toStringAsFixed(2);
-
+    final securedAmount = (enteredQuantity * state.stockPrice).toStringAsFixed(2);
     state = state.copyWith(amountText: securedAmount);
   }
 
-  // check if fields empty
-  void checkOrderValidity() {
+  // check if sufficient us wallet balance
+  void checkSufficientUsWalletBalance() {
+    final enteredAmount = double.tryParse(state.amountText) ?? 0;
+
+    state = state.copyWith(
+      usWalletFundsState: (enteredAmount <= state.usWalletBalance)
+          ? UsWalletFundsState.sufficientFunds
+          : UsWalletFundsState.insufficientFunds,
+    );
+  }
+
+  void placeOrder() {
     final enteredAmount = state.amountText;
 
     if (enteredAmount.trim().isEmpty) {
@@ -103,38 +115,52 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.zero,
       );
       return;
-    } else if (double.tryParse(enteredAmount)! > state.usWalletBalance) {
-      state = state.copyWith(
-        amountTextFieldState: TextFieldsStates.error,
-        amountTextFieldErrorMessageState: TextFieldErrorMessageState.error,
-        usWalletFundsState: UsWalletFundsState.insufficientFunds,
-        orderEligibility: OrderEligibilityStates.invalid
-      );
-      return ;
-    }
-    else if (double.tryParse(enteredAmount)! <= state.usWalletBalance){
+    } else if (double.tryParse(enteredAmount)! <= state.usWalletBalance) {
       state = state.copyWith(
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.active,
         amountTextFieldState: TextFieldsStates.active,
         usWalletFundsState: UsWalletFundsState.sufficientFunds,
-        orderEligibility: OrderEligibilityStates.valid
+        orderEligibility: OrderEligibilityStates.valid,
       );
     }
   }
 
-  // check if sufficient balance
-
-
-  // validate purchase
-  void placeOrder() {
-    final enteredAmount = double.tryParse(state.amountText) ?? 0;
-
-    final sufficientFunds = enteredAmount <= state.usWalletBalance;
+  // fees view dropdown
+  void feesViewDropdown() {
+    final currentState = state.feesViewStates;
 
     state = state.copyWith(
-      usWalletFundsState: sufficientFunds
-          ? UsWalletFundsState.sufficientFunds
-          : UsWalletFundsState.insufficientFunds,
+      feesViewStates: currentState == FeesViewStates.partialView
+          ? FeesViewStates.fullView
+          : FeesViewStates.partialView,
     );
   }
+
+  bool validatePurchase(){
+    return state.usWalletBalance >= enteredAmount && enteredAmount != 0;
+  }
+
+
+
+  // fees for the entered amount
+  void calculateFees(){
+    final wholeUnits = enteredAmount ~/ state.stockPrice;
+    final platformFee = wholeUnits*0.01;
+    final transactionFee = max(0.05, 0.05*enteredAmount);
+
+    state = state.copyWith(
+      totalFees: (platformFee + transactionFee).toString(),
+      orderValueText: enteredAmount.toString(),
+      amountPayable: (enteredAmount - transactionFee).toString()
+    );
+  }
+
+  void resetOrderValidity(){
+    state = state.copyWith(
+      orderEligibility: OrderEligibilityStates.invalid
+    );
+  }
+
+
+
 }

@@ -39,24 +39,21 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
 
     amountNode = FocusNode();
     quantityNode = FocusNode();
+
+
+
   }
 
   // dispose controllers
   @override
   void dispose() {
+
     super.dispose();
     amountController.dispose();
     quantityController.dispose();
     amountNode.dispose();
     quantityNode.dispose();
   }
-
-  // fetch the current text in amount controller
-  get amountControllerText => amountController.text;
-
-  // fetch the current text in quantity controller
-  get quantityControllerText => quantityController.text;
-
 
 
 
@@ -78,6 +75,7 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

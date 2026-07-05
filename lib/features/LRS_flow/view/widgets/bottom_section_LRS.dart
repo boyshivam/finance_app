@@ -1,13 +1,18 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/continue_where_you_left/assets_continue_where_left.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_provider.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class BottomSectionLrs extends StatelessWidget {
+class BottomSectionLrs extends ConsumerWidget {
   const BottomSectionLrs({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final vm = ref.watch(lrsProvider);
+
     return Container(
       height: 250,
       padding: EdgeInsets.fromLTRB(25, 35, 25, 25),
@@ -65,7 +70,7 @@ class BottomSectionLrs extends StatelessWidget {
               Text("Current Balance"),
               const SizedBox(width: 10),
               Text(
-                "₹12,000",
+                "₹ ${vm.currentYesBalance}",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -83,7 +88,7 @@ class BottomSectionLrs extends StatelessWidget {
                 color: AppColorsCommon.appreciateThemeColor,
               ),
               child: Text(
-                "Transfer 10,000",
+                "Transfer \$${vm.amountText}",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.appWhite,
                 ),
