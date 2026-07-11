@@ -1,3 +1,4 @@
+import "package:aprreciate/features/LRS_flow/view/presentation/confirm_remittance_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/lrs_screen.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/home_screen/home_screen.dart";
@@ -59,5 +60,9 @@ final GoRouter appRouter = GoRouter(
       path: AppRoutes.lrsScreen,
       builder: (context, state) => LrsScreen(),
     ),
+
+    GoRoute(path: AppRoutes.confirmRemittanceScreen,
+    builder: (context, state) => ConfirmRemittanceScreen()),
+
   ],
 );

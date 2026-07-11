@@ -60,7 +60,7 @@ class OrderPlacementSection extends ConsumerWidget {
               height: 50,
               child: InkWell(
                   onTap: (){
-                    AppNavigators.gotoAddFundsToWalletScreen(context);
+                    AppNavigators.gotoLrsScreen(context);
                   },
                   child:Container(
                     padding: EdgeInsets.symmetric(

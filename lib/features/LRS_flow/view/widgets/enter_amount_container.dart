@@ -1,6 +1,8 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_provider.dart";
+import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart";
 import "package:flutter/material.dart";
+import "package:flutter/services.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class EnterAmountContainer extends ConsumerWidget {
@@ -8,6 +10,8 @@ class EnterAmountContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final vm = ref.watch(lrsProvider);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
       child: Container(
@@ -32,6 +36,9 @@ class EnterAmountContainer extends ConsumerWidget {
 
             // Amount text field
             TextField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              style: const TextStyle(fontSize: 22),
               maxLength: 10,
               decoration: InputDecoration(
                 counterText: "",
@@ -68,8 +75,14 @@ class EnterAmountContainer extends ConsumerWidget {
               onChanged: (value) {
                 final notifier = ref.read(lrsProvider.notifier);
                 notifier.deriveAmountEntered(value);
+                notifier.lrsValidity();
               },
             ),
+            const SizedBox(height: 5),
+            if (vm.orderValidityStates == OrderValidityStates.empty)
+              Text("Amount field cannot be empty"),
+            if (vm.orderValidityStates == OrderValidityStates.inSufficient)
+              Text("Insufficient funds in bank account"),
             const SizedBox(height: 20),
             Row(
               children: [

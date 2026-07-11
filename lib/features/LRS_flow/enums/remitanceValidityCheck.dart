@@ -1,0 +1,8 @@
+
+
+enum RemittanceValidityCheck {
+
+  checked,
+  unchecked
+
+}

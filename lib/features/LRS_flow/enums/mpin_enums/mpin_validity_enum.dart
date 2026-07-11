@@ -1,0 +1,2 @@
+
+enum MpinValidity { valid, invalid }

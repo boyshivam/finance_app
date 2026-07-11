@@ -1,3 +1,5 @@
+import "package:aprreciate/features/profile_dashboard/view/widgets/top_section.dart";
+import "package:aprreciate/features/profile_dashboard/view/widgets/us_wallet_&_upi.dart";
 import "package:flutter/material.dart";
 
 class ProfileScreen extends StatelessWidget {
@@ -5,10 +7,12 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    return Scaffold(
+      body: Column(
         children: [
-          Text("Text")
+          TopSection(),
+          UsWalletUpi()
+
         ],
       ),
     );

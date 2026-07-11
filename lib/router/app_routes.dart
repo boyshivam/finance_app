@@ -31,5 +31,14 @@ class AppRoutes {
   // LRS , add funds to wallet
   static const String lrsScreen = "/lrsScreen";
 
+  // Yes bank confirm remittance screen
+  static const String confirmRemittanceScreen = "/confirmRemittanceScreen";
+
+  // External transfer screen
+  static const String externalTransferScreen = "/externalTransferScreen";
+
+  // Transaction submitted
+  static const String transactionSubmittedScreen = "/transactionSubmittedScreen";
+
 
 }

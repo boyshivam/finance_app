@@ -45,8 +45,15 @@ class AppNavigators {
     context.push(AppRoutes.orderPlacedScreen, extra: extra);
   }
 
-  static void gotoAddFundsToWalletScreen(BuildContext context, {Object? extra}) {
+  static void gotoLrsScreen(BuildContext context, {Object? extra}) {
     context.push(AppRoutes.lrsScreen, extra: extra);
   }
 
+  static void goToConfirmRemittanceScreen(BuildContext context, {Object? extra}){
+    context.push(AppRoutes.confirmRemittanceScreen, extra: extra);
+  }
+
+  static void goToTransactionSubmittedScreen(BuildContext context, {Object? extra}) {
+    context.push(AppRoutes.transactionSubmittedScreen, extra: extra);
+  }
 }

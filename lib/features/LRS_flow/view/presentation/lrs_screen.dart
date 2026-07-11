@@ -2,7 +2,7 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:aprreciate/features/LRS_flow/view/widgets/bottom_section_LRS.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/enter_amount_container.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/top_section_LRS.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_provider.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 

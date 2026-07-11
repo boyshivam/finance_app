@@ -1,7 +1,8 @@
-import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/continue_where_you_left/assets_continue_where_left.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_provider.dart";
+import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart";
+import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -79,20 +80,28 @@ class BottomSectionLrs extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 15),
-          SizedBox(
-            width: double.infinity,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: AppColorsCommon.appreciateThemeColor,
-              ),
-              child: Text(
-                "Transfer \$${vm.amountText}",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: AppColorsCommon.appWhite,
+          InkWell(
+            onTap: (){
+              if(vm.orderValidityStates == OrderValidityStates.sufficient){
+                AppNavigators.goToConfirmRemittanceScreen(context);
+              }
+            },
+            child: SizedBox(
+              width: double.infinity,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColorsCommon.appreciateThemeColor,
                 ),
-                textAlign: TextAlign.center,
+                child: Text( vm.orderValidityStates == OrderValidityStates.inSufficient ?
+                "Transfer funds externally" :
+                  "Transfer \$${vm.amountText}"  ,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColorsCommon.appWhite,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

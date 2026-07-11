@@ -28,7 +28,6 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
       if(valid) {
         AppNavigators.gotToOrderPlacedScreen(context);
       }
-
       setState(() {
         offset = 0;
       });
