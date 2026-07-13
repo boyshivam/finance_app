@@ -123,7 +123,7 @@ class FractionAmountQuantityFields extends ConsumerWidget {
                     ),
                   ],
                   decoration: InputDecoration(
-                    prefix: Text("    "),
+                    prefix: Text("Qty  "),
                     hint: Align(
                       alignment: Alignment.centerRight,
                       child: Text("Qty"),

@@ -2,6 +2,7 @@ import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/features/stock_details_screen/view/widgets/stock_details_currencytoggle.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class StockDetailsTopSection extends StatelessWidget {
   const StockDetailsTopSection({
@@ -26,7 +27,7 @@ class StockDetailsTopSection extends StatelessWidget {
         children: [
           InkWell(
             onTap: (){
-              AppNavigators.goToHomeDashBoard(context);
+              context.pop();
             },
             child: Image.asset(
               AppAssetsCommon.generic_back_cta,

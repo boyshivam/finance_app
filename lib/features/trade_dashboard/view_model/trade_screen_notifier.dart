@@ -77,11 +77,10 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   void quantityByAmount() {
     // quantity to be display in quantity field
     final securedQuantity = (enteredAmount / state.stockPrice).toStringAsFixed(2);
-
     state = state.copyWith(quantityText: securedQuantity);
   }
 
-  // show amount secured by entered quantity in the quantity textfield
+  // show amount secured by entered quantity in the quantity text field
   void amountByQuantity() {
 
     // this is amount to be displayed in the amount field
@@ -140,18 +139,19 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     return state.usWalletBalance >= enteredAmount && enteredAmount != 0;
   }
 
-
-
+  
   // fees for the entered amount
   void calculateFees(){
     final wholeUnits = enteredAmount ~/ state.stockPrice;
-    final platformFee = wholeUnits*0.01;
+    double platformFee = (wholeUnits*0.01);
     final transactionFee = max(0.05, 0.05*enteredAmount);
 
     state = state.copyWith(
-      totalFees: (platformFee + transactionFee).toString(),
+      totalFees: (platformFee + transactionFee).toStringAsFixed(2),
       orderValueText: enteredAmount.toString(),
-      amountPayable: (enteredAmount - transactionFee).toString()
+      amountPayable: (enteredAmount - transactionFee).toString(),
+      transactionFee: transactionFee.toStringAsFixed(2),
+      platformFee: platformFee.toStringAsFixed(2)
     );
   }
 
@@ -160,7 +160,5 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       orderEligibility: OrderEligibilityStates.invalid
     );
   }
-
-
-
+  
 }

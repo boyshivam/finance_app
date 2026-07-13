@@ -2,6 +2,7 @@ import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_currency_toggle.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class TradeTopSection extends StatelessWidget {
   const TradeTopSection({super.key});
@@ -13,8 +14,15 @@ class TradeTopSection extends StatelessWidget {
       child: Row(
         children: [
           InkWell(
-              onTap: (){AppNavigators.goToStockDetailsScreen(context);},
-              child: Image.asset(AppAssetsCommon.generic_back_cta, height: 30, width: 30)),
+            onTap: () {
+              context.pop();
+            },
+            child: Image.asset(
+              AppAssetsCommon.generic_back_cta,
+              height: 30,
+              width: 30,
+            ),
+          ),
           const Spacer(),
           Row(
             children: [
