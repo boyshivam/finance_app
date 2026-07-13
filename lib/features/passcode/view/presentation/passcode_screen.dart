@@ -8,9 +8,11 @@ import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart"
 import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
 import "package:aprreciate/features/passcode/view_model/passcode_provider/passcode_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:aprreciate/core/themes/app_theme/app_theme.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 import "../widgets/passcode_numpad.dart";
 
 class PasscodeScreen extends ConsumerStatefulWidget {
@@ -58,7 +60,7 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
               ],
             ))
     );
-    AppNavigators.goToHomeScreen(context);
+    context.go(AppRoutes.homeDashboardScreen);
   }
 
 

@@ -4,6 +4,7 @@ import 'package:aprreciate/core/constants/app_assets/app_assets_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
 import 'package:aprreciate/router/app_navigators.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TopSectionLrs extends StatelessWidget {
   const TopSectionLrs({super.key});
@@ -17,7 +18,7 @@ class TopSectionLrs extends StatelessWidget {
         children: [
           InkWell(
             onTap: (){
-              AppNavigators.goToTradeScreen(context);
+              context.pop();
             },
             child: Image.asset(
               AppAssetsCommon.generic_back_cta,

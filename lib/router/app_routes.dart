@@ -16,29 +16,36 @@ class AppRoutes {
   // Search dashboard
   static const String searchDashboardScreen = "/searchDashboardScreen";
 
-  // homeScreen
-  static const String homeScreen = "/homeScreen";
+  // portfolio dashboard
+  static const String portfolioDashboardScreen = "/portfolioDashboardScreen";
+
+  // watchlist dashboard
+  static const String watchlistDashboardScreen = "/watchlistDashboardScreen";
+
+  // profile dashboard
+  static const String profileDashboardScreen = "/profileDashboardScreen";
+
+
 
   // Trade screen
-  static const String tradeScreen = "/tradeScreen";
+  static const String tradeScreen = "/trade";
 
   // stock details screen
-  static const String stockDetailsScreen = "/stockDetailsScreen";
+  static const String stockDetailsScreen = "/stockDetails";
 
   // Trade order placed screen
-  static const String orderPlacedScreen = "/orderPlacedScreen";
+  static const String orderPlacedScreen = "/tradeOrderPlaced";
 
   // LRS , add funds to wallet
   static const String lrsScreen = "/lrsScreen";
 
   // Yes bank confirm remittance screen
-  static const String confirmRemittanceScreen = "/confirmRemittanceScreen";
+  static const String confirmRemittanceScreen = "/confirmRemittance";
 
   // External transfer screen
-  static const String externalTransferScreen = "/externalTransferScreen";
+  static const String externalTransferScreen = "/externalTransfer";
 
   // Transaction submitted
-  static const String transactionSubmittedScreen = "/transactionSubmittedScreen";
-
+  static const String transactionSubmittedScreen = "/transactionSubmitted";
 
 }

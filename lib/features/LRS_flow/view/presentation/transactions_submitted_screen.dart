@@ -1,7 +1,9 @@
 import "package:aprreciate/core/constants/app_assets/assets_trade/order_placed_screen/assets_order_placed_screen.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 
 class TransactionsSubmittedScreen extends StatelessWidget {
@@ -13,13 +15,14 @@ class TransactionsSubmittedScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 180, 25, 25),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Image.asset(
               AssetsOrderPlacedScreen.orderPlacedTickIcon,
               width: 178,
               height: 182,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 40),
             Text(
               "Order Placed",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -37,29 +40,35 @@ class TransactionsSubmittedScreen extends StatelessWidget {
             const SizedBox(height: 10),
             // OrderDetailsContainer(),
             const SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                  vertical: 10, horizontal: 30
-              ),
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColorsCommon.appreciateThemeColor,
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: InkWell(
-                onTap: (){
-                  AppNavigators.goToHomeDashBoard(context);
-                },
-                child: Text(
-                  "Go to Home Dashboard",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium!.copyWith(color: AppColorsCommon.appWhite),
-                  textAlign: TextAlign.center,
-                ),
-              ),
 
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+              ),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 30
+                ),
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColorsCommon.appreciateThemeColor,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: InkWell(
+                  onTap: (){
+                    context.go(AppRoutes.homeDashboardScreen);
+                  },
+                  child: Text(
+                    "Go to Home Dashboard",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium!.copyWith(color: AppColorsCommon.appWhite),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+              ),
             ),
           ],
         ),

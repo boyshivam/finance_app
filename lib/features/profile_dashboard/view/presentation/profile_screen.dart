@@ -12,7 +12,6 @@ class ProfileScreen extends StatelessWidget {
         children: [
           TopSection(),
           UsWalletUpi()
-
         ],
       ),
     );

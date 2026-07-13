@@ -32,7 +32,9 @@ class OurOfferings extends StatelessWidget {
             ),
             itemBuilder: (context, index) {
               return InkWell(
-                onTap: (){AppNavigators.goToTradeScreen(context);},
+                onTap: () {
+                  AppNavigators.goToStockDetailsScreen(context);
+                },
                 child: OurOfferingsCard(card: ourOfferingsData[index]),
               );
             },

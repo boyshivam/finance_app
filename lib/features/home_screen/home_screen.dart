@@ -5,41 +5,33 @@ import "package:aprreciate/features/profile_dashboard/view/presentation/profile_
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/watchlist_dashboard.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.navigationShell});
+
+  final StatefulNavigationShell navigationShell;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedPageIndex = 0;
 
-  final pages = [
-    HomeDashboardScreen(),
-    PortfolioDashboardScreen(),
-    SearchDashboardScreen(),
-    WatchlistDashboard(),
-    ProfileScreen(),
-  ];
 
-  // function to switch between bottom nav icons
-  void onTap(int index) {
-    setState(() {
-      selectedPageIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[selectedPageIndex],
+      body: widget.navigationShell,
 
       bottomNavigationBar: BottomNavBar(
-        selectedIndex: selectedPageIndex,
-        onTap: onTap,
+        selectedIndex: widget.navigationShell.currentIndex,
+        onTap: (index){
+          widget.navigationShell.goBranch(index);
+        },
       ),
+
     );
   }
 }
