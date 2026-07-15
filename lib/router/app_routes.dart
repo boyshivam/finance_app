@@ -48,4 +48,8 @@ class AppRoutes {
   // Transaction submitted
   static const String transactionSubmittedScreen = "/transactionSubmitted";
 
+
+  //////// profile screen
+  static const String orderScreen = "/ordersScreen";
+
 }

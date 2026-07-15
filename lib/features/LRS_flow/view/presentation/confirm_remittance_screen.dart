@@ -37,7 +37,8 @@ class _ConfirmRemittanceScreenState extends ConsumerState<ConfirmRemittanceScree
             child: Align(
               alignment: Alignment.bottomCenter,
               child: CheckboxListTile(
-                title: Text("Confirm order"),
+                title: Text("Confirm "
+                    "order"),
                 tileColor: Colors.grey,
                 value:
                 vmState.remittanceValidityCheck ==

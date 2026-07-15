@@ -42,7 +42,7 @@ class UsWalletUpi extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: Color(0xffDDE4F3),
+                color: Color(0xFFAFC1FD),
               ),
                 child: Row(
                   children: [
@@ -66,6 +66,35 @@ class UsWalletUpi extends StatelessWidget {
                 ),
             ),
           ),
+          const SizedBox(height: 20,),
+          Container(
+            padding: EdgeInsets.symmetric(
+                vertical: 15, horizontal: 15
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+              color: Color(0xDFFFF4E9),
+            ),
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.apartment, size: 30, color: Colors.indigo,),
+                    const SizedBox(width: 15,),
+                    Column(
+                      children: [
+                        Text("Bank Accounts"),
+                        const SizedBox(height: 5,),
+                        Text("AXIS, SBI")
+                      ],
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Icon(Icons.arrow_circle_right_outlined)
+              ],
+            ),
+          )
         ],
       ),
     );

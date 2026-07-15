@@ -144,7 +144,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   void calculateFees(){
     final wholeUnits = enteredAmount ~/ state.stockPrice;
     double platformFee = (wholeUnits*0.01);
-    final transactionFee = max(0.05, 0.05*enteredAmount);
+    final transactionFee = max(0.05, (0.05/100)*enteredAmount);
 
     state = state.copyWith(
       totalFees: (platformFee + transactionFee).toStringAsFixed(2),

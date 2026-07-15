@@ -1,8 +1,10 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class OrderSlider extends ConsumerStatefulWidget {
   const OrderSlider({
@@ -26,7 +28,7 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
       final valid = ref.read(tradeScreenProvider.notifier).validatePurchase();
 
       if(valid) {
-        AppNavigators.gotToOrderPlacedScreen(context);
+        context.push(AppRoutes.orderPlacedScreen);
       }
       setState(() {
         offset = 0;
