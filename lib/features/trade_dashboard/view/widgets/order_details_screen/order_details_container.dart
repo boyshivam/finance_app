@@ -21,7 +21,7 @@ class OrderDetailsContainer extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("order ID", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              Text("orders ID", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: AppColorsCommon.textGrey
               ),),
               Text("AB1ZW19D")
@@ -81,7 +81,7 @@ class OrderDetailsContainer extends StatelessWidget {
           const SizedBox(height: 10),
           const Divider(color: AppColorsCommon.inactiveTextFieldBorderColor, thickness: 3,),
           const SizedBox(height: 10,),
-          Text("view in order history", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+          Text("view in orders history", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
             color: AppColorsCommon.appreciateThemeColor
           )),
         ],

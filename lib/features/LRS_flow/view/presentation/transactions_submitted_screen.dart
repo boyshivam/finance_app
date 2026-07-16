@@ -34,7 +34,7 @@ class TransactionsSubmittedScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Your order to buy 3.0 qty of APPL has been placed and will be executed at the best available price.",
+                "Your orders to buy 3.0 qty of APPL has been placed and will be executed at the best available price.",
               ),
             ),
             const SizedBox(height: 10),

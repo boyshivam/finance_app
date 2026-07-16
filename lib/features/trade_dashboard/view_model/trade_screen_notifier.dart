@@ -1,6 +1,7 @@
 import "dart:math";
 
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
+import "package:aprreciate/features/profile_dashboard/view_model/view_model_orders/providers/orders_provider.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart";
@@ -15,6 +16,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   TradeScreenState build() {
     // TODO: implement build
     return TradeScreenState(
+      stockName: 'APPL',
       usWalletFundsState: UsWalletFundsState.sufficientFunds,
       amountTextFieldState: TextFieldsStates.neutral,
       quantityTextFieldState: TextFieldsStates.neutral,
@@ -34,7 +36,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       orderEligibility: OrderEligibilityStates.invalid,
       feesViewStates: FeesViewStates.partialView,
       totalFees: "",
-      stockPrice: AppStringsCommon.stockTeslaPrice
+      stockPrice: AppStringsCommon.stockTeslaPrice,
     );
   }
 
@@ -61,8 +63,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-
-
   // derive quantity from quantity controller
   void deriveQuantity(String value) {
     state = state.copyWith(quantityText: value);
@@ -76,15 +76,18 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   // shown quantity secured for the entered amount in the quantity textfield -
   void quantityByAmount() {
     // quantity to be display in quantity field
-    final securedQuantity = (enteredAmount / state.stockPrice).toStringAsFixed(2);
+    final securedQuantity = (enteredAmount / state.stockPrice).toStringAsFixed(
+      2,
+    );
     state = state.copyWith(quantityText: securedQuantity);
   }
 
   // show amount secured by entered quantity in the quantity text field
   void amountByQuantity() {
-
     // this is amount to be displayed in the amount field
-    final securedAmount = (enteredQuantity * state.stockPrice).toStringAsFixed(2);
+    final securedAmount = (enteredQuantity * state.stockPrice).toStringAsFixed(
+      2,
+    );
     state = state.copyWith(amountText: securedAmount);
   }
 
@@ -121,6 +124,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         usWalletFundsState: UsWalletFundsState.sufficientFunds,
         orderEligibility: OrderEligibilityStates.valid,
       );
+      ref.read(ordersProvider.notifier).addOrderDetailsToCard();
     }
   }
 
@@ -135,30 +139,27 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  bool validatePurchase(){
+  bool validatePurchase() {
     return state.usWalletBalance >= enteredAmount && enteredAmount != 0;
   }
 
-  
   // fees for the entered amount
-  void calculateFees(){
+  void calculateFees() {
     final wholeUnits = enteredAmount ~/ state.stockPrice;
-    double platformFee = (wholeUnits*0.01);
-    final transactionFee = max(0.05, (0.05/100)*enteredAmount);
+    double platformFee = (wholeUnits * 0.01);
+    final transactionFee = max(0.05, (0.05 / 100) * enteredAmount);
 
     state = state.copyWith(
       totalFees: (platformFee + transactionFee).toStringAsFixed(2),
       orderValueText: enteredAmount.toString(),
       amountPayable: (enteredAmount - transactionFee).toString(),
       transactionFee: transactionFee.toStringAsFixed(2),
-      platformFee: platformFee.toStringAsFixed(2)
+      platformFee: platformFee.toStringAsFixed(2),
     );
   }
 
-  void resetOrderValidity(){
-    state = state.copyWith(
-      orderEligibility: OrderEligibilityStates.invalid
-    );
+
+  void resetOrderValidity() {
+    state = state.copyWith(orderEligibility: OrderEligibilityStates.invalid);
   }
-  
 }

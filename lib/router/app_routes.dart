@@ -33,7 +33,7 @@ class AppRoutes {
   // stock details screen
   static const String stockDetailsScreen = "/stockDetails";
 
-  // Trade order placed screen
+  // Trade orders placed screen
   static const String orderPlacedScreen = "/tradeOrderPlaced";
 
   // LRS , add funds to wallet

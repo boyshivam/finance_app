@@ -7,6 +7,7 @@ import 'package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.
 
 class TradeScreenState {
   const TradeScreenState({
+    required this.stockName,
     required this.usWalletFundsState,
     required this.amountTextFieldState,
     required this.quantityTextFieldState,
@@ -29,6 +30,7 @@ class TradeScreenState {
     required this.stockPrice,
   });
 
+  final String stockName;
   final UsWalletFundsState usWalletFundsState;
   final TextFieldsStates amountTextFieldState;
   final TextFieldsStates quantityTextFieldState;
@@ -51,6 +53,7 @@ class TradeScreenState {
   final double stockPrice;
 
   TradeScreenState copyWith({
+    String? stockName,
     UsWalletFundsState? usWalletFundsState,
     CurrencyToggleState? currencyToggleState,
     TextFieldsStates? amountTextFieldState,
@@ -75,6 +78,7 @@ class TradeScreenState {
     double? stockPrice,
   }) {
     return TradeScreenState(
+      stockName: stockName ?? this.stockName,
       usWalletFundsState: usWalletFundsState ?? this.usWalletFundsState,
       amountTextFieldState: amountTextFieldState ?? this.amountTextFieldState,
       quantityTextFieldState:
