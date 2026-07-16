@@ -3,7 +3,10 @@ import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
 import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
 import "package:aprreciate/features/LRS_flow/enums/textfield_states.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/MPIN_bottom_sheet.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen_state.dart";
+import "package:aprreciate/features/profile_dashboard/enums/order_status_enum.dart";
+import "package:aprreciate/models/profile_models/lrs/lrs_card_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -19,12 +22,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       orderValidityStates: OrderValidityStates.sufficient,
       remittanceValidityCheck: RemittanceValidityCheck.checked,
       selectedFundSource: null,
-      sourceOfFunds: [
-        'Salary',
-        'Income from business',
-        'Pension',
-        'Gift'
-      ]
+      sourceOfFunds: ['Salary', 'Income from business', 'Pension', 'Gift'],
     );
   }
 
@@ -61,12 +59,6 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     }
   }
 
-  //
-  void placeOrder() {}
-
-  // confirm remittance
-  void confirmRemittance() {}
-
   // toggle the remittance checkbox
   void remittanceCheckbox(bool? value) {
     state = state.copyWith(
@@ -84,11 +76,19 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   }
 
   // select items from the
-  void selectSourceOfFund(String value){
-    state = state.copyWith(
-      selectedFundSource: value
-    );
+  void selectSourceOfFund(String value) {
+    state = state.copyWith(selectedFundSource: value);
   }
 
-  //
+  void addLrsTransaction() {
+    double amount = double.tryParse(state.amountText) ?? 0;
+
+    final newTransaction = UsWalletCardModel(
+      orderTypeHeader: "Bank to US wallet",
+      orderAmount: amount,
+      orderStatus: OrderStatusEnum.submitted,
+    );
+
+    ref.read(lrsTransactionProvider.notifier).addTransaction(newTransaction);
+  }
 }

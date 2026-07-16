@@ -2,6 +2,7 @@ import 'package:aprreciate/app.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_lrs/app_strings_lrs.dart';
 import 'package:aprreciate/features/LRS_flow/enums/mpin_enums/mpin_field_states.dart';
 import 'package:aprreciate/features/LRS_flow/enums/mpin_enums/mpin_validity_enum.dart';
+import 'package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart';
 import 'package:aprreciate/features/LRS_flow/view_model/mpin_view_model/mpin_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -58,6 +59,7 @@ class MpinNotifier extends Notifier<MpinState> {
         mpinFieldStates: MpinFieldStates.incorrect,
         mpinValidity: MpinValidity.valid, offset: 0
       );
+      ref.read(lrsProvider.notifier).addLrsTransaction();
     }
   }
 }

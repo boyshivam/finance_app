@@ -1,4 +1,7 @@
 import "package:aprreciate/data/profile_data/orders/trade_orders_data.dart";
+import "package:aprreciate/features/LRS_flow/view/widgets/confirm_lrs_screen_widgets/us_wallet_transaction_card.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
+import "package:aprreciate/features/profile_dashboard/enums/order_tab_selected_enum.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/order/order_cards.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/orders_tabs.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/top_section.dart";
@@ -21,20 +24,32 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
 
     final tradeOrdersState = ref.watch(tradeOrderProvider);
 
+    final usWalletOrdersState = ref.watch(lrsTransactionProvider);
+
     return Scaffold(
       body: Column(
         children: [
           OrdersTopSection(),
           const SizedBox(height: 2),
           OrdersTabs(),
-          SizedBox(
-            height: 800,
-            child: ListView.builder(
-              itemCount: tradeOrdersState.length,
-              itemBuilder: (context, index) =>
-                  OrderCard(item: tradeOrdersState[index]),
+          if (vmState.orderTabSelected == OrderTabSelectedEnum.all)
+            SizedBox(
+              height: 800,
+              child: ListView.builder(
+                itemCount: tradeOrdersState.length,
+                itemBuilder: (context, index) =>
+                    OrderCard(item: tradeOrdersState[index]),
+              ),
             ),
-          ),
+          if (vmState.orderTabSelected == OrderTabSelectedEnum.goals)
+            SizedBox(
+              height: 800,
+              child: ListView.builder(
+                itemCount: usWalletOrdersState.length,
+                itemBuilder: (context, index) =>
+                    UsWalletTransactionCard(item: usWalletOrdersState[index]),
+              ),
+            ),
         ],
       ),
     );

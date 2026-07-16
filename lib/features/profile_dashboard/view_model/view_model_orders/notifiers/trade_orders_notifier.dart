@@ -1,5 +1,4 @@
 import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
-import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeOrdersNotifier extends Notifier<List<OrderCardModel>> {
