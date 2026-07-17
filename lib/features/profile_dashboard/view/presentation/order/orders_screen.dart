@@ -41,7 +41,7 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                     OrderCard(item: tradeOrdersState[index]),
               ),
             ),
-          if (vmState.orderTabSelected == OrderTabSelectedEnum.goals)
+          if (vmState.orderTabSelected == OrderTabSelectedEnum.cash)
             SizedBox(
               height: 800,
               child: ListView.builder(

@@ -14,18 +14,13 @@ const orderTabsData = [
     tab: OrderTabSelectedEnum.usStocks,
   ),
   OrderTabsModel(
+    tabName: 'Cash ',
+    tabIcon: Icons.filter_alt_outlined,
+    tab: OrderTabSelectedEnum.cash,
+  ),
+  OrderTabsModel(
     tabName: 'Mutual Funds',
     tabIcon: Icons.filter_alt_outlined,
     tab: OrderTabSelectedEnum.mutualFunds,
-  ),
-  OrderTabsModel(
-    tabName: 'Indian Stocks',
-    tabIcon: Icons.filter_alt_outlined,
-    tab: OrderTabSelectedEnum.indianStocks,
-  ),
-  OrderTabsModel(
-    tabName: 'Goals',
-    tabIcon: Icons.filter_alt_outlined,
-    tab: OrderTabSelectedEnum.goals,
   ),
 ];

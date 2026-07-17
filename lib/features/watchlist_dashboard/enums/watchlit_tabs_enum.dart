@@ -1,0 +1,6 @@
+
+
+enum WatchlistTabsEnum {
+  usStocks,
+  mutualFunds
+}
