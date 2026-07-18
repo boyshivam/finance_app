@@ -65,7 +65,10 @@ class CreateWatchlistBottomSheet extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    ref.read(watchlistProvider.notifier).saveWatchList();
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "Create",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(

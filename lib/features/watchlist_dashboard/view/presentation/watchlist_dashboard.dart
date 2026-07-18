@@ -1,6 +1,7 @@
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/search_create_bar.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/top_section.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_tabs.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_viewer.dart";
 import "package:flutter/material.dart";
 
 class WatchlistDashboard extends StatelessWidget {
@@ -14,9 +15,8 @@ class WatchlistDashboard extends StatelessWidget {
           WatchlistTopSection(),
           const SizedBox(height: 1,),
           WatchlistTabs(),
-          SearchCreateBar()
-
-
+          SearchCreateBar(),
+          Expanded(child: WatchlistsViewer())
         ],
       ),
     );

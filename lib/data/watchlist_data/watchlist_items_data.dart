@@ -12,6 +12,7 @@ class WatchListItemsDataNotifier extends Notifier<List<WatchlistModel>> {
   }
 
 
+
 }
 
 final watchListItemsDataProvider =
