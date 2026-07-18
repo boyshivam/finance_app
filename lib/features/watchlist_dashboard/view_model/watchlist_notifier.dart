@@ -7,22 +7,35 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class WatchlistNotifier extends Notifier<WatchlistState> {
   @override
   WatchlistState build() {
-    return WatchlistState(selectedTab: WatchlistTabsEnum.usStocks);
+    return WatchlistState(
+      selectedTab: WatchlistTabsEnum.usStocks,
+      watchlistName: "",
+    );
   }
 
-
   // change the watchlist tab
-  void changeTab(WatchlistTabsEnum selectedTab){
-    state = state.copyWith(
-      selectedTab: selectedTab
-    );
+  void changeTab(WatchlistTabsEnum selectedTab) {
+    state = state.copyWith(selectedTab: selectedTab);
   }
 
   // open create watchlist bottom sheet on clicking on create
   void createWatchlistBottomSheet(BuildContext context) {
-    showModalBottomSheet(context: context, builder: (context){
-      return CreateWatchlistBottomSheet();
-    });
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return CreateWatchlistBottomSheet();
+      },
+    );
   }
 
+  // derive the watchlist name from the text field
+  void deriveWatchlistName(String name) {
+    state = state.copyWith(watchlistName: name);
+    print(state.watchlistName);
+  }
+
+  // create a watchlist
+  void createWatchlist(){
+    
+  }
 }
