@@ -1,14 +1,23 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/data/watchlist_data/watchlist_items_data.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_dashboard_widgets/individual_watchlist_card.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_dashboard_widgets/individual_watchlist_cards_viewer.dart";
 import "package:aprreciate/models/watchlist_models/watchlist_model.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class WatchlistItem extends StatelessWidget {
+class WatchlistItem extends ConsumerWidget {
   const WatchlistItem({super.key, required this.watchlist});
 
   final WatchlistModel watchlist;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final watchlistProvider = ref.watch(watchListItemsDataProvider);
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
       child: Column(
@@ -21,7 +30,7 @@ class WatchlistItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          if (watchlist.stocks.isEmpty)
+          if (watchlist.securities.isEmpty)
             Container(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               decoration: BoxDecoration(
@@ -52,21 +61,26 @@ class WatchlistItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                         const SizedBox(height: 20),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 20,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              width: 1.5,
-                              color: AppColorsCommon.appreciateThemeColor,
+                        InkWell(
+                          onTap: () {
+                            context.push(AppRoutes.watchlistSearchEquity);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 20,
                             ),
-                          ),
-                          child: Text(
-                            "Add stock",
-                            style: Theme.of(context).textTheme.bodySmall,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                width: 1.5,
+                                color: AppColorsCommon.appreciateThemeColor,
+                              ),
+                            ),
+                            child: Text(
+                              "Add stock",
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                           ),
                         ),
                       ],
@@ -75,14 +89,8 @@ class WatchlistItem extends StatelessWidget {
                 ],
               ),
             ),
-          if (watchlist.stocks.isNotEmpty)
-            SizedBox(
-              height: 120,
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) => Text("Stocks"),
-              ),
-            ),
+          if (watchlist.securities.isNotEmpty)
+            IndividualWatchlistCardsViewer()
         ],
       ),
     );

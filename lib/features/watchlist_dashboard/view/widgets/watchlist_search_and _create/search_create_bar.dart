@@ -1,7 +1,9 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/watchlist_provider.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class SearchCreateBar extends ConsumerWidget {
   const SearchCreateBar({super.key});
@@ -28,6 +30,9 @@ class SearchCreateBar extends ConsumerWidget {
                 border: InputBorder.none,
                 prefixIcon: Icon(Icons.search, size: 16),
               ),
+              onTap: (){
+                context.push(AppRoutes.watchlistSearchEquity);
+              },
             ),
           ),
           const SizedBox(width: 20),

@@ -5,14 +5,10 @@ class WatchListItemsDataNotifier extends Notifier<List<WatchlistModel>> {
   @override
   List<WatchlistModel> build() => [];
 
-
   // add new watchlist
-  void addWatchlist(WatchlistModel watchlist){
+  void addWatchlist(WatchlistModel watchlist) {
     state = [...state, watchlist];
   }
-
-
-
 }
 
 final watchListItemsDataProvider =

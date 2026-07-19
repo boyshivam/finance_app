@@ -54,7 +54,7 @@ class CreateWatchlistBottomSheet extends ConsumerWidget {
               ),
             ),
       
-            const SizedBox(height: 80,),
+            const SizedBox(height: 80),
             SizedBox(
               width: double.infinity,
       
@@ -66,7 +66,7 @@ class CreateWatchlistBottomSheet extends ConsumerWidget {
                 ),
                 child: InkWell(
                   onTap: (){
-                    ref.read(watchlistProvider.notifier).saveWatchList();
+                    ref.read(watchlistProvider.notifier).saveNewWatchList();
                     Navigator.pop(context);
                   },
                   child: Text(

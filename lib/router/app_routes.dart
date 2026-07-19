@@ -52,4 +52,7 @@ class AppRoutes {
   //////// profile screen
   static const String orderScreen = "/ordersScreen";
 
+  //////
+  static const String watchlistSearchEquity = "/watchlistSearchEquity";
+
 }

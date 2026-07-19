@@ -13,6 +13,7 @@ import "package:aprreciate/features/search_dashboard/view/presentation/search_da
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/presentation/search_security_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/watchlist_dashboard.dart";
 
 import "package:aprreciate/router/app_routes.dart";
@@ -81,6 +82,11 @@ final appRouter = GoRouter(
         path: AppRoutes.orderScreen,
         name: 'orderScreen',
         builder: (context, state) => OrderScreen()
+    ),
+    GoRoute(
+        path: AppRoutes.watchlistSearchEquity,
+        name: 'watchListSearchEquity',
+        builder: (context, state) => SearchSecurityScreen()
     ),
 
     StatefulShellRoute.indexedStack(
