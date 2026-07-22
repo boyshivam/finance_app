@@ -1,7 +1,8 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/watchlist_dashboard/enums/search_result_status_enum.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/search_results_viewer.dart";
-import "package:aprreciate/features/watchlist_dashboard/view_model/watchlist_provider.dart";
+import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -12,6 +13,8 @@ class SearchSecurityScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final vmState = ref.watch(watchlistProvider);
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -65,7 +68,9 @@ class SearchSecurityScreen extends ConsumerWidget {
                           prefixIcon: Icon(Icons.search, size: 20),
                         ),
                         onChanged: (value) {
-                          final watchlistNotifier = ref.read(watchlistProvider.notifier);
+                          final watchlistNotifier = ref.read(
+                            watchlistProvider.notifier,
+                          );
                           watchlistNotifier.deriveSearchedSecurity(value);
                           watchlistNotifier.searchSecurity(value);
                         },
@@ -76,7 +81,74 @@ class SearchSecurityScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            Expanded(child: SearchResultsViewer())
+
+            if (vmState.searchResultsStatus == SearchResultStatusEnum.empty)
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 80),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: Colors.grey,
+                        ),
+                        child: Text(
+                          "Search for a security...",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                            color: AppColorsCommon.appWhite,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            if (vmState.searchResultsStatus == SearchResultStatusEnum.noResults)
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 80),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: Colors.grey,
+                        ),
+                        child: Text(
+                          "No search results found...",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(
+                                color: AppColorsCommon.appWhite,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            if (vmState.searchResultsStatus ==
+                SearchResultStatusEnum.resultsFound)
+              Expanded(child: SearchResultsViewer()),
           ],
         ),
       ),

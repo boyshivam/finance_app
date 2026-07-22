@@ -1,6 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/data/watchlist_data/watchlist_items_data.dart";
-import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_dashboard_widgets/individual_watchlist_card.dart";
+import "package:aprreciate/data/watchlist_data/all_watchlists_provider.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_dashboard_widgets/individual_watchlist_cards_viewer.dart";
 import "package:aprreciate/models/watchlist_models/watchlist_model.dart";
 import "package:aprreciate/router/app_routes.dart";
@@ -8,15 +7,13 @@ import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class WatchlistItem extends ConsumerWidget {
-  const WatchlistItem({super.key, required this.watchlist});
+class SingleWatchlistItem extends ConsumerWidget {
+  const SingleWatchlistItem({super.key, required this.watchlist});
 
-  final WatchlistModel watchlist;
+  final IndividualWatchlistModel watchlist;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final watchlistProvider = ref.watch(watchListItemsDataProvider);
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),

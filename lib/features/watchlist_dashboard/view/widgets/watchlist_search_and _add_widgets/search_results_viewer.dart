@@ -1,5 +1,5 @@
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/search_result_card.dart";
-import "package:aprreciate/features/watchlist_dashboard/view_model/watchlist_provider.dart";
+import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 

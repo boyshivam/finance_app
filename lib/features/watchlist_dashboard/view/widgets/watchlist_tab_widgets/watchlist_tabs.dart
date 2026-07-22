@@ -1,7 +1,7 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/data/watchlist_data/watchlist_tabs_data.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_tab_widgets/watchlist_tab_pill.dart";
-import "package:aprreciate/features/watchlist_dashboard/view_model/watchlist_provider.dart";
+import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 

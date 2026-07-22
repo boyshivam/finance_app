@@ -1,0 +1,6 @@
+
+
+enum IsSecurityFavouriteEnum {
+  fav,
+  notFav
+}

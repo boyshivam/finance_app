@@ -1,8 +1,8 @@
-import 'package:aprreciate/models/watchlist_models/individual_watchlist_card_model.dart';
+import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 
-class WatchlistModel {
-  const WatchlistModel({required this.watchlistName, this.securities = const []});
+class IndividualWatchlistModel {
+  const IndividualWatchlistModel({required this.watchlistName, this.securities = const []});
 
   final String watchlistName;
-  final List<IndividualWatchlistCardModel> securities;
+  final List<StockCardModel> securities;
 }
