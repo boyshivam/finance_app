@@ -5,7 +5,6 @@ import "package:flutter/material.dart";
 class WatchlistTabsModel {
   const WatchlistTabsModel({
     required this.tabName,
-
     required this.tab
 
   });

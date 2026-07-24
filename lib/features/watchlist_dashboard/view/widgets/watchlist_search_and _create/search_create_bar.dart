@@ -10,9 +10,9 @@ class SearchCreateBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.read(watchlistProvider);
+    final vmState = ref.read(watchlistDashboardProvider);
 
-    final notifier = ref.read(watchlistProvider.notifier);
+    final notifier = ref.read(watchlistDashboardProvider.notifier);
 
     return SizedBox(
       height: 80,

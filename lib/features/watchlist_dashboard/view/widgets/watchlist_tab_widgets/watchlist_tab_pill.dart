@@ -11,7 +11,7 @@ class WatchlistTabPill extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(watchlistProvider);
+    final vmState = ref.watch(watchlistDashboardProvider);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),

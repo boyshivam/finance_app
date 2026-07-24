@@ -4,11 +4,14 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class SearchResultsViewer extends ConsumerWidget {
-  const SearchResultsViewer({super.key});
+  const SearchResultsViewer({super.key, required this.watchlistId});
+
+  final String watchlistId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchResults = ref.watch(watchlistProvider).searchResults;
+
+    final searchResults = ref.watch(watchlistDashboardProvider).searchResults;
 
     return SizedBox(
       height: 450,
@@ -16,7 +19,7 @@ class SearchResultsViewer extends ConsumerWidget {
         scrollDirection: Axis.vertical,
         itemCount: searchResults.length,
         itemBuilder: (context, index) =>
-            SearchResultCard(security: searchResults[index]),
+            SearchResultCard(security: searchResults[index], watchlistId: watchlistId,),
       ),
     );
   }

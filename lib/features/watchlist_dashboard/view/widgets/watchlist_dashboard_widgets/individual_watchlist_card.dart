@@ -12,50 +12,68 @@ class IndividualWatchlistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: AppColorsCommon.appWhite,
+        borderRadius: BorderRadius.circular(18),
+      ),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       child: Column(
         children: [
           Row(
             children: [
-              Row(
-                children: [
-                  Image.asset(watchlistCard.stockIcon),
-                  const SizedBox(width: 5),
-                  Column(
-                    children: [
-                      Text(watchlistCard.stockSymbol),
-                      const SizedBox(height: 5),
-                      Text(watchlistCard.stockName),
-                    ],
-                  ),
-                  const SizedBox(width: 5),
-                ],
+              Image.asset(watchlistCard.stockIcon, width: 20, height: 20),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      watchlistCard.stockSymbol,
+                      style: Theme.of(context).textTheme.bodySmall!
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      watchlistCard.stockName,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.bodySmall!
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
+                  ],
+                ),
               ),
-              const Spacer(),
+
+              const SizedBox(width: 20,),
               Image.asset(
                 watchlistCard.isFavourite == true
                     ? AppAssetsCommon.likedHeart
                     : AppAssetsCommon.emptyHeart,
+                width: 20,
+                height: 20,
               ),
             ],
           ),
-          const Divider(thickness: 2, color: AppColorsCommon.textGrey),
+          const Divider(thickness: 1, color: Colors.grey),
           Row(
             children: [
-              Text("\$${watchlistCard.value.toStringAsFixed(2)}"),
+              Text(
+                "\$${watchlistCard.value.toStringAsFixed(2)}",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
               const Spacer(),
-              Row(
-                children: [
-                  Text(watchlistCard.value.toString()),
-                  const SizedBox(width: 3),
-                  Text("(${watchlistCard.valueChangePerc}%)"),
-                  const SizedBox(width: 3),
-                  Image.asset(
-                    watchlistCard.valueChangeIcon == true
-                        ? AppAssets.value_growth_icon
-                        : AppAssets.value_fall_icon,
-                  ),
-                ],
+              Text(
+                "(${watchlistCard.valueChangePerc}%)",
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              const SizedBox(width: 3),
+              Image.asset(
+                watchlistCard.valueChangeIcon == true
+                    ? AppAssets.value_growth_icon
+                    : AppAssets.value_fall_icon,
+                width: 20,
+                height: 20,
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/data/watchlist_data/watchlist_tabs_data.dart";
+import "package:aprreciate/features/watchlist_dashboard/enums/watchlit_tabs_enum.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_tab_widgets/watchlist_tab_pill.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:flutter/material.dart";
@@ -24,7 +25,13 @@ class WatchlistTabs extends ConsumerWidget {
 
             return InkWell(
               onTap: () {
-                ref.read(watchlistProvider.notifier).changeTab(item);
+                ref.read(watchlistDashboardProvider.notifier).changeTab(item);
+
+                if (item == WatchlistTabsEnum.mutualFunds) {
+                  ref
+                      .read(watchlistDashboardProvider.notifier)
+                      .printAllWatchlistNamesAndIds();
+                }
               },
               child: WatchlistTabPill(item: watchlistTabsData[index]),
             );

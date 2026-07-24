@@ -1,28 +1,29 @@
-import "package:aprreciate/data/watchlist_data/securities_per_watchlist_data.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_dashboard_widgets/individual_watchlist_card.dart";
+import "package:aprreciate/models/watchlist_models/watchlist_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class IndividualWatchlistCardsViewer extends ConsumerWidget {
-  const IndividualWatchlistCardsViewer({super.key});
+  const IndividualWatchlistCardsViewer({super.key, required this.watchlist});
+
+  final IndividualWatchlistModel watchlist;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final securitiesProvider = ref.watch(securitiesPerWatchlistProvider);
-
     return SizedBox(
-      height: 200,
+      height: 270,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: securitiesProvider.length,
+        itemCount: watchlist.securities.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           mainAxisSpacing: 20,
           crossAxisSpacing: 20,
-          childAspectRatio: 1.8,
+          mainAxisExtent: 220,
+
         ),
         itemBuilder: (context, index) =>
-            IndividualWatchlistCard(watchlistCard: securitiesProvider[index]),
+            IndividualWatchlistCard(watchlistCard: watchlist.securities[index]),
       ),
     );
   }

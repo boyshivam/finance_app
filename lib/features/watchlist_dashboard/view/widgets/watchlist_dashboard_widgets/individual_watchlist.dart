@@ -1,5 +1,4 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/data/watchlist_data/all_watchlists_provider.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_dashboard_widgets/individual_watchlist_cards_viewer.dart";
 import "package:aprreciate/models/watchlist_models/watchlist_model.dart";
 import "package:aprreciate/router/app_routes.dart";
@@ -7,14 +6,13 @@ import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class SingleWatchlistItem extends ConsumerWidget {
-  const SingleWatchlistItem({super.key, required this.watchlist});
+class IndividualWatchlistSection extends ConsumerWidget {
+  const IndividualWatchlistSection({super.key, required this.watchlist});
 
   final IndividualWatchlistModel watchlist;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
       child: Column(
@@ -60,7 +58,10 @@ class SingleWatchlistItem extends ConsumerWidget {
                         const SizedBox(height: 20),
                         InkWell(
                           onTap: () {
-                            context.push(AppRoutes.watchlistSearchEquity);
+                            context.push(
+                              AppRoutes.watchlistSearchEquity,
+                              extra: watchlist.watchlistId,
+                            );
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(
@@ -87,7 +88,7 @@ class SingleWatchlistItem extends ConsumerWidget {
               ),
             ),
           if (watchlist.securities.isNotEmpty)
-            IndividualWatchlistCardsViewer()
+            IndividualWatchlistCardsViewer(watchlist: watchlist),
         ],
       ),
     );

@@ -8,7 +8,8 @@ class CreateWatchlistBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(watchlistProvider);
+
+    final vmState = ref.watch(watchlistDashboardProvider);
 
     return SingleChildScrollView(
       child: Padding(
@@ -46,7 +47,7 @@ class CreateWatchlistBottomSheet extends ConsumerWidget {
                       border: InputBorder.none,
                     ),
                     onChanged: (value) {
-                      final notifier = ref.read(watchlistProvider.notifier);
+                      final notifier = ref.read(watchlistDashboardProvider.notifier);
                       notifier.deriveWatchlistName(value);
                     },
                   ),
@@ -66,7 +67,7 @@ class CreateWatchlistBottomSheet extends ConsumerWidget {
                 ),
                 child: InkWell(
                   onTap: (){
-                    ref.read(watchlistProvider.notifier).saveNewWatchList();
+                    ref.read(watchlistDashboardProvider.notifier).saveNewWatchList();
                     Navigator.pop(context);
                   },
                   child: Text(

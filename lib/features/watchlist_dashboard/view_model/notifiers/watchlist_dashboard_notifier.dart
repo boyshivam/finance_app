@@ -1,5 +1,4 @@
 import 'package:aprreciate/data/common_data/common_securities_data.dart';
-import 'package:aprreciate/features/watchlist_dashboard/enums/is_security_favourite_enum.dart';
 import 'package:aprreciate/features/watchlist_dashboard/enums/search_result_status_enum.dart';
 import 'package:aprreciate/features/watchlist_dashboard/enums/watchlist_createfield_enum.dart';
 import 'package:aprreciate/features/watchlist_dashboard/enums/watchlit_tabs_enum.dart';
@@ -21,7 +20,6 @@ class WatchlistDashboardNotifier extends Notifier<WatchlistState> {
       searchedSecurity: "",
       searchResults: [],
       searchResultsStatus: SearchResultStatusEnum.empty,
-      isSecurityFavourite: IsSecurityFavouriteEnum.notFav,
     );
   }
 
@@ -62,6 +60,7 @@ class WatchlistDashboardNotifier extends Notifier<WatchlistState> {
       final newWatchlist = IndividualWatchlistModel(
         watchlistName: state.watchlistName,
       );
+      print(newWatchlist.watchlistId);
       ref.read(allWatchListsProvider.notifier).addWatchlist(newWatchlist);
     }
   }
@@ -94,14 +93,14 @@ class WatchlistDashboardNotifier extends Notifier<WatchlistState> {
     }
   }
 
-  // add a stock to watchlist
-  void toggleSecurityAsFavourite() {
-    if (state.isSecurityFavourite == IsSecurityFavouriteEnum.notFav) {
-      state = state.copyWith(isSecurityFavourite: IsSecurityFavouriteEnum.fav);
-    } else if (state.isSecurityFavourite == IsSecurityFavouriteEnum.fav) {
-      state = state.copyWith(
-        isSecurityFavourite: IsSecurityFavouriteEnum.notFav,
-      );
+
+
+  void printAllWatchlistNamesAndIds(){
+    final allWatchlists =  ref.watch(allWatchListsProvider);
+
+    for (final w in allWatchlists){
+      print("${w.watchlistId},  ${w.watchlistName }" );
     }
+
   }
 }

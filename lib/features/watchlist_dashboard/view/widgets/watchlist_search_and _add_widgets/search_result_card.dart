@@ -1,19 +1,23 @@
 import 'package:aprreciate/core/constants/app_assets/app_assets_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
-import 'package:aprreciate/features/watchlist_dashboard/enums/is_security_favourite_enum.dart';
-import 'package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart';
+import 'package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart';
 import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class SearchResultCard extends ConsumerWidget {
-  const SearchResultCard({super.key, required this.security});
+  const SearchResultCard({
+    super.key,
+    required this.security,
+    required this.watchlistId,
+  });
 
   final StockCardModel security;
+  final String watchlistId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(watchlistProvider);
+    final vmState = ref.watch(allWatchListsProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -57,16 +61,16 @@ class SearchResultCard extends ConsumerWidget {
                 const SizedBox(width: 5),
                 InkWell(
                   onTap: () {
-                    final notifier = ref.read(watchlistProvider.notifier);
-                    notifier.toggleSecurityAsFavourite();
+                    print("added to watchlist");
+                    ref
+                        .read(allWatchListsProvider.notifier)
+                        .addSecurityToWatchlist(
+                          watchlistId: watchlistId,
+                          security: security,
+                        );
+
                   },
-                  child: Image.asset(
-                    vmState.isSecurityFavourite == IsSecurityFavouriteEnum.fav
-                        ? AppAssetsCommon.likedHeart
-                        : AppAssetsCommon.emptyHeart,
-                    width: 20,
-                    height: 20,
-                  ),
+                  child: Image.asset(AppAssetsCommon.likedHeart),
                 ),
               ],
             ),

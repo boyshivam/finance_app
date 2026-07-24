@@ -1,4 +1,3 @@
-import 'package:aprreciate/features/watchlist_dashboard/enums/is_security_favourite_enum.dart';
 import 'package:aprreciate/features/watchlist_dashboard/enums/search_result_status_enum.dart';
 import 'package:aprreciate/features/watchlist_dashboard/enums/watchlist_createfield_enum.dart';
 import 'package:aprreciate/features/watchlist_dashboard/enums/watchlit_tabs_enum.dart';
@@ -12,7 +11,6 @@ class WatchlistState {
     required this.searchedSecurity,
     required this.searchResults,
     required this.searchResultsStatus,
-    required this.isSecurityFavourite,
   });
 
   final WatchlistTabsEnum selectedTab;
@@ -21,7 +19,6 @@ class WatchlistState {
   final String searchedSecurity;
   List<StockCardModel> searchResults;
   SearchResultStatusEnum searchResultsStatus;
-  IsSecurityFavouriteEnum isSecurityFavourite;
 
   WatchlistState copyWith({
     WatchlistTabsEnum? selectedTab,
@@ -30,7 +27,6 @@ class WatchlistState {
     String? searchedSecurity,
     List<StockCardModel>? searchResults,
     SearchResultStatusEnum? searchResultsStatus,
-    IsSecurityFavouriteEnum? isSecurityFavourite,
   }) {
     return WatchlistState(
       selectedTab: selectedTab ?? this.selectedTab,
@@ -39,7 +35,6 @@ class WatchlistState {
       searchedSecurity: searchedSecurity ?? this.searchedSecurity,
       searchResults: searchResults ?? this.searchResults,
       searchResultsStatus: searchResultsStatus ?? this.searchResultsStatus,
-      isSecurityFavourite: isSecurityFavourite ?? this.isSecurityFavourite,
     );
   }
 }

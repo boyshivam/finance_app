@@ -9,11 +9,13 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class SearchSecurityScreen extends ConsumerWidget {
-  const SearchSecurityScreen({super.key});
+  const SearchSecurityScreen({super.key, required this.watchlistId});
+
+  final String watchlistId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(watchlistProvider);
+    final vmState = ref.watch(watchlistDashboardProvider);
 
     return Scaffold(
       body: Padding(
@@ -69,7 +71,7 @@ class SearchSecurityScreen extends ConsumerWidget {
                         ),
                         onChanged: (value) {
                           final watchlistNotifier = ref.read(
-                            watchlistProvider.notifier,
+                            watchlistDashboardProvider.notifier,
                           );
                           watchlistNotifier.deriveSearchedSecurity(value);
                           watchlistNotifier.searchSecurity(value);
@@ -148,7 +150,7 @@ class SearchSecurityScreen extends ConsumerWidget {
               ),
             if (vmState.searchResultsStatus ==
                 SearchResultStatusEnum.resultsFound)
-              Expanded(child: SearchResultsViewer()),
+              Expanded(child: SearchResultsViewer( watchlistId: watchlistId,)),
           ],
         ),
       ),

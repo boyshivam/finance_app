@@ -21,10 +21,7 @@ import "package:go_router/go_router.dart";
 
 final appRouter = GoRouter(
   routes: [
-
-
     // entire login section routers
-
     GoRoute(
       path: AppRoutes.loginScreen,
       name: 'mobileNumberScreen',
@@ -42,51 +39,56 @@ final appRouter = GoRouter(
     ),
 
     // trade section
-
     GoRoute(
-        path: AppRoutes.stockDetailsScreen,
-        name: 'stockDetailsScreen',
-        builder: (context, state) => StockDetailsScreen()
-        ),
-    GoRoute(
-        path: AppRoutes.tradeScreen,
-        name: 'tradeScreen',
-        builder: (context, state) => TradeScreen()
+      path: AppRoutes.stockDetailsScreen,
+      name: 'stockDetailsScreen',
+      builder: (context, state) => StockDetailsScreen(),
     ),
     GoRoute(
-        path: AppRoutes.lrsScreen,
-        name: 'lrsScreen',
-        builder: (context, state) => LrsScreen()
+      path: AppRoutes.tradeScreen,
+      name: 'tradeScreen',
+      builder: (context, state) => TradeScreen(),
     ),
-
     GoRoute(
-        path: AppRoutes.confirmRemittanceScreen,
-        name: 'confirmRemittanceScreen',
-        builder: (context, state) => ConfirmRemittanceScreen()
-    ),
-
-
-    GoRoute(
-        path: AppRoutes.transactionSubmittedScreen,
-        name: 'transactionSubmittedScreen',
-        builder: (context, state) => TransactionsSubmittedScreen()
+      path: AppRoutes.lrsScreen,
+      name: 'lrsScreen',
+      builder: (context, state) => LrsScreen(),
     ),
 
     GoRoute(
-        path: AppRoutes.orderPlacedScreen,
-        name: 'orderPlacedScreen',
-        builder: (context, state) => OrderPlacedScreen()
+      path: AppRoutes.confirmRemittanceScreen,
+      name: 'confirmRemittanceScreen',
+      builder: (context, state) => ConfirmRemittanceScreen(),
     ),
 
     GoRoute(
-        path: AppRoutes.orderScreen,
-        name: 'orderScreen',
-        builder: (context, state) => OrderScreen()
+      path: AppRoutes.transactionSubmittedScreen,
+      name: 'transactionSubmittedScreen',
+      builder: (context, state) => TransactionsSubmittedScreen(),
+    ),
+
+    GoRoute(
+      path: AppRoutes.orderPlacedScreen,
+      name: 'orderPlacedScreen',
+      builder: (context, state) => OrderPlacedScreen(),
+    ),
+
+    GoRoute(
+      path: AppRoutes.orderScreen,
+      name: 'orderScreen',
+      builder: (context, state) => OrderScreen(),
     ),
     GoRoute(
-        path: AppRoutes.watchlistSearchEquity,
-        name: 'watchListSearchEquity',
-        builder: (context, state) => SearchSecurityScreen()
+      path: AppRoutes.watchlistSearchEquity,
+      name: 'watchListSearchEquity',
+      builder: (context, state) {
+
+        final watchlistId = state.extra as String;
+
+        return SearchSecurityScreen(
+          watchlistId : watchlistId
+        );
+      },
     ),
 
     StatefulShellRoute.indexedStack(
