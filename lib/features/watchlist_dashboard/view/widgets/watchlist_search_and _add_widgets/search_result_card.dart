@@ -13,7 +13,7 @@ class SearchResultCard extends ConsumerWidget {
   });
 
   final StockCardModel security;
-  final String watchlistId;
+  final String? watchlistId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

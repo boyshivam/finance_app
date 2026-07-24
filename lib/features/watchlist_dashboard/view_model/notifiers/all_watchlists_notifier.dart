@@ -12,7 +12,7 @@ class AllWatchListsNotifier extends Notifier<List<IndividualWatchlistModel>> {
 
   // add stock to watchlist
   void addSecurityToWatchlist({
-    required String watchlistId,
+    required String? watchlistId,
     required security,
   }) {
     state = state.map((watchlist) {

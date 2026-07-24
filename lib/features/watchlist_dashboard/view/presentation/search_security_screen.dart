@@ -11,7 +11,7 @@ import "package:go_router/go_router.dart";
 class SearchSecurityScreen extends ConsumerWidget {
   const SearchSecurityScreen({super.key, required this.watchlistId});
 
-  final String watchlistId;
+  final String? watchlistId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

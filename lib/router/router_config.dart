@@ -13,6 +13,7 @@ import "package:aprreciate/features/search_dashboard/view/presentation/search_da
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/presentation/individual_watchlist_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/search_security_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/watchlist_dashboard.dart";
 
@@ -82,12 +83,20 @@ final appRouter = GoRouter(
       path: AppRoutes.watchlistSearchEquity,
       name: 'watchListSearchEquity',
       builder: (context, state) {
+        final watchlistId = state.extra as String?;
 
-        final watchlistId = state.extra as String;
+        return SearchSecurityScreen(watchlistId: watchlistId);
+      },
+    ),
 
-        return SearchSecurityScreen(
-          watchlistId : watchlistId
-        );
+    // router for individual watchlist screen
+    GoRoute(
+      path: AppRoutes.individualWatchlistScreen,
+      name: 'individualWatchlistScreen',
+      builder: (context, state) {
+        final watchlistHeader = state.extra as String;
+
+        return IndividualWatchlistScreen(watchlistHeader: watchlistHeader);
       },
     ),
 
@@ -140,58 +149,3 @@ final appRouter = GoRouter(
     ),
   ],
 );
-
-// final GoRouter apppRouter = GoRouter(
-//   routes: <RouteBase>[
-//     GoRoute(
-//       path: AppRoutes.loginScreen,
-//       builder: (context, state) => MobileNumScreen(),
-//     ),
-//     GoRoute(
-//       path: AppRoutes.otpScreen,
-//       builder: (context, state) => MobileOtpScreen(),
-//     ),
-//     GoRoute(
-//       path: AppRoutes.passcodeScreen,
-//       builder: (context, state) => PasscodeScreen(),
-//     ),
-//     GoRoute(
-//       path: AppRoutes.homeDashboardScreen,
-//       builder: (context, state) => HomeDashboardScreen(),
-//     ),
-//     GoRoute(
-//       path: AppRoutes.searchDashboardScreen,
-//       builder: (context, state) => SearchDashboardScreen(),
-//     ),
-//
-//     GoRoute(
-//       path: AppRoutes.homeScreen,
-//       builder: (context, state) => HomeScreen(),
-//     ),
-//
-//     GoRoute(
-//       path: AppRoutes.tradeScreen,
-//       builder: (context, state) => TradeScreen(),
-//     ),
-//
-//     GoRoute(
-//       path: AppRoutes.stockDetailsScreen,
-//       builder: (context, state) => StockDetailsScreen(),
-//     ),
-//
-//     GoRoute(
-//       path: AppRoutes.orderPlacedScreen,
-//       builder: (context, state) => OrderPlacedScreen(),
-//     ),
-//
-//     GoRoute(
-//       path: AppRoutes.lrsScreen,
-//       builder: (context, state) => LrsScreen(),
-//     ),
-//
-//     GoRoute(
-//       path: AppRoutes.confirmRemittanceScreen,
-//       builder: (context, state) => ConfirmRemittanceScreen(),
-//     ),
-//   ],
-// );

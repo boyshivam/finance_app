@@ -6,7 +6,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 class SearchResultsViewer extends ConsumerWidget {
   const SearchResultsViewer({super.key, required this.watchlistId});
 
-  final String watchlistId;
+  final String? watchlistId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

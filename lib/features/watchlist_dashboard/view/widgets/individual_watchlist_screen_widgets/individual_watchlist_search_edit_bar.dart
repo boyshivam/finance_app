@@ -5,13 +5,14 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
-class SearchCreateBar extends ConsumerWidget {
-  const SearchCreateBar({super.key});
+class IndividualWatchlistSearchEditBar extends ConsumerWidget {
+  const IndividualWatchlistSearchEditBar({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final notifier = ref.read(watchlistDashboardProvider.notifier);
+    final watchlistDashboardNotifier = ref.read(
+      watchlistDashboardProvider.notifier,
+    );
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25),
@@ -21,7 +22,7 @@ class SearchCreateBar extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 240,
+              width: 260,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 color: AppColorsCommon.appWhite,
@@ -39,7 +40,6 @@ class SearchCreateBar extends ConsumerWidget {
             const SizedBox(width: 20),
             InkWell(
               onTap: () {
-                notifier.createWatchlistBottomSheet(context);
               },
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -56,7 +56,7 @@ class SearchCreateBar extends ConsumerWidget {
                     ),
                     const SizedBox(width: 5),
                     Text(
-                      "Create",
+                      "Edit",
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         fontWeight: FontWeight.w500,
                         color: AppColorsCommon.appWhite,
