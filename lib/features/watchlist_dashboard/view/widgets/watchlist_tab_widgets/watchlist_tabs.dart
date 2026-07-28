@@ -28,9 +28,6 @@ class WatchlistTabs extends ConsumerWidget {
                 ref.read(watchlistDashboardProvider.notifier).changeTab(item);
 
                 if (item == WatchlistTabsEnum.mutualFunds) {
-                  ref
-                      .read(watchlistDashboardProvider.notifier)
-                      .printAllWatchlistNamesAndIds();
                 }
               },
               child: WatchlistTabPill(item: watchlistTabsData[index]),

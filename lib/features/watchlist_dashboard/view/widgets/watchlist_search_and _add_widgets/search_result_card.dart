@@ -10,10 +10,12 @@ class SearchResultCard extends ConsumerWidget {
     super.key,
     required this.security,
     required this.watchlistId,
+    required this.descendantOfWatchlist,
   });
 
   final StockCardModel security;
   final String? watchlistId;
+  final bool descendantOfWatchlist;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,14 +63,16 @@ class SearchResultCard extends ConsumerWidget {
                 const SizedBox(width: 5),
                 InkWell(
                   onTap: () {
-                    print("added to watchlist");
-                    ref
-                        .read(allWatchListsProvider.notifier)
-                        .addSecurityToWatchlist(
-                          watchlistId: watchlistId,
-                          security: security,
-                        );
+                    final notifier = ref.read(allWatchListsProvider.notifier);
 
+                    if (descendantOfWatchlist == true) {
+                      notifier.addSecurityToDescendantWatchlist(
+                        watchlistId: watchlistId,
+                        security: security,
+                      );
+                    } else {
+
+                    }
                   },
                   child: Image.asset(AppAssetsCommon.likedHeart),
                 ),

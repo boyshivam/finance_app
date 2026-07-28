@@ -60,7 +60,6 @@ class WatchlistDashboardNotifier extends Notifier<WatchlistState> {
       final newWatchlist = IndividualWatchlistModel(
         watchlistName: state.watchlistName,
       );
-      print(newWatchlist.watchlistId);
       ref.read(allWatchListsProvider.notifier).addWatchlist(newWatchlist);
     }
   }
@@ -93,14 +92,4 @@ class WatchlistDashboardNotifier extends Notifier<WatchlistState> {
     }
   }
 
-
-
-  void printAllWatchlistNamesAndIds(){
-    final allWatchlists =  ref.watch(allWatchListsProvider);
-
-    for (final w in allWatchlists){
-      print("${w.watchlistId},  ${w.watchlistName }" );
-    }
-
-  }
 }

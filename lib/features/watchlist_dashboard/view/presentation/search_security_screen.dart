@@ -9,9 +9,14 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class SearchSecurityScreen extends ConsumerWidget {
-  const SearchSecurityScreen({super.key, required this.watchlistId});
+  const SearchSecurityScreen({
+    super.key,
+    required this.watchlistId,
+    required this.descendantOfWatchlist,
+  });
 
-  final String? watchlistId;
+  final String watchlistId;
+  final bool descendantOfWatchlist;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -106,10 +111,10 @@ class SearchSecurityScreen extends ConsumerWidget {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.bodyMedium!
                               .copyWith(
-                            color: AppColorsCommon.appWhite,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                          ),
+                                color: AppColorsCommon.appWhite,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ),
                       ),
                     ),
@@ -150,7 +155,12 @@ class SearchSecurityScreen extends ConsumerWidget {
               ),
             if (vmState.searchResultsStatus ==
                 SearchResultStatusEnum.resultsFound)
-              Expanded(child: SearchResultsViewer( watchlistId: watchlistId,)),
+              Expanded(
+                child: SearchResultsViewer(
+                  watchlistId: watchlistId,
+                  descendantOfWatchlist: descendantOfWatchlist,
+                ),
+              ),
           ],
         ),
       ),

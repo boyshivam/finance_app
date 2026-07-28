@@ -1,4 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/watchlist_dashboard/helpers/individual_watchlists_args.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
@@ -10,7 +11,6 @@ class SearchCreateBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final notifier = ref.read(watchlistDashboardProvider.notifier);
 
     return Padding(
@@ -31,8 +31,15 @@ class SearchCreateBar extends ConsumerWidget {
                   border: InputBorder.none,
                   prefixIcon: Icon(Icons.search, size: 16),
                 ),
-                onTap: (){
-                  context.push(AppRoutes.watchlistSearchEquity);
+                onTap: () {
+                  context.push(
+                    AppRoutes.watchlistSearchEquity,
+                    extra: IndividualWatchlistArgs(
+                      watchlistName: "",
+                      watchlistId: "",
+                      descendantOfWatchlist: false,
+                    ),
+                  );
                 },
               ),
             ),

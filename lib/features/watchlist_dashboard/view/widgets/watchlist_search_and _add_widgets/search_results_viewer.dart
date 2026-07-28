@@ -4,9 +4,10 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class SearchResultsViewer extends ConsumerWidget {
-  const SearchResultsViewer({super.key, required this.watchlistId});
+  const SearchResultsViewer({super.key, required this.watchlistId, required this.descendantOfWatchlist});
 
   final String? watchlistId;
+  final bool descendantOfWatchlist;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +20,7 @@ class SearchResultsViewer extends ConsumerWidget {
         scrollDirection: Axis.vertical,
         itemCount: searchResults.length,
         itemBuilder: (context, index) =>
-            SearchResultCard(security: searchResults[index], watchlistId: watchlistId,),
+            SearchResultCard(security: searchResults[index], watchlistId: watchlistId, descendantOfWatchlist: descendantOfWatchlist,),
       ),
     );
   }

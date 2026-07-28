@@ -32,7 +32,7 @@ class TradeButtonsSection extends StatelessWidget {
               ),
               borderRadius: BorderRadius.circular(16)
             ),
-            child: Text("Sell", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            child: Text("Sell", style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: AppColorsCommon.appreciateThemeColor,
                 fontWeight: FontWeight.w600
             )),
@@ -50,7 +50,7 @@ class TradeButtonsSection extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 color: AppColorsCommon.appreciateThemeColor
               ),
-              child: Text("Buy", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              child: Text("Buy", style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: AppColorsCommon.appWhite,
                 fontWeight: FontWeight.w600
               ))

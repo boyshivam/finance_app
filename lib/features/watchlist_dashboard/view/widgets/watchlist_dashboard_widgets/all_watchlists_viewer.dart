@@ -14,7 +14,7 @@ class AllWatchlistsViewer extends ConsumerWidget {
     final allWatchLists = ref.watch(allWatchListsProvider);
 
     return ListView.builder(
-      itemCount: allWatchLists.length,
+      itemCount: allWatchLists.allWatchlistsList.length,
       itemBuilder: (context, index) =>
           IndividualWatchlistSection(watchlist: allWatchlists[index]),
     );

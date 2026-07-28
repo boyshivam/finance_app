@@ -13,6 +13,7 @@ import "package:aprreciate/features/search_dashboard/view/presentation/search_da
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
+import "package:aprreciate/features/watchlist_dashboard/helpers/individual_watchlists_args.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/individual_watchlist_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/search_security_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/watchlist_dashboard.dart";
@@ -83,9 +84,12 @@ final appRouter = GoRouter(
       path: AppRoutes.watchlistSearchEquity,
       name: 'watchListSearchEquity',
       builder: (context, state) {
-        final watchlistId = state.extra as String?;
+        final args = state.extra as IndividualWatchlistArgs;
 
-        return SearchSecurityScreen(watchlistId: watchlistId);
+        return SearchSecurityScreen(
+          watchlistId: args.watchlistId,
+          descendantOfWatchlist: args.descendantOfWatchlist,
+        );
       },
     ),
 
@@ -94,9 +98,12 @@ final appRouter = GoRouter(
       path: AppRoutes.individualWatchlistScreen,
       name: 'individualWatchlistScreen',
       builder: (context, state) {
-        final watchlistHeader = state.extra as String;
+        final args = state.extra as IndividualWatchlistArgs;
 
-        return IndividualWatchlistScreen(watchlistHeader: watchlistHeader);
+        return IndividualWatchlistScreen(
+          watchlistHeader: args.watchlistName,
+          watchlistId: args.watchlistId,
+        );
       },
     ),
 

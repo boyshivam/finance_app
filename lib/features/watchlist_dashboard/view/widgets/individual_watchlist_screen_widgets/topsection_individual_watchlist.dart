@@ -1,5 +1,6 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class TopsectionIndividualWatchlist extends StatelessWidget {
   const TopsectionIndividualWatchlist({
@@ -12,19 +13,25 @@ class TopsectionIndividualWatchlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(25, MediaQuery.of(context).padding.top + 16, 25, 20),
+      padding: EdgeInsets.fromLTRB(
+        25,
+        MediaQuery.of(context).padding.top + 16,
+        25,
+        20,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(AppAssetsCommon.generic_back_cta, width: 30, height: 30),
+          InkWell(
+              onTap: (){context.pop();},
+              child: Image.asset(AppAssetsCommon.generic_back_cta, width: 30, height: 30)),
           const SizedBox(height: 10),
           Text(
             watchlistHeader,
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge!.copyWith(
-                fontSize: 26,
-                fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           const SizedBox(height: 10),
           Text(

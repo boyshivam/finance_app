@@ -14,8 +14,10 @@ class IndividualWatchlistSearchEditBar extends ConsumerWidget {
       watchlistDashboardProvider.notifier,
     );
 
+
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 25),
       child: SizedBox(
         height: 80,
         child: Row(
@@ -24,13 +26,13 @@ class IndividualWatchlistSearchEditBar extends ConsumerWidget {
             Container(
               width: 260,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 color: AppColorsCommon.appWhite,
               ),
               child: TextField(
                 decoration: const InputDecoration(
                   border: InputBorder.none,
-                  prefixIcon: Icon(Icons.search, size: 16),
+                  prefixIcon:  Icon(Icons.search, size: 16),
                 ),
                 onTap: (){
                   context.push(AppRoutes.watchlistSearchEquity);
@@ -42,7 +44,7 @@ class IndividualWatchlistSearchEditBar extends ConsumerWidget {
               onTap: () {
               },
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 decoration: BoxDecoration(
                   color: AppColorsCommon.appreciateThemeColor,
                   borderRadius: BorderRadius.circular(16),
