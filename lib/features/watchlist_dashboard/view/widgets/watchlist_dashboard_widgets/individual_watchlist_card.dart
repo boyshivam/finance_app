@@ -1,16 +1,29 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class IndividualWatchlistCard extends StatelessWidget {
-  const IndividualWatchlistCard({super.key, required this.watchlistCard});
+class IndividualWatchlistCard extends ConsumerWidget {
+  const IndividualWatchlistCard(
+      {super.key, required this.watchlistCard, required this.watchlistId});
 
   final StockCardModel watchlistCard;
+  final String? watchlistId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final allWatchlistsState = ref.watch(allWatchListsProvider);
+
+    final isAdded = allWatchlistsState.allWatchlistsList.any(
+          (watchlist) =>
+          watchlist.securities.any(
+                (security) => security.stockSymbol == watchlistCard.stockSymbol,
+          ),
+    );
+
     return Container(
       decoration: BoxDecoration(
         color: AppColorsCommon.appWhite,
@@ -29,8 +42,13 @@ class IndividualWatchlistCard extends StatelessWidget {
                   children: [
                     Text(
                       watchlistCard.stockSymbol,
-                      style: Theme.of(context).textTheme.bodySmall!
-                          .copyWith(fontWeight: FontWeight.w600),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(height: 5),
                     Text(
@@ -38,20 +56,34 @@ class IndividualWatchlistCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
-                      style: Theme.of(context).textTheme.bodySmall!
-                          .copyWith(fontWeight: FontWeight.w400),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodySmall!
+                          .copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(width: 20,),
-              Image.asset(
-                watchlistCard.isFavourite == true
-                    ? AppAssetsCommon.likedHeart
-                    : AppAssetsCommon.emptyHeart,
-                width: 20,
-                height: 20,
+              const SizedBox(width: 20),
+              InkWell(
+                onTap: () {
+                  final allWatchlistsNotifier = ref.read(
+                    allWatchListsProvider.notifier,
+                  );
+                  allWatchlistsNotifier.manipulateWatchlistSecurities(
+                      watchlistId: watchlistId, security: watchlistCard);
+                },
+                child: Image.asset(
+                  isAdded
+                      ? AppAssetsCommon.likedHeart
+                      : AppAssetsCommon.emptyHeart,
+                  width: 20,
+                  height: 20,
+                ),
               ),
             ],
           ),
@@ -60,21 +92,21 @@ class IndividualWatchlistCard extends StatelessWidget {
             children: [
               Text(
                 "\$${watchlistCard.value.toStringAsFixed(2)}",
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodySmall,
               ),
               const Spacer(),
               Text(
                 "(${watchlistCard.valueChangePerc}%)",
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodySmall,
               ),
               const SizedBox(width: 3),
-              Image.asset(
-                watchlistCard.valueChangeIcon == true
-                    ? AppAssets.value_growth_icon
-                    : AppAssets.value_fall_icon,
-                width: 20,
-                height: 20,
-              ),
+              Image.asset(AppAssets.value_fall_icon),
             ],
           ),
         ],

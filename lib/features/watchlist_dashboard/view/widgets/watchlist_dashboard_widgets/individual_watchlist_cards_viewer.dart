@@ -23,7 +23,7 @@ class IndividualWatchlistCardsViewer extends ConsumerWidget {
 
         ),
         itemBuilder: (context, index) =>
-            IndividualWatchlistCard(watchlistCard: watchlist.securities[index]),
+            IndividualWatchlistCard(watchlistCard: watchlist.securities[index], watchlistId: watchlist.watchlistId,),
       ),
     );
   }

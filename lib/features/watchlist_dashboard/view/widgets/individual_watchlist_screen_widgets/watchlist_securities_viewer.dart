@@ -18,10 +18,13 @@ class WatchlistSecuritiesViewer extends ConsumerWidget {
 
     final stocksOfOpenList = openWatchlist.securities;
 
-    return ListView.builder(
-        itemCount: stocksOfOpenList.length,
-        itemBuilder: (context, index) =>
-            IndividualWatchlistCard(watchlistCard: stocksOfOpenList[index])
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: ListView.builder(
+          itemCount: stocksOfOpenList.length,
+          itemBuilder: (context, index) =>
+              IndividualWatchlistCard(watchlistCard: stocksOfOpenList[index], watchlistId: openedWatchlistId,)
+      ),
     );
   }
 }

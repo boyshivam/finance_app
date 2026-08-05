@@ -13,10 +13,12 @@ class SearchSecurityScreen extends ConsumerWidget {
     super.key,
     required this.watchlistId,
     required this.descendantOfWatchlist,
+    required this.watchlistName
   });
 
   final String watchlistId;
   final bool descendantOfWatchlist;
+  final String watchlistName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

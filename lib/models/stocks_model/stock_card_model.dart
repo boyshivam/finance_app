@@ -1,3 +1,4 @@
+
 class StockCardModel {
   const StockCardModel({
     required this.stockName,
@@ -7,7 +8,8 @@ class StockCardModel {
     required this.valueChangePerc,
     required this.valueChange,
     required this.valueChangeIcon,
-    required this.isFavourite
+    required this.isFavourite,
+
   });
 
   final String stockName;
@@ -18,4 +20,5 @@ class StockCardModel {
   final double valueChange;
   final bool valueChangeIcon;
   final bool isFavourite;
+
 }

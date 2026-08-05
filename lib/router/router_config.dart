@@ -89,6 +89,7 @@ final appRouter = GoRouter(
         return SearchSecurityScreen(
           watchlistId: args.watchlistId,
           descendantOfWatchlist: args.descendantOfWatchlist,
+          watchlistName: args.watchlistName
         );
       },
     ),

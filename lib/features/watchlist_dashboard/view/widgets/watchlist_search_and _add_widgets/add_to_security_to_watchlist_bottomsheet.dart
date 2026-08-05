@@ -1,4 +1,4 @@
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/existing_watchlist_list_viewer.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:flutter/material.dart";
@@ -9,7 +9,6 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(watchlistDashboardProvider);
 
     final currentStateOfWatchlists = ref.watch(allWatchListsProvider);
 
@@ -36,7 +35,7 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
                 ),
               ),
             if(currentStateOfWatchlists.allWatchlistsList.isNotEmpty)
-
+              ExistingWatchlistListViewer()
           ],
         ),
       ),

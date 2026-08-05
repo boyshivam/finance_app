@@ -22,11 +22,14 @@ class IndividualWatchlistScreen extends ConsumerWidget {
     return Scaffold(
       body: Column(
         children: [
-          TopsectionIndividualWatchlist(
-            watchlistHeader: watchlistHeader
+          TopsectionIndividualWatchlist(watchlistHeader: watchlistHeader),
+          IndividualWatchlistSearchEditBar(
+            watchlistId: watchlistId,
+            watchlistName: watchlistHeader,
           ),
-          IndividualWatchlistSearchEditBar(),
-          WatchlistSecuritiesViewer(openedWatchlistId: watchlistId),
+          Expanded(
+            child: WatchlistSecuritiesViewer(openedWatchlistId: watchlistId),
+          ),
         ],
       ),
     );

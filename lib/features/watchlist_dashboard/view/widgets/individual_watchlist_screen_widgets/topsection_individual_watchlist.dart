@@ -23,8 +23,15 @@ class TopsectionIndividualWatchlist extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-              onTap: (){context.pop();},
-              child: Image.asset(AppAssetsCommon.generic_back_cta, width: 30, height: 30)),
+            onTap: () {
+              context.pop();
+            },
+            child: Image.asset(
+              AppAssetsCommon.generic_back_cta,
+              width: 30,
+              height: 30,
+            ),
+          ),
           const SizedBox(height: 10),
           Text(
             watchlistHeader,

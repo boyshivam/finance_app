@@ -1,21 +1,18 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
+import "package:aprreciate/features/watchlist_dashboard/helpers/individual_watchlists_args.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class IndividualWatchlistSearchEditBar extends ConsumerWidget {
-  const IndividualWatchlistSearchEditBar({super.key});
+  const IndividualWatchlistSearchEditBar({super.key, required this.watchlistId, required this.watchlistName});
+
+  final String watchlistId;
+  final String watchlistName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final watchlistDashboardNotifier = ref.read(
-      watchlistDashboardProvider.notifier,
-    );
-
-
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: SizedBox(
@@ -32,17 +29,23 @@ class IndividualWatchlistSearchEditBar extends ConsumerWidget {
               child: TextField(
                 decoration: const InputDecoration(
                   border: InputBorder.none,
-                  prefixIcon:  Icon(Icons.search, size: 16),
+                  prefixIcon: Icon(Icons.search, size: 16),
                 ),
-                onTap: (){
-                  context.push(AppRoutes.watchlistSearchEquity);
+                onTap: () {
+                  context.push(
+                    AppRoutes.watchlistSearchEquity,
+                    extra: IndividualWatchlistArgs(
+                      watchlistName: watchlistName,
+                      watchlistId: watchlistId,
+                      descendantOfWatchlist: true,
+                    ),
+                  );
                 },
               ),
             ),
             const SizedBox(width: 20),
             InkWell(
-              onTap: () {
-              },
+              onTap: () {},
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 decoration: BoxDecoration(

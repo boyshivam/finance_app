@@ -1,5 +1,6 @@
 import 'package:aprreciate/core/constants/app_assets/app_assets_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
+import 'package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/add_to_security_to_watchlist_bottomsheet.dart';
 import 'package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart';
 import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,15 @@ class SearchResultCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(allWatchListsProvider);
+
+
+    final allWatchlists = ref.watch(allWatchListsProvider);
+
+    final isAdded = allWatchlists.allWatchlistsList.any(
+      (watchlistSecurities) => watchlistSecurities.securities.any(
+        (watchlistSecurity) => watchlistSecurity.stockSymbol == security.stockSymbol,
+      ),
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -66,15 +75,23 @@ class SearchResultCard extends ConsumerWidget {
                     final notifier = ref.read(allWatchListsProvider.notifier);
 
                     if (descendantOfWatchlist == true) {
-                      notifier.addSecurityToDescendantWatchlist(
+                      notifier.manipulateWatchlistSecurities(
                         watchlistId: watchlistId,
                         security: security,
                       );
                     } else {
-
+                      showModalBottomSheet(
+                        context: (context),
+                        builder: (builder) =>
+                            AddToSecurityToWatchlistBottomSheet(),
+                      );
                     }
                   },
-                  child: Image.asset(AppAssetsCommon.likedHeart),
+                  child: Image.asset(
+                    isAdded
+                        ? AppAssetsCommon.likedHeart
+                        : AppAssetsCommon.emptyHeart,
+                  ),
                 ),
               ],
             ),
