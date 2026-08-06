@@ -57,7 +57,7 @@ final commonSecuritiesProvider = Provider((ref) {
     ),
 
     StockCardModel(
-      stockName: 'Diamond company',
+      stockName: 'Diamond',
       stockSymbol: 'DIA',
       stockIcon: EtfIconAssets.etf_DIA_icon,
       value: 391,

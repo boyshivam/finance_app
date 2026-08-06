@@ -11,7 +11,7 @@ class IndividualWatchlistCardsViewer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: 270,
+      height: 290,
       child: GridView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: watchlist.securities.length,

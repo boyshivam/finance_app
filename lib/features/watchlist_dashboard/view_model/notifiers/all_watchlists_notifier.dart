@@ -16,6 +16,7 @@ class AllWatchListsNotifier extends Notifier<AllWatchlistsState> {
     );
   }
 
+
   // add or remove securities from a watchlist
   void manipulateWatchlistSecurities({
     required String? watchlistId,

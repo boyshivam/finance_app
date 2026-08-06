@@ -20,7 +20,6 @@ class WatchlistDashboard extends ConsumerWidget {
           const SizedBox(height: 1,),
           WatchlistTabs(),
           SearchCreateBar(),
-
           Expanded(child: WatchlistsDashboardContent())
         ],
       ),

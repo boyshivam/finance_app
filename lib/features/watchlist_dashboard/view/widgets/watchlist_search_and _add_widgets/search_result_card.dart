@@ -24,11 +24,13 @@ class SearchResultCard extends ConsumerWidget {
 
     final allWatchlists = ref.watch(allWatchListsProvider);
 
+
     final isAdded = allWatchlists.allWatchlistsList.any(
       (watchlistSecurities) => watchlistSecurities.securities.any(
         (watchlistSecurity) => watchlistSecurity.stockSymbol == security.stockSymbol,
       ),
     );
+
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -83,7 +85,7 @@ class SearchResultCard extends ConsumerWidget {
                       showModalBottomSheet(
                         context: (context),
                         builder: (builder) =>
-                            AddToSecurityToWatchlistBottomSheet(),
+                             AddToSecurityToWatchlistBottomSheet(security: security,),
                       );
                     }
                   },
