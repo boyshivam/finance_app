@@ -11,7 +11,6 @@ import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_prov
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
-
 class TradeScreen extends ConsumerStatefulWidget {
   const TradeScreen({super.key});
 
@@ -20,16 +19,12 @@ class TradeScreen extends ConsumerStatefulWidget {
 }
 
 class _TradeScreenState extends ConsumerState<TradeScreen> {
-
-
-
   // text editing controllers
   late TextEditingController amountController;
   late TextEditingController quantityController;
 
   late FocusNode amountNode;
   late FocusNode quantityNode;
-
 
   // initialise controller
   @override
@@ -41,23 +36,17 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
 
     amountNode = FocusNode();
     quantityNode = FocusNode();
-
-
-
   }
 
   // dispose controllers
   @override
   void dispose() {
-
     super.dispose();
     amountController.dispose();
     quantityController.dispose();
     amountNode.dispose();
     quantityNode.dispose();
   }
-
-
 
   // this is to show snack bar message on currency toggle
   void currencyToggleSnackBarMessage() {
@@ -78,21 +67,20 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
 
+    // this will show snack bar message when currency toggle is triggered
     ref.listen<CurrencyToggleState>(
-      tradeScreenProvider.select(
-          (state) => state.currencyToggleState,),
-        (previous, next){
-          if(previous != null && previous != next){
-            currencyToggleSnackBarMessage();
-          }
+      tradeScreenProvider.select((state) => state.currencyToggleState),
+      (previous, next) {
+        if (previous != null && previous != next) {
+          currencyToggleSnackBarMessage();
         }
-      );
+      },
+    );
 
-
+    // this listens to the provider and updates the cursor position in the text-field
     ref.listen(tradeScreenProvider, (previous, next) {
       if (amountController.text != next.amountText) {
         amountController.text = next.amountText;
@@ -106,10 +94,9 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
         quantityController.text = next.quantityText;
 
         quantityController.selection = TextSelection.fromPosition(
-          TextPosition(offset: quantityController.text.length)
+          TextPosition(offset: quantityController.text.length),
         );
       }
-
     });
 
     return Scaffold(

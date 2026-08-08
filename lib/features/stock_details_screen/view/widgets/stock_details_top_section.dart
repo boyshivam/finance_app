@@ -7,12 +7,9 @@ import "package:go_router/go_router.dart";
 class StockDetailsTopSection extends StatelessWidget {
   const StockDetailsTopSection({
     super.key,
-    required this.currencyToggled,
-    required this.toggled,
+
   });
 
-  final void Function(bool input) currencyToggled;
-  final bool toggled;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +36,7 @@ class StockDetailsTopSection extends StatelessWidget {
           Text("EQUITY"),
           const Spacer(),
           StockDetailsCurrencyToggle(
-            currencyToggled: currencyToggled,
-            toggled: toggled,
+
           ),
         ],
       ),

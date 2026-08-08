@@ -1,0 +1,1 @@
+enum StockDetailsToggleState { inr, usd }
