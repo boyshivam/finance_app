@@ -88,7 +88,7 @@ class TradeScreenState {
           this.amountTextFieldErrorMessageState,
       quantityTextFieldErrorMessageState:
           quantityTextFieldErrorMessageState ??
-          this.amountTextFieldErrorMessageState,
+          this.quantityTextFieldErrorMessageState,
       orderEligibility: orderEligibility ?? this.orderEligibility,
       currencyToggleState: currencyToggleState ?? this.currencyToggleState,
       quantityByAmount: quantityByAmount ?? this.quantityByAmount,

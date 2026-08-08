@@ -1,6 +1,7 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/fees_section/trade_fees_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_placment_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/purchase_section.dart";
@@ -9,6 +10,7 @@ import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_se
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
+
 
 class TradeScreen extends ConsumerStatefulWidget {
   const TradeScreen({super.key});
@@ -79,8 +81,20 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    ref.listen<CurrencyToggleState>(
+      tradeScreenProvider.select(
+          (state) => state.currencyToggleState,),
+        (previous, next){
+          if(previous != null && previous != next){
+            currencyToggleSnackBarMessage();
+          }
+        }
+      );
+
+
     ref.listen(tradeScreenProvider, (previous, next) {
-      if (!amountNode.hasFocus  &&  amountController.text != next.amountText) {
+      if (amountController.text != next.amountText) {
         amountController.text = next.amountText;
 
         amountController.selection = TextSelection.fromPosition(
@@ -88,7 +102,7 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
         );
       }
 
-      if (!quantityNode.hasFocus && quantityController.text != next.quantityText) {
+      if (amountController.text != next.quantityText) {
         quantityController.text = next.quantityText;
 
         quantityController.selection = TextSelection.fromPosition(

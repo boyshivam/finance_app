@@ -46,7 +46,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // this alters the state of currency toggle
   void toggleCurrency() {
-    // entered input by the user
     final enteredAmount = double.tryParse(state.amountText) ?? 0;
 
     final isUsd = state.currencyToggleState == CurrencyToggleState.toggledUsd;
@@ -56,7 +55,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
           ? CurrencyToggleState.toggledInr
           : CurrencyToggleState.toggledUsd,
       amountText:
-          (isUsd
+          (
+              isUsd
                   ? enteredAmount * AppStringsCommon.currentFxRate
                   : enteredAmount / AppStringsCommon.currentFxRate)
               .toStringAsFixed(2),
@@ -145,20 +145,19 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // fees for the entered amount
   void calculateFees() {
-    final wholeUnits = enteredAmount ~/ state.stockPrice;
-    double platformFee = (wholeUnits * 0.01);
+    double platformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
     final transactionFee = max(0.05, (0.05 / 100) * enteredAmount);
 
     state = state.copyWith(
       totalFees: (platformFee + transactionFee).toStringAsFixed(2),
       orderValueText: enteredAmount.toString(),
-      amountPayable: (enteredAmount - transactionFee).toString(),
+      amountPayable: (enteredAmount + transactionFee).toString(),
       transactionFee: transactionFee.toStringAsFixed(2),
       platformFee: platformFee.toStringAsFixed(2),
     );
   }
 
-
+  // reset order
   void resetOrderValidity() {
     state = state.copyWith(orderEligibility: OrderEligibilityStates.invalid);
   }

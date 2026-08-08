@@ -1,20 +1,26 @@
 import "package:aprreciate/core/constants/app_assets/assets_trade/order_placed_screen/assets_order_placed_screen.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_details_screen/order_details_container.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class OrderPlacedScreen extends StatefulWidget {
+class OrderPlacedScreen extends ConsumerStatefulWidget {
   const OrderPlacedScreen({super.key});
 
   @override
-  State<OrderPlacedScreen> createState() => _OrderPlacedScreenState();
+  ConsumerState<OrderPlacedScreen> createState() => _OrderPlacedScreenState();
 }
 
-class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
+class _OrderPlacedScreenState extends ConsumerState<OrderPlacedScreen> {
   @override
   Widget build(BuildContext context) {
+
+    final tradeDetails = ref.watch(tradeScreenProvider);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25, 180, 25, 25),
@@ -37,7 +43,7 @@ class _OrderPlacedScreenState extends State<OrderPlacedScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Your orders to buy 3.0 qty of APPL has been placed and will be executed at the best available price.",
+                "Your orders to buy ${tradeDetails.quantityText} qty of APPL has been placed and will be executed at the best available price.",
               ),
             ),
             const SizedBox(height: 10),

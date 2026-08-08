@@ -1,12 +1,18 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 
-class OrderDetailsContainer extends StatelessWidget {
+
+class OrderDetailsContainer extends ConsumerWidget {
   const OrderDetailsContainer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final tradeOrderDetails = ref.watch(tradeScreenProvider);
+
     return Container(
       padding:EdgeInsets.symmetric(
         vertical: 20, horizontal: 25,
@@ -35,7 +41,7 @@ class OrderDetailsContainer extends StatelessWidget {
               Text("Quantity", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text("3.02")
+              Text(tradeOrderDetails.quantityText)
             ],
           ),
           const SizedBox(height: 10,),
@@ -45,7 +51,7 @@ class OrderDetailsContainer extends StatelessWidget {
               Text("Estimated price", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text("\$9,012")
+              Text(tradeOrderDetails.amountPayable)
             ],
           ),
           const SizedBox(height: 10,),
@@ -55,7 +61,7 @@ class OrderDetailsContainer extends StatelessWidget {
               Text("Estimated credit", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text("\$8,122")
+              Text(tradeOrderDetails.orderValueText)
             ],
           ),
           const SizedBox(height: 10,),
@@ -65,7 +71,7 @@ class OrderDetailsContainer extends StatelessWidget {
               Text("Fees", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text("\$ 8")
+              Text(tradeOrderDetails.totalFees)
             ],
           ),
           const SizedBox(height: 10,),

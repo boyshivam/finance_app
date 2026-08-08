@@ -24,11 +24,23 @@ class WatchlistSecuritiesViewer extends ConsumerWidget {
       child: Column(
         children: [
           if (stocksOfOpenList.isEmpty)
-            Container(
-              color: AppColorsCommon.textGrey,
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("Empty watchlist"),
+            Center(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 25,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColorsCommon.appWhite,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: AppColorsCommon.inactiveTextFieldBorderColor
+                  )
+                ),
+
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text("Watchlist is empty..."),
+                ),
               ),
             ),
           if (stocksOfOpenList.isNotEmpty)
