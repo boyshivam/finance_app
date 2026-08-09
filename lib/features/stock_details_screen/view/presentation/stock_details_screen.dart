@@ -1,8 +1,10 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/features/stock_details_screen/enum/stock_details_toggle_state.dart";
-import "package:aprreciate/features/stock_details_screen/view/widgets/security_details.dart";
+import "package:aprreciate/features/stock_details_screen/view/widgets/security_bar.dart";
+import "package:aprreciate/features/stock_details_screen/view/widgets/security_data.dart";
 import "package:aprreciate/features/stock_details_screen/view/widgets/stock_details_top_section.dart";
+import "package:aprreciate/features/stock_details_screen/view/widgets/stock_graph.dart";
 import "package:aprreciate/features/stock_details_screen/view/widgets/trade_buttons.dart";
 import "package:aprreciate/features/stock_details_screen/view_model/provider/stock_details_provider.dart";
 import "package:flutter/material.dart";
@@ -41,7 +43,13 @@ class StockDetailsScreen extends ConsumerWidget {
     );
 
     return Scaffold(
-      body: Column(children: [StockDetailsTopSection(), SecurityDetails()]),
+      body: Column(
+          children: [
+            StockDetailsTopSection(),
+            SecurityBar(),
+            const SizedBox(height: 30,),
+            Expanded(child: SecurityData())
+          ]),
       bottomNavigationBar: TradeButtonsSection(),
     );
   }

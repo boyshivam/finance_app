@@ -4,8 +4,8 @@ import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_d
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dash_viewer_widgets/portfolio_dashviewer_freq_tabs.dart";
 import "package:flutter/material.dart";
 
-class PortfolioStatusViewer extends StatelessWidget {
-  const PortfolioStatusViewer({super.key});
+class PortfolioDashboard extends StatelessWidget {
+  const PortfolioDashboard({super.key});
 
   @override
   Widget build(BuildContext context) {

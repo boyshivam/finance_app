@@ -48,15 +48,6 @@ class AllWatchListsNotifier extends Notifier<AllWatchlistsState> {
   }
 
 
-  // check if a particular security exists in multiple watchlists
-  bool isSecurityInAnyWatchlist(String securitySymbol) {
-    return state.allWatchlistsList.any(
-      (watchlist) => watchlist.securities.any(
-        (security) => security.stockSymbol == securitySymbol,
-      ),
-    );
-  }
-
 
   // selected watchlist
   void selectedWatchlist({

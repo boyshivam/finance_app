@@ -1,9 +1,10 @@
+import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dashboard_holdings_widgets/portfolio_holdings_viewer.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dashboard_tabs.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dash_viewer_widgets/portfolio_status_viewer.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_topsection.dart";
 import "package:flutter/material.dart";
 
-class PortfolioDashboardScreen extends StatefulWidget {
+class PortfolioDashboardScreen extends ConsumerStatefulWidget {
   const PortfolioDashboardScreen({super.key});
 
   @override
@@ -12,17 +13,14 @@ class PortfolioDashboardScreen extends StatefulWidget {
 }
 
 class _PortfolioDashboardScreenState extends State<PortfolioDashboardScreen> {
-
   int selectedTabIndex = 0;
   late ScrollController tabScrollController;
-
 
   void onSelectTab(int index) {
     setState(() {
       selectedTabIndex = index;
     });
   }
-
 
   @override
   void initState() {
@@ -47,7 +45,8 @@ class _PortfolioDashboardScreenState extends State<PortfolioDashboardScreen> {
           selectedTabIndex: selectedTabIndex,
           scrollController: tabScrollController,
         ),
-        PortfolioStatusViewer()
+        PortfolioDashboard(),
+        PortfolioHoldingsViewer(holdings: ,)
       ],
     );
   }

@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 class AppColorsCommon {
 
   // appreciate theme color
-  static const appreciateThemeColor = Color(0xFF0461E5);
+  static const appreciateThemeColor = Color(0xFF6F47EA);
 
   // app error color -
   static const appreciateThemeError = Color(0xFFEA3636);

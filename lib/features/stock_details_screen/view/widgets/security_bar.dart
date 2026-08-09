@@ -1,12 +1,13 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/stock_details_screen/view/widgets/stock_graph.dart";
 import "package:flutter/material.dart";
 
 
 
-class SecurityDetails extends StatelessWidget {
-  const SecurityDetails({super.key});
+class SecurityBar extends StatelessWidget {
+  const SecurityBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +50,9 @@ class SecurityDetails extends StatelessWidget {
                   ],
                 )
               ],
-            )
+            ),
+            const Divider(color: AppColorsCommon.inactiveTextFieldBorderColor,),
+            StockGraph()
           ],
         ),
       ),

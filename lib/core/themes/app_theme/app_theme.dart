@@ -3,17 +3,17 @@ import "package:aprreciate/core/themes/text_theme/app_text_theme.dart";
 
 
 
-const Color theColor = Color(0xFF0461E5);
+const Color theColor = Color(0xFF6F47EA);
 
 const Color scaffoldColor = Color(0xFFEFF1F4);
 
 final kInitialLightColor = ColorScheme.fromSeed(
     brightness: Brightness.light,
-    seedColor: Color(0xFF0461E5));
+    seedColor: Color(0xFF6F47EA));
 
 final kInitialDarkColor = ColorScheme.fromSeed(
     brightness: Brightness.dark,
-    seedColor: Color(0xFF0461E5));
+    seedColor: Color(0xFF6F47EA));
 
 class AppTheme {
 

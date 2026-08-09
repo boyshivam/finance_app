@@ -1,6 +1,8 @@
 import "dart:math";
 
+import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
+import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_holdings_provider.dart";
 import "package:aprreciate/features/profile_dashboard/view_model/view_model_orders/providers/orders_provider.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
@@ -9,6 +11,7 @@ import "package:aprreciate/features/trade_dashboard/enums/text_field_error_messa
 import "package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_ screen_state.dart";
+import "package:aprreciate/models/portfolio_holding_model/portfolio_holding_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
@@ -16,7 +19,9 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   TradeScreenState build() {
     // TODO: implement build
     return TradeScreenState(
-      stockName: 'APPL',
+      securityName: "Tesla",
+      securitySymbol: 'TSLA',
+      securityIcon: AppAssets.tesla_icon,
       usWalletFundsState: UsWalletFundsState.sufficientFunds,
       amountTextFieldState: TextFieldsStates.neutral,
       quantityTextFieldState: TextFieldsStates.neutral,
@@ -55,8 +60,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
           ? CurrencyToggleState.toggledInr
           : CurrencyToggleState.toggledUsd,
       amountText:
-          (
-              isUsd
+          (isUsd
                   ? enteredAmount * AppStringsCommon.currentFxRate
                   : enteredAmount / AppStringsCommon.currentFxRate)
               .toStringAsFixed(2),
@@ -102,6 +106,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
+  //  place trade order
   void placeOrder() {
     final enteredAmount = state.amountText;
 
@@ -139,6 +144,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
+  // check the validity of purchase order which weighs on USWallet balance, and entered amount
   bool validatePurchase() {
     return state.usWalletBalance >= enteredAmount && enteredAmount != 0;
   }
@@ -154,6 +160,30 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       amountPayable: (enteredAmount + transactionFee).toString(),
       transactionFee: transactionFee.toStringAsFixed(2),
       platformFee: platformFee.toStringAsFixed(2),
+    );
+  }
+
+  // add investment to portfolio or add investment to exiting portfolio
+  void addSecurityToPortfolio() {
+    double securityPrice = double.tryParse(state.amountText) ?? 0;
+    double purchaseAmount = double.tryParse(state.amountText) ?? 0;
+    double purchaseQuantity = double.tryParse(state.quantityText) ?? 0;
+    double averageCost = purchaseAmount / purchaseQuantity;
+
+    final newHolding = PortfolioHoldingCardModel(
+      securityName: state.securityName,
+      securityIcon: state.securityIcon,
+      securitySymbol: state.securitySymbol,
+      securityPrice: securityPrice,
+      investedAmount: purchaseAmount,
+      purchasedQuantity: purchaseQuantity,
+      average: averageCost,
+    );
+
+    final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
+    holdingsNotifier.addHolding(
+      newHolding: newHolding,
+      securitySymbol: state.securitySymbol,
     );
   }
 
