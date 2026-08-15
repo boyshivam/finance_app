@@ -130,6 +130,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         orderEligibility: OrderEligibilityStates.valid,
       );
       ref.read(ordersProvider.notifier).addOrderDetailsToCard();
+      addSecurityToPortfolio();
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:aprreciate/features/search_dashboard/enums/search_enums.dart';
 import 'package:aprreciate/features/search_dashboard/enums/user_input_enum.dart';
 import 'package:aprreciate/models/search_dashboard_models/search_dashboard_card_model.dart';
+import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 
 class SearchDashboardState {
   const SearchDashboardState({
@@ -14,13 +15,13 @@ class SearchDashboardState {
   final int selectedTabIndex;
   final SearchResultState searchState;
   final UserInputState userInputState;
-  final List<SearchDashboardCardModel> searchResults;
+  final List<StockCardModel> searchResults;
 
   SearchDashboardState copyWith({
     int? selectedTabIndex,
     SearchResultState? searchState,
     UserInputState? userInputState,
-    List<SearchDashboardCardModel>? searchResults,
+    List<StockCardModel>? searchResults,
   }){
     return SearchDashboardState(
       selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,

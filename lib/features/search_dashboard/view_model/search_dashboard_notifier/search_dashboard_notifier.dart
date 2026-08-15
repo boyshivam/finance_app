@@ -2,7 +2,7 @@ import 'package:aprreciate/data/search_dashboard_data/search_dashboard_cards.dar
 import 'package:aprreciate/features/search_dashboard/enums/search_enums.dart';
 import 'package:aprreciate/features/search_dashboard/enums/user_input_enum.dart';
 import 'package:aprreciate/features/search_dashboard/view_model/search_state/search_state.dart';
-import 'package:aprreciate/models/search_dashboard_models/search_dashboard_card_model.dart';
+import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchDashboardNotifier extends Notifier<SearchDashboardState> {
@@ -17,10 +17,10 @@ class SearchDashboardNotifier extends Notifier<SearchDashboardState> {
   }
 
   // validate if user's input has a match in database
-  List<SearchDashboardCardModel> validateSearchQuery(String input) {
+  List<StockCardModel> validateSearchQuery(String input) {
     final query = input.toLowerCase();
     return searchDashboardCards
-        .where((stock) => stock.itemName.toLowerCase().contains(query))
+        .where((stock) => stock.stockName.toLowerCase().contains(query))
         .toList();
   }
 

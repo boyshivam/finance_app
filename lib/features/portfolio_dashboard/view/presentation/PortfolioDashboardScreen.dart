@@ -3,37 +3,18 @@ import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_d
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dash_viewer_widgets/portfolio_status_viewer.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_topsection.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class PortfolioDashboardScreen extends ConsumerStatefulWidget {
   const PortfolioDashboardScreen({super.key});
 
   @override
-  State<PortfolioDashboardScreen> createState() =>
+  ConsumerState<PortfolioDashboardScreen> createState() =>
       _PortfolioDashboardScreenState();
 }
 
-class _PortfolioDashboardScreenState extends State<PortfolioDashboardScreen> {
-  int selectedTabIndex = 0;
-  late ScrollController tabScrollController;
+class _PortfolioDashboardScreenState extends ConsumerState<PortfolioDashboardScreen> {
 
-  void onSelectTab(int index) {
-    setState(() {
-      selectedTabIndex = index;
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    tabScrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    tabScrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +22,9 @@ class _PortfolioDashboardScreenState extends State<PortfolioDashboardScreen> {
       children: [
         PortfolioDashTopSection(),
         PortfolioDashboardTabs(
-          onSelectTab: onSelectTab,
-          selectedTabIndex: selectedTabIndex,
-          scrollController: tabScrollController,
         ),
         PortfolioDashboard(),
-        PortfolioHoldingsViewer(holdings: ,)
+        Expanded(child: PortfolioHoldingsViewer())
       ],
     );
   }

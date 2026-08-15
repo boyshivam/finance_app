@@ -20,11 +20,13 @@ class PortfolioHoldingCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset(holding.securityIcon),
+              Image.asset(holding.securityIcon, width: 40, height: 40),
               const SizedBox(width: 10),
               Column(
                 children: [
-                  Text(holding.securityName),
+                  Text(holding.securityName, style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    fontSize: 24
+                  ),),
                   Text(
                     "${holding.securityPrice}",
                     style: Theme.of(context).textTheme.bodySmall,

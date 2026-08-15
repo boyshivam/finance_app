@@ -1,29 +1,77 @@
 import 'package:aprreciate/core/constants/app_assets/app_assets.dart';
-import 'package:aprreciate/models/search_dashboard_models/search_dashboard_card_model.dart';
+import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
+import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/top_etf_icons_assets/etf_icons_assets.dart";
 
-const List<SearchDashboardCardModel> searchDashboardCards = [
-  SearchDashboardCardModel(
-    icon: AppAssets.apple_icon,
-    itemSymbol: "AAPL",
-    itemName: "Apple",
-    itemType: "Stock",
+const List<StockCardModel> searchDashboardCards = [
+  StockCardModel(
+    stockName: 'Apple',
+    stockSymbol: 'APPL',
+    stockIcon: AppAssets.apple_icon,
+    value: 298,
+    valueChange: 21,
+    valueChangePerc: -2.1,
+    valueChangeIcon: true,
+    isFavourite: false,
   ),
-  SearchDashboardCardModel(
-    icon: AppAssets.amazon_icon,
-    itemSymbol: "AMZN",
-    itemName: "Amazon",
-    itemType: "Stock",
+  StockCardModel(
+    stockName: 'Tesla',
+    stockSymbol: 'TSLA',
+    stockIcon: AppAssets.tesla_icon,
+    value: 399,
+    valueChange: 34.98,
+    valueChangePerc: 9.9,
+    valueChangeIcon: false,
+    isFavourite: false,
   ),
-  SearchDashboardCardModel(
-    icon: AppAssets.microsoft_icon,
-    itemSymbol: "MSFT",
-    itemName: "Microsoft",
-    itemType: "Stock",
+  StockCardModel(
+    stockName: 'Amazon',
+    stockSymbol: 'AZN',
+    stockIcon: AppAssets.amazon_icon,
+    value: 268,
+    valueChange: 17,
+    valueChangePerc: -3.4,
+    valueChangeIcon: true,
+    isFavourite: false,
   ),
-  SearchDashboardCardModel(
-    icon: AppAssets.tesla_icon,
-    itemSymbol: "TSLA",
-    itemName: "Tesla",
-    itemType: "Stock",
+  StockCardModel(
+    stockName: 'Microsoft',
+    stockSymbol: 'MSFT',
+    stockIcon: AppAssets.microsoft_icon,
+    value: 281,
+    valueChange: 12.2,
+    valueChangePerc: 7.1,
+    valueChangeIcon: true,
+    isFavourite: false,
+  ),
+  StockCardModel(
+    stockName: 'Google',
+    stockSymbol: 'GOOGL',
+    stockIcon: AppAssets.google_icon,
+    value: 311,
+    valueChange: 21.2,
+    valueChangePerc: -8.1,
+    valueChangeIcon: false,
+    isFavourite: false,
+  ),
+
+  StockCardModel(
+    stockName: 'Diamond',
+    stockSymbol: 'DIA',
+    stockIcon: EtfIconAssets.etf_DIA_icon,
+    value: 391,
+    valueChange: 11.2,
+    valueChangePerc: 5.1,
+    valueChangeIcon: true,
+    isFavourite: false,
+  ),
+  StockCardModel(
+    stockName: 'Voodoo child',
+    stockSymbol: 'VOO',
+    stockIcon: EtfIconAssets.etf_VOO_icon,
+    value: 389,
+    valueChange: 41.2,
+    valueChangePerc: -2.1,
+    valueChangeIcon: false,
+    isFavourite: false,
   ),
 ];

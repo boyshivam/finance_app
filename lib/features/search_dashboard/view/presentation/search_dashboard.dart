@@ -3,9 +3,7 @@ import "package:aprreciate/features/search_dashboard/view/widgets/search_bar.dar
 import "package:aprreciate/features/search_dashboard/view/widgets/search_dash_top_section.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_tabs.dart";
 import "package:aprreciate/features/search_dashboard/view_model/search_dashboard_provider/search_dashboard_provider.dart";
-import "package:aprreciate/features/search_dashboard/view_model/view_model_searchdashboard.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:riverpod/riverpod.dart";
 import "package:flutter/material.dart";
 
 class SearchDashboardScreen extends ConsumerStatefulWidget {
@@ -89,7 +87,6 @@ class _SearchDashboardScreenState extends ConsumerState<SearchDashboardScreen> {
             searchState: vm.searchState,
             userInput: vm.userInputState,
             results: vm.searchResults,
-
           ),
         ],
       ),

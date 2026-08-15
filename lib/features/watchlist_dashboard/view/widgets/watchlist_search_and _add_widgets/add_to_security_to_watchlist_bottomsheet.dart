@@ -1,6 +1,7 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/existing_watchlist_list_viewer.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart";
+import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -15,7 +16,12 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    // provider and notifiers declaration
     final allWatchlists = ref.watch(allWatchListsProvider);
+    final createWatchlistNotifier = ref.read(
+      watchlistDashboardProvider.notifier,
+    );
 
     return SingleChildScrollView(
       child: Padding(
@@ -34,7 +40,7 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
                 fontSize: 25,
               ),
             ),
-            if (allWatchlists.allWatchlistsList.isEmpty)
+            if (allWatchlists.allWatchlistsList.isEmpty) ...[
               Align(
                 alignment: Alignment.center,
                 child: Container(
@@ -42,28 +48,60 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
                   child: Text("No existing watchlists... Create a new one!"),
                 ),
               ),
-            if (allWatchlists.allWatchlistsList.isNotEmpty)
-              ExistingWatchlistListViewer(security: security),
-            SizedBox(
-              width: double.infinity,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: AppColorsCommon.appreciateThemeColor,
-                ),
-                child: InkWell(
-                  onTap: () {},
-                  child: Text(
-                    "Confirm",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: AppColorsCommon.appWhite,
+              SizedBox(
+                width: double.infinity,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColorsCommon.appreciateThemeColor,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      // notifier watchlist
+                      createWatchlistNotifier.createWatchlistBottomSheet(
+                        context,
+                      );
+                    },
+                    child: Text(
+                      "Create watchlist",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: AppColorsCommon.appWhite,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-            ),
+            ] else if (allWatchlists.allWatchlistsList.isNotEmpty) ...[
+              ExistingWatchlistListViewer(security: security),
+              SizedBox(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: AppColorsCommon.appreciateThemeColor,
+                      ),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Confirm",
+                          style: Theme.of(context).textTheme.bodyMedium!
+                              .copyWith(color: AppColorsCommon.appWhite),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ],
         ),
       ),

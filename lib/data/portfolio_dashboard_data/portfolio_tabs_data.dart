@@ -1,2 +1,7 @@
+import 'package:aprreciate/features/portfolio_dashboard/view_model/enums/portfolio_tabs.dart';
 
-const  List<String> portfolioTabs = ['All', 'US Stocks', 'Mutual Funds',];
+const List<PortfolioTabsEnums> portfolioTabs = [
+  PortfolioTabsEnums.all,
+  PortfolioTabsEnums.usStocks,
+  PortfolioTabsEnums.mutualFunds,
+];

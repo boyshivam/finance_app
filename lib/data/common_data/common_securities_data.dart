@@ -3,7 +3,7 @@ import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/top_e
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-final commonSecuritiesProvider = Provider((ref) {
+final   commonSecuritiesProvider = Provider<List<StockCardModel>>((ref) {
   return [
     StockCardModel(
       stockName: 'Apple',
