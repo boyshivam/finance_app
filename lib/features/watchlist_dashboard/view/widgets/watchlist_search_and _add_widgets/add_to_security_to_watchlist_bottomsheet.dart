@@ -5,6 +5,7 @@ import "package:aprreciate/features/watchlist_dashboard/view_model/providers/wat
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
   const AddToSecurityToWatchlistBottomSheet({
@@ -17,9 +18,10 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    // provider and notifiers declaration
+    //  watchlists stored currently in watchlist provider
     final allWatchlists = ref.watch(allWatchListsProvider);
-    final createWatchlistNotifier = ref.read(
+
+    final watchlistNotifier = ref.read(
       watchlistDashboardProvider.notifier,
     );
 
@@ -59,7 +61,7 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
                   child: InkWell(
                     onTap: () {
                       // notifier watchlist
-                      createWatchlistNotifier.createWatchlistBottomSheet(
+                      watchlistNotifier.createWatchlistBottomSheet(
                         context,
                       );
                     },
@@ -75,31 +77,51 @@ class AddToSecurityToWatchlistBottomSheet extends ConsumerWidget {
               ),
             ] else if (allWatchlists.allWatchlistsList.isNotEmpty) ...[
               ExistingWatchlistListViewer(security: security),
-              SizedBox(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 20,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: AppColorsCommon.appreciateThemeColor,
-                      ),
-                      child: InkWell(
-                        onTap: () {},
-                        child: Text(
-                          "Confirm",
-                          style: Theme.of(context).textTheme.bodyMedium!
-                              .copyWith(color: AppColorsCommon.appWhite),
-                          textAlign: TextAlign.center,
+              Column(
+                children: [
+                  InkWell(
+                    onTap: (){
+                      watchlistNotifier.createWatchlistBottomSheet(context);
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.add_circle,
+                          color: AppColorsCommon.appreciateThemeColor,
                         ),
+                        const SizedBox(width: 5,),
+                        Text(
+                          "Create New",
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontSize: 22,
+                            color: AppColorsCommon.appreciateThemeColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColorsCommon.appreciateThemeColor,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        context.pop();
+                      },
+                      child: Text(
+                        "Confirm",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: AppColorsCommon.appWhite,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ],

@@ -1,12 +1,18 @@
+import "package:aprreciate/features/watchlist_dashboard/enums/watchlist_snackbar_text_enum.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/states/all_watchlists_state.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:aprreciate/models/watchlist_models/watchlist_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class AllWatchListsNotifier extends Notifier<AllWatchlistsState> {
+
+  bool isAdded = false;
+
   @override
   AllWatchlistsState build() {
-    return AllWatchlistsState(allWatchlistsList: []);
+    return AllWatchlistsState(
+        watchlistMessage: WatchlistSnackbarTextEnum.neutral ,
+        allWatchlistsList: []);
   }
 
   // add new watchlist
@@ -22,6 +28,9 @@ class AllWatchListsNotifier extends Notifier<AllWatchlistsState> {
     required String? watchlistId,
     required StockCardModel security,
   }) {
+
+    WatchlistSnackbarTextEnum? message;
+
     state = state.copyWith(
       allWatchlistsList: state.allWatchlistsList.map((watchlist) {
         if (watchlist.watchlistId != watchlistId) {
@@ -33,6 +42,9 @@ class AllWatchListsNotifier extends Notifier<AllWatchlistsState> {
         );
 
         if (securityExists) {
+
+          message = WatchlistSnackbarTextEnum.removed;
+
           return watchlist.copyWith(
             securities: watchlist.securities
                 .where((e) => e.stockSymbol != security.stockSymbol)
@@ -40,23 +52,21 @@ class AllWatchListsNotifier extends Notifier<AllWatchlistsState> {
           );
         }
 
+        message = WatchlistSnackbarTextEnum.added;
+
         return watchlist.copyWith(
           securities: [...watchlist.securities, security],
         );
       }).toList(),
+      watchlistMessage: message
     );
   }
 
 
-
-  // selected watchlist
-  void selectedWatchlist({
-    required String watchlistId,
-    required String watchlistName,
-  }) {
+  // clear the snack bar message once shown
+  void clearSnackBarMessage(){
     state = state.copyWith(
-      selectedWatchlistId: watchlistId,
-      selectedWatchlistName: watchlistName,
+      watchlistMessage: WatchlistSnackbarTextEnum.neutral
     );
   }
 }

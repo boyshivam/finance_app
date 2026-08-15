@@ -1,19 +1,21 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/watchlist_dashboard/enums/search_result_status_enum.dart";
+import "package:aprreciate/features/watchlist_dashboard/enums/watchlist_snackbar_text_enum.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/search_results_viewer.dart";
+import "package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/watchlist_dashboard_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
-class SearchSecurityScreen extends ConsumerWidget {
+class SearchSecurityScreen extends ConsumerStatefulWidget {
   const SearchSecurityScreen({
     super.key,
     required this.watchlistId,
     required this.descendantOfWatchlist,
-    required this.watchlistName
+    required this.watchlistName,
   });
 
   final String watchlistId;
@@ -21,9 +23,48 @@ class SearchSecurityScreen extends ConsumerWidget {
   final String watchlistName;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final vmState = ref.watch(watchlistDashboardProvider);
+  ConsumerState<SearchSecurityScreen> createState() =>
+      _SearchSecurityScreenState();
+}
 
+class _SearchSecurityScreenState extends ConsumerState<SearchSecurityScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    ref.listenManual(
+      allWatchListsProvider.select((state) => state.watchlistMessage),
+      (previous, next) {
+        if (next == WatchlistSnackbarTextEnum.added) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+
+              content: Text("Security added!"),
+              duration: Duration(seconds: 2),
+              backgroundColor: AppColorsCommon.appreciateThemeColor,
+            ),
+          );
+          final notifier = ref.read(allWatchListsProvider.notifier);
+          notifier.clearSnackBarMessage();
+        } else if (next == WatchlistSnackbarTextEnum.removed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Security removed!"),
+              duration: Duration(seconds: 1),
+              backgroundColor: AppColorsCommon.appreciateThemeColor,
+            ),
+          );
+          final notifier = ref.read(allWatchListsProvider.notifier);
+          notifier.clearSnackBarMessage();
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final vmState = ref.watch(watchlistDashboardProvider);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(
@@ -159,8 +200,8 @@ class SearchSecurityScreen extends ConsumerWidget {
                 SearchResultStatusEnum.resultsFound)
               Expanded(
                 child: SearchResultsViewer(
-                  watchlistId: watchlistId,
-                  descendantOfWatchlist: descendantOfWatchlist,
+                  watchlistId: widget.watchlistId,
+                  descendantOfWatchlist: widget.descendantOfWatchlist,
                 ),
               ),
           ],

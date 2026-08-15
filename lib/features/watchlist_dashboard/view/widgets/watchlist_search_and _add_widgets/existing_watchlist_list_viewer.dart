@@ -16,7 +16,7 @@ class ExistingWatchlistListViewer extends ConsumerWidget {
         .allWatchlistsList;
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+      padding: EdgeInsets.symmetric(vertical: 20),
       child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
