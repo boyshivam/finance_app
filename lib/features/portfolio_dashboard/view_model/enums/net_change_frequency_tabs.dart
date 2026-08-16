@@ -1,0 +1,1 @@
+enum NetChangeFrequencyTabs { totalPnL, dailyPnL }

@@ -1,19 +1,21 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_provider.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-
-
-class PortfolioDashboardDetails extends StatelessWidget {
+class PortfolioDashboardDetails extends ConsumerWidget {
   const PortfolioDashboardDetails({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vmState = ref.watch(portfolioProvider);
+
     return Container(
       padding: EdgeInsets.all(20),
       height: 110,
       decoration: BoxDecoration(
-          color: AppColorsCommon.appWhite,
-          borderRadius: BorderRadius.circular(20)
+        color: AppColorsCommon.appWhite,
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         children: [
@@ -21,12 +23,14 @@ class PortfolioDashboardDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Invested"
+              Text("Invested"),
+              const SizedBox(height: 5),
+              Text(
+                vmState.investedAmount.toStringAsFixed(2),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 5,),
-              Text("Rs 9,00,000", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.bold
-              ),)
             ],
           ),
           const Spacer(),
@@ -35,10 +39,13 @@ class PortfolioDashboardDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text("Current"),
-              const SizedBox(height: 5,),
-              Text("Rs 9,25,000", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.bold
-              ))
+              const SizedBox(height: 5),
+              Text(
+                vmState.currentAmount.toStringAsFixed(2),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         ],

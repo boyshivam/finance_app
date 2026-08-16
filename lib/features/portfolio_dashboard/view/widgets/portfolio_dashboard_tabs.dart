@@ -13,7 +13,7 @@ class PortfolioDashboardTabs extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // current selected tab of the tabs
     final selectedTab = ref.watch(
-      portfolioProvider.select((state) => state.selectedTab),
+      portfolioProvider.select((state) => state.selectedProductTab),
     );
 
     return Container(
