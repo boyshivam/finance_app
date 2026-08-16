@@ -5,6 +5,7 @@ class PortfolioHoldingCardModel {
     required this.securityIcon,
     required this.securityPrice,
     required this.investedAmount,
+    required this.totalPnL,
     required this.purchasedQuantity,
     required this.average,
   });
@@ -15,5 +16,6 @@ class PortfolioHoldingCardModel {
   final double securityPrice;
   final double investedAmount;
   final double purchasedQuantity;
+  final double totalPnL;
   final double average;
 }

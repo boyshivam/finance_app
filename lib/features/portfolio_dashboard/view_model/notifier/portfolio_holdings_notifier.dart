@@ -35,12 +35,15 @@ class PortfolioHoldingsNotifier
 
       final newAverage = totalInvestedAmount / totalQuantity;
 
+      final totalPnL = (holding.securityPrice - newAverage) * totalQuantity;
+
       return PortfolioHoldingCardModel(
         securityIcon: newHolding.securityIcon,
         securityName: newHolding.securityName,
-        securitySymbol: holding.securitySymbol,
-        securityPrice: holding.securityPrice,
+        securitySymbol: newHolding.securitySymbol,
+        securityPrice: newHolding.securityPrice,
         investedAmount: totalInvestedAmount,
+        totalPnL: totalPnL,
         purchasedQuantity: totalQuantity,
         average: newAverage,
       );

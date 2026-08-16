@@ -166,10 +166,11 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // add investment to portfolio or add investment to exiting portfolio
   void addSecurityToPortfolio() {
-    double securityPrice = double.tryParse(state.amountText) ?? 0;
+    double securityPrice = state.stockPrice;
     double purchaseAmount = double.tryParse(state.amountText) ?? 0;
     double purchaseQuantity = double.tryParse(state.quantityText) ?? 0;
     double averageCost = purchaseAmount / purchaseQuantity;
+    double totalPnL = (securityPrice - averageCost) * purchaseQuantity;
 
     final newHolding = PortfolioHoldingCardModel(
       securityName: state.securityName,
@@ -179,6 +180,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       investedAmount: purchaseAmount,
       purchasedQuantity: purchaseQuantity,
       average: averageCost,
+      totalPnL: totalPnL,
     );
 
     final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);

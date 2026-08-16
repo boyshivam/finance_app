@@ -55,7 +55,7 @@ class PortfolioHoldingCard extends StatelessWidget {
                 children: [
                   Text("Total P&L"),
                   const SizedBox(height: 10),
-                  Text("8938323"),
+                  Text(holding.totalPnL.toStringAsFixed(2)),
                   const SizedBox(height: 20),
                   Text("Qty: ${holding.purchasedQuantity.toStringAsFixed(2)}"),
                 ],
