@@ -1,6 +1,7 @@
 import "package:aprreciate/features/LRS_flow/view/presentation/confirm_remittance_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/lrs_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/transactions_submitted_screen.dart";
+import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_screen.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/home_screen/home_screen.dart";
 import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
@@ -11,7 +12,6 @@ import "package:aprreciate/features/profile_dashboard/view/presentation/order/or
 import "package:aprreciate/features/profile_dashboard/view/presentation/profile_screen.dart";
 import "package:aprreciate/features/search_dashboard/helpers/search_dashboard_arg.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
-import "package:aprreciate/features/stock_details_screen/helper/stock_details_args.dart";
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
@@ -64,10 +64,19 @@ final appRouter = GoRouter(
         );
       },
     ),
+
+    // Route to LRS screen
     GoRoute(
       path: AppRoutes.lrsScreen,
       name: 'lrsScreen',
       builder: (context, state) => LrsScreen(),
+    ),
+
+    // route to Cash-free transaction
+    GoRoute(
+      path: AppRoutes.cashFreeScreen,
+      name: 'cashFreeScreen',
+      builder: (context, state) => CashFreeScreen(),
     ),
 
     GoRoute(

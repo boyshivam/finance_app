@@ -35,14 +35,14 @@ class OrderPlacementSection extends ConsumerWidget {
               const Spacer(),
               Row(
                 children: [
-                  Text("\$ ${AppStringsCommon.usWalletBalance}"),
+                  Text(vmState.usWalletBalance.toStringAsFixed(2)),
                   const SizedBox(width: 5),
                   Icon(Icons.arrow_drop_down_circle_outlined),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           if (vmState.usWalletFundsState == UsWalletFundsState.insufficientFunds)
             Row(
               children: [

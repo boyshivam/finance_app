@@ -14,8 +14,9 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   @override
   LrsScreenState build() {
     return LrsScreenState(
+      currentBuyingPower: 0,
       amountText: "",
-      currentYesBalance: AppStringsCommon.yesBankBalance,
+      currentYesBalance: 0,
       amountFieldStates: TextFieldStates.neutral,
       fxRate: AppStringsCommon.currentFxRate,
       processingDate: "",

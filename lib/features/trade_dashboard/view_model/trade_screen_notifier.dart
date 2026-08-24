@@ -30,7 +30,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       amountTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       quantityTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       currencyToggleState: CurrencyToggleState.toggledUsd,
-      usWalletBalance: AppStringsCommon.usWalletBalance,
+      usWalletBalance: 0,
       quantityByAmount: 0,
       amountByQuantity: 0,
       convertedValue: 0,

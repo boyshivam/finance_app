@@ -48,6 +48,9 @@ class AppRoutes {
   // LRS , add funds to wallet
   static const String lrsScreen = "/lrsScreen";
 
+  // Cash free screen
+  static const String cashFreeScreen = "/cashFreeScreen";
+
   // Yes bank confirm remittance screen
   static const String confirmRemittanceScreen = "/confirmRemittance";
 

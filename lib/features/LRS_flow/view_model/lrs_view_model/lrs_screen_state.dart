@@ -4,6 +4,7 @@ import 'package:aprreciate/features/LRS_flow/enums/textfield_states.dart';
 
 class LrsScreenState {
   const LrsScreenState({
+    required this.currentBuyingPower,
     required this.amountText,
     required this.currentYesBalance,
     required this.amountFieldStates,
@@ -15,6 +16,7 @@ class LrsScreenState {
     required this.selectedFundSource,
   });
 
+  final double currentBuyingPower;
   final String amountText;
   final List<String> sourceOfFunds;
   final String? selectedFundSource;
@@ -26,6 +28,7 @@ class LrsScreenState {
   final RemittanceValidityCheck remittanceValidityCheck;
 
   LrsScreenState copyWith({
+    double? currentBuyingPower,
     String? amountText,
     List<String>? sourceOfFunds,
     String? selectedFundSource,
@@ -37,6 +40,7 @@ class LrsScreenState {
     RemittanceValidityCheck? remittanceValidityCheck,
   }) {
     return LrsScreenState(
+      currentBuyingPower: currentBuyingPower ?? this.currentBuyingPower,
       selectedFundSource: selectedFundSource ?? this.selectedFundSource,
       sourceOfFunds: sourceOfFunds ?? this.sourceOfFunds,
       amountText: amountText ?? this.amountText,
