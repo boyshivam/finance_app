@@ -9,6 +9,7 @@ import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart"
 import "package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart";
+import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_ screen_state.dart";
 import "package:aprreciate/models/portfolio_holding_model/portfolio_holding_card_model.dart";
@@ -19,9 +20,10 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   TradeScreenState build() {
     // TODO: implement build
     return TradeScreenState(
-      securityName: "Tesla",
-      securitySymbol: 'TSLA',
-      securityIcon: AppAssets.tesla_icon,
+      securityName: "",
+      securitySymbol: "",
+      securityIcon: "",
+      tradeType: TradeTypeEnum.buyFraction,
       usWalletFundsState: UsWalletFundsState.sufficientFunds,
       amountTextFieldState: TextFieldsStates.neutral,
       quantityTextFieldState: TextFieldsStates.neutral,
@@ -103,6 +105,15 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       usWalletFundsState: (enteredAmount <= state.usWalletBalance)
           ? UsWalletFundsState.sufficientFunds
           : UsWalletFundsState.insufficientFunds,
+    );
+  }
+
+  // get security details
+  void getSecurityDetails(String name, String symbol, String icon){
+    state = state.copyWith(
+      securityName: name,
+      securitySymbol: symbol,
+      securityIcon: icon
     );
   }
 

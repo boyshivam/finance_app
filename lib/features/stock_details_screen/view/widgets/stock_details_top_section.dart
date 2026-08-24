@@ -1,5 +1,6 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/features/stock_details_screen/view/widgets/stock_details_currencytoggle.dart";
+import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
@@ -7,9 +8,10 @@ import "package:go_router/go_router.dart";
 class StockDetailsTopSection extends StatelessWidget {
   const StockDetailsTopSection({
     super.key,
-
+    required this.security
   });
 
+  final StockCardModel security;
 
   @override
   Widget build(BuildContext context) {

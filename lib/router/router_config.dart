@@ -9,8 +9,11 @@ import "package:aprreciate/features/passcode/view/presentation/passcode_screen.d
 import "package:aprreciate/features/portfolio_dashboard/view/presentation/PortfolioDashboardScreen.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/order/orders_screen.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/profile_screen.dart";
+import "package:aprreciate/features/search_dashboard/helpers/search_dashboard_arg.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
+import "package:aprreciate/features/stock_details_screen/helper/stock_details_args.dart";
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
+import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/helpers/individual_watchlists_args.dart";
@@ -44,12 +47,22 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.stockDetailsScreen,
       name: 'stockDetailsScreen',
-      builder: (context, state) => StockDetailsScreen(),
+      builder: (context, state) {
+        final args = state.extra as SearchDashboardArgs;
+
+        return StockDetailsScreen(securitySymbol: args.securitySymbol);
+      },
     ),
     GoRoute(
       path: AppRoutes.tradeScreen,
       name: 'tradeScreen',
-      builder: (context, state) => TradeScreen(),
+      builder: (context, state) {
+        final args = state.extra as TradeScreenArgs;
+        return TradeScreen(
+          selectedSecurity: args.selectedSecurity,
+          tradeType: args.tradeType,
+        );
+      },
     ),
     GoRoute(
       path: AppRoutes.lrsScreen,
@@ -89,7 +102,7 @@ final appRouter = GoRouter(
         return SearchSecurityScreen(
           watchlistId: args.watchlistId,
           descendantOfWatchlist: args.descendantOfWatchlist,
-          watchlistName: args.watchlistName
+          watchlistName: args.watchlistName,
         );
       },
     ),

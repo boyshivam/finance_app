@@ -1,11 +1,14 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeFeesSection extends ConsumerWidget {
-  const TradeFeesSection({super.key});
+  const TradeFeesSection({super.key, required this.selectedSecurity});
+
+  final StockCardModel selectedSecurity;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

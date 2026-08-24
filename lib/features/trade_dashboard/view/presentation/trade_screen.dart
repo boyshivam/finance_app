@@ -1,18 +1,26 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
-import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
+import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/fees_section/trade_fees_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_placment_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/purchase_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/security_details/security_details.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_top_section.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
 class TradeScreen extends ConsumerStatefulWidget {
-  const TradeScreen({super.key});
+  const TradeScreen({
+    super.key,
+    required this.selectedSecurity,
+    required this.tradeType,
+  });
+
+  final StockCardModel selectedSecurity;
+  final TradeTypeEnum tradeType;
 
   @override
   ConsumerState<TradeScreen> createState() => _TradeScreenState();
@@ -57,9 +65,7 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
           children: [
             Image.asset(AppAssetsCommon.snackBarTick, width: 25, height: 25),
             const SizedBox(width: 10),
-            Text(
-              "Currency exchange rate: \$1 = ₹${AppStringsCommon.currentFxRate}",
-            ),
+            Text("Exchange rate is "),
           ],
         ),
         duration: Duration(seconds: 2),
@@ -69,6 +75,8 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final vmState = ref.watch(tradeScreenProvider);
 
     // this will show snack bar message when currency toggle is triggered
     ref.listen<CurrencyToggleState>(
@@ -104,14 +112,18 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
       body: Column(
         children: [
           TradeTopSection(),
-          SecurityDetails(),
+          SecurityDetails(selectedSecurity: widget.selectedSecurity),
           PurchaseSection(
             amountController: amountController,
             quantityController: quantityController,
             amountNode: amountNode,
             quantityNode: quantityNode,
+            tradeType: widget.tradeType,
+              selectedSecurity: widget.selectedSecurity
           ),
-          TradeFeesSection(),
+          TradeFeesSection(
+              selectedSecurity: widget.selectedSecurity
+          ),
         ],
       ),
       bottomNavigationBar: OrderPlacementSection(),

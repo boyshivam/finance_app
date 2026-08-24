@@ -1,10 +1,11 @@
-import "package:aprreciate/core/constants/app_assets/app_assets.dart";
-import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
 
 class SecurityDetails extends StatelessWidget {
-  const SecurityDetails({super.key});
+  const SecurityDetails({super.key, required this.selectedSecurity});
+
+  final StockCardModel selectedSecurity;
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +21,20 @@ class SecurityDetails extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset(AppAssets.tesla_icon, width: 40, height: 40),
+                Image.asset(selectedSecurity.stockIcon, width: 40, height: 40),
                 const SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "TESLA",
+                      selectedSecurity.stockName,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      "Tesla, inc",
+                      selectedSecurity.stockSymbol,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontWeight: FontWeight.w300,
                         fontSize: 18
@@ -47,7 +48,7 @@ class SecurityDetails extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  "\$ ${AppStringsCommon.stockTeslaPrice}",
+                  "\$ ${selectedSecurity.value}",
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(

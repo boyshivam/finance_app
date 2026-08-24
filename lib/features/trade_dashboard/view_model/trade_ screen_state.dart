@@ -3,6 +3,7 @@ import 'package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart'
 import 'package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart';
+import 'package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart';
 
 class TradeScreenState {
@@ -10,6 +11,7 @@ class TradeScreenState {
     required this.securityName,
     required this.securitySymbol,
     required this.securityIcon,
+    required this.tradeType,
     required this.usWalletFundsState,
     required this.amountTextFieldState,
     required this.quantityTextFieldState,
@@ -35,6 +37,7 @@ class TradeScreenState {
   final String securityName;
   final String securitySymbol;
   final String securityIcon;
+  final TradeTypeEnum tradeType;
   final UsWalletFundsState usWalletFundsState;
   final TextFieldsStates amountTextFieldState;
   final TextFieldsStates quantityTextFieldState;
@@ -60,6 +63,7 @@ class TradeScreenState {
     String? securityName,
     String? securitySymbol,
     String? securityIcon,
+    TradeTypeEnum? tradeType,
     UsWalletFundsState? usWalletFundsState,
     CurrencyToggleState? currencyToggleState,
     TextFieldsStates? amountTextFieldState,
@@ -85,8 +89,9 @@ class TradeScreenState {
   }) {
     return TradeScreenState(
       securityName: securityName ?? this.securityName,
-      securityIcon: securityIcon ?? this.securityIcon,
       securitySymbol: securitySymbol ?? this.securitySymbol,
+      securityIcon: securityIcon ?? this.securityIcon,
+      tradeType: tradeType ?? this.tradeType,
       usWalletFundsState: usWalletFundsState ?? this.usWalletFundsState,
       amountTextFieldState: amountTextFieldState ?? this.amountTextFieldState,
       quantityTextFieldState:

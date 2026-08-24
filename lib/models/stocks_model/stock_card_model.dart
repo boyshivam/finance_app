@@ -14,7 +14,7 @@ class StockCardModel {
 
   final String stockName;
   final String stockSymbol;
-  final int value;
+  final double value;
   final String stockIcon;
   final double valueChangePerc;
   final double valueChange;
