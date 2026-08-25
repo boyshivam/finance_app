@@ -2,6 +2,7 @@ import "package:aprreciate/features/LRS_flow/view/presentation/confirm_remittanc
 import "package:aprreciate/features/LRS_flow/view/presentation/lrs_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/transactions_submitted_screen.dart";
 import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_screen.dart";
+import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_transaction_placed.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/home_screen/home_screen.dart";
 import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
@@ -77,6 +78,13 @@ final appRouter = GoRouter(
       path: AppRoutes.cashFreeScreen,
       name: 'cashFreeScreen',
       builder: (context, state) => CashFreeScreen(),
+    ),
+
+    // route to cashfree transaction placed
+    GoRoute(
+      path: AppRoutes.cashFreeTransactionPlaced,
+      name: "cashFreeTransactionPlaced",
+      builder: (context, state) => CashFreeTransactionPlaced(),
     ),
 
     GoRoute(
