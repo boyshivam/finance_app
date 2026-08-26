@@ -19,7 +19,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     final vmStateBank = ref.watch(cashFreeProvider);
 
     return LrsScreenState(
-      currentBuyingPower: 0,
+      walletBalance: 0,
       amountText: "",
       currentYesBalance: vmStateBank.bankBalance,
       amountFieldStates: TextFieldStates.neutral,

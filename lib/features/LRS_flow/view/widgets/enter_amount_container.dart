@@ -33,7 +33,6 @@ class EnterAmountContainer extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
-
             // Amount text field
             TextField(
               keyboardType: TextInputType.number,
@@ -80,9 +79,21 @@ class EnterAmountContainer extends ConsumerWidget {
             ),
             const SizedBox(height: 5),
             if (vm.orderValidityStates == OrderValidityStates.empty)
-              Text("Amount field cannot be empty"),
+              Text(
+                "Enter valid amount",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColorsCommon.appreciateThemeError,
+                  fontSize: 18,
+                ),
+              ),
             if (vm.orderValidityStates == OrderValidityStates.inSufficient)
-              Text("Insufficient funds in bank account"),
+              Text(
+                "Insufficient funds in bank account",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColorsCommon.appreciateThemeError,
+                  fontSize: 18,
+                ),
+              ),
             const SizedBox(height: 20),
             Row(
               children: [

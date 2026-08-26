@@ -29,7 +29,7 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
       state = state.copyWith(amountFieldState: CashFreeUIState.empty);
     } else if (state.bankBalance == 0) {
       state = state.copyWith(amountFieldState: CashFreeUIState.invalid);
-    } else {
+    } else if (state.bankBalance > 0) {
       state = state.copyWith(amountFieldState: CashFreeUIState.valid);
     }
   }
@@ -42,10 +42,9 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
     if (upiID.isEmpty) {
       state = state.copyWith(upiFieldState: CashFreeUIState.empty);
     } else if (upiIDSplits > 2 || upiIDSplits < 2) {
-      state = state.copyWith(amountFieldState: CashFreeUIState.invalid);
+      state = state.copyWith(upiFieldState: CashFreeUIState.invalid);
     } else {
       state = state.copyWith(upiFieldState: CashFreeUIState.valid);
     }
   }
-
 }

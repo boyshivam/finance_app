@@ -12,12 +12,17 @@ class TopSectionLrs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(25, MediaQuery.of(context).padding.top + 16, 25, 25),
+      padding: EdgeInsets.fromLTRB(
+        25,
+        MediaQuery.of(context).padding.top + 16,
+        25,
+        25,
+      ),
       decoration: BoxDecoration(color: AppColorsCommon.appWhite),
       child: Row(
         children: [
           InkWell(
-            onTap: (){
+            onTap: () {
               context.pop();
             },
             child: Image.asset(
@@ -30,10 +35,11 @@ class TopSectionLrs extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "Transfer to US wallet",
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, fontSize: 26),
+                "Transfer to wallet",
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 26,
+                ),
               ),
             ),
           ),
