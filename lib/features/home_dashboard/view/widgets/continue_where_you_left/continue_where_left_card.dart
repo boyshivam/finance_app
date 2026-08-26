@@ -43,15 +43,10 @@ class ContinueWhereLeftCard extends StatelessWidget {
                       maxLines: 2,
                     ),
 
-                    InkWell(
-                      onTap: (){
-                        AppNavigators.goToStockDetailsScreen(context);
-                      },
-                      child: Text(
-                        item.actionCTA,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: AppColorsCommon.appreciateThemeColor,
-                        ),
+                    Text(
+                      item.actionCTA,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: AppColorsCommon.appreciateThemeColor,
                       ),
                     ),
                   ],

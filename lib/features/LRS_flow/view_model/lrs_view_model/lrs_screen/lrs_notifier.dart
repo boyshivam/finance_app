@@ -4,7 +4,7 @@ import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
 import "package:aprreciate/features/LRS_flow/enums/textfield_states.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/MPIN_bottom_sheet.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen_state.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_screen_state.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/order_status_enum.dart";
 import "package:aprreciate/models/profile_models/lrs/lrs_card_model.dart";

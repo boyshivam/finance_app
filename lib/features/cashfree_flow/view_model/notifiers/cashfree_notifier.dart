@@ -1,7 +1,5 @@
 import "package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/state/cashfree_state.dart";
-import "package:aprreciate/router/app_routes.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class CashFreeNotifier extends Notifier<CashFreeState> {
@@ -27,17 +25,12 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
 
   // validate entered inputs
   void validateEnteredAmount() {
-    double enteredAmount = state.bankBalance;
-
-    if (enteredAmount.toStringAsFixed(2).isEmpty) {
+    if (state.bankBalance.toString().trim().isEmpty) {
       state = state.copyWith(amountFieldState: CashFreeUIState.empty);
-      print("amount is empty");
-    } else if (enteredAmount == 0) {
+    } else if (state.bankBalance == 0) {
       state = state.copyWith(amountFieldState: CashFreeUIState.invalid);
-      print("amount cannot be 0");
     } else {
       state = state.copyWith(amountFieldState: CashFreeUIState.valid);
-      print("valid");
     }
   }
 
@@ -48,13 +41,10 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
 
     if (upiID.isEmpty) {
       state = state.copyWith(upiFieldState: CashFreeUIState.empty);
-      print("upi is empty");
-    } else if ( upiIDSplits >2  || upiIDSplits < 2) {
+    } else if (upiIDSplits > 2 || upiIDSplits < 2) {
       state = state.copyWith(amountFieldState: CashFreeUIState.invalid);
-      print("invalid UPI ID");
     } else {
       state = state.copyWith(upiFieldState: CashFreeUIState.valid);
-      print("valid");
     }
   }
 

@@ -18,8 +18,6 @@ class ProceedPayCta extends ConsumerWidget {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
       child: InkWell(
         onTap: () {
-          notifier.validateEnteredAmount();
-          notifier.validateEnteredUpiID();
 
           if (vmState.amountFieldState == CashFreeUIState.valid &&
               vmState.upiFieldState == CashFreeUIState.valid) {

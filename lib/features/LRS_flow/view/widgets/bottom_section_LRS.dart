@@ -1,18 +1,21 @@
 import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/continue_where_you_left/assets_continue_where_left.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:go_router/go_router.dart";
 
 class BottomSectionLrs extends ConsumerWidget {
   const BottomSectionLrs({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final vm = ref.watch(lrsProvider);
+    final vmCashFree = ref.watch(cashFreeProvider);
+    final vmLRS = ref.watch(lrsProvider);
 
     return Container(
       height: 250,
@@ -68,10 +71,10 @@ class BottomSectionLrs extends ConsumerWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              Text("Current Balance"),
+              Text("Current Bank Balance"),
               const SizedBox(width: 10),
               Text(
-                "₹ ${vm.currentYesBalance}",
+                "₹ ${vmCashFree.bankBalance}",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -81,8 +84,8 @@ class BottomSectionLrs extends ConsumerWidget {
           ),
           const SizedBox(height: 15),
           InkWell(
-            onTap: (){
-              if(vm.orderValidityStates == OrderValidityStates.sufficient){
+            onTap: () {
+              if (vmLRS.orderValidityStates == OrderValidityStates.sufficient) {
                 AppNavigators.goToConfirmRemittanceScreen(context);
               }
             },
@@ -94,13 +97,26 @@ class BottomSectionLrs extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(16),
                   color: AppColorsCommon.appreciateThemeColor,
                 ),
-                child: Text( vm.orderValidityStates == OrderValidityStates.inSufficient ?
-                "Transfer funds externally" :
-                  "Transfer \$${vm.amountText}"  ,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: AppColorsCommon.appWhite,
+                child: InkWell(
+                  onTap: () {
+                    if (vmLRS.orderValidityStates ==
+                        OrderValidityStates.inSufficient) {
+                      context.push(AppRoutes.cashFreeScreen);
+                    } else if (vmLRS.orderValidityStates ==
+                        OrderValidityStates.sufficient) {
+                      context.push(AppRoutes.confirmRemittanceScreen);
+                    }
+                  },
+                  child: Text(
+                    vmLRS.orderValidityStates ==
+                            OrderValidityStates.inSufficient
+                        ? "Add funds to bank"
+                        : "Transfer \$${vmLRS.amountText}",
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: AppColorsCommon.appWhite,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),

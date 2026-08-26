@@ -1,7 +1,7 @@
 import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/confirm_lrs_screen_widgets/confirm_lrs_buttons.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/confirm_lrs_screen_widgets/source_of_funds_dropdown.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 

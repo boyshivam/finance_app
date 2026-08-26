@@ -1,4 +1,4 @@
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_provider.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
