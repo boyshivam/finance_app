@@ -1,7 +1,7 @@
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
-import 'package:aprreciate/features/cashfree_flow/view/widgets/cashfree_top_section.dart';
-import 'package:aprreciate/features/cashfree_flow/view/widgets/proceed_pay_CTA.dart';
-import 'package:aprreciate/features/cashfree_flow/view/widgets/transaction_details_section.dart';
+import 'package:aprreciate/features/cashfree_flow/view/widgets/cashfree_screen_widgets/cashfree_top_section.dart';
+import 'package:aprreciate/features/cashfree_flow/view/widgets/cashfree_screen_widgets/proceed_pay_CTA.dart';
+import 'package:aprreciate/features/cashfree_flow/view/widgets/cashfree_screen_widgets/transaction_details_section.dart';
 import 'package:flutter/material.dart';
 
 class CashFreeScreen extends StatelessWidget {
