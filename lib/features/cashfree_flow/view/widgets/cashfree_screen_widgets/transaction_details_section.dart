@@ -70,7 +70,8 @@ class TransactionDetailsSection extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 10),
-            if (vm.amountFieldState == CashFreeUIState.empty)
+            if (vm.amountFieldState == CashFreeUIState.empty &&
+                vm.submitClicked == true)
               Text(
                 "Amount cannot be empty",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -127,7 +128,8 @@ class TransactionDetailsSection extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                if (vm.upiFieldState == CashFreeUIState.empty)
+                if (vm.upiFieldState == CashFreeUIState.empty &&
+                    vm.submitClicked == true)
                   Text(
                     "UPI ID cannot be empty",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(

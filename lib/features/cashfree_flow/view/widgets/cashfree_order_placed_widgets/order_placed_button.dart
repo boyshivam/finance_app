@@ -3,10 +3,12 @@ import 'package:aprreciate/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-
-
 class OrderPlacedButton extends StatelessWidget {
-  const OrderPlacedButton({super.key, required this.text, required this.routeString});
+  const OrderPlacedButton({
+    super.key,
+    required this.text,
+    required this.routeString,
+  });
 
   final String text;
   final String routeString;
@@ -14,8 +16,8 @@ class OrderPlacedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        context.push(routeString);
+      onTap: () {
+        context.go(routeString);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 25),

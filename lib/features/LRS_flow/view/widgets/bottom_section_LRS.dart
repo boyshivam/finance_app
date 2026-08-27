@@ -111,7 +111,7 @@ class BottomSectionLrs extends ConsumerWidget {
                     vmLRS.orderValidityStates ==
                             OrderValidityStates.inSufficient
                         ? "Add funds to bank"
-                        : "Transfer \$${vmLRS.amountText}",
+                        : "Transfer \$${vmLRS.enteredAmount}",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: AppColorsCommon.appWhite,
                     ),

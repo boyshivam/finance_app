@@ -32,8 +32,8 @@ class _LrsScreenState extends ConsumerState<LrsScreen> {
   @override
   Widget build(BuildContext context) {
     ref.listen(lrsProvider, (previous, next) {
-      if (amountController.text != next.amountText) {
-        amountController.text == next.amountText;
+      if (amountController.text != next.enteredAmount) {
+        amountController.text == next.enteredAmount;
       }
     });
 

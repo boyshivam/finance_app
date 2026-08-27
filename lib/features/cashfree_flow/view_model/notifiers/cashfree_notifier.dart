@@ -7,15 +7,17 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
   CashFreeState build() {
     return CashFreeState(
       bankBalance: 0,
+      enteredAmount: "",
       upiID: "",
       amountFieldState: CashFreeUIState.neutral,
       upiFieldState: CashFreeUIState.neutral,
+      submitClicked: false,
     );
   }
 
   // get the entered amount by user
   void retrieveEnteredAmount(String amount) {
-    state = state.copyWith(bankBalance: double.tryParse(amount) ?? 0);
+    state = state.copyWith(enteredAmount: amount);
   }
 
   // get the entered upi id by user
@@ -25,12 +27,25 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
 
   // validate entered inputs
   void validateEnteredAmount() {
-    if (state.bankBalance.toString().trim().isEmpty) {
-      state = state.copyWith(amountFieldState: CashFreeUIState.empty);
-    } else if (state.bankBalance == 0) {
-      state = state.copyWith(amountFieldState: CashFreeUIState.invalid);
-    } else if (state.bankBalance > 0) {
-      state = state.copyWith(amountFieldState: CashFreeUIState.valid);
+    final enteredAmountDouble = double.tryParse(state.enteredAmount) ?? 0;
+    final enteredAmountText = state.enteredAmount.toString();
+
+    if (enteredAmountText.trim().isEmpty) {
+      state = state.copyWith(
+        amountFieldState: CashFreeUIState.empty,
+        submitClicked: true,
+      );
+    } else if (enteredAmountDouble == 0) {
+      state = state.copyWith(
+        amountFieldState: CashFreeUIState.invalid,
+        submitClicked: true,
+      );
+    } else if (enteredAmountDouble > 0) {
+      state = state.copyWith(
+        amountFieldState: CashFreeUIState.valid,
+        submitClicked: true,
+        bankBalance: enteredAmountDouble
+      );
     }
   }
 
@@ -40,11 +55,20 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
     final upiIDSplits = upiID.split("@").length;
 
     if (upiID.isEmpty) {
-      state = state.copyWith(upiFieldState: CashFreeUIState.empty);
+      state = state.copyWith(
+        upiFieldState: CashFreeUIState.empty,
+        submitClicked: true,
+      );
     } else if (upiIDSplits > 2 || upiIDSplits < 2) {
-      state = state.copyWith(upiFieldState: CashFreeUIState.invalid);
+      state = state.copyWith(
+        submitClicked: true,
+        upiFieldState: CashFreeUIState.invalid,
+      );
     } else {
-      state = state.copyWith(upiFieldState: CashFreeUIState.valid);
+      state = state.copyWith(
+        upiFieldState: CashFreeUIState.valid,
+        submitClicked: true,
+      );
     }
   }
 }

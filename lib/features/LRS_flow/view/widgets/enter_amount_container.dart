@@ -11,6 +11,7 @@ class EnterAmountContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final vm = ref.watch(lrsProvider);
+    final lrsNotifier = ref.read(lrsProvider.notifier);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -33,8 +34,10 @@ class EnterAmountContainer extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20),
+
             // Amount text field
             TextField(
+
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               style: const TextStyle(fontSize: 22),
@@ -71,14 +74,22 @@ class EnterAmountContainer extends ConsumerWidget {
                   ),
                 ),
               ),
-              onChanged: (value) {
-                final notifier = ref.read(lrsProvider.notifier);
-                notifier.deriveAmountEntered(value);
-                notifier.lrsValidity();
+              onChanged: (amount) {
+                lrsNotifier.deriveAmountEntered(amount);
+                lrsNotifier.validateLrsOrder();
               },
             ),
             const SizedBox(height: 5),
-            if (vm.orderValidityStates == OrderValidityStates.empty)
+            if (vm.orderValidityStates == OrderValidityStates.empty &&
+                vm.submitClicked == true)
+              Text(
+                "Amount cannot be empty",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColorsCommon.appreciateThemeError,
+                  fontSize: 18,
+                ),
+              ),
+            if (vm.orderValidityStates == OrderValidityStates.invalid)
               Text(
                 "Enter valid amount",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(

@@ -2,5 +2,7 @@
 enum OrderValidityStates {
   sufficient,
   inSufficient,
-  empty
+  invalid,
+  empty,
+  neutral
 }

@@ -5,8 +5,9 @@ import 'package:aprreciate/features/LRS_flow/enums/textfield_states.dart';
 class LrsScreenState {
   const LrsScreenState({
     required this.walletBalance,
-    required this.amountText,
-    required this.currentYesBalance,
+    required this.enteredAmount,
+    required this.submitClicked,
+    required this.currentBankBalance,
     required this.amountFieldStates,
     required this.fxRate,
     required this.processingDate,
@@ -17,10 +18,11 @@ class LrsScreenState {
   });
 
   final double walletBalance;
-  final String amountText;
+  final String enteredAmount;
+  final bool submitClicked;
   final List<String> sourceOfFunds;
   final String? selectedFundSource;
-  final double currentYesBalance;
+  final double currentBankBalance;
   final TextFieldStates amountFieldStates;
   final double fxRate;
   final String processingDate;
@@ -29,10 +31,11 @@ class LrsScreenState {
 
   LrsScreenState copyWith({
     double? walletBalance,
-    String? amountText,
+    String? enteredAmount,
+    bool? submitClicked,
     List<String>? sourceOfFunds,
     String? selectedFundSource,
-    double? currentYesBalance,
+    double? currentBankBalance,
     TextFieldStates? amountFieldStates,
     double? fxRate,
     String? processingDate,
@@ -42,9 +45,10 @@ class LrsScreenState {
     return LrsScreenState(
       walletBalance: walletBalance ?? this.walletBalance,
       selectedFundSource: selectedFundSource ?? this.selectedFundSource,
+      submitClicked: submitClicked ?? this.submitClicked,
       sourceOfFunds: sourceOfFunds ?? this.sourceOfFunds,
-      amountText: amountText ?? this.amountText,
-      currentYesBalance: currentYesBalance ?? this.currentYesBalance,
+      enteredAmount: enteredAmount ?? this.enteredAmount,
+      currentBankBalance: currentBankBalance ?? this.currentBankBalance,
       amountFieldStates: amountFieldStates ?? this.amountFieldStates,
       fxRate: fxRate ?? this.fxRate,
       processingDate: processingDate ?? this.processingDate,

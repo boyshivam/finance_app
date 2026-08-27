@@ -1,8 +1,7 @@
 
 
 enum TextFieldStates {
-  empty,
+  invalid,
   neutral,
-  error,
   active
 }

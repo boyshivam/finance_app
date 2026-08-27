@@ -14,53 +14,60 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 class LrsNotifier extends Notifier<LrsScreenState> {
   @override
   LrsScreenState build() {
-
     // calls cash free provider to access bank balance
     final vmStateBank = ref.watch(cashFreeProvider);
 
     return LrsScreenState(
       walletBalance: 0,
-      amountText: "",
-      currentYesBalance: vmStateBank.bankBalance,
+      enteredAmount: "",
+      submitClicked: false,
+      currentBankBalance: vmStateBank.bankBalance,
       amountFieldStates: TextFieldStates.neutral,
       fxRate: AppStringsCommon.currentFxRate,
       processingDate: "",
-      orderValidityStates: OrderValidityStates.sufficient,
+      orderValidityStates: OrderValidityStates.neutral,
       remittanceValidityCheck: RemittanceValidityCheck.checked,
       selectedFundSource: null,
       sourceOfFunds: ['Salary', 'Income from business', 'Pension', 'Gift'],
     );
   }
 
-  String get lrsAmount => state.amountText;
-
   // get the entered amount and store it in state
   void deriveAmountEntered(String value) {
-    state = state.copyWith(amountText: value);
+    state = state.copyWith(enteredAmount: value);
   }
 
   // check if LRS is valid
-  void lrsValidity() {
-    final lrsAmountDouble = double.tryParse(lrsAmount) ?? 0;
-    if (lrsAmount.trim().isEmpty) {
+  void validateLrsOrder() {
+    final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
+    final convertedBankBalance =
+        state.currentBankBalance / AppStringsCommon.currentFxRate;
+
+    if (state.enteredAmount.isEmpty) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.empty,
-        amountFieldStates: TextFieldStates.empty,
+        amountFieldStates: TextFieldStates.invalid,
+        submitClicked: true,
       );
-    } else if (lrsAmountDouble == 0) {
+    } else if (amountDouble == 0) {
       state = state.copyWith(
-        orderValidityStates: OrderValidityStates.empty,
-        amountFieldStates: TextFieldStates.empty,
+        orderValidityStates: OrderValidityStates.invalid,
+        amountFieldStates: TextFieldStates.invalid,
+        submitClicked: true,
       );
-    } else if (double.tryParse(lrsAmount)! <= state.currentYesBalance) {
+    } else if (amountDouble >= convertedBankBalance) {
+      state = state.copyWith(
+        orderValidityStates: OrderValidityStates.inSufficient,
+        amountFieldStates: TextFieldStates.invalid,
+        submitClicked: true,
+      );
+    } else if (amountDouble < convertedBankBalance) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.sufficient,
         amountFieldStates: TextFieldStates.active,
-      );
-    } else if (lrsAmountDouble > state.currentYesBalance) {
-      state = state.copyWith(
-        orderValidityStates: OrderValidityStates.inSufficient,
-        amountFieldStates: TextFieldStates.error,
+        walletBalance: amountDouble,
+        submitClicked: true,
+
       );
     }
   }
@@ -87,11 +94,11 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   }
 
   void addLrsTransaction() {
-    double amount = double.tryParse(state.amountText) ?? 0;
+    final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
 
     final newTransaction = UsWalletCardModel(
       orderTypeHeader: "Bank to US wallet",
-      orderAmount: amount,
+      orderAmount: amountDouble,
       orderStatus: OrderStatusEnum.submitted,
     );
 
