@@ -15,7 +15,9 @@ class BottomSectionLrs extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final vmCashFree = ref.watch(cashFreeProvider);
+
     final vmLRS = ref.watch(lrsProvider);
+    final lrsNotifier = ref.read(lrsProvider.notifier);
 
     return Container(
       height: 250,
@@ -71,12 +73,18 @@ class BottomSectionLrs extends ConsumerWidget {
           const SizedBox(height: 10),
           Row(
             children: [
-              Text("Current Bank Balance"),
+              Text(
+                "Bank Balance",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                ),
+              ),
               const SizedBox(width: 10),
               Text(
-                "₹ ${vmCashFree.bankBalance}",
+                "₹ ${vmCashFree.bankBalance} (\$${vmLRS.bankBalanceInUSD.toStringAsFixed(2)})",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -99,6 +107,7 @@ class BottomSectionLrs extends ConsumerWidget {
                 ),
                 child: InkWell(
                   onTap: () {
+                    lrsNotifier.validateLrsOrder();
                     if (vmLRS.orderValidityStates ==
                         OrderValidityStates.inSufficient) {
                       context.push(AppRoutes.cashFreeScreen);

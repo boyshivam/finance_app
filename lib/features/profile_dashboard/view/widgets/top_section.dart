@@ -32,7 +32,7 @@ class TopSection extends StatelessWidget {
         style: Theme.of(context).textTheme.titleLarge!.copyWith(
           fontWeight: FontWeight.w800,
           fontSize: 45,
-          color: AppColorsCommon.appreciateThemeColor
+          color: AppColorsCommon.appWhite
         ),
       ),
     );

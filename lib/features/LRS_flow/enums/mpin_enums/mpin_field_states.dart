@@ -5,5 +5,5 @@ enum MpinFieldStates {
   correct,
   incomplete,
   incorrect,
-
+  neutral
 }

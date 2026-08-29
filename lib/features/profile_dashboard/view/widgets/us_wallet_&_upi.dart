@@ -26,6 +26,7 @@ class UsWalletUpi extends ConsumerWidget {
                   Icon(Icons.person, color: Colors.lightBlue, size: 40),
                   const SizedBox(width: 15),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Shivam"),
                       const SizedBox(height: 5),

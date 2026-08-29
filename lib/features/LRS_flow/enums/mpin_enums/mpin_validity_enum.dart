@@ -1,2 +1,2 @@
 
-enum MpinValidity { valid, invalid }
+enum MpinValidity { valid, invalid, neutral }

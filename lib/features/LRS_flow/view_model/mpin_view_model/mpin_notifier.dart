@@ -51,15 +51,29 @@ class MpinNotifier extends Notifier<MpinState> {
     if (state.mpin.isEmpty) {
       state = state.copyWith(mpinFieldStates: MpinFieldStates.empty, offset: 0);
     } else if (state.mpin.length < AppStringLrs.mpinLength) {
-      state = state.copyWith(mpinFieldStates: MpinFieldStates.incomplete, offset: 0);
+      state = state.copyWith(
+        mpinFieldStates: MpinFieldStates.incomplete,
+        offset: 0,
+      );
     } else if (state.mpin != AppStringLrs.correctMpin) {
-      state = state.copyWith(mpinFieldStates: MpinFieldStates.incorrect, offset: 0);
-    } else if (state.mpin == AppStringLrs.correctMpin) {
       state = state.copyWith(
         mpinFieldStates: MpinFieldStates.incorrect,
-        mpinValidity: MpinValidity.valid, offset: 0
+        offset: 0,
+      );
+    } else if (state.mpin == AppStringLrs.correctMpin) {
+      state = state.copyWith(
+        mpinFieldStates: MpinFieldStates.correct,
+        mpinValidity: MpinValidity.valid,
+        offset: 0,
       );
       ref.read(lrsProvider.notifier).addLrsTransaction();
     }
+  }
+  void resetMpinState() {
+    state = state.copyWith(
+      mpinValidity: MpinValidity.neutral,
+      mpinFieldStates: MpinFieldStates.neutral,
+      mpin: "",
+    );
   }
 }

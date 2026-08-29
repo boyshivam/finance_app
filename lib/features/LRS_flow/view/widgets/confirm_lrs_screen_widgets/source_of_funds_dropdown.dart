@@ -11,19 +11,47 @@ class SourceOfFundsDropdown extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vmState = ref.watch(lrsProvider);
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: 20, horizontal: 15
-      ),
-      color: Colors.white10,
-      child: DropdownButton(
-        value: vmState.selectedFundSource,
-        items: vmState.sourceOfFunds.map((fund) {
-          return DropdownMenuItem(value: fund, child: Text(fund));
-        }).toList(),
-        onChanged: (value) {
-          ref.read(lrsProvider.notifier).selectSourceOfFund(value!);
-        },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Source of Funds",
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.w600,
+              fontSize: 24,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+            color: Colors.blueAccent,
+            child: DropdownButton(
+              hint: Text("-Select a source-", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColorsCommon.appWhite
+              ),),
+              value: vmState.selectedFundSource,
+              items: vmState.sourceOfFunds.map((fund) {
+                return DropdownMenuItem(
+                  value: fund,
+                  
+                  child: Text(
+                    fund,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: AppColorsCommon.appWhite
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (value) {
+                ref.read(lrsProvider.notifier).selectSourceOfFund(value!);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

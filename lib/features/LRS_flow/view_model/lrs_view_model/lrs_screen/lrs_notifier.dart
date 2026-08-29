@@ -15,13 +15,15 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   @override
   LrsScreenState build() {
     // calls cash free provider to access bank balance
-    final vmStateBank = ref.watch(cashFreeProvider);
+    final vmBank = ref.watch(cashFreeProvider);
 
     return LrsScreenState(
       walletBalance: 0,
       enteredAmount: "",
+      enteredAmountDouble: 0,
       submitClicked: false,
-      currentBankBalance: vmStateBank.bankBalance,
+      currentBankBalance: vmBank.bankBalance,
+      bankBalanceInUSD: vmBank.bankBalance / AppStringsCommon.currentFxRate,
       amountFieldStates: TextFieldStates.neutral,
       fxRate: AppStringsCommon.currentFxRate,
       processingDate: "",
@@ -34,14 +36,16 @@ class LrsNotifier extends Notifier<LrsScreenState> {
 
   // get the entered amount and store it in state
   void deriveAmountEntered(String value) {
-    state = state.copyWith(enteredAmount: value);
+    state = state.copyWith(
+      enteredAmount: value,
+      enteredAmountDouble: double.tryParse(value),
+    );
   }
 
   // check if LRS is valid
   void validateLrsOrder() {
     final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
-    final convertedBankBalance =
-        state.currentBankBalance / AppStringsCommon.currentFxRate;
+    final bankBalanceInUSD = state.bankBalanceInUSD;
 
     if (state.enteredAmount.isEmpty) {
       state = state.copyWith(
@@ -55,19 +59,18 @@ class LrsNotifier extends Notifier<LrsScreenState> {
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble >= convertedBankBalance) {
+    } else if (amountDouble >= bankBalanceInUSD) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.inSufficient,
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble < convertedBankBalance) {
+    } else if (amountDouble < bankBalanceInUSD) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.sufficient,
         amountFieldStates: TextFieldStates.active,
         walletBalance: amountDouble,
         submitClicked: true,
-
       );
     }
   }
@@ -88,11 +91,21 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     );
   }
 
+  // reset the state of all components to neutral
+  void resetState() {
+    state = state.copyWith(
+      submitClicked: false,
+      orderValidityStates: OrderValidityStates.neutral,
+      amountFieldStates: TextFieldStates.neutral,
+    );
+  }
+
   // select items from the
   void selectSourceOfFund(String value) {
     state = state.copyWith(selectedFundSource: value);
   }
 
+  // add the lrs transaction to US wallet
   void addLrsTransaction() {
     final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
 
@@ -101,7 +114,6 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       orderAmount: amountDouble,
       orderStatus: OrderStatusEnum.submitted,
     );
-
     ref.read(lrsTransactionProvider.notifier).addTransaction(newTransaction);
   }
 }

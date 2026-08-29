@@ -1,8 +1,11 @@
 import "package:aprreciate/core/constants/app_strings/features/app_strings_lrs/app_strings_lrs.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/LRS_flow/enums/mpin_enums/mpin_field_states.dart";
 import "package:aprreciate/features/LRS_flow/enums/mpin_enums/mpin_validity_enum.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/Mpin_bottomsheet_widgets/mpin_input_field.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/Mpin_bottomsheet_widgets/mpin_numpad.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/Mpin_bottomsheet_widgets/mpin_slider.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/LRS_flow/view_model/mpin_view_model/mpin_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
@@ -26,6 +29,9 @@ class _MpinBottomSheetState extends ConsumerState<MpinBottomSheet> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // initialise the mpin notifier
+    final mpinNotifier = ref.read(mpinProvider.notifier);
+
     mpinNodes = List.generate(AppStringLrs.mpinLength, (_) => FocusNode());
     mpinControllers = List.generate(
       AppStringLrs.mpinLength,
@@ -38,8 +44,9 @@ class _MpinBottomSheetState extends ConsumerState<MpinBottomSheet> {
           mpinControllers[i].text = value;
         }
       }
-      if(next.mpinValidity == MpinValidity.valid){
+      if (next.mpinValidity == MpinValidity.valid) {
         AppNavigators.goToTransactionSubmittedScreen(context);
+        mpinNotifier.resetMpinState();
       }
     });
   }
@@ -74,8 +81,10 @@ class _MpinBottomSheetState extends ConsumerState<MpinBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final vmMpin = ref.watch(mpinProvider);
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 35),
+      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: SizedBox(
         width: double.infinity,
         child: Column(
@@ -91,9 +100,39 @@ class _MpinBottomSheetState extends ConsumerState<MpinBottomSheet> {
                   focusToPrevious: focusToPrevious,
                 ),
                 const SizedBox(height: 15),
+                if (vmMpin.mpinFieldState == MpinFieldStates.empty)
+                  Text(
+                    "MPIN cannot be empty",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontSize: 16,
+                      color: AppColorsCommon.appreciateThemeError,
+                    ),
+                  )
+                else if (vmMpin.mpinFieldState == MpinFieldStates.incomplete)
+                  Text(
+                    "MPIN should be 6 characters",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontSize: 16,
+                      color: AppColorsCommon.appreciateThemeError,
+                    ),
+                  )
+                else if (vmMpin.mpinFieldState == MpinFieldStates.incorrect)
+                  Text(
+                    "Incorrect MPIN",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      fontSize: 16,
+                      color: AppColorsCommon.appreciateThemeError,
+                    ),
+                  ),
+                // else if(vmMpin.mpinFieldState == MpinFieldStates.correct)
+                //   Text("Verified", style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                //       fontSize: 16,
+                //       color: AppColorsCommon.appreciateThemeError
+                //   )),
+                const SizedBox(height: 15),
                 MpinNumpad(),
-                const SizedBox(height: 15,),
-                MpinSlider()
+                const SizedBox(height: 15),
+                MpinSlider(),
               ],
             ),
           ],

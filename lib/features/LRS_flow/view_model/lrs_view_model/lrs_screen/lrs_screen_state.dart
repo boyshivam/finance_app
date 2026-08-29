@@ -6,6 +6,7 @@ class LrsScreenState {
   const LrsScreenState({
     required this.walletBalance,
     required this.enteredAmount,
+    required this.enteredAmountDouble,
     required this.submitClicked,
     required this.currentBankBalance,
     required this.amountFieldStates,
@@ -15,10 +16,12 @@ class LrsScreenState {
     required this.remittanceValidityCheck,
     required this.sourceOfFunds,
     required this.selectedFundSource,
+    required this.bankBalanceInUSD,
   });
 
   final double walletBalance;
   final String enteredAmount;
+  final double enteredAmountDouble;
   final bool submitClicked;
   final List<String> sourceOfFunds;
   final String? selectedFundSource;
@@ -28,10 +31,12 @@ class LrsScreenState {
   final String processingDate;
   final OrderValidityStates orderValidityStates;
   final RemittanceValidityCheck remittanceValidityCheck;
+  final double bankBalanceInUSD;
 
   LrsScreenState copyWith({
     double? walletBalance,
     String? enteredAmount,
+    double? enteredAmountDouble,
     bool? submitClicked,
     List<String>? sourceOfFunds,
     String? selectedFundSource,
@@ -41,6 +46,7 @@ class LrsScreenState {
     String? processingDate,
     OrderValidityStates? orderValidityStates,
     RemittanceValidityCheck? remittanceValidityCheck,
+    double? bankBalanceInUSD,
   }) {
     return LrsScreenState(
       walletBalance: walletBalance ?? this.walletBalance,
@@ -48,6 +54,7 @@ class LrsScreenState {
       submitClicked: submitClicked ?? this.submitClicked,
       sourceOfFunds: sourceOfFunds ?? this.sourceOfFunds,
       enteredAmount: enteredAmount ?? this.enteredAmount,
+      enteredAmountDouble: enteredAmountDouble ?? this.enteredAmountDouble,
       currentBankBalance: currentBankBalance ?? this.currentBankBalance,
       amountFieldStates: amountFieldStates ?? this.amountFieldStates,
       fxRate: fxRate ?? this.fxRate,
@@ -55,6 +62,7 @@ class LrsScreenState {
       remittanceValidityCheck:
           remittanceValidityCheck ?? this.remittanceValidityCheck,
       orderValidityStates: orderValidityStates ?? this.orderValidityStates,
+      bankBalanceInUSD: bankBalanceInUSD ?? this.bankBalanceInUSD,
     );
   }
 }

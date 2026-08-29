@@ -1,3 +1,4 @@
+import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
@@ -37,9 +38,17 @@ class EnterAmountContainer extends ConsumerWidget {
 
             // Amount text field
             TextField(
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [
+                TextInputFormatter.withFunction((oldValue, newValue) {
+                  final text = newValue.text;
 
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  if (RegExp(r'^\d*\.?\d{0,2}$').hasMatch(text)) {
+                    return newValue;
+                  }
+                  return oldValue;
+                }),
+              ],
               style: const TextStyle(fontSize: 22),
               maxLength: 10,
               decoration: InputDecoration(
@@ -112,10 +121,13 @@ class EnterAmountContainer extends ConsumerWidget {
                   children: [
                     Icon(Icons.compare_arrows, size: 20),
                     const SizedBox(width: 5),
-                    Text("\$114.7"),
+                    Text(
+                      (vm.enteredAmountDouble * AppStringsCommon.currentFxRate)
+                          .toStringAsFixed(2),
+                    ),
                     const SizedBox(width: 3),
                     Text(
-                      "(\$1 = Rs 83.41)",
+                      "(\$1 = ${vm.fxRate})",
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: AppColorsCommon.textGrey,
                       ),
@@ -123,7 +135,7 @@ class EnterAmountContainer extends ConsumerWidget {
                   ],
                 ),
                 const Spacer(),
-                Text("In USD"),
+                Text("In INR"),
               ],
             ),
             const Divider(
