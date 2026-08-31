@@ -1,7 +1,6 @@
 import "dart:math";
-
-import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_holdings_provider.dart";
 import "package:aprreciate/features/profile_dashboard/view_model/view_model_orders/providers/orders_provider.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
@@ -18,8 +17,13 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
   @override
   TradeScreenState build() {
+
+    // lrs state provider to fetch US wallet balance
+    final vmLrs = ref.watch(lrsProvider);
+
     // TODO: implement build
     return TradeScreenState(
+
       securityName: "",
       securitySymbol: "",
       securityIcon: "",
@@ -30,7 +34,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       amountTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       quantityTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       currencyToggleState: CurrencyToggleState.toggledUsd,
-      usWalletBalance: 0,
+      usWalletBalance: vmLrs.walletBalance,
       quantityByAmount: 0,
       amountByQuantity: 0,
       convertedValue: 0,
@@ -117,7 +121,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  //  place trade order
+  //  place trade orders
   void placeOrder() {
     final enteredAmount = state.amountText;
 
@@ -156,7 +160,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  // check the validity of purchase order which weighs on USWallet balance, and entered amount
+  // check the validity of purchase orders which weighs on USWallet balance, and entered amount
   bool validatePurchase() {
     return state.usWalletBalance >= enteredAmount && enteredAmount != 0;
   }
@@ -169,7 +173,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(
       totalFees: (platformFee + transactionFee).toStringAsFixed(2),
       orderValueText: enteredAmount.toString(),
-      amountPayable: (enteredAmount + transactionFee).toString(),
+      amountPayable: (enteredAmount + transactionFee).toStringAsFixed(2),
       transactionFee: transactionFee.toStringAsFixed(2),
       platformFee: platformFee.toStringAsFixed(2),
     );
@@ -201,7 +205,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  // reset order
+  // reset orders
   void resetOrderValidity() {
     state = state.copyWith(orderEligibility: OrderEligibilityStates.invalid);
   }

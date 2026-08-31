@@ -77,7 +77,6 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
               decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
               child: Row(
                 children: [
-                  AssetImageHelper.image(AppAssets.lo_ap_logo, height: 24),
                   const Spacer(),
                   AssetImageHelper.image(
                     AppAssets.lo_support,
@@ -98,13 +97,13 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      AppStrings.log_header,
+                      "TradeStox",
                       style: Theme
                           .of(context)
                           .textTheme
                           .headlineLarge!
                           .copyWith(
-                        fontSize: 35,
+                        fontSize: 40,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.start,
@@ -143,7 +142,7 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                       child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                              onPressed: validate, child: Text("Confirm"))),
+                              onPressed: validate, child: Text("Proceed"))),
                     )
                   ],
                 ),

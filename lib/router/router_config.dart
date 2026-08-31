@@ -1,6 +1,7 @@
 import "package:aprreciate/features/LRS_flow/view/presentation/confirm_remittance_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/lrs_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/transactions_submitted_screen.dart";
+import "package:aprreciate/features/LRS_flow/view/presentation/us_wallet_dashboard.dart";
 import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_screen.dart";
 import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_transaction_placed.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
@@ -9,7 +10,7 @@ import "package:aprreciate/features/mobile_num_validator/view/presentations/mobi
 import "package:aprreciate/features/mobile_otp_validator/view/presentation/mobile_otp_screen.dart";
 import "package:aprreciate/features/passcode/view/presentation/passcode_screen.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/presentation/PortfolioDashboardScreen.dart";
-import "package:aprreciate/features/profile_dashboard/view/presentation/order/orders_screen.dart";
+import "package:aprreciate/features/profile_dashboard/view/presentation/orders/orders_screen.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/profile_screen.dart";
 import "package:aprreciate/features/search_dashboard/helpers/search_dashboard_arg.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
@@ -68,9 +69,15 @@ final appRouter = GoRouter(
 
     // Route to LRS screen
     GoRoute(
-      path: AppRoutes.lrsScreen,
-      name: 'lrsScreen',
-      builder: (context, state) => LrsScreen(),
+      path: AppRoutes.lrsTransferScreen,
+      name: 'lrsTransferScreen',
+      builder: (context, state) => LrsTransferScreen(),
+    ),
+
+    GoRoute(
+      path: AppRoutes.usWalletDashboard,
+      name: "usWalletDashboard",
+      builder: (context, state) => UsWalletDashboard(),
     ),
 
     // route to Cash-free transaction

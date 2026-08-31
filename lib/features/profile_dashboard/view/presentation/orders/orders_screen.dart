@@ -1,8 +1,7 @@
-import "package:aprreciate/data/profile_data/orders/trade_orders_data.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/confirm_lrs_screen_widgets/us_wallet_transaction_card.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/order_tab_selected_enum.dart";
-import "package:aprreciate/features/profile_dashboard/view/presentation/order/order_cards.dart";
+import "package:aprreciate/features/profile_dashboard/view/presentation/orders/order_card.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/orders_tabs.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/top_section.dart";
 import "package:aprreciate/features/profile_dashboard/view_model/view_model_orders/providers/orders_provider.dart";

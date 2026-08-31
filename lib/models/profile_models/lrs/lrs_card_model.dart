@@ -8,10 +8,12 @@ class UsWalletCardModel {
     required this.orderTypeHeader,
     required this.orderAmount,
     required this.orderStatus,
+    required this.orderTime
 });
 
-  final String orderTypeHeader;
+  final UsWalletOrdersEnum orderTypeHeader;
   final double orderAmount;
   final OrderStatusEnum orderStatus;
+  final DateTime orderTime;
 
 }

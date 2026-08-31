@@ -1,6 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
-import "package:aprreciate/router/app_navigators.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -11,7 +10,6 @@ class UsWalletUpi extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final vmState = ref.watch(lrsProvider);
 
     return Container(
@@ -42,7 +40,7 @@ class UsWalletUpi extends ConsumerWidget {
           const SizedBox(height: 20),
           InkWell(
             onTap: () {
-              context.push(AppRoutes.lrsScreen);
+              context.push(AppRoutes.usWalletDashboard);
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -60,10 +58,14 @@ class UsWalletUpi extends ConsumerWidget {
                         children: [
                           Text("US wallet"),
                           const SizedBox(height: 5),
-                          Text(vmState.walletBalance!.toStringAsFixed(2), style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColorsCommon.snackBarMsgBlue
-                          ),),
+                          Text(
+                            vmState.walletBalance.toStringAsFixed(2),
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColorsCommon.snackBarMsgBlue,
+                                ),
+                          ),
                         ],
                       ),
                     ],
@@ -76,7 +78,7 @@ class UsWalletUpi extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
           InkWell(
-            onTap: (){
+            onTap: () {
               context.push(AppRoutes.cashFreeScreen);
             },
             child: Container(

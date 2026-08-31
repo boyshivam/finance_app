@@ -6,14 +6,14 @@ import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_scree
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class LrsScreen extends ConsumerStatefulWidget {
-  const LrsScreen({super.key});
+class LrsTransferScreen extends ConsumerStatefulWidget {
+  const LrsTransferScreen({super.key});
 
   @override
-  ConsumerState<LrsScreen> createState() => _LrsScreenState();
+  ConsumerState<LrsTransferScreen> createState() => _LrsScreenState();
 }
 
-class _LrsScreenState extends ConsumerState<LrsScreen> {
+class _LrsScreenState extends ConsumerState<LrsTransferScreen> {
   late TextEditingController amountController;
 
   @override

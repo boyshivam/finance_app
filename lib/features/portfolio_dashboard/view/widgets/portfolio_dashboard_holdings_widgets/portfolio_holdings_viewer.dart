@@ -32,19 +32,48 @@ class PortfolioHoldingsViewer extends ConsumerWidget {
             ),
           ],
           if (holdingsData.isEmpty) ...[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.folder, size: 100, color: AppColorsCommon.appreciateThemeColor,),
-                const SizedBox(width: 10),
-                Text(
-                  "No holdings!",
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 30,
+            const SizedBox(height: 70,),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(18),
+                color: AppColorsCommon.appWhite,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.folder,
+                    size: 60,
+                    color: AppColorsCommon.appreciateThemeColor,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text(
+                          "No holdings!",
+                          style: Theme.of(context).textTheme.headlineLarge!
+                              .copyWith(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24,
+                              ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "Make an investment and see it here",
+                          style: Theme.of(context).textTheme.headlineLarge!
+                              .copyWith(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ],

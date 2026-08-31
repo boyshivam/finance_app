@@ -43,7 +43,7 @@ class AppNavigators {
   }
 
   static void gotoLrsScreen(BuildContext context, {Object? extra}) {
-    context.push(AppRoutes.lrsScreen, extra: extra);
+    context.push(AppRoutes.lrsTransferScreen, extra: extra);
   }
 
   static void goToConfirmRemittanceScreen(BuildContext context, {Object? extra}){

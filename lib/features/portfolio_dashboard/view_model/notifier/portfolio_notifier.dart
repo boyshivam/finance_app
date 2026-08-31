@@ -37,7 +37,7 @@ class PortfolioNotifier extends Notifier<PortfolioState> {
 
   // change the selected tab
   void selectPortfolioTab(PortfolioTabsEnums newSelectedTab) {
-    state = state.copyWith(selectedProductTab: PortfolioTabsEnums.usStocks);
+    state = state.copyWith(selectedProductTab: newSelectedTab);
   }
 
   // change the selected frequency tab

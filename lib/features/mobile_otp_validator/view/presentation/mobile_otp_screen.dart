@@ -3,6 +3,7 @@ import "package:aprreciate/core/constants/app_strings/features/app_strings_homed
 import "package:aprreciate/core/constants/app_strings/features/mobile_otp/mobile_otp_constants.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
+import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
 import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_provider/mobile_otp_provider.dart";
@@ -18,8 +19,6 @@ class MobileOtpScreen extends ConsumerStatefulWidget {
 }
 
 class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
-
-
   // declare controllers and focus nodes
   late List<TextEditingController> controllers;
   late List<FocusNode> focusNodes;
@@ -67,7 +66,6 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
       }
       focusNodes.first.requestFocus();
       ref.read(mobileOtpProvider.notifier).resetOtp();
-
     });
   }
 
@@ -76,7 +74,9 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
 
   // proceed to next screen if otp is correct
   Future<void> proceedToNextScreen() async {
-    bool validate = ref.read(mobileOtpProvider.notifier).validateOtp(derivedOtp);
+    bool validate = ref
+        .read(mobileOtpProvider.notifier)
+        .validateOtp(derivedOtp);
     if (validate) {
       AppNavigators.goToPasscodeScreen(context);
     } else {
@@ -92,7 +92,6 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final validationState = ref.watch(mobileOtpProvider);
 
     return Scaffold(
@@ -109,7 +108,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                     // top section with appreciate logo and support icon
                     Container(
                       // height: 80,
-                      padding:  EdgeInsets.only(
+                      padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 20,
                         bottom: 20,
                         right: 25,
@@ -118,10 +117,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                       decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
                       child: Row(
                         children: [
-                          AssetImageHelper.image(
-                            AppAssets.lo_ap_logo,
-                            height: 24,
-                          ),
+                          CompanyTrademark(),
                           const Spacer(),
                           AssetImageHelper.image(
                             AppAssets.lo_support,
@@ -199,15 +195,13 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                             validationState: validationState,
                             controllers: controllers,
                             focusNodes: focusNodes,
-                            otpLength: MobileOtpConstants.requiredPasscodeLength,
-                            otpNavigator: cursorMovementInOtp,),
-
+                            otpLength:
+                                MobileOtpConstants.requiredPasscodeLength,
+                            otpNavigator: cursorMovementInOtp,
+                          ),
 
                           //resend OTP countdown timer
-                          OtpTimer(
-                            initialTime: 10,
-                            resendText: 'resend OTP',
-                          ),
+                          OtpTimer(initialTime: 10, resendText: 'resend OTP'),
                         ],
                       ),
                     ),
@@ -218,7 +212,11 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 25, right: 25, bottom: MediaQuery.of(context).padding.bottom + 20),
+              padding: EdgeInsets.only(
+                left: 25,
+                right: 25,
+                bottom: MediaQuery.of(context).padding.bottom + 20,
+              ),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(

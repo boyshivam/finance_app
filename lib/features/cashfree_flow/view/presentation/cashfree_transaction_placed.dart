@@ -22,7 +22,7 @@ class CashFreeTransactionPlaced extends StatelessWidget {
           const SizedBox(height: 50),
           OrderPlacedButton(
             text: "Continue LRS",
-            routeString: AppRoutes.lrsScreen,
+            routeString: AppRoutes.lrsTransferScreen,
           ),
           const SizedBox(height: 30),
           OrderPlacedButton(

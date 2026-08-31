@@ -1,5 +1,6 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
@@ -15,7 +16,11 @@ class OrderPlacementSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    // trade provider
     final vmState = ref.watch(tradeScreenProvider);
+    
+    // LRS provider to access its state parameters
+    final vmLRS = ref.watch(lrsProvider);
 
     return Container(
       padding: EdgeInsets.fromLTRB(25, 20, 25, 40),
@@ -31,11 +36,15 @@ class OrderPlacementSection extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text("US Wallet"),
+              Text("US Wallet balance:",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20
+                ),),
               const Spacer(),
               Row(
                 children: [
-                  Text(vmState.usWalletBalance.toStringAsFixed(2)),
+                  Text("\$${vmLRS.walletBalance.toStringAsFixed(2)}"),
                   const SizedBox(width: 5),
                   Icon(Icons.arrow_drop_down_circle_outlined),
                 ],

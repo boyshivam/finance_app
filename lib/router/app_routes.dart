@@ -1,15 +1,10 @@
-
-
 class AppRoutes {
-
-
   //login screens
   static const String loginScreen = '/';
   static const String otpScreen = "/loginOtpScreen";
 
   // passcode screen
   static const String passcodeScreen = '/passcodeScreen';
-
 
   ////// DASHBOARD SCREENS
 
@@ -28,9 +23,6 @@ class AppRoutes {
   // profile dashboard
   static const String profileDashboardScreen = "/profileDashboardScreen";
 
-
-
-
   ////// TRADE AND STOCK DETAILS
 
   // Trade screen
@@ -42,11 +34,13 @@ class AppRoutes {
   // Trade orders placed screen
   static const String orderPlacedScreen = "/tradeOrderPlaced";
 
-
   ////// LRS AND CASH FREE SCREENS
 
   // LRS , add funds to wallet
-  static const String lrsScreen = "/lrsScreen";
+  static const String lrsTransferScreen = "/lrsTransferScreen";
+
+  // US wallet dashboard
+  static const String usWalletDashboard = "/usWalletDashboard";
 
   // Cash free screen
   static const String cashFreeScreen = "/cashFreeScreen";
@@ -60,8 +54,8 @@ class AppRoutes {
   // Transaction submitted
   static const String transactionSubmittedScreen = "/transactionSubmitted";
 
-  static const String cashFreeTransactionPlaced = "/cashFreeTransactionSubmitted";
-
+  static const String cashFreeTransactionPlaced =
+      "/cashFreeTransactionSubmitted";
 
   //////// profile screen
   static const String orderScreen = "/ordersScreen";
@@ -70,5 +64,4 @@ class AppRoutes {
   static const String watchlistSearchEquity = "/watchlistSearchEquity";
 
   static const String individualWatchlistScreen = "/individualWatchlistScreen";
-
 }
