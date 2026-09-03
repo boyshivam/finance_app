@@ -6,43 +6,47 @@ import 'package:aprreciate/router/app_navigators.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/router/app_routes.dart";
+import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
+
 class TopSectionLrs extends StatelessWidget {
   const TopSectionLrs({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       padding: EdgeInsets.fromLTRB(
         25,
-        MediaQuery.of(context).padding.top + 16,
+        MediaQuery.of(context).padding.top + 20,
         25,
-        25,
+        35,
       ),
-      decoration: BoxDecoration(color: AppColorsCommon.appWhite),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColorsCommon.appreciateThemeColor,
+            AppColorsCommon.snackBarMsgBlue,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
       child: Row(
         children: [
-          InkWell(
-            onTap: () {
-              context.pop();
-            },
-            child: Image.asset(
-              AppAssetsCommon.generic_back_cta,
-              width: 30,
-              height: 30,
+          Text(
+            "Transfer to Us wallet",
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.w800,
+                fontSize: 30,
+                color: AppColorsCommon.appWhite
             ),
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Transfer to wallet",
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 26,
-                ),
-              ),
-            ),
-          ),
+          const Spacer(),
+          Icon(Icons.support_agent_outlined, size: 30, color: AppColorsCommon.appWhite,)
         ],
       ),
     );

@@ -30,6 +30,10 @@ class _ConfirmRemittanceScreenState
     );
   }
 
+  // void sourceOfFundNotSelected(){
+  //
+  // }
+
   @override
   Widget build(BuildContext context) {
     final vmState = ref.watch(lrsProvider);

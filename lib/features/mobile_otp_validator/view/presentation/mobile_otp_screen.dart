@@ -7,12 +7,15 @@ import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
 import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_provider/mobile_otp_provider.dart";
+import "package:aprreciate/features/profile_dashboard/view/widgets/top_section.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class MobileOtpScreen extends ConsumerStatefulWidget {
-  const MobileOtpScreen({super.key});
+  const MobileOtpScreen({super.key, required this.userNumber});
+
+  final String userNumber;
 
   @override
   ConsumerState<MobileOtpScreen> createState() => _MobileOtpScreenState();
@@ -106,29 +109,17 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     // top section with appreciate logo and support icon
-                    Container(
-                      // height: 80,
-                      padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 20,
-                        bottom: 20,
-                        right: 25,
-                        left: 25,
-                      ),
-                      decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-                      child: Row(
-                        children: [
-                          CompanyTrademark(),
-                          const Spacer(),
-                          AssetImageHelper.image(
-                            AppAssets.lo_support,
-                            height: 24,
-                            width: 24,
-                          ),
-                        ],
+                    TopSection(
+                      child: CompanyTrademark(
+                        paddingLeft: 25,
+                        paddingRight: 25,
+                        paddingTop: 15,
+                        paddingBottom: 15,
+                        fontSize: 26,
+
                       ),
                     ),
                     const SizedBox(height: 20),
-
                     // main body with otp validator
                     Container(
                       // height: SizeConfig.height(context) * 0.4,
@@ -155,7 +146,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
 
                               // users number
                               Text(
-                                "userNumber",
+                                widget.userNumber,
                                 style: Theme.of(context).textTheme.bodySmall!
                                     .copyWith(fontWeight: FontWeight.w600),
                               ),

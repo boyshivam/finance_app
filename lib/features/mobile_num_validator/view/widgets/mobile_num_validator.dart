@@ -2,27 +2,25 @@ import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
-import "package:aprreciate/features/mobile_num_validator/enums/mobile_number_enums.dart";
 import "package:aprreciate/features/mobile_num_validator/view/extensions/mobile_num_extensions.dart";
+import "package:aprreciate/features/mobile_num_validator/view_model/mobile_num_validator_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class MobileNumValidator extends StatelessWidget {
+class MobileNumValidator extends ConsumerWidget {
   const MobileNumValidator({
     super.key,
     required this.onController,
-    required this.onChanged,
-
-    required this.validationState
   });
 
   final TextEditingController onController;
-  final void Function(String value) onChanged;
-
-  final MobileNumValidationState validationState;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vmMobileNumProvider = ref.watch(mobileNumProvider);
+    final mobileNumValidatorNotifier = ref.read(mobileNumProvider.notifier);
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -72,7 +70,7 @@ class MobileNumValidator extends StatelessWidget {
               color: AppColorsModule.mobileNumColorTextFieldBGColor,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: validationState.borderColor,
+                color: vmMobileNumProvider.mobileNumValidationState.borderColor,
                 width: 2.5,
               ),
             ),
@@ -93,7 +91,8 @@ class MobileNumValidator extends StatelessWidget {
                   controller: onController,
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
-                    onChanged(value);
+                    mobileNumValidatorNotifier.userEnteredNum(value);
+                    mobileNumValidatorNotifier.validateNumber(value);
                   },
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -117,18 +116,18 @@ class MobileNumValidator extends StatelessWidget {
                   ),
                 ),
 
-                if(validationState.hasError)
+                if (vmMobileNumProvider.mobileNumValidationState.hasError)
                   Row(
                     children: [
                       Text(
-                        validationState.errorText,
+                        vmMobileNumProvider.mobileNumValidationState.errorText,
                         style: Theme.of(
                           context,
                         ).textTheme.bodySmall!.copyWith(color: Colors.red),
                       ),
                     ],
-                  )
-                ]
+                  ),
+              ],
             ),
           ),
         ),

@@ -1,6 +1,8 @@
 import 'package:aprreciate/features/LRS_flow/enums/order_validity_states.dart';
 import 'package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart';
 import 'package:aprreciate/features/LRS_flow/enums/textfield_states.dart';
+import 'package:aprreciate/features/LRS_flow/enums/us_wallet_order_enum.dart';
+import 'package:aprreciate/features/LRS_flow/source_of_funds_enums.dart';
 
 class LrsScreenState {
   const LrsScreenState({
@@ -17,14 +19,15 @@ class LrsScreenState {
     required this.sourceOfFunds,
     required this.selectedFundSource,
     required this.bankBalanceInUSD,
+    required this.orderType,
   });
 
   final double walletBalance;
   final String enteredAmount;
   final double enteredAmountDouble;
   final bool submitClicked;
-  final List<String> sourceOfFunds;
-  final String? selectedFundSource;
+  final List<Map<SourceOfFundsEnums, String>> sourceOfFunds;
+  final SourceOfFundsEnums selectedFundSource;
   final double currentBankBalance;
   final TextFieldStates amountFieldStates;
   final double fxRate;
@@ -32,14 +35,15 @@ class LrsScreenState {
   final OrderValidityStates orderValidityStates;
   final RemittanceValidityCheck remittanceValidityCheck;
   final double bankBalanceInUSD;
+  final UsWalletOrderEnum orderType;
 
   LrsScreenState copyWith({
     double? walletBalance,
     String? enteredAmount,
     double? enteredAmountDouble,
     bool? submitClicked,
-    List<String>? sourceOfFunds,
-    String? selectedFundSource,
+    List<Map<SourceOfFundsEnums, String>>? sourceOfFunds,
+    SourceOfFundsEnums? selectedFundSource,
     double? currentBankBalance,
     TextFieldStates? amountFieldStates,
     double? fxRate,
@@ -47,6 +51,7 @@ class LrsScreenState {
     OrderValidityStates? orderValidityStates,
     RemittanceValidityCheck? remittanceValidityCheck,
     double? bankBalanceInUSD,
+    UsWalletOrderEnum? orderType,
   }) {
     return LrsScreenState(
       walletBalance: walletBalance ?? this.walletBalance,
@@ -63,6 +68,7 @@ class LrsScreenState {
           remittanceValidityCheck ?? this.remittanceValidityCheck,
       orderValidityStates: orderValidityStates ?? this.orderValidityStates,
       bankBalanceInUSD: bankBalanceInUSD ?? this.bankBalanceInUSD,
+      orderType: orderType ?? this.orderType,
     );
   }
 }

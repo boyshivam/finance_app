@@ -7,6 +7,7 @@ import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_tra
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
 import "package:aprreciate/features/home_screen/home_screen.dart";
 import "package:aprreciate/features/mobile_num_validator/view/presentations/mobile_num_screen.dart";
+import "package:aprreciate/features/mobile_otp_validator/helpers/otp_screen_args.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/presentation/mobile_otp_screen.dart";
 import "package:aprreciate/features/passcode/view/presentation/passcode_screen.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/presentation/PortfolioDashboardScreen.dart";
@@ -33,11 +34,15 @@ final appRouter = GoRouter(
       path: AppRoutes.loginScreen,
       name: 'mobileNumberScreen',
       builder: (context, state) => MobileNumScreen(),
+
     ),
     GoRoute(
       path: AppRoutes.otpScreen,
       name: "otpEntryScreen",
-      builder: (context, state) => MobileOtpScreen(),
+      builder: (context, state) {
+        final args = state.extra as OtpScreenArgs;
+        return MobileOtpScreen(userNumber: args.userNumber);
+      },
     ),
     GoRoute(
       path: AppRoutes.passcodeScreen,

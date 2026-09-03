@@ -1,5 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/data/lrs_data/source_of_funds_dropdown.dart";
+import "package:aprreciate/features/LRS_flow/source_of_funds_enums.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +10,7 @@ class SourceOfFundsDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final vmState = ref.watch(lrsProvider);
 
     return Padding(
@@ -28,29 +30,44 @@ class SourceOfFundsDropdown extends ConsumerWidget {
             padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
             color: Colors.blueAccent,
             child: DropdownButton(
-              hint: Text("-Select a source-", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              hint: Text(
+                "-Select a source-",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: AppColorsCommon.appWhite
-              ),),
+                  color: AppColorsCommon.appWhite,
+                ),
+              ),
               value: vmState.selectedFundSource,
               items: vmState.sourceOfFunds.map((fund) {
-                return DropdownMenuItem(
-                  value: fund,
-                  
+                final entry = fund.entries.first;
+
+                return DropdownMenuItem<SourceOfFundsEnums>(
+                  value: entry.key,
                   child: Text(
-                    fund,
+                    fund.values.toString(),
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: AppColorsCommon.appWhite
+                      color: AppColorsCommon.appWhite,
                     ),
                   ),
                 );
               }).toList(),
               onChanged: (value) {
-                ref.read(lrsProvider.notifier).selectSourceOfFund(value!);
+                if (value != null) {
+                  ref.read(lrsProvider.notifier).selectSourceOfFund(value);
+                }
               },
             ),
           ),
+          if (vmState.selectedFundSource == SourceOfFundsEnums.none)
+            Text(
+              "Select a source of fund",
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w300,
+                fontSize: 22,
+                color: AppColorsCommon.appreciateThemeError,
+              ),
+            ),
         ],
       ),
     );

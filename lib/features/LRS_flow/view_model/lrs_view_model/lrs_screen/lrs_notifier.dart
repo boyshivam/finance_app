@@ -1,7 +1,10 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
+import "package:aprreciate/features/LRS_flow/data/source_of_funds_data.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
 import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
 import "package:aprreciate/features/LRS_flow/enums/textfield_states.dart";
+import "package:aprreciate/features/LRS_flow/enums/us_wallet_order_enum.dart";
+import "package:aprreciate/features/LRS_flow/source_of_funds_enums.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/MPIN_bottom_sheet.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_screen_state.dart";
@@ -29,8 +32,9 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       processingDate: "",
       orderValidityStates: OrderValidityStates.neutral,
       remittanceValidityCheck: RemittanceValidityCheck.checked,
-      selectedFundSource: null,
-      sourceOfFunds: ['Salary', 'Income from business', 'Pension', 'Gift'],
+      selectedFundSource: SourceOfFundsEnums.none,
+      sourceOfFunds: sourceOfFundsData,
+      orderType: UsWalletOrderEnum.neutral,
     );
   }
 
@@ -97,11 +101,12 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       submitClicked: false,
       orderValidityStates: OrderValidityStates.neutral,
       amountFieldStates: TextFieldStates.neutral,
+      selectedFundSource: SourceOfFundsEnums.none
     );
   }
 
   // select items from the
-  void selectSourceOfFund(String value) {
+  void selectSourceOfFund(SourceOfFundsEnums value) {
     state = state.copyWith(selectedFundSource: value);
   }
 
@@ -110,7 +115,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
 
     final newTransaction = UsWalletCardModel(
-      orderTypeHeader: "Bank to US wallet",
+      orderType: UsWalletOrderEnum.bankToUsWallet,
       orderAmount: amountDouble,
       orderStatus: OrderStatusEnum.submitted,
     );

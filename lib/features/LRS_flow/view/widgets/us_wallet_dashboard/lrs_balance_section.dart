@@ -10,45 +10,43 @@ class LrsBalanceSection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vmLrs = ref.watch(lrsProvider);
 
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.fromLTRB(
-        25,
-        MediaQuery.of(context).padding.top + 35,
-        25,
-        20,
-      ),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black45.withOpacity(0.5),
-            blurRadius: 10,
-            spreadRadius: 3,
-            offset: const Offset(3, 3)
-          )
-        ],
-        borderRadius: BorderRadius.circular(18),
-        gradient: LinearGradient(
-          colors: [
-            AppColorsCommon.lightPurpleGradient,
-            AppColorsCommon.snackBarMsgBlue,
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Column(
-        children: [
-          Text("US wallet balance"),
-          const SizedBox(height: 10),
-          Text(
-            vmLrs.walletBalance.toStringAsFixed(2),
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.w900,
-              fontSize: 32,
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 25),
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black45.withOpacity(0.5),
+              blurRadius: 10,
+              spreadRadius: 3,
+              offset: const Offset(3, 7),
             ),
+          ],
+          borderRadius: BorderRadius.circular(18),
+          gradient: LinearGradient(
+            colors: [
+              AppColorsCommon.lightPurpleGradient,
+              AppColorsCommon.lightBlueBackground,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-        ],
+        ),
+        child: Column(
+          children: [
+            Text("US wallet balance"),
+            const SizedBox(height: 10),
+            Text(
+              vmLrs.walletBalance.toStringAsFixed(2),
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                fontWeight: FontWeight.w900,
+                fontSize: 32,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

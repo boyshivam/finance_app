@@ -1,11 +1,10 @@
-import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
-import "package:go_router/go_router.dart";
 
 class TopSection extends StatelessWidget {
-  const TopSection({super.key});
+  const TopSection({super.key, required this.child});
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +26,16 @@ class TopSection extends StatelessWidget {
           end: Alignment.bottomCenter,
         ),
       ),
-      child: Text(
-        "Menu",
-        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          fontWeight: FontWeight.w800,
-          fontSize: 45,
-          color: AppColorsCommon.appWhite
-        ),
+      child: Row(
+        children: [
+          Expanded(child: child),
+          const SizedBox(width: 30,),
+          Icon(
+            Icons.support_agent_outlined,
+            size: 30,
+            color: AppColorsCommon.appWhite,
+          ),
+        ],
       ),
     );
   }

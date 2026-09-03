@@ -1,3 +1,4 @@
+import "package:aprreciate/core/utils/helper_widgets/header_text_helper.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/services_grid_section.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/top_section.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/us_wallet_&_upi.dart";
@@ -12,9 +13,9 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TopSection(),
+            TopSection(child: HeaderTextHelper(text: "Menu")),
             UsWalletUpi(),
-            ServicesGridSection()
+            ServicesGridSection(),
           ],
         ),
       ),

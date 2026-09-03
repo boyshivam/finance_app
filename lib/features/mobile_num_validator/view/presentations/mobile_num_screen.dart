@@ -1,15 +1,14 @@
-import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
-import "package:aprreciate/features/mobile_num_validator/view_model/provider.dart";
-import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
+import "package:aprreciate/features/mobile_num_validator/view_model/mobile_num_validator_provider.dart";
+import "package:aprreciate/features/mobile_otp_validator/helpers/otp_screen_args.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-
+import "package:go_router/go_router.dart";
 
 import "../widgets/mobile_num_validator.dart";
-
 
 class MobileNumScreen extends ConsumerStatefulWidget {
   const MobileNumScreen({super.key});
@@ -19,13 +18,10 @@ class MobileNumScreen extends ConsumerStatefulWidget {
 }
 
 class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
-
-
   late TextEditingController controller;
 
   @override
   void initState() {
-    // TODO: implement initState
     controller = TextEditingController();
     super.initState();
   }
@@ -36,121 +32,87 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
     super.dispose();
   }
 
-  String deriveMobileNum() {
-    final user_num = controller.text.trim();
-    return user_num;
-  }
-
-
-  void validate() {
-    final checkNum = ref.watch(mobileNumProvider.notifier).validateNumber(
-        deriveMobileNum());
-    setState(() {});
-
-    if (checkNum) {
-      AppNavigators.goToOTPScreen(context);
-    }
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    final validationState = ref.watch(mobileNumProvider);
+    final vmMobileNumProvider = ref.watch(mobileNumProvider);
+    final mobileNumNotifier = ref.read(mobileNumProvider.notifier);
 
     return Scaffold(
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
-      body: Column(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppColorsCommon.lightBlueBackground,
+              AppColorsCommon.lightPurpleGradient,
+            ],
+          ),
+        ),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // top container with logo and support -
-            Container(
-              // height: 80,
-              padding: EdgeInsets.only(
-                  top: MediaQuery
-                      .of(context)
-                      .padding
-                      .top + 15,
-                  bottom: 20,
-                  right: 25,
-                  left: 25
-              ),
-              decoration: BoxDecoration(color: Color(0xFFFFFFFF)),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  AssetImageHelper.image(
-                    AppAssets.lo_support,
-                    height: 24,
-                    width: 24,
-                  ),
-                ],
-              ),
-            ),
-
             // Container with number field
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: EdgeInsets.fromLTRB(25, 30, 25, 20),
+                padding: EdgeInsets.fromLTRB(
+                  25,
+                  MediaQuery.of(context).padding.top + 20,
+                  25,
+                  20,
+                ),
                 decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "TradeStox",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headlineLarge!
-                          .copyWith(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.start,
+                    CompanyTrademark(
+                      paddingLeft: 25,
+                      paddingRight: 25,
+                      paddingTop: 15,
+                      paddingBottom: 15,
+                      fontSize: 35,
+                      containerWidth: double.infinity,
                     ),
+
                     const SizedBox(height: 20),
                     Text(
                       AppStrings.log_subt,
-                      style: Theme
-                          .of(
+                      style: Theme.of(
                         context,
-                      )
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(fontSize: 19),
+                      ).textTheme.bodyMedium!.copyWith(fontSize: 19),
                     ),
                     const SizedBox(height: 25),
 
                     // Mobile number widget -
-
-                    MobileNumValidator(
-                      onController: controller,
-                      onChanged: (value) {
-                        ref.read(mobileNumProvider.notifier).onChanged(value);
-                      },
-                      validationState: validationState,
-                    ),
+                    MobileNumValidator(onController: controller),
 
                     const Spacer(),
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: MediaQuery
-                              .of(context)
-                              .padding
-                              .bottom + 10
+                        bottom: MediaQuery.of(context).padding.bottom + 10,
                       ),
                       child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                              onPressed: validate, child: Text("Proceed"))),
-                    )
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            context.push(
+                              AppRoutes.otpScreen,
+                              extra: OtpScreenArgs(
+                                userNumber: vmMobileNumProvider.mobileNumber,
+                              ),
+                            );
+                          },
+                          child: Text("Proceed"),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-          ]
+          ],
+        ),
       ),
     );
   }
 }
-

@@ -11,7 +11,7 @@ class AppStrings {
   static const String log_mob_label = "Enter mobile number";
   static const String log_subt2 = "Please ensure to use your Aadhaar-linked mobile number.";
 
-  static const String log_otp_header = "Confirm OTP";
+  static const String log_otp_header = "Enter OTP";
 
   static const String log_otp_subt = "We have sent an OTP to";
 

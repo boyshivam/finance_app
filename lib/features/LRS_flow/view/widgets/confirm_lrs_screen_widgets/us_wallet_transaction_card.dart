@@ -22,7 +22,7 @@ class UsWalletTransactionCard extends StatelessWidget {
           children: [
            Row(
              children: [
-               Text(item.orderTypeHeader),
+               Text(item.orderType.toString()),
                const Spacer(),
                Text(item.orderAmount.toStringAsFixed(2))
              ],

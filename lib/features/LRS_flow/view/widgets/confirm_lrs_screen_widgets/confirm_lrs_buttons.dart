@@ -1,5 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
+import "package:aprreciate/features/LRS_flow/source_of_funds_enums.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
@@ -14,7 +15,11 @@ class ConfirmLrsButtons extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
 
-    final vmState = ref.read(lrsProvider);
+    final vmState = ref.watch(lrsProvider);
+    final lrsScreenNotifier = ref.read(lrsProvider.notifier);
+
+
+
 
     return Align(
       alignment: Alignment.bottomCenter,
@@ -68,8 +73,12 @@ class ConfirmLrsButtons extends ConsumerWidget {
                       if(vmState.remittanceValidityCheck == RemittanceValidityCheck.unchecked){
                         checkboxSnackBar();
                       }
+                      else if(vmState.selectedFundSource == SourceOfFundsEnums.none){
+                        return;
+                      }
                       else if (vmState.remittanceValidityCheck == RemittanceValidityCheck.checked){
-                        ref.read(lrsProvider.notifier).showMpinBottomSheet(context);
+                        lrsScreenNotifier.showMpinBottomSheet(context);
+                        lrsScreenNotifier.resetState();
                       }
                     },
                     child: Container(
