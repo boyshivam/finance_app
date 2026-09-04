@@ -1,17 +1,22 @@
+import "package:aprreciate/core/utils/helper_widgets/transactionID_generator.dart";
+import "package:aprreciate/features/cashfree_flow/enums/cash_free_order_status.dart";
 import "package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_orders_provider.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/state/cashfree_state.dart";
+import "package:aprreciate/models/profile_models/cashfree/cashfree_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class CashFreeNotifier extends Notifier<CashFreeState> {
+class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
   @override
-  CashFreeState build() {
-    return CashFreeState(
+  CashFreeScreenState build() {
+    return CashFreeScreenState(
       bankBalance: 0,
       enteredAmount: "",
       upiID: "",
       amountFieldState: CashFreeUIState.neutral,
       upiFieldState: CashFreeUIState.neutral,
       submitClicked: false,
+      orderStatus: CashFreeOrderStatusEnums.submitted
     );
   }
 
@@ -30,7 +35,9 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
     final enteredAmountDouble = double.tryParse(state.enteredAmount) ?? 0;
     final enteredAmountText = state.enteredAmount.toString();
 
-    if (enteredAmountText.trim().isEmpty) {
+    if (enteredAmountText
+        .trim()
+        .isEmpty) {
       state = state.copyWith(
         amountFieldState: CashFreeUIState.empty,
         submitClicked: true,
@@ -42,9 +49,9 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
       );
     } else if (enteredAmountDouble > 0) {
       state = state.copyWith(
-        amountFieldState: CashFreeUIState.valid,
-        submitClicked: true,
-        bankBalance: enteredAmountDouble
+          amountFieldState: CashFreeUIState.valid,
+          submitClicked: true,
+          bankBalance: enteredAmountDouble
       );
     }
   }
@@ -52,7 +59,9 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
   // validate entered UPI ID
   void validateEnteredUpiID() {
     final upiID = state.upiID;
-    final upiIDSplits = upiID.split("@").length;
+    final upiIDSplits = upiID
+        .split("@")
+        .length;
 
     if (upiID.isEmpty) {
       state = state.copyWith(
@@ -71,4 +80,18 @@ class CashFreeNotifier extends Notifier<CashFreeState> {
       );
     }
   }
+
+  void addToOrdersList() {
+
+    final cashFreeOrdersNotifier = ref.read(cashFreeOrdersProvider.notifier);
+
+    final CashFreeCardModel newOrder = CashFreeCardModel(
+        amount: state.enteredAmount,
+        transactionID: RandomOrderIdGenerator.generateId(),
+        upiID: state.upiID,
+        orderStatus: state.orderStatus);
+
+    cashFreeOrdersNotifier.addCashFreeOrder(newOrder);
+  }
+
 }

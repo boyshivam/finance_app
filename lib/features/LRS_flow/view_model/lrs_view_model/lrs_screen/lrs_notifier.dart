@@ -4,11 +4,11 @@ import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
 import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
 import "package:aprreciate/features/LRS_flow/enums/textfield_states.dart";
 import "package:aprreciate/features/LRS_flow/enums/us_wallet_order_enum.dart";
-import "package:aprreciate/features/LRS_flow/source_of_funds_enums.dart";
+import "package:aprreciate/features/LRS_flow/enums/source_of_funds_enums.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/MPIN_bottom_sheet.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_screen_state.dart";
-import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/order_status_enum.dart";
 import "package:aprreciate/models/profile_models/lrs/lrs_card_model.dart";
 import "package:flutter/material.dart";
@@ -18,7 +18,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   @override
   LrsScreenState build() {
     // calls cash free provider to access bank balance
-    final vmBank = ref.watch(cashFreeProvider);
+    final vmBank = ref.watch(cashFreeScreenProvider);
 
     return LrsScreenState(
       walletBalance: 0,

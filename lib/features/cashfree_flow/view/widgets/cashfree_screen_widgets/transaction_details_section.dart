@@ -1,6 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart";
-import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -10,19 +10,20 @@ class TransactionDetailsSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmNotifier = ref.read(cashFreeProvider.notifier);
-    final vm = ref.watch(cashFreeProvider);
+    final vmNotifier = ref.read(cashFreeScreenProvider.notifier);
+    final vm = ref.watch(cashFreeScreenProvider);
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         decoration: BoxDecoration(
           color: AppColorsCommon.appWhite,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(width: 2.5, color: AppColorsCommon.textGrey),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Enter amount to transfer",
@@ -35,7 +36,7 @@ class TransactionDetailsSection extends ConsumerWidget {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(width: 1.5, color: AppColorsCommon.textGrey),
+                border: Border.all(width: 2, color: AppColorsCommon.appreciateThemeColor),
               ),
               child: TextField(
                 keyboardType: const TextInputType.numberWithOptions(
@@ -104,8 +105,8 @@ class TransactionDetailsSection extends ConsumerWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      width: 1.5,
-                      color: AppColorsCommon.textGrey,
+                      width: 2,
+                      color: AppColorsCommon.appreciateThemeColor,
                     ),
                   ),
                   child: TextField(

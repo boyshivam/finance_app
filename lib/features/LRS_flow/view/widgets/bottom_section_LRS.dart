@@ -2,7 +2,7 @@ import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/conti
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
-import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
@@ -14,7 +14,7 @@ class BottomSectionLrs extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmCashFree = ref.watch(cashFreeProvider);
+    final vmCashFree = ref.watch(cashFreeScreenProvider);
 
     final vmLRS = ref.watch(lrsProvider);
     final lrsNotifier = ref.read(lrsProvider.notifier);

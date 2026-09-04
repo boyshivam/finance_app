@@ -10,13 +10,16 @@ class CashFreeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
         child: Column(
           children: [
             CashFreeTopSection(),
-            const SizedBox(height: 40,),
+            const Spacer(),
             TransactionDetailsSection(),
-            ProceedPayCta(),
+            const Spacer(),
+            ProceedPayCta()
+
           ],
         ),
       ),

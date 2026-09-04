@@ -1,5 +1,4 @@
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
-import 'package:aprreciate/router/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,10 +7,14 @@ class OrderPlacedButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.routeString,
+    required this.backGroundColor,
+    required this.textColor,
   });
 
   final String text;
   final String routeString;
+  final Color backGroundColor;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +28,17 @@ class OrderPlacedButton extends StatelessWidget {
           width: double.infinity,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           decoration: BoxDecoration(
-            color: AppColorsCommon.appreciateThemeColor,
+            color: backGroundColor,
             borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: AppColorsCommon.appreciateThemeColor,
+              width: 2,
+            ),
           ),
           child: Text(
             text,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: AppColorsCommon.appWhite,
+              color: textColor,
               fontSize: 24,
               fontWeight: FontWeight.w600,
             ),

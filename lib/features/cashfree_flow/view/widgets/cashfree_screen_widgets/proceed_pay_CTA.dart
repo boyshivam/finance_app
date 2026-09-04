@@ -1,6 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart";
-import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -11,8 +11,8 @@ class ProceedPayCta extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(cashFreeProvider.notifier);
-    final vmState = ref.watch(cashFreeProvider);
+    final notifier = ref.read(cashFreeScreenProvider.notifier);
+    final vmState = ref.watch(cashFreeScreenProvider);
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),

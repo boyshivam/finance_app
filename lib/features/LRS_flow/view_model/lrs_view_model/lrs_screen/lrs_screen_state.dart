@@ -2,7 +2,7 @@ import 'package:aprreciate/features/LRS_flow/enums/order_validity_states.dart';
 import 'package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart';
 import 'package:aprreciate/features/LRS_flow/enums/textfield_states.dart';
 import 'package:aprreciate/features/LRS_flow/enums/us_wallet_order_enum.dart';
-import 'package:aprreciate/features/LRS_flow/source_of_funds_enums.dart';
+import 'package:aprreciate/features/LRS_flow/enums/source_of_funds_enums.dart';
 
 class LrsScreenState {
   const LrsScreenState({
