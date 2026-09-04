@@ -81,6 +81,8 @@ class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
     }
   }
 
+
+  // add the transaction details to orders list
   void addToOrdersList() {
 
     final cashFreeOrdersNotifier = ref.read(cashFreeOrdersProvider.notifier);

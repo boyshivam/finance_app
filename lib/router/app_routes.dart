@@ -34,7 +34,7 @@ class AppRoutes {
   // Trade orders placed screen
   static const String orderPlacedScreen = "/tradeOrderPlaced";
 
-  ////// LRS AND CASH FREE SCREENS
+  ////// LRS AND CASH FREE SCREENS ///////////////
 
   // LRS , add funds to wallet
   static const String lrsTransferScreen = "/lrsTransferScreen";
@@ -44,6 +44,9 @@ class AppRoutes {
 
   // Cash free screen
   static const String cashFreeScreen = "/cashFreeScreen";
+
+  // Cash free dashboard
+  static const String cashFreeDashboard = "/cashFreeDashboard";
 
   // Yes bank confirm remittance screen
   static const String confirmRemittanceScreen = "/confirmRemittance";

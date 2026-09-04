@@ -2,6 +2,7 @@ import "package:aprreciate/features/LRS_flow/view/presentation/confirm_remittanc
 import "package:aprreciate/features/LRS_flow/view/presentation/lrs_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/transactions_submitted_screen.dart";
 import "package:aprreciate/features/LRS_flow/view/presentation/us_wallet_dashboard.dart";
+import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_dashboard.dart";
 import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_screen.dart";
 import "package:aprreciate/features/cashfree_flow/view/presentation/cashfree_transaction_placed.dart";
 import "package:aprreciate/features/home_dashboard/view/screens/home_dashboard_screen.dart";
@@ -34,7 +35,6 @@ final appRouter = GoRouter(
       path: AppRoutes.loginScreen,
       name: 'mobileNumberScreen',
       builder: (context, state) => MobileNumScreen(),
-
     ),
     GoRoute(
       path: AppRoutes.otpScreen,
@@ -83,6 +83,13 @@ final appRouter = GoRouter(
       path: AppRoutes.usWalletDashboard,
       name: "usWalletDashboard",
       builder: (context, state) => UsWalletDashboard(),
+    ),
+
+    // route to cashfree dashboard
+    GoRoute(
+      path: AppRoutes.cashFreeDashboard,
+      name: "cashFreeDashboard",
+      builder: (context, state) => CashfreeDashboard(),
     ),
 
     // route to Cash-free transaction

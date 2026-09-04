@@ -79,7 +79,7 @@ class UsWalletUpi extends ConsumerWidget {
           const SizedBox(height: 20),
           InkWell(
             onTap: () {
-              context.push(AppRoutes.cashFreeScreen);
+              context.push(AppRoutes.cashFreeDashboard);
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
