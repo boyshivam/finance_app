@@ -1,6 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/LRS_flow/view/widgets/us_wallet_dashboard/us_wallet_orders_viewer.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view/widgets/cash_free_dashboard_widgets/cashfree_orders_viewer.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_orders_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -31,6 +30,7 @@ class CashFreeOrdersSection extends ConsumerWidget {
               Icon(Icons.filter_alt_outlined)
             ],
           ),
+          const SizedBox(height: 30,),
           if (vmCashFreeTransactions.isEmpty)
             Container(
               padding: EdgeInsets.symmetric(vertical: 45, horizontal: 55),
@@ -59,7 +59,7 @@ class CashFreeOrdersSection extends ConsumerWidget {
               ),
             ),
           if (vmCashFreeTransactions.isNotEmpty)
-            UsWalletOrdersViewer(),
+            CashFreeOrdersViewer(),
         ],
       ),
     );

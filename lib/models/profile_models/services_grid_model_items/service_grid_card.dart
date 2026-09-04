@@ -12,6 +12,14 @@ class ServiceGridCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black38,
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(0,2)
+            )
+          ],
           borderRadius: BorderRadius.all(Radius.circular(16)),
           color: AppColorsCommon.appWhite),
       child: Column(

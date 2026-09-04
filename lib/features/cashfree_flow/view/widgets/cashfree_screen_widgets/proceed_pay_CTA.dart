@@ -21,6 +21,7 @@ class ProceedPayCta extends ConsumerWidget {
 
           if (vmState.amountFieldState == CashFreeUIState.valid &&
               vmState.upiFieldState == CashFreeUIState.valid) {
+            notifier.addToOrdersList();
             context.push(AppRoutes.cashFreeTransactionPlaced);
           }
         },

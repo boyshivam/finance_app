@@ -12,7 +12,7 @@ class ProceedCtaCashfree extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       child: InkWell(
         onTap: (){
-          context.push(AppRoutes.lrsTransferScreen);
+          context.push(AppRoutes.cashFreeScreen);
         },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),

@@ -28,10 +28,10 @@ class LrsBalanceSection extends ConsumerWidget {
           gradient: LinearGradient(
             colors: [
               AppColorsCommon.lightPurpleGradient,
-              AppColorsCommon.lightBlueBackground,
+              Color(0xFFe9c3f7),
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: Column(

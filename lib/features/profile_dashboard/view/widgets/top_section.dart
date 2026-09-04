@@ -1,5 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class TopSection extends StatelessWidget {
   const TopSection({super.key, required this.child});
@@ -28,8 +29,19 @@ class TopSection extends StatelessWidget {
       ),
       child: Row(
         children: [
+          InkWell(
+            onTap: () {
+              context.pop();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              size: 35,
+              color: AppColorsCommon.appWhite,
+            ),
+          ),
+          const SizedBox(width: 15),
           Expanded(child: child),
-          const SizedBox(width: 30,),
+          const SizedBox(width: 30),
           Icon(
             Icons.support_agent_outlined,
             size: 30,

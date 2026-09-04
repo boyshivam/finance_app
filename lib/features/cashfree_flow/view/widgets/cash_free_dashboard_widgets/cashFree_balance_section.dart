@@ -1,4 +1,3 @@
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -28,11 +27,11 @@ class CashfreeBalanceSection extends ConsumerWidget {
           borderRadius: BorderRadius.circular(18),
           gradient: LinearGradient(
             colors: [
-              AppColorsCommon.lightPurpleGradient,
-              AppColorsCommon.lightBlueBackground,
+              Color(0xFFfaebc0),
+              Color(0XFFf5aba2),
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: Column(
@@ -40,7 +39,7 @@ class CashfreeBalanceSection extends ConsumerWidget {
             Text("YES bank balance"),
             const SizedBox(height: 10),
             Text(
-              vmCashFreeProvider.bankBalance.toStringAsFixed(2),
+              "₹ ${vmCashFreeProvider.bankBalance.toStringAsFixed(2)} ",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.w900,
                 fontSize: 32,

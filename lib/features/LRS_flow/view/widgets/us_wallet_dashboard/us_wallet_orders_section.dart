@@ -30,6 +30,7 @@ class UsWalletOrdersSection extends ConsumerWidget {
               Icon(Icons.filter_alt_outlined)
             ],
           ),
+          const SizedBox(height: 20),
           if (vmLrsTransactions.isEmpty)
             Container(
               padding: EdgeInsets.symmetric(vertical: 45, horizontal: 55),
