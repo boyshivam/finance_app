@@ -33,6 +33,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       orderValidityStates: OrderValidityStates.neutral,
       remittanceValidityCheck: RemittanceValidityCheck.checked,
       selectedFundSource: SourceOfFundsEnums.none,
+      isFundsSourceNone: false,
       sourceOfFunds: sourceOfFundsData,
       orderType: UsWalletOrderEnum.neutral,
     );
@@ -101,8 +102,23 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       submitClicked: false,
       orderValidityStates: OrderValidityStates.neutral,
       amountFieldStates: TextFieldStates.neutral,
-      selectedFundSource: SourceOfFundsEnums.none
+      selectedFundSource: SourceOfFundsEnums.none,
+      isFundsSourceNone: false,
     );
+  }
+
+  void confirmRemittance(Function checkboxSnackBar, BuildContext context) {
+    if (state.remittanceValidityCheck == RemittanceValidityCheck.unchecked) {
+      checkboxSnackBar();
+    } else if (state.selectedFundSource == SourceOfFundsEnums.none &&
+        state.isFundsSourceNone == false) {
+      state = state.copyWith(isFundsSourceNone: true);
+      return;
+    } else if (state.remittanceValidityCheck ==
+        RemittanceValidityCheck.checked) {
+      showMpinBottomSheet(context);
+      resetState();
+    }
   }
 
   // select items from the

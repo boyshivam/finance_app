@@ -17,6 +17,7 @@ class LrsScreenState {
     required this.orderValidityStates,
     required this.remittanceValidityCheck,
     required this.sourceOfFunds,
+    required this.isFundsSourceNone,
     required this.selectedFundSource,
     required this.bankBalanceInUSD,
     required this.orderType,
@@ -26,8 +27,9 @@ class LrsScreenState {
   final String enteredAmount;
   final double enteredAmountDouble;
   final bool submitClicked;
-  final List<Map<SourceOfFundsEnums, String>> sourceOfFunds;
+  final List<Map<SourceOfFundsEnums, String?>> sourceOfFunds;
   final SourceOfFundsEnums selectedFundSource;
+  final bool isFundsSourceNone;
   final double currentBankBalance;
   final TextFieldStates amountFieldStates;
   final double fxRate;
@@ -44,6 +46,7 @@ class LrsScreenState {
     bool? submitClicked,
     List<Map<SourceOfFundsEnums, String>>? sourceOfFunds,
     SourceOfFundsEnums? selectedFundSource,
+    bool? isFundsSourceNone,
     double? currentBankBalance,
     TextFieldStates? amountFieldStates,
     double? fxRate,
@@ -56,6 +59,7 @@ class LrsScreenState {
     return LrsScreenState(
       walletBalance: walletBalance ?? this.walletBalance,
       selectedFundSource: selectedFundSource ?? this.selectedFundSource,
+      isFundsSourceNone: isFundsSourceNone ?? this.isFundsSourceNone,
       submitClicked: submitClicked ?? this.submitClicked,
       sourceOfFunds: sourceOfFunds ?? this.sourceOfFunds,
       enteredAmount: enteredAmount ?? this.enteredAmount,

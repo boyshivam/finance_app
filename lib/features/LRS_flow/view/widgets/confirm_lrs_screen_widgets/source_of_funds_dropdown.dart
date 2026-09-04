@@ -1,5 +1,4 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/data/lrs_data/source_of_funds_dropdown.dart";
 import "package:aprreciate/features/LRS_flow/source_of_funds_enums.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:flutter/material.dart";
@@ -10,7 +9,6 @@ class SourceOfFundsDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final vmState = ref.watch(lrsProvider);
 
     return Padding(
@@ -59,7 +57,8 @@ class SourceOfFundsDropdown extends ConsumerWidget {
               },
             ),
           ),
-          if (vmState.selectedFundSource == SourceOfFundsEnums.none)
+          if (vmState.selectedFundSource == SourceOfFundsEnums.none &&
+              vmState.isFundsSourceNone == true)
             Text(
               "Select a source of fund",
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
