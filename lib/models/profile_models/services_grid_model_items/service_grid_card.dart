@@ -29,7 +29,7 @@ class ServiceGridCard extends StatelessWidget {
           Text(
             item.name,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
-              fontSize: 20,
+              fontSize: 22,
               fontWeight: FontWeight.w700,
             ),
           ),

@@ -9,7 +9,7 @@ class ProceedCtaCashfree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+      padding: EdgeInsets.fromLTRB(25, 0, 25, 30),
       child: InkWell(
         onTap: (){
           context.push(AppRoutes.cashFreeScreen);

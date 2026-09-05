@@ -7,14 +7,13 @@ class CashfreeBalanceSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final vmCashFreeProvider = ref.watch(cashFreeScreenProvider);
 
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0, horizontal: 25),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+        padding: EdgeInsets.symmetric(vertical: 40, horizontal: 15),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -26,17 +25,20 @@ class CashfreeBalanceSection extends ConsumerWidget {
           ],
           borderRadius: BorderRadius.circular(18),
           gradient: LinearGradient(
-            colors: [
-              Color(0xFFfaebc0),
-              Color(0XFFf5aba2),
-            ],
+            colors: [Color(0xFFfaebc0), Color(0XFFf5aba2)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Column(
           children: [
-            Text("YES bank balance"),
+            Text(
+              "YES bank balance",
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             const SizedBox(height: 10),
             Text(
               "₹ ${vmCashFreeProvider.bankBalance.toStringAsFixed(2)} ",

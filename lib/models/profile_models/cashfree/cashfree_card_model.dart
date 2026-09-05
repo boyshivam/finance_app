@@ -1,6 +1,6 @@
 
 
-import "package:aprreciate/features/cashfree_flow/enums/cash_free_order_status.dart";
+import "package:aprreciate/core/utils/common_helper_enums/order_stage_enum.dart";
 
 
 class CashFreeCardModel {
@@ -14,7 +14,7 @@ class CashFreeCardModel {
   final String amount;
   final String transactionID;
   final String upiID;
-  final CashFreeOrderStatusEnums orderStatus;
+  final OrderStageEnums orderStatus;
 
 
 }

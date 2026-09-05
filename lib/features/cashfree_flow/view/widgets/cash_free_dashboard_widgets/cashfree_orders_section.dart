@@ -27,10 +27,9 @@ class CashFreeOrdersSection extends ConsumerWidget {
               ),
               const Spacer(),
               Text("Filter"),
-              Icon(Icons.filter_alt_outlined)
+              Icon(Icons.filter_alt_outlined),
             ],
           ),
-          const SizedBox(height: 30,),
           if (vmCashFreeTransactions.isEmpty)
             Container(
               padding: EdgeInsets.symmetric(vertical: 45, horizontal: 55),
@@ -58,8 +57,7 @@ class CashFreeOrdersSection extends ConsumerWidget {
                 ],
               ),
             ),
-          if (vmCashFreeTransactions.isNotEmpty)
-            CashFreeOrdersViewer(),
+          if (vmCashFreeTransactions.isNotEmpty) CashFreeOrdersViewer(),
         ],
       ),
     );

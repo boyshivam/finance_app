@@ -1,4 +1,4 @@
-import 'package:aprreciate/features/cashfree_flow/enums/cash_free_order_status.dart';
+import 'package:aprreciate/core/utils/common_helper_enums/order_stage_enum.dart';
 import 'package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart';
 
 class CashFreeScreenState {
@@ -18,7 +18,7 @@ class CashFreeScreenState {
   final CashFreeUIState upiFieldState;
   final String upiID;
   final bool submitClicked;
-  final CashFreeOrderStatusEnums orderStatus;
+  final OrderStageEnums orderStatus;
 
   CashFreeScreenState copyWith({
     String? enteredAmount,
@@ -27,7 +27,7 @@ class CashFreeScreenState {
     CashFreeUIState? upiFieldState,
     String? upiID,
     bool? submitClicked,
-    CashFreeOrderStatusEnums? orderStatus,
+    OrderStageEnums? orderStatus,
   }) {
     return CashFreeScreenState(
       enteredAmount: enteredAmount ?? this.enteredAmount,

@@ -29,16 +29,6 @@ class TopSection extends StatelessWidget {
       ),
       child: Row(
         children: [
-          InkWell(
-            onTap: () {
-              context.pop();
-            },
-            child: Icon(
-              Icons.arrow_back,
-              size: 35,
-              color: AppColorsCommon.appWhite,
-            ),
-          ),
           const SizedBox(width: 15),
           Expanded(child: child),
           const SizedBox(width: 30),

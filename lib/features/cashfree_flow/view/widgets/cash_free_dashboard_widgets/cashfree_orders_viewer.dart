@@ -11,11 +11,14 @@ class CashFreeOrdersViewer extends ConsumerWidget {
     // Lrs Transaction provider
     final vmCashFreeOrders = ref.watch(cashFreeOrdersProvider);
 
-    return SizedBox(
-      height: 400,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.sizeOf(context).height * 0.5,
+      ),
       child: ListView.builder(
         itemCount: vmCashFreeOrders.length,
-        itemBuilder: (context, index) => CashFreeOrderCard(cashFreeOrder: vmCashFreeOrders[index]),
+        itemBuilder: (context, index) =>
+            CashFreeOrderCard(cashFreeOrder: vmCashFreeOrders[index]),
       ),
     );
   }

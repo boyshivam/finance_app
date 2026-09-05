@@ -13,9 +13,9 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TopSection(child: HeaderTextHelper(text: "Menu")),
+            TopSection(child: HeaderTextHelper(text: "Menu"),),
             UsWalletUpi(),
-            ServicesGridSection(),
+            ServicesGridSection()
           ],
         ),
       ),

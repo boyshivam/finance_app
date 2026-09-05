@@ -1,5 +1,5 @@
+import "package:aprreciate/core/utils/common_helper_enums/order_stage_enum.dart";
 import "package:aprreciate/core/utils/helper_widgets/transactionID_generator.dart";
-import "package:aprreciate/features/cashfree_flow/enums/cash_free_order_status.dart";
 import "package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_orders_provider.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/state/cashfree_state.dart";
@@ -16,7 +16,7 @@ class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
       amountFieldState: CashFreeUIState.neutral,
       upiFieldState: CashFreeUIState.neutral,
       submitClicked: false,
-      orderStatus: CashFreeOrderStatusEnums.submitted
+      orderStatus: OrderStageEnums.submitted
     );
   }
 
