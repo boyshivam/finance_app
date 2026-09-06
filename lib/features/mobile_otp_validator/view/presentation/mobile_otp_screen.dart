@@ -4,6 +4,7 @@ import "package:aprreciate/core/constants/app_strings/features/mobile_otp/mobile
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
 import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
 import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_provider/mobile_otp_provider.dart";
@@ -109,7 +110,8 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     // top section with appreciate logo and support icon
-                    TopSection(
+                    CustomTopSection(
+                      childAlignment: MainAxisAlignment.start,
                       child: CompanyTrademark(
                         paddingLeft: 25,
                         paddingRight: 25,

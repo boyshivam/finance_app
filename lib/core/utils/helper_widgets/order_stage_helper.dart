@@ -16,7 +16,7 @@ class OrderStageHelper extends StatelessWidget {
           color: orderStage.errorTextColor,
           width: 2
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(8),
         color: orderStage.errorBgColor,
       ),
       child: Text(

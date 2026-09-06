@@ -6,6 +6,7 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart"
     show AssetImageHelper;
 import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
 import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
 import "package:aprreciate/features/passcode/view_model/passcode_provider/passcode_provider.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/top_section.dart";
@@ -77,7 +78,8 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // top header section with appreciate text and logo
-          TopSection(
+          CustomTopSection(
+            childAlignment: MainAxisAlignment.start,
             child: CompanyTrademark(
               paddingLeft: 25,
               paddingRight: 25,

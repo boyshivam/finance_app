@@ -26,24 +26,29 @@ class _MarketIndicesTickerState extends State<MarketIndicesTicker> {
     super.initState();
     _scrollController = ScrollController();
     loopingList = [...marketIndices, ...marketIndices];
-    startScrollingAnimation();
+    // startScrollingAnimation();
+    scrollingAnimation();
   }
 
-  // this runs the animation
-  Future<void> startScrollingAnimation() async {
+
+  // function to run the scroll animation
+  Future<void> scrollingAnimation() async {
     while (mounted) {
-      await Future.delayed(const Duration(milliseconds: 14));
-      double scrollOffset = _scrollController.offset - 1;
-      double minExtent = _scrollController.position.minScrollExtent;
+      await Future.delayed(Duration(milliseconds: 13));
+
+      double scrollOffset = _scrollController.offset + 1;
+      final scrollMaxExtent = _scrollController.position.maxScrollExtent;
 
       if (_scrollController.hasClients) {
-        if (scrollOffset <= minExtent) {
+        if (scrollOffset >= scrollMaxExtent / 2) {
           scrollOffset = 0;
         }
         _scrollController.jumpTo(scrollOffset);
       }
     }
   }
+
+
 
   // dispose scroll controller after use
   @override
@@ -97,4 +102,3 @@ class _MarketIndicesTickerState extends State<MarketIndicesTicker> {
     );
   }
 }
-

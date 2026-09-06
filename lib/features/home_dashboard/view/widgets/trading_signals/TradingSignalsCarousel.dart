@@ -15,7 +15,7 @@ class TradingSignalsCarousel extends StatefulWidget {
 class _TradingSignalsCarouselState extends State<TradingSignalsCarousel> {
   late final PageController controller;
 
-  double currentPage = 1;
+  double currentPage = 0;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _TradingSignalsCarouselState extends State<TradingSignalsCarousel> {
             child: Row(
               children: [
                 Text(
-                  "Trading Signals",
+                  "Trending securities",
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
@@ -61,9 +61,12 @@ class _TradingSignalsCarouselState extends State<TradingSignalsCarousel> {
                 const Spacer(),
                 Row(
                   children: [
-                    Text("Explore", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: AppColorsCommon.appreciateThemeColor
-                    ),),
+                    Text(
+                      "Explore",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: AppColorsCommon.appreciateThemeColor,
+                      ),
+                    ),
                     const SizedBox(width: 5),
                     Image.asset(
                       AppAssets.ho_blue_forward_icon,
@@ -85,7 +88,7 @@ class _TradingSignalsCarouselState extends State<TradingSignalsCarousel> {
               itemBuilder: (context, index) {
                 final difference = (currentPage - index).abs();
 
-                double scale = (1 - (difference * .15)).clamp(0.75, 1);
+                double scale = (1 - (difference * .15)).clamp(.75, 1);
 
                 return Transform.scale(
                   scale: scale,
