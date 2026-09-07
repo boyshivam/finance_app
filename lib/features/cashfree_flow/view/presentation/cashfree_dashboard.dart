@@ -13,7 +13,12 @@ class CashfreeDashboard extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          CustomTopSection(childAlignment: MainAxisAlignment.center,child: HeaderTextHelper(text: "Bank Transactions",), showSupportIcon: true, showBackCTA: true,),
+          CustomTopSection(
+            childAlignment: MainAxisAlignment.center,
+            child: HeaderTextHelper(text: "Bank Transactions"),
+            showSupportIcon: true,
+            showBackCTA: true,
+          ),
           const SizedBox(height: 30),
           CashfreeBalanceSection(),
           const SizedBox(height: 30),

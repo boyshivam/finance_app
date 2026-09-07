@@ -5,12 +5,10 @@ class CustomNavigationButtonHelper extends StatelessWidget {
   const CustomNavigationButtonHelper({
     super.key,
     required this.buttonText,
-    required this.buttonTextColor,
     required this.secondaryButton,
   });
 
   final String buttonText;
-  final Color buttonTextColor;
   final bool secondaryButton;
 
   @override
@@ -30,9 +28,11 @@ class CustomNavigationButtonHelper extends StatelessWidget {
       ),
       child: Text(
         buttonText,
-        style: Theme.of(
-          context,
-        ).textTheme.bodyMedium!.copyWith(color: buttonTextColor),
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+          color: secondaryButton
+              ? AppColorsCommon.appreciateThemeColor
+              : AppColorsCommon.appWhite,
+        ),
         textAlign: TextAlign.center,
       ),
     );

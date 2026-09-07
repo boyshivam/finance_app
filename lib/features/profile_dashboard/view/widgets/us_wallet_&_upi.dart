@@ -59,7 +59,7 @@ class UsWalletUpi extends ConsumerWidget {
                           Text("US wallet"),
                           const SizedBox(height: 5),
                           Text(
-                            vmState.walletBalance.toStringAsFixed(2),
+                            vmState.usWalletBalance.toStringAsFixed(2),
                             style: Theme.of(context).textTheme.bodyMedium!
                                 .copyWith(
                                   fontWeight: FontWeight.w500,

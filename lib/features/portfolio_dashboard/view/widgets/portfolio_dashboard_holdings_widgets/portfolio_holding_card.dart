@@ -9,60 +9,67 @@ class PortfolioHoldingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: AppColorsCommon.appreciateThemeColor),
-        color: AppColorsCommon.appWhite,
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Image.asset(holding.securityIcon, width: 40, height: 40),
-              const SizedBox(width: 10),
-              Column(
-                children: [
-                  Text(holding.securityName, style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    fontSize: 24
-                  ),),
-                  Text(
-                    "${holding.securityPrice}",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Divider(
-            color: AppColorsCommon.inactiveTextFieldBorderColor,
-            thickness: 2,
-          ),
-          Row(
-            children: [
-              Column(
-                children: [
-                  Text("Invested"),
-                  const SizedBox(height: 10),
-                  Text("${holding.investedAmount}"),
-                  const SizedBox(height: 20),
-                  Text("Avg: ${holding.average.toStringAsFixed(2)}"),
-                ],
-              ),
-              const Spacer(),
-              Column(
-                children: [
-                  Text("Total P&L"),
-                  const SizedBox(height: 10),
-                  Text(holding.totalPnL.toStringAsFixed(2)),
-                  const SizedBox(height: 20),
-                  Text("Qty: ${holding.purchasedQuantity.toStringAsFixed(2)}"),
-                ],
-              ),
-            ],
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+              width: 3,
+              color: AppColorsCommon.appreciateThemeColor),
+          color: AppColorsCommon.appWhite,
+        ),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Image.asset(holding.securityIcon, width: 40, height: 40),
+                const SizedBox(width: 10),
+                Column(
+                  children: [
+                    Text(holding.securityName, style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontSize: 24
+                    ),),
+                    Text(
+                      "${holding.securityPrice}",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const Divider(
+              color: AppColorsCommon.inactiveTextFieldBorderColor,
+              thickness: 3,
+            ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Text("Invested", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.w600
+                    ),),
+                    const SizedBox(height: 10),
+                    Text("${holding.investedAmount}"),
+                    const SizedBox(height: 20),
+                    Text("Avg: ${holding.average.toStringAsFixed(2)}"),
+                  ],
+                ),
+                const Spacer(),
+                Column(
+                  children: [
+                    Text("Total P&L"),
+                    const SizedBox(height: 10),
+                    Text(holding.totalPnL.toStringAsFixed(2)),
+                    const SizedBox(height: 20),
+                    Text("Qty: ${holding.purchasedQuantity.toStringAsFixed(2)}"),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

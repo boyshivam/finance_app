@@ -10,6 +10,7 @@ class CashFreeScreenState {
     required this.upiID,
     required this.submitClicked,
     required this.orderStatus,
+    required this.transactionID
   });
 
   final String enteredAmount;
@@ -19,6 +20,7 @@ class CashFreeScreenState {
   final String upiID;
   final bool submitClicked;
   final OrderStageEnums orderStatus;
+  final String transactionID;
 
   CashFreeScreenState copyWith({
     String? enteredAmount,
@@ -28,6 +30,7 @@ class CashFreeScreenState {
     String? upiID,
     bool? submitClicked,
     OrderStageEnums? orderStatus,
+    String? transactionID
   }) {
     return CashFreeScreenState(
       enteredAmount: enteredAmount ?? this.enteredAmount,
@@ -37,6 +40,7 @@ class CashFreeScreenState {
       upiID: upiID ?? this.upiID,
       submitClicked: submitClicked ?? this.submitClicked,
       orderStatus: orderStatus ?? this.orderStatus,
+      transactionID: transactionID ?? this.transactionID
     );
   }
 }

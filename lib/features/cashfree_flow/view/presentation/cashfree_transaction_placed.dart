@@ -2,7 +2,6 @@ import "package:aprreciate/core/constants/app_assets/assets_trade/order_placed_s
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/helper_widgets/custom_navigation_button_helper.dart";
 import "package:aprreciate/features/cashfree_flow/view/widgets/cashfree_order_placed_widgets/transaction_details_section.dart";
-import "package:aprreciate/features/cashfree_flow/view/widgets/cashfree_order_placed_widgets/order_placed_button.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -49,20 +48,32 @@ class CashFreeTransactionPlaced extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 50),
-            TransactionDetailsSection(),
+            TransactionDetailsCashFree(),
             const Spacer(),
             Column(
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: InkWell(
-                    onTap: (){
-                      context.go(AppRoutes.orderScreen);
+                    onTap: () {
+                      context.go(AppRoutes.cashFreeDashboard);
                     },
                     child: CustomNavigationButtonHelper(
-                      buttonText: "Go to dashboard",
-                      buttonTextColor: AppColorsCommon.appWhite,
+                      buttonText: "Go to bank dashboard",
                       secondaryButton: false,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15,),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25),
+                  child: InkWell(
+                    onTap: () {
+                      context.go(AppRoutes.homeDashboardScreen);
+                    },
+                    child: CustomNavigationButtonHelper(
+                      buttonText: "Go to home dashboard",
+                      secondaryButton: true,
                     ),
                   ),
                 ),

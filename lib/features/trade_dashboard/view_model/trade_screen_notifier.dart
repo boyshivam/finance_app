@@ -17,13 +17,11 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
   @override
   TradeScreenState build() {
-
     // lrs state provider to fetch US wallet balance
     final vmLrs = ref.watch(lrsProvider);
 
     // TODO: implement build
     return TradeScreenState(
-
       securityName: "",
       securitySymbol: "",
       securityIcon: "",
@@ -34,7 +32,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       amountTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       quantityTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       currencyToggleState: CurrencyToggleState.toggledUsd,
-      usWalletBalance: vmLrs.walletBalance,
+      usWalletBalance: vmLrs.usWalletBalance,
       quantityByAmount: 0,
       amountByQuantity: 0,
       convertedValue: 0,
@@ -113,11 +111,11 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   }
 
   // get security details
-  void getSecurityDetails(String name, String symbol, String icon){
+  void getSecurityDetails(String name, String symbol, String icon) {
     state = state.copyWith(
       securityName: name,
       securitySymbol: symbol,
-      securityIcon: icon
+      securityIcon: icon,
     );
   }
 
@@ -181,11 +179,14 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // add investment to portfolio or add investment to exiting portfolio
   void addSecurityToPortfolio() {
+    final vmLrsProvider = ref.read(lrsProvider.notifier);
+
     double securityPrice = state.stockPrice;
     double purchaseAmount = double.tryParse(state.amountText) ?? 0;
     double purchaseQuantity = double.tryParse(state.quantityText) ?? 0;
     double averageCost = purchaseAmount / purchaseQuantity;
     double totalPnL = (securityPrice - averageCost) * purchaseQuantity;
+
 
     final newHolding = PortfolioHoldingCardModel(
       securityName: state.securityName,

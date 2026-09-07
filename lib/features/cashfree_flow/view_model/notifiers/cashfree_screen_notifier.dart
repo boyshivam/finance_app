@@ -16,9 +16,13 @@ class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
       amountFieldState: CashFreeUIState.neutral,
       upiFieldState: CashFreeUIState.neutral,
       submitClicked: false,
-      orderStatus: OrderStageEnums.submitted
+      orderStatus: OrderStageEnums.submitted,
+      transactionID: getTransactionID,
     );
   }
+
+  // random transaction id generator
+  String get getTransactionID => RandomOrderIdGenerator.generateId();
 
   // get the entered amount by user
   void retrieveEnteredAmount(String amount) {
@@ -30,70 +34,33 @@ class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
     state = state.copyWith(upiID: upi);
   }
 
-  // validate entered inputs
-  void validateEnteredAmount() {
-    final enteredAmountDouble = double.tryParse(state.enteredAmount) ?? 0;
-    final enteredAmountText = state.enteredAmount.toString();
-
-    if (enteredAmountText
-        .trim()
-        .isEmpty) {
-      state = state.copyWith(
-        amountFieldState: CashFreeUIState.empty,
-        submitClicked: true,
-      );
-    } else if (enteredAmountDouble == 0) {
-      state = state.copyWith(
-        amountFieldState: CashFreeUIState.invalid,
-        submitClicked: true,
-      );
-    } else if (enteredAmountDouble > 0) {
-      state = state.copyWith(
-          amountFieldState: CashFreeUIState.valid,
-          submitClicked: true,
-          bankBalance: enteredAmountDouble
-      );
-    }
+  // deduct from bank balance
+  void deductBankBalanceOnLrs(double lrsAmount){
+    state = state.copyWith(
+      bankBalance: state.bankBalance - lrsAmount
+    );
   }
 
-  // validate entered UPI ID
-  void validateEnteredUpiID() {
-    final upiID = state.upiID;
-    final upiIDSplits = upiID
-        .split("@")
-        .length;
+  // add new amount to bank balance
+  void addAmountToBankBalance() {
+    double latestBankBalance =
+        state.bankBalance + double.parse(state.enteredAmount);
 
-    if (upiID.isEmpty) {
-      state = state.copyWith(
-        upiFieldState: CashFreeUIState.empty,
-        submitClicked: true,
-      );
-    } else if (upiIDSplits > 2 || upiIDSplits < 2) {
-      state = state.copyWith(
-        submitClicked: true,
-        upiFieldState: CashFreeUIState.invalid,
-      );
-    } else {
-      state = state.copyWith(
-        upiFieldState: CashFreeUIState.valid,
-        submitClicked: true,
-      );
-    }
+    state = state.copyWith(bankBalance: latestBankBalance);
   }
-
 
   // add the transaction details to orders list
   void addToOrdersList() {
-
     final cashFreeOrdersNotifier = ref.read(cashFreeOrdersProvider.notifier);
+    addAmountToBankBalance();
 
     final CashFreeCardModel newOrder = CashFreeCardModel(
-        amount: state.enteredAmount,
-        transactionID: RandomOrderIdGenerator.generateId(),
-        upiID: state.upiID,
-        orderStatus: state.orderStatus);
+      amount: state.enteredAmount,
+      transactionID: state.transactionID,
+      upiID: state.upiID,
+      orderStatus: state.orderStatus,
+    );
 
     cashFreeOrdersNotifier.addCashFreeOrder(newOrder);
   }
-
 }

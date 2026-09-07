@@ -9,12 +9,14 @@ class UsWalletCardModel {
     required this.orderType,
     required this.orderAmount,
     required this.orderStatus,
+    required this.orderTxnId
     // required this.orderTime
 });
 
   final UsWalletOrderEnum orderType;
   final double orderAmount;
   final OrderStageEnums orderStatus;
+  final String orderTxnId;
   // final DateTime orderTime;
 
 }

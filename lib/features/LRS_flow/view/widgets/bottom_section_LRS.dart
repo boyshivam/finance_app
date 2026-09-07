@@ -82,7 +82,7 @@ class BottomSectionLrs extends ConsumerWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                "₹ ${vmCashFree.bankBalance} (\$${vmLRS.bankBalanceInUSD.toStringAsFixed(2)})",
+                "₹ ${vmCashFree.bankBalance.toStringAsFixed(2)}",
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
@@ -108,11 +108,13 @@ class BottomSectionLrs extends ConsumerWidget {
                 child: InkWell(
                   onTap: () {
                     lrsNotifier.validateLrsOrder();
+                    lrsNotifier.resetState();
                     if (vmLRS.orderValidityStates ==
                         OrderValidityStates.inSufficient) {
                       context.push(AppRoutes.cashFreeScreen);
                     } else if (vmLRS.orderValidityStates ==
                         OrderValidityStates.sufficient) {
+
                       context.push(AppRoutes.confirmRemittanceScreen);
                     }
                   },

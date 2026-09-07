@@ -33,7 +33,7 @@ class CashfreeBalanceSection extends ConsumerWidget {
         child: Column(
           children: [
             Text(
-              "YES bank balance",
+              "Bank balance",
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,

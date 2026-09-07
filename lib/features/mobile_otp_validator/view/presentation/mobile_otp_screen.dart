@@ -8,7 +8,6 @@ import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/helper_widgets/otp_timer.dart";
 import "package:aprreciate/features/mobile_otp_validator/view/widgets/otp_validator.dart";
 import "package:aprreciate/features/mobile_otp_validator/view_model/mobile_otp_provider/mobile_otp_provider.dart";
-import "package:aprreciate/features/profile_dashboard/view/widgets/top_section.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -117,7 +116,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                         paddingRight: 25,
                         paddingTop: 15,
                         paddingBottom: 15,
-                        fontSize: 26,
+                        fontSize: 18,
 
                       ),
                     ),

@@ -1,12 +1,12 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/order_status.dart";
+import "package:aprreciate/core/utils/helper_widgets/order_stage_helper.dart";
 import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
 import "package:flutter/material.dart";
 
-class OrderCard extends StatelessWidget {
-  const OrderCard({super.key, required this.item});
+class TradeOrderCard extends StatelessWidget {
+  const TradeOrderCard({super.key, required this.item});
 
-  final OrderCardModel item;
+  final TradeOrderCardModel item;
 
   @override
   Widget build(BuildContext context) {
@@ -14,24 +14,36 @@ class OrderCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Container(
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 3,
+              spreadRadius: 3,
+              offset: Offset(0, 4)
+            )
+          ],
           color: AppColorsCommon.appWhite,
           borderRadius: BorderRadius.all(Radius.circular(16)),
+          border: Border.all(
+            color: AppColorsCommon.appreciateThemeColor,
+            width: 3
+          )
         ),
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 45),
         child: Column(
           children: [
             Row(
               children: [
-                const SizedBox(height: 5),
+                Text(item.orderType.name),
                 const Spacer(),
-                Text(item.orderStatus)
+                OrderStageHelper(orderStage: item.orderStatus),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Text(
-                  item.orderHeader,
+                  item.security,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
@@ -41,8 +53,11 @@ class OrderCard extends StatelessWidget {
                 Text(item.orderAmount.toStringAsFixed(2)),
               ],
             ),
-            const SizedBox(height: 5),
-            Row(children: [Text(item.orderQuantity.toStringAsFixed(2))]),
+            const SizedBox(height: 10),
+            Row(children: [
+              Text("Amount: ${item.orderAmount.toString()}"),
+              const Spacer(),
+              Text("Quantity: ${item.orderQuantity.toString()}")]),
           ],
         ),
       ),

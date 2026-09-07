@@ -3,8 +3,8 @@ import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class TransactionDetailsSection extends ConsumerWidget {
-  const TransactionDetailsSection({super.key});
+class TransactionDetailsCashFree extends ConsumerWidget {
+  const TransactionDetailsCashFree({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,7 +64,7 @@ class TransactionDetailsSection extends ConsumerWidget {
                   ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const Spacer(),
-                Text(vmCashFreeProvider.upiID),
+                Text(vmCashFreeProvider.transactionID),
               ],
             ),
           ],

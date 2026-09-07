@@ -1,4 +1,3 @@
-import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
 import "package:aprreciate/core/constants/app_strings/features/passcode/passcode_constants.dart";
@@ -9,7 +8,6 @@ import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
 import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
 import "package:aprreciate/features/passcode/view/widgets/passcode_UI.dart";
 import "package:aprreciate/features/passcode/view_model/passcode_provider/passcode_provider.dart";
-import "package:aprreciate/features/profile_dashboard/view/widgets/top_section.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";

@@ -6,7 +6,7 @@ import 'package:aprreciate/features/LRS_flow/enums/source_of_funds_enums.dart';
 
 class LrsScreenState {
   const LrsScreenState({
-    required this.walletBalance,
+    required this.usWalletBalance,
     required this.enteredAmount,
     required this.enteredAmountDouble,
     required this.submitClicked,
@@ -23,7 +23,7 @@ class LrsScreenState {
     required this.orderType,
   });
 
-  final double walletBalance;
+  final double usWalletBalance;
   final String enteredAmount;
   final double enteredAmountDouble;
   final bool submitClicked;
@@ -40,7 +40,7 @@ class LrsScreenState {
   final UsWalletOrderEnum orderType;
 
   LrsScreenState copyWith({
-    double? walletBalance,
+    double? usWalletBalance,
     String? enteredAmount,
     double? enteredAmountDouble,
     bool? submitClicked,
@@ -57,7 +57,7 @@ class LrsScreenState {
     UsWalletOrderEnum? orderType,
   }) {
     return LrsScreenState(
-      walletBalance: walletBalance ?? this.walletBalance,
+      usWalletBalance: usWalletBalance ?? this.usWalletBalance,
       selectedFundSource: selectedFundSource ?? this.selectedFundSource,
       isFundsSourceNone: isFundsSourceNone ?? this.isFundsSourceNone,
       submitClicked: submitClicked ?? this.submitClicked,

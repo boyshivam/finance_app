@@ -1,17 +1,21 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class ProceedCtaCashfree extends StatelessWidget {
+class ProceedCtaCashfree extends ConsumerWidget {
   const ProceedCtaCashfree({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final vmCashFreeScreenNotifier = ref.read(cashFreeScreenProvider.notifier);
+
     return Padding(
       padding: EdgeInsets.fromLTRB(25, 0, 25, 30),
       child: InkWell(
-        onTap: (){
+        onTap: () {
           context.push(AppRoutes.cashFreeScreen);
         },
         child: Container(

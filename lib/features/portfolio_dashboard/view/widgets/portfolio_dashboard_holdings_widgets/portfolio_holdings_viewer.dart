@@ -14,6 +14,7 @@ class PortfolioHoldingsViewer extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (holdingsData.isNotEmpty) ...[
             Text(

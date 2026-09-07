@@ -9,6 +9,7 @@ class CashFreeOrdersSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final vmCashFreeTransactions = ref.watch(cashFreeOrdersProvider);
 
     return Padding(

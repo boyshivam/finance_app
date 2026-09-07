@@ -13,18 +13,17 @@ class PortfolioDashboardScreen extends ConsumerStatefulWidget {
       _PortfolioDashboardScreenState();
 }
 
-class _PortfolioDashboardScreenState extends ConsumerState<PortfolioDashboardScreen> {
-
-
+class _PortfolioDashboardScreenState
+    extends ConsumerState<PortfolioDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         PortfolioDashTopSection(),
-        PortfolioDashboardTabs(
-        ),
+        PortfolioDashboardTabs(),
         PortfolioDashboard(),
-        Expanded(child: PortfolioHoldingsViewer())
+        const SizedBox(height: 10),
+        Expanded(child: PortfolioHoldingsViewer()),
       ],
     );
   }

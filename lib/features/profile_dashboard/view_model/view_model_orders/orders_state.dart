@@ -12,13 +12,13 @@ class OrdersState {
   final OrderTabSelectedEnum orderTabSelected;
   final double orderValue;
   final double orderQuantity;
-  final List<OrderCardModel> orderCards;
+  final List<TradeOrderCardModel> orderCards;
 
   OrdersState copyWith({
     OrderTabSelectedEnum? orderTabSelected,
     double? orderValue,
     double? orderQuantity,
-    List<OrderCardModel>? orderCards,
+    List<TradeOrderCardModel>? orderCards,
   }) {
     return OrdersState(
       orderTabSelected: orderTabSelected ?? this.orderTabSelected,

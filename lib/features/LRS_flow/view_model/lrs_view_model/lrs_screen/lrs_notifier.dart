@@ -1,5 +1,6 @@
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/utils/common_helper_enums/order_stage_enum.dart";
+import "package:aprreciate/core/utils/helper_widgets/transactionID_generator.dart";
 import "package:aprreciate/features/LRS_flow/data/source_of_funds_data.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
 import "package:aprreciate/features/LRS_flow/enums/remitanceValidityCheck.dart";
@@ -21,7 +22,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     final vmBank = ref.watch(cashFreeScreenProvider);
 
     return LrsScreenState(
-      walletBalance: 0,
+      usWalletBalance: 0,
       enteredAmount: "",
       enteredAmountDouble: 0,
       submitClicked: false,
@@ -38,6 +39,8 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       orderType: UsWalletOrderEnum.neutral,
     );
   }
+
+  // denote value with new LRS value
 
   // get the entered amount and store it in state
   void deriveAmountEntered(String value) {
@@ -74,7 +77,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.sufficient,
         amountFieldStates: TextFieldStates.active,
-        walletBalance: amountDouble,
+        usWalletBalance: amountDouble,
         submitClicked: true,
       );
     }
@@ -126,16 +129,23 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     state = state.copyWith(selectedFundSource: value);
   }
 
-
   // add the lrs transaction to US wallet
   void addLrsTransaction() {
     final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
 
     final newTransaction = UsWalletCardModel(
+      orderTxnId: RandomOrderIdGenerator.generateId(),
       orderType: UsWalletOrderEnum.bankToUsWallet,
       orderAmount: amountDouble,
       orderStatus: OrderStageEnums.submitted,
     );
     ref.read(lrsTransactionProvider.notifier).addTransaction(newTransaction);
+  }
+
+  // deduct amount from LRS during trade
+  void deductBalanceAfterTrade(double deductibleAmount) {
+    state = state.copyWith(
+      usWalletBalance: state.usWalletBalance - deductibleAmount,
+    );
   }
 }

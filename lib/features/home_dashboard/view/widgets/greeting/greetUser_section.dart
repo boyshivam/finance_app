@@ -12,7 +12,7 @@ class GreetUserSection extends StatelessWidget {
         top: MediaQuery.of(context).padding.top + 16,
         left: 24,
         right: 24,
-        bottom: 14,
+        bottom: 25,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(

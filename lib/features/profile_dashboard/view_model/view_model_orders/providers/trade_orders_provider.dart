@@ -3,6 +3,6 @@ import 'package:aprreciate/features/profile_dashboard/view_model/view_model_orde
 import 'package:aprreciate/models/profile_models/orders/order_card_model.dart';
 
 final tradeOrderProvider =
-    NotifierProvider<TradeOrdersNotifier, List<OrderCardModel>>(
+    NotifierProvider<TradeOrdersNotifier, List<TradeOrderCardModel>>(
       TradeOrdersNotifier.new,
     );

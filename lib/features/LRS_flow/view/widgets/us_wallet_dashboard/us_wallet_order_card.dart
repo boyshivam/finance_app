@@ -1,4 +1,7 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/helper_widgets/order_stage_helper.dart";
+import "package:aprreciate/features/LRS_flow/enums/us_wallet_order_enum.dart";
+import "package:aprreciate/features/LRS_flow/extensions/us_wallet_order_type_extension.dart";
 import "package:aprreciate/models/profile_models/lrs/lrs_card_model.dart";
 import "package:flutter/material.dart";
 
@@ -10,8 +13,17 @@ class UsWalletOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black45,
+            blurRadius: 5,
+            offset: Offset(0, 4),
+            spreadRadius: 3
+          )
+        ],
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: AppColorsCommon.appreciateThemeColor,
@@ -23,17 +35,21 @@ class UsWalletOrderCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(usWalletOrder.orderStatus.toString(), style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-
-              ),),
+              Text(usWalletOrder.orderType.getOrderTypeText, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w400
+              ),) ,
+              const Spacer(),
+              OrderStageHelper(orderStage: usWalletOrder.orderStatus)
             ],
           ),
           const SizedBox(height: 10),
           Row(
             children: [
-              Text("order type"),
+              Text("\$ ${usWalletOrder.orderAmount}", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontWeight: FontWeight.w600
+              ),),
               const Spacer(),
-              Text(usWalletOrder.orderAmount.toString()),
+              Text(usWalletOrder.orderTxnId,),
             ],
           ),
           const SizedBox(height: 10),

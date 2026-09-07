@@ -11,7 +11,7 @@ class TransactionsSubmittedScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmLrs = ref.watch(lrsProvider);
+    final vmLrsProvider = ref.watch(lrsProvider);
 
     return Scaffold(
       body: Padding(
@@ -46,7 +46,7 @@ class TransactionsSubmittedScreen extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Order amount \$${vmLrs.enteredAmount} in progress ", style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                "Order amount \$${vmLrsProvider.enteredAmount} in progress ", style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.w700,
                 fontSize: 22,
               ),

@@ -1,4 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
 
@@ -10,7 +11,6 @@ class CustomTopSection extends StatelessWidget {
     required this.child,
     required this.childAlignment,
   });
-
 
   final bool? showSupportIcon;
   final bool? showBackCTA;
@@ -42,8 +42,8 @@ class CustomTopSection extends StatelessWidget {
         children: [
           if (showBackCTA == true)
             InkWell(
-              onTap: (){
-                context.pop();
+              onTap: () {
+                context.go(AppRoutes.profileDashboardScreen);
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -51,12 +51,9 @@ class CustomTopSection extends StatelessWidget {
                 color: AppColorsCommon.appWhite,
               ),
             ),
-          const SizedBox(width: 30,),
+          const SizedBox(width: 30),
           Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: child,
-            ),
+            child: Align(alignment: Alignment.center, child: child),
           ),
           const SizedBox(width: 30),
           if (showSupportIcon == true)

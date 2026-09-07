@@ -39,7 +39,7 @@ class LrsBalanceSection extends ConsumerWidget {
             Text("US wallet balance"),
             const SizedBox(height: 10),
             Text(
-              vmLrs.walletBalance.toStringAsFixed(2),
+              vmLrs.usWalletBalance.toStringAsFixed(2),
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.w900,
                 fontSize: 32,

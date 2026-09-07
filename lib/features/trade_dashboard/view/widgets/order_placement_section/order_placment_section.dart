@@ -44,7 +44,7 @@ class OrderPlacementSection extends ConsumerWidget {
               const Spacer(),
               Row(
                 children: [
-                  Text("\$${vmLRS.walletBalance.toStringAsFixed(2)}"),
+                  Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
                   const SizedBox(width: 5),
                   Icon(Icons.arrow_drop_down_circle_outlined),
                 ],

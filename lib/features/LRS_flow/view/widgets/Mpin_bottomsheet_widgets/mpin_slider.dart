@@ -1,5 +1,7 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/LRS_flow/view_model/mpin_view_model/mpin_provider.dart";
+import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -13,12 +15,11 @@ class MpinSlider extends ConsumerStatefulWidget {
 class _MpinSliderState extends ConsumerState<MpinSlider> {
   double offset = 0;
 
-
-
   @override
   Widget build(BuildContext context) {
+    final vmMpinProvider = ref.watch(mpinProvider);
 
-    final vmState = ref.watch(mpinProvider);
+    final vmLrsScreenProvider = ref.watch(lrsProvider);
 
     return SizedBox(
       height: 60,
@@ -28,7 +29,7 @@ class _MpinSliderState extends ConsumerState<MpinSlider> {
           final max = constraints.maxWidth - thumb;
 
           return GestureDetector(
-            onHorizontalDragEnd: (_){
+            onHorizontalDragEnd: (_) {
               ref.read(mpinProvider.notifier).submitMpin(max);
             },
             onHorizontalDragUpdate: (details) {
@@ -45,12 +46,16 @@ class _MpinSliderState extends ConsumerState<MpinSlider> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                    child: Text("Slide to proceed", style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: AppColorsCommon.appWhite
-                    ),)),
+                  child: Text(
+                    "Slide to proceed",
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: AppColorsCommon.appWhite,
+                    ),
+                  ),
+                ),
                 AnimatedPositioned(
                   duration: Duration(milliseconds: 100),
-                  left: vmState.offset,
+                  left: vmMpinProvider.offset,
                   child: Padding(
                     padding: EdgeInsets.all(4),
                     child: Container(
