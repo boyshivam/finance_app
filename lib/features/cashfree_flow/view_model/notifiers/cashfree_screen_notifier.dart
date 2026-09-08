@@ -1,3 +1,4 @@
+import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
 import "package:aprreciate/core/utils/common_helper_enums/order_stage_enum.dart";
 import "package:aprreciate/core/utils/helper_widgets/transactionID_generator.dart";
 import "package:aprreciate/features/cashfree_flow/enums/cashfree_UI_state.dart";
@@ -34,11 +35,11 @@ class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
     state = state.copyWith(upiID: upi);
   }
 
-  // deduct from bank balance
-  void deductBankBalanceOnLrs(double lrsAmount){
-    state = state.copyWith(
-      bankBalance: state.bankBalance - lrsAmount
-    );
+  // deduct from bank balance when
+  void deductBankBalanceOnLrsSubmit(double lrsAmount) {
+    final lrsAmountInInr = lrsAmount * AppStringsCommon.currentFxRate;
+
+    state = state.copyWith(bankBalance: state.bankBalance - lrsAmountInInr);
   }
 
   // add new amount to bank balance
@@ -52,8 +53,6 @@ class CashFreeScreenNotifier extends Notifier<CashFreeScreenState> {
   // add the transaction details to orders list
   void addToOrdersList() {
     final cashFreeOrdersNotifier = ref.read(cashFreeOrdersProvider.notifier);
-    addAmountToBankBalance();
-
     final CashFreeCardModel newOrder = CashFreeCardModel(
       amount: state.enteredAmount,
       transactionID: state.transactionID,

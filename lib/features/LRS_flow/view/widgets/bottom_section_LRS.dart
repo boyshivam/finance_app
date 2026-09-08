@@ -108,13 +108,11 @@ class BottomSectionLrs extends ConsumerWidget {
                 child: InkWell(
                   onTap: () {
                     lrsNotifier.validateLrsOrder();
-                    lrsNotifier.resetState();
                     if (vmLRS.orderValidityStates ==
                         OrderValidityStates.inSufficient) {
                       context.push(AppRoutes.cashFreeScreen);
                     } else if (vmLRS.orderValidityStates ==
                         OrderValidityStates.sufficient) {
-
                       context.push(AppRoutes.confirmRemittanceScreen);
                     }
                   },

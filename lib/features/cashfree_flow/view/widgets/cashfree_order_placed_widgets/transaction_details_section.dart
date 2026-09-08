@@ -34,7 +34,7 @@ class TransactionDetailsCashFree extends ConsumerWidget {
                   ).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w700),
                 ),
                 const Spacer(),
-                Text(vmCashFreeProvider.enteredAmount),
+                Text("₹${vmCashFreeProvider.enteredAmount}"),
               ],
             ),
             const SizedBox(height: 10),

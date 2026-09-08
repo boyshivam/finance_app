@@ -19,8 +19,6 @@ class _MpinSliderState extends ConsumerState<MpinSlider> {
   Widget build(BuildContext context) {
     final vmMpinProvider = ref.watch(mpinProvider);
 
-    final vmLrsScreenProvider = ref.watch(lrsProvider);
-
     return SizedBox(
       height: 60,
       child: LayoutBuilder(
@@ -31,6 +29,7 @@ class _MpinSliderState extends ConsumerState<MpinSlider> {
           return GestureDetector(
             onHorizontalDragEnd: (_) {
               ref.read(mpinProvider.notifier).submitMpin(max);
+
             },
             onHorizontalDragUpdate: (details) {
               ref.read(mpinProvider.notifier).sliderMovement(details, 0, max);

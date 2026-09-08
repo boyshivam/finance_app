@@ -19,15 +19,12 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   @override
   LrsScreenState build() {
     // calls cash free provider to access bank balance
-    final vmBank = ref.watch(cashFreeScreenProvider);
 
     return LrsScreenState(
       usWalletBalance: 0,
       enteredAmount: "",
       enteredAmountDouble: 0,
       submitClicked: false,
-      currentBankBalance: vmBank.bankBalance,
-      bankBalanceInUSD: vmBank.bankBalance / AppStringsCommon.currentFxRate,
       amountFieldStates: TextFieldStates.neutral,
       fxRate: AppStringsCommon.currentFxRate,
       processingDate: "",
@@ -52,8 +49,10 @@ class LrsNotifier extends Notifier<LrsScreenState> {
 
   // check if LRS is valid
   void validateLrsOrder() {
+    // fetch bank balance
+    final bankBalance = ref.read(cashFreeScreenProvider).bankBalance;
+
     final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
-    final bankBalanceInUSD = state.bankBalanceInUSD;
 
     if (state.enteredAmount.isEmpty) {
       state = state.copyWith(
@@ -67,17 +66,16 @@ class LrsNotifier extends Notifier<LrsScreenState> {
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble >= bankBalanceInUSD) {
+    } else if (amountDouble >= bankBalance) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.inSufficient,
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble < bankBalanceInUSD) {
+    } else if (amountDouble < bankBalance) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.sufficient,
         amountFieldStates: TextFieldStates.active,
-        usWalletBalance: amountDouble,
         submitClicked: true,
       );
     }
@@ -100,15 +98,15 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   }
 
   // reset the state of all components to neutral
-  void resetState() {
-    state = state.copyWith(
-      submitClicked: false,
-      orderValidityStates: OrderValidityStates.neutral,
-      amountFieldStates: TextFieldStates.neutral,
-      selectedFundSource: SourceOfFundsEnums.none,
-      isFundsSourceNone: false,
-    );
-  }
+  // void resetState() {
+  //   state = state.copyWith(
+  //     submitClicked: false,
+  //     orderValidityStates: OrderValidityStates.neutral,
+  //     amountFieldStates: TextFieldStates.neutral,
+  //     selectedFundSource: SourceOfFundsEnums.none,
+  //     isFundsSourceNone: false,
+  //   );
+  // }
 
   void confirmRemittance(Function checkboxSnackBar, BuildContext context) {
     if (state.remittanceValidityCheck == RemittanceValidityCheck.unchecked) {
@@ -120,8 +118,16 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     } else if (state.remittanceValidityCheck ==
         RemittanceValidityCheck.checked) {
       showMpinBottomSheet(context);
-      resetState();
+      // resetState();
     }
+  }
+
+  // add entered LRS amount to US wallet balance
+  void addAmountToUSWallet() {
+    final enteredLrsAmountDouble = double.tryParse(state.enteredAmount) ?? 0;
+    final updatedUsWalletBalance =
+        state.usWalletBalance + enteredLrsAmountDouble;
+    state = state.copyWith(usWalletBalance: updatedUsWalletBalance);
   }
 
   // select items from the

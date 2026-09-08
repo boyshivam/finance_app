@@ -10,7 +10,6 @@ class LrsScreenState {
     required this.enteredAmount,
     required this.enteredAmountDouble,
     required this.submitClicked,
-    required this.currentBankBalance,
     required this.amountFieldStates,
     required this.fxRate,
     required this.processingDate,
@@ -19,7 +18,6 @@ class LrsScreenState {
     required this.sourceOfFunds,
     required this.isFundsSourceNone,
     required this.selectedFundSource,
-    required this.bankBalanceInUSD,
     required this.orderType,
   });
 
@@ -30,13 +28,11 @@ class LrsScreenState {
   final List<Map<SourceOfFundsEnums, String?>> sourceOfFunds;
   final SourceOfFundsEnums selectedFundSource;
   final bool isFundsSourceNone;
-  final double currentBankBalance;
   final TextFieldStates amountFieldStates;
   final double fxRate;
   final String processingDate;
   final OrderValidityStates orderValidityStates;
   final RemittanceValidityCheck remittanceValidityCheck;
-  final double bankBalanceInUSD;
   final UsWalletOrderEnum orderType;
 
   LrsScreenState copyWith({
@@ -64,14 +60,12 @@ class LrsScreenState {
       sourceOfFunds: sourceOfFunds ?? this.sourceOfFunds,
       enteredAmount: enteredAmount ?? this.enteredAmount,
       enteredAmountDouble: enteredAmountDouble ?? this.enteredAmountDouble,
-      currentBankBalance: currentBankBalance ?? this.currentBankBalance,
       amountFieldStates: amountFieldStates ?? this.amountFieldStates,
       fxRate: fxRate ?? this.fxRate,
       processingDate: processingDate ?? this.processingDate,
       remittanceValidityCheck:
           remittanceValidityCheck ?? this.remittanceValidityCheck,
       orderValidityStates: orderValidityStates ?? this.orderValidityStates,
-      bankBalanceInUSD: bankBalanceInUSD ?? this.bankBalanceInUSD,
       orderType: orderType ?? this.orderType,
     );
   }

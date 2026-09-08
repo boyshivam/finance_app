@@ -177,6 +177,7 @@ class _TransactionDetailsSectionState
         if (formKey.currentState!.validate()) {
           context.push(AppRoutes.cashFreeTransactionPlaced);
           cashFreeScreenNotifier.addToOrdersList();
+          cashFreeScreenNotifier.addAmountToBankBalance();
         }
       },
       child: CustomNavigationButtonHelper(

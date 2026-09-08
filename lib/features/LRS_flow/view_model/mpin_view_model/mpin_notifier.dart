@@ -66,8 +66,24 @@ class MpinNotifier extends Notifier<MpinState> {
         mpinValidity: MpinValidity.valid,
         offset: 0,
       );
-      ref.read(lrsProvider.notifier).addLrsTransaction();
+      completeLrsTransaction();
     }
+  }
+
+  // this will handle, deduction of lrs amount from bank balance, add to us wallet and create US wallet order
+  void completeLrsTransaction() {
+    // fetch lrs amount one time
+    final lrsAmount = ref
+        .read(lrsProvider)
+        .enteredAmountDouble;
+
+    // final vmCashFreeScreenNotifier = ref.read(cashFreeScreenProvider.notifier);
+
+    ref.read(lrsProvider.notifier).addLrsTransaction();
+    ref
+        .read(cashFreeScreenProvider.notifier)
+        .deductBankBalanceOnLrsSubmit(lrsAmount);
+    ref.read(lrsProvider.notifier).addAmountToUSWallet();
   }
 
   void resetMpinState() {
