@@ -1,7 +1,10 @@
 import "dart:math";
 import "package:aprreciate/core/constants/app_strings/app_strings_common.dart";
+import "package:aprreciate/core/utils/common_helper_enums/order_stage_enum.dart";
+import "package:aprreciate/core/utils/helper_widgets/transactionID_generator.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_holdings_provider.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/profile_dashboard/view_model/view_model_orders/providers/orders_provider.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
@@ -10,14 +13,13 @@ import "package:aprreciate/features/trade_dashboard/enums/text_field_error_messa
 import "package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_ screen_state.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_%20screen_state.dart";
 import "package:aprreciate/models/portfolio_holding_model/portfolio_holding_card_model.dart";
+import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
-  @override
-  TradeScreenState build() {
-    // lrs state provider to fetch US wallet balance
+  TradeScreenState _initialState() {
     final vmLrs = ref.watch(lrsProvider);
 
     // TODO: implement build
@@ -49,9 +51,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  get enteredAmount => double.tryParse(state.amountText) ?? 0;
-
-  get enteredQuantity => double.tryParse(state.quantityText) ?? 0;
+  @override
+  TradeScreenState build() => _initialState();
 
   // this alters the state of currency toggle
   void toggleCurrency() {
@@ -81,7 +82,13 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(amountText: value);
   }
 
-  // shown quantity secured for the entered amount in the quantity textfield -
+  // get amount in double
+  double get enteredAmount => double.parse(state.amountText);
+
+  // get quantity in double
+  double get enteredQuantity => double.tryParse(state.quantityText) ?? 0;
+
+  // shown quantity secured for the entered amount in the quantity text field -
   void quantityByAmount() {
     // quantity to be display in quantity field
     final securedQuantity = (enteredAmount / state.stockPrice).toStringAsFixed(
@@ -92,6 +99,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // show amount secured by entered quantity in the quantity text field
   void amountByQuantity() {
+    final enteredQuantity = double.tryParse(state.quantityText) ?? 0;
+
     // this is amount to be displayed in the amount field
     final securedAmount = (enteredQuantity * state.stockPrice).toStringAsFixed(
       2,
@@ -99,15 +108,48 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(amountText: securedAmount);
   }
 
-  // check if sufficient us wallet balance
-  void checkSufficientUsWalletBalance() {
-    final enteredAmount = double.tryParse(state.amountText) ?? 0;
+  // check trade amount validity
+  void validateTradeOrder() {
+    if (state.amountText.trim().isEmpty) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.empty,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.empty,
+        orderEligibility: OrderEligibilityStates.invalid,
+      );
+      return;
+    } else if (enteredAmount == 0) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.zero,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.zero,
+        orderEligibility: OrderEligibilityStates.invalid,
+      );
+      return;
+    } else if (enteredAmount > state.usWalletBalance) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.error,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.error,
+        orderEligibility: OrderEligibilityStates.invalid,
+      );
+      return;
+    } else if (enteredAmount <= state.usWalletBalance) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.active,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.active,
+        orderEligibility: OrderEligibilityStates.valid,
+        usWalletFundsState: UsWalletFundsState.sufficientFunds,
+      );
+    }
+  }
 
-    state = state.copyWith(
-      usWalletFundsState: (enteredAmount <= state.usWalletBalance)
-          ? UsWalletFundsState.sufficientFunds
-          : UsWalletFundsState.insufficientFunds,
-    );
+  // place the trade order
+  void placeTradeOrder() {
+    if (state.orderEligibility == OrderEligibilityStates.valid &&
+        state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
+      addTradeOrderToOrdersHistory();
+      addSecurityToPortfolio();
+      resetState();
+    }
+    return;
   }
 
   // get security details
@@ -119,32 +161,44 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  //  place trade orders
-  void placeOrder() {
-    final enteredAmount = state.amountText;
+  // add trade order to orders listing in profile
+  void addTradeOrderToOrdersHistory() {
+    final vmOrdersNotifier = ref.read(ordersProvider.notifier);
 
-    if (enteredAmount.trim().isEmpty) {
-      state = state.copyWith(
-        amountTextFieldState: TextFieldsStates.empty,
-        amountTextFieldErrorMessageState: TextFieldErrorMessageState.empty,
-      );
-      return;
-    } else if (double.tryParse(enteredAmount) == 0) {
-      state = state.copyWith(
-        amountTextFieldState: TextFieldsStates.zero,
-        amountTextFieldErrorMessageState: TextFieldErrorMessageState.zero,
-      );
-      return;
-    } else if (double.tryParse(enteredAmount)! <= state.usWalletBalance) {
-      state = state.copyWith(
-        amountTextFieldErrorMessageState: TextFieldErrorMessageState.active,
-        amountTextFieldState: TextFieldsStates.active,
-        usWalletFundsState: UsWalletFundsState.sufficientFunds,
-        orderEligibility: OrderEligibilityStates.valid,
-      );
-      ref.read(ordersProvider.notifier).addOrderDetailsToCard();
-      addSecurityToPortfolio();
-    }
+    final newOrder = TradeOrderCardModel(
+      orderStatus: OrderStageEnums.submitted,
+      security: state.securitySymbol,
+      orderAmount: enteredAmount,
+      orderQuantity: enteredQuantity,
+      orderType: TradeOrderTypeEnums.buyFraction,
+      transactionID: RandomOrderIdGenerator.generateId(),
+    );
+
+    vmOrdersNotifier.addOrderDetailsToCard(newOrder);
+  }
+
+  // add investment to portfolio or add investment to exiting portfolio
+  void addSecurityToPortfolio() {
+    double securityPrice = state.stockPrice;
+    double averageCost = enteredAmount / enteredQuantity;
+    double totalPnL = (securityPrice - averageCost) * enteredQuantity;
+
+    final newHolding = PortfolioHoldingCardModel(
+      securityName: state.securityName,
+      securityIcon: state.securityIcon,
+      securitySymbol: state.securitySymbol,
+      securityPrice: securityPrice,
+      investedAmount: enteredAmount,
+      purchasedQuantity: enteredQuantity,
+      average: averageCost,
+      totalPnL: totalPnL,
+    );
+
+    final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
+    holdingsNotifier.addHolding(
+      newHolding: newHolding,
+      securitySymbol: state.securitySymbol,
+    );
   }
 
   // fees view dropdown
@@ -156,11 +210,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
           ? FeesViewStates.fullView
           : FeesViewStates.partialView,
     );
-  }
-
-  // check the validity of purchase orders which weighs on USWallet balance, and entered amount
-  bool validatePurchase() {
-    return state.usWalletBalance >= enteredAmount && enteredAmount != 0;
   }
 
   // fees for the entered amount
@@ -177,37 +226,13 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  // add investment to portfolio or add investment to exiting portfolio
-  void addSecurityToPortfolio() {
-    final vmLrsProvider = ref.read(lrsProvider.notifier);
-
-    double securityPrice = state.stockPrice;
-    double purchaseAmount = double.tryParse(state.amountText) ?? 0;
-    double purchaseQuantity = double.tryParse(state.quantityText) ?? 0;
-    double averageCost = purchaseAmount / purchaseQuantity;
-    double totalPnL = (securityPrice - averageCost) * purchaseQuantity;
-
-
-    final newHolding = PortfolioHoldingCardModel(
-      securityName: state.securityName,
-      securityIcon: state.securityIcon,
-      securitySymbol: state.securitySymbol,
-      securityPrice: securityPrice,
-      investedAmount: purchaseAmount,
-      purchasedQuantity: purchaseQuantity,
-      average: averageCost,
-      totalPnL: totalPnL,
-    );
-
-    final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
-    holdingsNotifier.addHolding(
-      newHolding: newHolding,
-      securitySymbol: state.securitySymbol,
-    );
-  }
-
   // reset orders
   void resetOrderValidity() {
     state = state.copyWith(orderEligibility: OrderEligibilityStates.invalid);
+  }
+
+  // reset trade screen state
+  void resetState() {
+    state = _initialState();
   }
 }

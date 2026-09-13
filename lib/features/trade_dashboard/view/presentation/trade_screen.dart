@@ -7,7 +7,7 @@ import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/purchase_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/security_details/security_details.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_top_section.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";

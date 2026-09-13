@@ -1,5 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -11,7 +11,7 @@ class OrderDetailsContainer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final tradeOrderDetails = ref.watch(tradeScreenProvider);
+    final vmTradeScreenProvider = ref.watch(tradeScreenProvider);
 
     return Container(
       padding:EdgeInsets.symmetric(
@@ -41,7 +41,7 @@ class OrderDetailsContainer extends ConsumerWidget {
               Text("Quantity", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text(tradeOrderDetails.quantityText)
+              Text(vmTradeScreenProvider.quantityText)
             ],
           ),
           const SizedBox(height: 10,),
@@ -51,7 +51,7 @@ class OrderDetailsContainer extends ConsumerWidget {
               Text("Estimated price", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text(tradeOrderDetails.amountPayable)
+              Text(vmTradeScreenProvider.amountPayable)
             ],
           ),
           const SizedBox(height: 10,),
@@ -61,7 +61,7 @@ class OrderDetailsContainer extends ConsumerWidget {
               Text("Estimated credit", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text(tradeOrderDetails.orderValueText)
+              Text(vmTradeScreenProvider.orderValueText)
             ],
           ),
           const SizedBox(height: 10,),
@@ -71,7 +71,7 @@ class OrderDetailsContainer extends ConsumerWidget {
               Text("Fees", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey
               ),),
-              Text(tradeOrderDetails.totalFees)
+              Text(vmTradeScreenProvider.totalFees)
             ],
           ),
           const SizedBox(height: 10,),

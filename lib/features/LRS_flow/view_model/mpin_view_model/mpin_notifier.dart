@@ -10,9 +10,9 @@ class MpinNotifier extends Notifier<MpinState> {
   @override
   MpinState build() {
     return MpinState(
-      mpinFieldState: MpinFieldStates.empty,
+      mpinFieldState: MpinFieldStates.neutral,
       offset: 0,
-      mpinValidity: MpinValidity.invalid,
+      mpinValidity: MpinValidity.neutral,
       mpin: "",
     );
   }

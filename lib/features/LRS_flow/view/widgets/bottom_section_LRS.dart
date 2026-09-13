@@ -1,6 +1,7 @@
 import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/continue_where_you_left/assets_continue_where_left.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
+import "package:aprreciate/features/LRS_flow/enums/textfield_states.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
@@ -112,7 +113,7 @@ class BottomSectionLrs extends ConsumerWidget {
                         OrderValidityStates.inSufficient) {
                       context.push(AppRoutes.cashFreeScreen);
                     } else if (vmLRS.orderValidityStates ==
-                        OrderValidityStates.sufficient) {
+                            OrderValidityStates.sufficient) {
                       context.push(AppRoutes.confirmRemittanceScreen);
                     }
                   },

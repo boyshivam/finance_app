@@ -19,15 +19,15 @@ class TradeOrderCard extends StatelessWidget {
               color: Colors.black54,
               blurRadius: 3,
               spreadRadius: 3,
-              offset: Offset(0, 4)
-            )
+              offset: Offset(0, 4),
+            ),
           ],
           color: AppColorsCommon.appWhite,
           borderRadius: BorderRadius.all(Radius.circular(16)),
           border: Border.all(
             color: AppColorsCommon.appreciateThemeColor,
-            width: 3
-          )
+            width: 3,
+          ),
         ),
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 45),
         child: Column(
@@ -54,10 +54,13 @@ class TradeOrderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Row(children: [
-              Text("Amount: ${item.orderAmount.toString()}"),
-              const Spacer(),
-              Text("Quantity: ${item.orderQuantity.toString()}")]),
+            Row(
+              children: [
+                Text("Amount: ${item.orderAmount}"),
+                const Spacer(),
+                Text("Quantity: ${item.orderQuantity}"),
+              ],
+            ),
           ],
         ),
       ),

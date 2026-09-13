@@ -1,7 +1,7 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";

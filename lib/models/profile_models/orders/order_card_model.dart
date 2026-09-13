@@ -8,6 +8,7 @@ class TradeOrderCardModel {
     required this.orderAmount,
     required this.orderQuantity,
     required this.orderType,
+    required this.transactionID
   });
 
   final OrderStageEnums orderStatus;
@@ -15,4 +16,5 @@ class TradeOrderCardModel {
   final double orderAmount;
   final double orderQuantity;
   final TradeOrderTypeEnums orderType;
+  final String transactionID;
 }

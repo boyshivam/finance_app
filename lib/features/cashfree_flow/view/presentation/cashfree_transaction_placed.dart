@@ -1,5 +1,4 @@
 import "package:aprreciate/core/constants/app_assets/assets_trade/order_placed_screen/assets_order_placed_screen.dart";
-import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/helper_widgets/custom_navigation_button_helper.dart";
 import "package:aprreciate/features/cashfree_flow/view/widgets/cashfree_order_placed_widgets/transaction_details_section.dart";
 import "package:aprreciate/router/app_routes.dart";
@@ -56,10 +55,10 @@ class CashFreeTransactionPlaced extends ConsumerWidget {
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: InkWell(
                     onTap: () {
-                      context.go(AppRoutes.cashFreeDashboard);
+                      context.go(AppRoutes.lrsTransferScreen);
                     },
                     child: CustomNavigationButtonHelper(
-                      buttonText: "Go to bank dashboard",
+                      buttonText: "Continue LRS",
                       secondaryButton: false,
                     ),
                   ),

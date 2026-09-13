@@ -1,35 +1,27 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
-import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class OrderSlider extends ConsumerStatefulWidget {
-  const OrderSlider({
-    super.key,
-
-  });
-
+  const OrderSlider({super.key});
 
   @override
   ConsumerState<OrderSlider> createState() => _OrderSliderState();
 }
 
 class _OrderSliderState extends ConsumerState<OrderSlider> {
-
   double offset = 0;
 
-  void placeOrder(double maxWidth) {
+  void placeOrder(double maxWidth, BuildContext context) {
+
+    final vmTradeScreenNotifier = ref.read(tradeScreenProvider.notifier);
+
     if (offset >= maxWidth - 20) {
-      ref.read(tradeScreenProvider.notifier).placeOrder();
-
-      final valid = ref.read(tradeScreenProvider.notifier).validatePurchase();
-
-      if(valid) {
-        context.push(AppRoutes.orderPlacedScreen);
-      }
+      vmTradeScreenNotifier.placeTradeOrder();
+      context.push(AppRoutes.orderPlacedScreen);
       setState(() {
         offset = 0;
       });
@@ -50,7 +42,7 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
           final max = constrains.maxWidth - thumb;
           return GestureDetector(
             onHorizontalDragEnd: (_) {
-              placeOrder(max);
+              placeOrder(max, context);
             },
             onHorizontalDragUpdate: (details) {
               setState(() {

@@ -2,7 +2,7 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/amount_quantity%20_fields.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";

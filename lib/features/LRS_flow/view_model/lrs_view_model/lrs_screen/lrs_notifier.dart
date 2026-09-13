@@ -47,12 +47,12 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     );
   }
 
+  get enteredAmountDouble => double.tryParse(state.enteredAmount) ?? 0;
+
   // check if LRS is valid
   void validateLrsOrder() {
     // fetch bank balance
     final bankBalance = ref.read(cashFreeScreenProvider).bankBalance;
-
-    final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
 
     if (state.enteredAmount.isEmpty) {
       state = state.copyWith(
@@ -60,19 +60,22 @@ class LrsNotifier extends Notifier<LrsScreenState> {
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble == 0) {
+      return;
+    } else if (enteredAmountDouble == 0) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.invalid,
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble >= bankBalance) {
+      return;
+    } else if (enteredAmountDouble >= bankBalance) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.inSufficient,
         amountFieldStates: TextFieldStates.invalid,
         submitClicked: true,
       );
-    } else if (amountDouble < bankBalance) {
+      return;
+    } else if (enteredAmountDouble < bankBalance) {
       state = state.copyWith(
         orderValidityStates: OrderValidityStates.sufficient,
         amountFieldStates: TextFieldStates.active,
@@ -96,17 +99,6 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       builder: (builder) => MpinBottomSheet(),
     );
   }
-
-  // reset the state of all components to neutral
-  // void resetState() {
-  //   state = state.copyWith(
-  //     submitClicked: false,
-  //     orderValidityStates: OrderValidityStates.neutral,
-  //     amountFieldStates: TextFieldStates.neutral,
-  //     selectedFundSource: SourceOfFundsEnums.none,
-  //     isFundsSourceNone: false,
-  //   );
-  // }
 
   void confirmRemittance(Function checkboxSnackBar, BuildContext context) {
     if (state.remittanceValidityCheck == RemittanceValidityCheck.unchecked) {
@@ -149,7 +141,7 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   }
 
   // deduct amount from LRS during trade
-  void deductBalanceAfterTrade(double deductibleAmount) {
+  void deductWalletBalanceAfterTradeOrder(double deductibleAmount) {
     state = state.copyWith(
       usWalletBalance: state.usWalletBalance - deductibleAmount,
     );

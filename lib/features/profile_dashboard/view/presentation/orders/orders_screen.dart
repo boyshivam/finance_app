@@ -1,5 +1,3 @@
-import "package:aprreciate/features/LRS_flow/view/widgets/confirm_lrs_screen_widgets/us_wallet_transaction_card.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_order/lrs_transaction_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/order_tab_selected_enum.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/orders/trade_order_card.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/orders_tabs.dart";
@@ -21,9 +19,7 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
   Widget build(BuildContext context) {
     final vmState = ref.watch(ordersProvider);
 
-    final tradeOrdersState = ref.watch(tradeOrderProvider);
-
-    final usWalletOrdersState = ref.watch(lrsTransactionProvider);
+    final vmTradeOrdersProvider = ref.watch(tradeOrderProvider);
 
     return Scaffold(
       body: Column(
@@ -35,9 +31,9 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
             SizedBox(
               height: 800,
               child: ListView.builder(
-                itemCount: tradeOrdersState.length,
+                itemCount: vmTradeOrdersProvider.length,
                 itemBuilder: (context, index) =>
-                    TradeOrderCard(item: tradeOrdersState[index]),
+                    TradeOrderCard(item: vmTradeOrdersProvider[index]),
               ),
             ),
         ],

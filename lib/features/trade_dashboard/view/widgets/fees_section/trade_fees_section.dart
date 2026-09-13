@@ -1,6 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
-import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_provider.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -12,7 +12,7 @@ class TradeFeesSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vm = ref.watch(tradeScreenProvider);
+    final vmTradeScreenProvider = ref.watch(tradeScreenProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
@@ -36,7 +36,10 @@ class TradeFeesSection extends ConsumerWidget {
                     children: [
                       Text("Order value"),
                       const Spacer(),
-                      Text("\$${vm.orderValueText}"),
+                      if (vmTradeScreenProvider.amountText.isNotEmpty)
+                        Text("\$${vmTradeScreenProvider.orderValueText}")
+                      else
+                        Text("\$ 0.0"),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -52,7 +55,10 @@ class TradeFeesSection extends ConsumerWidget {
                       const Spacer(),
                       Row(
                         children: [
-                          Text("\$${vm.totalFees}"),
+                          if (vmTradeScreenProvider.amountText.isNotEmpty)
+                            Text("\$${vmTradeScreenProvider.totalFees}")
+                          else
+                            Text("\$ 0.0"),
                           const SizedBox(width: 5),
                           InkWell(
                             onTap: () {
@@ -67,7 +73,8 @@ class TradeFeesSection extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  if (vm.feesViewStates == FeesViewStates.fullView)
+                  if (vmTradeScreenProvider.feesViewStates ==
+                      FeesViewStates.fullView)
                     Padding(
                       padding: EdgeInsets.only(left: 15),
                       child: Column(
@@ -76,7 +83,12 @@ class TradeFeesSection extends ConsumerWidget {
                             children: [
                               Text("Transaction fee"),
                               const Spacer(),
-                              Text("\$${vm.transactionFee}"),
+                              if (vmTradeScreenProvider.amountText.isNotEmpty)
+                                Text(
+                                  "\$${vmTradeScreenProvider.transactionFee}",
+                                )
+                              else
+                                Text("\$ 0.0"),
                             ],
                           ),
                           const SizedBox(height: 10),
@@ -84,7 +96,7 @@ class TradeFeesSection extends ConsumerWidget {
                             children: [
                               Text("Platform fee"),
                               const Spacer(),
-                              Text("\$${vm.platformFee}"),
+                              Text("\$${vmTradeScreenProvider.platformFee}"),
                             ],
                           ),
                         ],
@@ -105,12 +117,15 @@ class TradeFeesSection extends ConsumerWidget {
                 children: [
                   Text("Amount payable"),
                   const Spacer(),
-                  Text(
-                    "\$${vm.amountPayable}",
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  if (vmTradeScreenProvider.amountText.isNotEmpty)
+                    Text(
+                      "\$${vmTradeScreenProvider.amountPayable}",
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  else
+                    Text("\$ 0.0"),
                 ],
               ),
             ),
