@@ -5,7 +5,6 @@ import "package:aprreciate/features/LRS_flow/enums/mpin_enums/mpin_validity_enum
 import "package:aprreciate/features/LRS_flow/view/widgets/Mpin_bottomsheet_widgets/mpin_input_field.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/Mpin_bottomsheet_widgets/mpin_numpad.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/Mpin_bottomsheet_widgets/mpin_slider.dart";
-import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/LRS_flow/view_model/mpin_view_model/mpin_provider.dart";
 import "package:aprreciate/router/app_navigators.dart";
 import "package:flutter/material.dart";

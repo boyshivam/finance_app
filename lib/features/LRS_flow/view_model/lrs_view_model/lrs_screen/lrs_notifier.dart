@@ -16,10 +16,7 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class LrsNotifier extends Notifier<LrsScreenState> {
-  @override
-  LrsScreenState build() {
-    // calls cash free provider to access bank balance
-
+  LrsScreenState _initialState() {
     return LrsScreenState(
       usWalletBalance: 0,
       enteredAmount: "",
@@ -34,10 +31,16 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       isFundsSourceNone: false,
       sourceOfFunds: sourceOfFundsData,
       orderType: UsWalletOrderEnum.neutral,
+      transactionID: "",
     );
   }
 
-  // denote value with new LRS value
+  void resetState() {
+    state = _initialState();
+  }
+
+  @override
+  LrsScreenState build() => _initialState();
 
   // get the entered amount and store it in state
   void deriveAmountEntered(String value) {
@@ -52,7 +55,8 @@ class LrsNotifier extends Notifier<LrsScreenState> {
   // check if LRS is valid
   void validateLrsOrder() {
     // fetch bank balance
-    final bankBalance = ref.read(cashFreeScreenProvider).bankBalance;
+    final bankBalance =
+        ref.read(cashFreeScreenProvider).bankBalance / state.fxRate;
 
     if (state.enteredAmount.isEmpty) {
       state = state.copyWith(
@@ -108,7 +112,8 @@ class LrsNotifier extends Notifier<LrsScreenState> {
       state = state.copyWith(isFundsSourceNone: true);
       return;
     } else if (state.remittanceValidityCheck ==
-        RemittanceValidityCheck.checked) {
+            RemittanceValidityCheck.checked &&
+        state.orderValidityStates == OrderValidityStates.sufficient) {
       showMpinBottomSheet(context);
       // resetState();
     }
@@ -129,12 +134,13 @@ class LrsNotifier extends Notifier<LrsScreenState> {
 
   // add the lrs transaction to US wallet
   void addLrsTransaction() {
-    final amountDouble = double.tryParse(state.enteredAmount) ?? 0;
+    // generate a transaction iD for the specific order
+    state = state.copyWith(transactionID: RandomOrderIdGenerator.generateId());
 
     final newTransaction = UsWalletCardModel(
-      orderTxnId: RandomOrderIdGenerator.generateId(),
+      orderTxnId: state.transactionID,
       orderType: UsWalletOrderEnum.bankToUsWallet,
-      orderAmount: amountDouble,
+      orderAmount: enteredAmountDouble,
       orderStatus: OrderStageEnums.submitted,
     );
     ref.read(lrsTransactionProvider.notifier).addTransaction(newTransaction);

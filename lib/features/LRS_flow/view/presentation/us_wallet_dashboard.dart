@@ -18,7 +18,7 @@ class UsWalletDashboard extends ConsumerWidget {
             childAlignment: MainAxisAlignment.center,
             showSupportIcon: true,
             showBackCTA: true,
-            child: HeaderTextHelper(text: "US Wallet"),
+            child: HeaderTextHelper(text: "US Wallet", fontSize: 24,),
           ),
           const SizedBox(height: 40),
           LrsBalanceSection(),

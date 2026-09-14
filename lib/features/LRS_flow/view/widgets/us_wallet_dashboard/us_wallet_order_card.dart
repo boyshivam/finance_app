@@ -12,48 +12,50 @@ class UsWalletOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black45,
-            blurRadius: 5,
-            offset: Offset(0, 4),
-            spreadRadius: 3
-          )
-        ],
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: AppColorsCommon.appreciateThemeColor,
-          width: 2
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black45,
+              blurRadius: 5,
+              offset: Offset(0, 4),
+              spreadRadius: 3
+            )
+          ],
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: AppColorsCommon.appreciateThemeColor,
+            width: 2
+          ),
+          color: AppColorsCommon.lightBlueBackground
         ),
-        color: AppColorsCommon.lightBlueBackground
-      ),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Text(usWalletOrder.orderType.getOrderTypeText, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.w400
-              ),) ,
-              const Spacer(),
-              OrderStageHelper(orderStage: usWalletOrder.orderStatus)
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Text("\$ ${usWalletOrder.orderAmount}", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.w600
-              ),),
-              const Spacer(),
-              Text(usWalletOrder.orderTxnId,),
-            ],
-          ),
-          const SizedBox(height: 10),
-        ],
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(usWalletOrder.orderType.getOrderTypeText, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w400
+                ),) ,
+                const Spacer(),
+                OrderStageHelper(orderStage: usWalletOrder.orderStatus)
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Text("\$ ${usWalletOrder.orderAmount}", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600
+                ),),
+                const Spacer(),
+                Text(usWalletOrder.orderTxnId,),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }

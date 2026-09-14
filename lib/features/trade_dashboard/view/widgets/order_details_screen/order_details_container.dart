@@ -30,7 +30,7 @@ class OrderDetailsContainer extends ConsumerWidget {
               Text("orders ID", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: AppColorsCommon.textGrey
               ),),
-              Text("AB1ZW19D")
+              Text(vmTradeScreenProvider.transactionId)
             ],
           ),
 
@@ -45,16 +45,7 @@ class OrderDetailsContainer extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Estimated price", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: AppColorsCommon.textGrey
-              ),),
-              Text(vmTradeScreenProvider.amountPayable)
-            ],
-          ),
-          const SizedBox(height: 10,),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -62,16 +53,6 @@ class OrderDetailsContainer extends ConsumerWidget {
                   color: AppColorsCommon.textGrey
               ),),
               Text(vmTradeScreenProvider.orderValueText)
-            ],
-          ),
-          const SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Fees", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: AppColorsCommon.textGrey
-              ),),
-              Text(vmTradeScreenProvider.totalFees)
             ],
           ),
           const SizedBox(height: 10,),

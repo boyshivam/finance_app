@@ -16,12 +16,15 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
   double offset = 0;
 
   void placeOrder(double maxWidth, BuildContext context) {
-
     final vmTradeScreenNotifier = ref.read(tradeScreenProvider.notifier);
 
+    final isValid = vmTradeScreenNotifier.placeTradeOrder();
+
     if (offset >= maxWidth - 20) {
-      vmTradeScreenNotifier.placeTradeOrder();
-      context.push(AppRoutes.orderPlacedScreen);
+      if(isValid){
+        context.push(AppRoutes.orderPlacedScreen);
+      }
+      vmTradeScreenNotifier.validateTradeOrder();
       setState(() {
         offset = 0;
       });

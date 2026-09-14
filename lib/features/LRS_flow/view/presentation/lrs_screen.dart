@@ -1,4 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
+import "package:aprreciate/core/utils/helper_widgets/header_text_helper.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/bottom_section_LRS.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/enter_amount_container.dart";
 import "package:aprreciate/features/LRS_flow/view/widgets/top_section_LRS.dart";
@@ -38,7 +40,17 @@ class _LrsScreenState extends ConsumerState<LrsTransferScreen> {
     });
 
     return Scaffold(
-      body: Column(children: [TopSectionLrs(), EnterAmountContainer()]),
+      body: Column(
+        children: [
+          CustomTopSection(
+            showBackCTA: true,
+            showSupportIcon: true,
+            childAlignment: MainAxisAlignment.center,
+            child: HeaderTextHelper(text: "Transfer to US wallet", fontSize: 24,),
+          ),
+          EnterAmountContainer(),
+        ],
+      ),
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       bottomNavigationBar: BottomSectionLrs(),
     );

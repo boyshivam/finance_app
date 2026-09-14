@@ -1,6 +1,7 @@
 import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_navigation_button_helper.dart";
 import "package:aprreciate/features/mobile_num_validator/view_model/mobile_num_validator_provider.dart";
 import "package:aprreciate/features/mobile_otp_validator/helpers/otp_screen_args.dart";
 import "package:aprreciate/router/app_routes.dart";
@@ -38,14 +39,20 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
     final mobileNumNotifier = ref.read(mobileNumProvider.notifier);
 
     return Scaffold(
-      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              AppColorsCommon.lightBlueBackground,
-              AppColorsCommon.lightPurpleGradient,
+              AppColorsCommon.appreciateThemeColor,
+              Color(0xFFe5daf7),
+              AppColorsCommon.appWhite.withValues(alpha: 0.15),
+              Color(0xFFe5daf7),
+              AppColorsCommon.appreciateThemeColor
+
+
             ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter
           ),
         ),
         child: Column(
@@ -61,7 +68,7 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                   25,
                   20,
                 ),
-                decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
+                // decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -74,12 +81,14 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                       containerWidth: double.infinity,
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 90),
                     Text(
-                      AppStrings.log_subt,
+                      "Start with entering your number",
                       style: Theme.of(
                         context,
-                      ).textTheme.bodyMedium!.copyWith(fontSize: 19),
+                      ).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w700,
+                          fontSize: 24),
                     ),
                     const SizedBox(height: 25),
 
@@ -87,25 +96,29 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                     MobileNumValidator(onController: controller),
 
                     const Spacer(),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //     bottom: MediaQuery.of(context).padding.bottom + 10,
+                    //   ),
+                    //   child: SizedBox(
+                    //     width: double.infinity,
+                    //     child: ElevatedButton(
+                    //       onPressed: () {
+                    //         context.push(
+                    //           AppRoutes.otpScreen,
+                    //           extra: OtpScreenArgs(
+                    //             userNumber: vmMobileNumProvider.mobileNumber,
+                    //           ),
+                    //         );
+                    //       },
+                    //       child: Text("Proceed"),
+                    //     ),
+                    //   ),
+                    // ),
                     Padding(
-                      padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).padding.bottom + 10,
-                      ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            context.push(
-                              AppRoutes.otpScreen,
-                              extra: OtpScreenArgs(
-                                userNumber: vmMobileNumProvider.mobileNumber,
-                              ),
-                            );
-                          },
-                          child: Text("Proceed"),
-                        ),
-                      ),
-                    ),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                      child: CustomNavigationButtonHelper(buttonText: "Proceed", secondaryButton: true),
+                    )
                   ],
                 ),
               ),

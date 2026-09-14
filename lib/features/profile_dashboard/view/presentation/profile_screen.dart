@@ -13,7 +13,7 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomTopSection(childAlignment: MainAxisAlignment.start,child: HeaderTextHelper(text: "Menu")),
+            CustomTopSection(childAlignment: MainAxisAlignment.start,child: HeaderTextHelper(text: "Menu", fontSize: 24,)),
             UsWalletUpi(),
             ServicesGridSection()
           ],

@@ -32,6 +32,7 @@ class TradeScreenState {
     required this.feesViewStates,
     required this.totalFees,
     required this.stockPrice,
+    required this.transactionId,
   });
 
   final String securityName;
@@ -58,6 +59,7 @@ class TradeScreenState {
   final FeesViewStates feesViewStates;
   final String totalFees;
   final double stockPrice;
+  final String transactionId;
 
   TradeScreenState copyWith({
     String? securityName,
@@ -86,6 +88,7 @@ class TradeScreenState {
     FeesViewStates? feesViewStates,
     String? totalFees,
     double? stockPrice,
+    String? transactionId,
   }) {
     return TradeScreenState(
       securityName: securityName ?? this.securityName,
@@ -121,6 +124,7 @@ class TradeScreenState {
       feesViewStates: feesViewStates ?? this.feesViewStates,
       totalFees: totalFees ?? this.totalFees,
       stockPrice: stockPrice ?? this.stockPrice,
+      transactionId: transactionId ?? this.transactionId,
     );
   }
 }

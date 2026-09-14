@@ -19,6 +19,7 @@ class LrsScreenState {
     required this.isFundsSourceNone,
     required this.selectedFundSource,
     required this.orderType,
+    required this.transactionID
   });
 
   final double usWalletBalance;
@@ -34,6 +35,7 @@ class LrsScreenState {
   final OrderValidityStates orderValidityStates;
   final RemittanceValidityCheck remittanceValidityCheck;
   final UsWalletOrderEnum orderType;
+  final String transactionID;
 
   LrsScreenState copyWith({
     double? usWalletBalance,
@@ -51,6 +53,7 @@ class LrsScreenState {
     RemittanceValidityCheck? remittanceValidityCheck,
     double? bankBalanceInUSD,
     UsWalletOrderEnum? orderType,
+    String? transactionID
   }) {
     return LrsScreenState(
       usWalletBalance: usWalletBalance ?? this.usWalletBalance,
@@ -67,6 +70,7 @@ class LrsScreenState {
           remittanceValidityCheck ?? this.remittanceValidityCheck,
       orderValidityStates: orderValidityStates ?? this.orderValidityStates,
       orderType: orderType ?? this.orderType,
+      transactionID: transactionID ?? this.transactionID
     );
   }
 }

@@ -19,8 +19,8 @@ import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
-  TradeScreenState _initialState() {
-    final vmLrs = ref.watch(lrsProvider);
+  TradeScreenState initialState() {
+    final vmLrs = ref.read(lrsProvider);
 
     // TODO: implement build
     return TradeScreenState(
@@ -28,7 +28,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       securitySymbol: "",
       securityIcon: "",
       tradeType: TradeTypeEnum.buyFraction,
-      usWalletFundsState: UsWalletFundsState.sufficientFunds,
+      usWalletFundsState: UsWalletFundsState.neutral,
       amountTextFieldState: TextFieldsStates.neutral,
       quantityTextFieldState: TextFieldsStates.neutral,
       amountTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
@@ -48,11 +48,12 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       feesViewStates: FeesViewStates.partialView,
       totalFees: "",
       stockPrice: AppStringsCommon.stockTeslaPrice,
+      transactionId: "",
     );
   }
 
   @override
-  TradeScreenState build() => _initialState();
+  TradeScreenState build() => initialState();
 
   // this alters the state of currency toggle
   void toggleCurrency() {
@@ -83,10 +84,10 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   }
 
   // get amount in double
-  double get enteredAmount => double.parse(state.amountText);
+  double get enteredAmount => double.tryParse(state.amountText.trim()) ?? 0;
 
   // get quantity in double
-  double get enteredQuantity => double.tryParse(state.quantityText) ?? 0;
+  double get enteredQuantity => double.tryParse(state.quantityText.trim()) ?? 0;
 
   // shown quantity secured for the entered amount in the quantity text field -
   void quantityByAmount() {
@@ -97,7 +98,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(quantityText: securedQuantity);
   }
 
-  // show amount secured by entered quantity in the quantity text field
+  // show amount secured by entered quantity in the amount text field
   void amountByQuantity() {
     final enteredQuantity = double.tryParse(state.quantityText) ?? 0;
 
@@ -115,6 +116,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         amountTextFieldState: TextFieldsStates.empty,
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.empty,
         orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.neutral,
       );
       return;
     } else if (enteredAmount == 0) {
@@ -122,6 +124,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         amountTextFieldState: TextFieldsStates.zero,
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.zero,
         orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.neutral,
       );
       return;
     } else if (enteredAmount > state.usWalletBalance) {
@@ -129,6 +132,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         amountTextFieldState: TextFieldsStates.error,
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.error,
         orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.insufficientFunds,
       );
       return;
     } else if (enteredAmount <= state.usWalletBalance) {
@@ -142,14 +146,20 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   }
 
   // place the trade order
-  void placeTradeOrder() {
-    if (state.orderEligibility == OrderEligibilityStates.valid &&
+  bool placeTradeOrder() {
+    final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
+
+    if (enteredAmount <= state.usWalletBalance &&
+        enteredAmount != 0 &&
+        state.orderEligibility == OrderEligibilityStates.valid &&
         state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
+      vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(enteredAmount);
       addTradeOrderToOrdersHistory();
       addSecurityToPortfolio();
-      resetState();
+
+      return true;
     }
-    return;
+    return false;
   }
 
   // get security details
@@ -165,13 +175,15 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
   void addTradeOrderToOrdersHistory() {
     final vmOrdersNotifier = ref.read(ordersProvider.notifier);
 
+    state = state.copyWith(transactionId: RandomOrderIdGenerator.generateId());
+
     final newOrder = TradeOrderCardModel(
       orderStatus: OrderStageEnums.submitted,
       security: state.securitySymbol,
       orderAmount: enteredAmount,
       orderQuantity: enteredQuantity,
       orderType: TradeOrderTypeEnums.buyFraction,
-      transactionID: RandomOrderIdGenerator.generateId(),
+      transactionID: state.transactionId,
     );
 
     vmOrdersNotifier.addOrderDetailsToCard(newOrder);
@@ -231,8 +243,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(orderEligibility: OrderEligibilityStates.invalid);
   }
 
-  // reset trade screen state
-  void resetState() {
-    state = _initialState();
-  }
+  // // reset trade screen state
+  // void resetState() {
+  //   state = initialState();
+  // }
 }

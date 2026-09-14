@@ -1,14 +1,13 @@
 import "package:aprreciate/core/constants/app_assets/assets_home_dashboard/continue_where_you_left/assets_continue_where_left.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_navigation_button_helper.dart";
 import "package:aprreciate/features/LRS_flow/enums/order_validity_states.dart";
-import "package:aprreciate/features/LRS_flow/enums/textfield_states.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/cashfree_flow/view_model/providers/cashfree_screen_provider.dart";
-import "package:aprreciate/router/app_navigators.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
-import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class BottomSectionLrs extends ConsumerWidget {
   const BottomSectionLrs({super.key});
@@ -18,7 +17,6 @@ class BottomSectionLrs extends ConsumerWidget {
     final vmCashFree = ref.watch(cashFreeScreenProvider);
 
     final vmLRS = ref.watch(lrsProvider);
-    final lrsNotifier = ref.read(lrsProvider.notifier);
 
     return Container(
       height: 250,
@@ -95,40 +93,19 @@ class BottomSectionLrs extends ConsumerWidget {
           InkWell(
             onTap: () {
               if (vmLRS.orderValidityStates == OrderValidityStates.sufficient) {
-                AppNavigators.goToConfirmRemittanceScreen(context);
+                context.push(AppRoutes.confirmRemittanceScreen);
+              } else if (vmLRS.orderValidityStates ==
+                  OrderValidityStates.inSufficient) {
+                context.push(AppRoutes.cashFreeScreen);
+                print("hello");
               }
             },
-            child: SizedBox(
-              width: double.infinity,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: AppColorsCommon.appreciateThemeColor,
-                ),
-                child: InkWell(
-                  onTap: () {
-                    lrsNotifier.validateLrsOrder();
-                    if (vmLRS.orderValidityStates ==
-                        OrderValidityStates.inSufficient) {
-                      context.push(AppRoutes.cashFreeScreen);
-                    } else if (vmLRS.orderValidityStates ==
-                            OrderValidityStates.sufficient) {
-                      context.push(AppRoutes.confirmRemittanceScreen);
-                    }
-                  },
-                  child: Text(
-                    vmLRS.orderValidityStates ==
-                            OrderValidityStates.inSufficient
-                        ? "Add funds to bank"
-                        : "Transfer \$${vmLRS.enteredAmount}",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: AppColorsCommon.appWhite,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
+            child: CustomNavigationButtonHelper(
+              buttonText:
+                  vmLRS.orderValidityStates == OrderValidityStates.inSufficient
+                  ? "Add funds to US wallet"
+                  : "Transfer \$${vmLRS.enteredAmountDouble}",
+              secondaryButton: false,
             ),
           ),
         ],

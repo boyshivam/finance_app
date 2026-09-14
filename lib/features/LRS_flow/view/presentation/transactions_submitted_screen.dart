@@ -1,5 +1,6 @@
 import "package:aprreciate/core/constants/app_assets/assets_trade/order_placed_screen/assets_order_placed_screen.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/LRS_flow/view/widgets/lrs_transaction_submitted_widgets/lrs_submitted_details.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
@@ -11,7 +12,6 @@ class TransactionsSubmittedScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final vmLrsProvider = ref.watch(lrsProvider);
 
     return Scaffold(
       body: Padding(
@@ -43,19 +43,9 @@ class TransactionsSubmittedScreen extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Order amount \$${vmLrsProvider.enteredAmount} in progress ", style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 22,
-              ),
-              ),
-            ),
-            const SizedBox(height: 10),
+            TransactionDetailsLRS(),
             // OrderDetailsContainer(),
             const SizedBox(height: 20),
-
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Container(

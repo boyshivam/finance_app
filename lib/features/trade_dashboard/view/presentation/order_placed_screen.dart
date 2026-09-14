@@ -18,7 +18,6 @@ class _OrderPlacedScreenState extends ConsumerState<OrderPlacedScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final tradeDetails = ref.watch(tradeScreenProvider);
 
     return Scaffold(
       body: Padding(
@@ -35,42 +34,41 @@ class _OrderPlacedScreenState extends ConsumerState<OrderPlacedScreen> {
               "Order Placed",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 38,
+                fontSize: 40
               ),
             ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Your orders to buy ${tradeDetails.quantityText} qty of APPL has been placed and will be executed at the best available price.",
-              ),
-            ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 100),
             OrderDetailsContainer(),
-            const SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                  vertical: 10, horizontal: 30
-              ),
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColorsCommon.appreciateThemeColor,
-                borderRadius: BorderRadius.circular(18),
-              ),
-              child: InkWell(
-                onTap: (){
-                  context.go(AppRoutes.homeDashboardScreen);
-                },
-                child: Text(
-                  "Go to Home Dashboard",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium!.copyWith(color: AppColorsCommon.appWhite),
-                  textAlign: TextAlign.center,
+            const Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 25),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 30
                 ),
-              ),
+                height: 50,
+                decoration: BoxDecoration(
+                  color: AppColorsCommon.appreciateThemeColor,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: InkWell(
+                  onTap: (){
+                    final vmTradeScreenProvider = ref.read(tradeScreenProvider.notifier);
 
+                    // vmTradeScreenProvider.resetState();
+                    context.go(AppRoutes.homeDashboardScreen);
+                  },
+                  child: Text(
+                    "Go to Home Dashboard",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium!.copyWith(color: AppColorsCommon.appWhite),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
+              ),
             ),
           ],
         ),
