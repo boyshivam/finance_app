@@ -1,7 +1,9 @@
 import "package:aprreciate/core/constants/app_assets/app_assets.dart";
 import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart";
 import "package:aprreciate/core/utils/asset_helpers/asset_image_helpers.dart";
+import "package:aprreciate/features/mobile_num_validator/enums/mobile_number_enums.dart";
 import "package:aprreciate/features/mobile_num_validator/view/extensions/mobile_num_extensions.dart";
 import "package:aprreciate/features/mobile_num_validator/view_model/mobile_num_validator_provider.dart";
 import "package:flutter/material.dart";
@@ -9,10 +11,7 @@ import "package:flutter/services.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class MobileNumValidator extends ConsumerWidget {
-  const MobileNumValidator({
-    super.key,
-    required this.onController,
-  });
+  const MobileNumValidator({super.key, required this.onController});
 
   final TextEditingController onController;
 
@@ -67,6 +66,15 @@ class MobileNumValidator extends ConsumerWidget {
             height: 120,
             width: MediaQuery.of(context).size.width * 0.87,
             decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color:
+                      vmMobileNumProvider.mobileNumValidationState.borderColor,
+                  spreadRadius: 3,
+                  offset: Offset(0, 0),
+                  blurRadius: 5
+                ),
+              ],
               color: AppColorsModule.mobileNumColorTextFieldBGColor,
               borderRadius: BorderRadius.circular(20),
               border: Border.all(

@@ -1,13 +1,9 @@
-import "package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/helper_widgets/company_trademark.dart";
 import "package:aprreciate/core/utils/helper_widgets/custom_navigation_button_helper.dart";
 import "package:aprreciate/features/mobile_num_validator/view_model/mobile_num_validator_provider.dart";
-import "package:aprreciate/features/mobile_otp_validator/helpers/otp_screen_args.dart";
-import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:go_router/go_router.dart";
 
 import "../widgets/mobile_num_validator.dart";
 
@@ -45,7 +41,9 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
             colors: [
               AppColorsCommon.appreciateThemeColor,
               Color(0xFFe5daf7),
-              AppColorsCommon.appWhite.withValues(alpha: 0.15),
+              AppColorsCommon.appWhite.withValues(alpha: 0.1),
+              AppColorsCommon.appWhite.withValues(alpha: 0.1),
+              AppColorsCommon.appWhite.withValues(alpha: 0.1),
               Color(0xFFe5daf7),
               AppColorsCommon.appreciateThemeColor
 
