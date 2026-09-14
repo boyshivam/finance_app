@@ -42,6 +42,13 @@ class MobileNumNotifier extends Notifier<MobileNumberValidatorState> {
     }
   }
 
+  bool proceedWithNumber() {
+    if (state.mobileNumValidationState == MobileNumValidationEnum.active){
+      return true;
+    }
+    return false;
+  }
+
   void reset() {
     state = state.copyWith(
       mobileNumValidationState: MobileNumValidationEnum.neutral,

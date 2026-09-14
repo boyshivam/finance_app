@@ -72,7 +72,7 @@ class MobileNumValidator extends ConsumerWidget {
                       vmMobileNumProvider.mobileNumValidationState.borderColor,
                   spreadRadius: 3,
                   offset: Offset(0, 0),
-                  blurRadius: 5
+                  blurRadius: 20
                 ),
               ],
               color: AppColorsModule.mobileNumColorTextFieldBGColor,
