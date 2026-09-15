@@ -73,13 +73,16 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CompanyTrademark(
-                      paddingLeft: 25,
-                      paddingRight: 25,
-                      paddingTop: 15,
-                      paddingBottom: 15,
-                      fontSize: 35,
-                      containerWidth: double.infinity,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: CompanyTrademark(
+                        paddingLeft: 25,
+                        paddingRight: 25,
+                        paddingTop: 15,
+                        paddingBottom: 15,
+                        fontSize: 35,
+                        containerWidth: double.infinity,
+                      ),
                     ),
 
                     const SizedBox(height: 90),
@@ -88,6 +91,7 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 24,
+                        color: AppColorsCommon.appreciateThemeColor
                       ),
                     ),
                     const SizedBox(height: 25),
@@ -96,25 +100,6 @@ class _MobileNumScreenState extends ConsumerState<MobileNumScreen> {
                     MobileNumValidator(onController: controller),
 
                     const Spacer(),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //     bottom: MediaQuery.of(context).padding.bottom + 10,
-                    //   ),
-                    //   child: SizedBox(
-                    //     width: double.infinity,
-                    //     child: ElevatedButton(
-                    //       onPressed: () {
-                    //         context.push(
-                    //           AppRoutes.otpScreen,
-                    //           extra: OtpScreenArgs(
-                    //             userNumber: vmMobileNumProvider.mobileNumber,
-                    //           ),
-                    //         );
-                    //       },
-                    //       child: Text("Proceed"),
-                    //     ),
-                    //   ),
-                    // ),
                     InkWell(
                       onTap: () {
                         final isValidNumber = mobileNumNotifier

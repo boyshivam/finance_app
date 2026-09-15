@@ -183,6 +183,7 @@ class _TransactionDetailsSectionState
       child: CustomNavigationButtonHelper(
         buttonText: "Proceed",
         secondaryButton: false,
+
       ),
     );
   }

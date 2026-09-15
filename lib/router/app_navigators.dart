@@ -34,9 +34,9 @@ class AppNavigators {
     context.push(AppRoutes.stockDetailsScreen,extra: extra);
   }
 
-  static void goToTradeScreen(BuildContext context, {Object? extra}) {
-    context.push(AppRoutes.tradeScreen, extra: extra);
-  }
+  // static void goToTradeScreen(BuildContext context, {Object? extra}) {
+  //   context.push(AppRoutes.tradeScreen, extra: extra);
+  // }
 
   static void gotToOrderPlacedScreen(BuildContext context, {Object? extra}) {
     context.push(AppRoutes.orderPlacedScreen, extra: extra);

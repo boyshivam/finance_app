@@ -12,8 +12,8 @@ import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
-class TradeScreen extends ConsumerStatefulWidget {
-  const TradeScreen({
+class SellTradeScreen extends ConsumerStatefulWidget {
+  const SellTradeScreen({
     super.key,
     required this.selectedSecurity,
     required this.tradeType,
@@ -23,10 +23,10 @@ class TradeScreen extends ConsumerStatefulWidget {
   final TradeTypeEnum tradeType;
 
   @override
-  ConsumerState<TradeScreen> createState() => _TradeScreenState();
+  ConsumerState<SellTradeScreen> createState() => _TradeScreenState();
 }
 
-class _TradeScreenState extends ConsumerState<TradeScreen> {
+class _TradeScreenState extends ConsumerState<SellTradeScreen> {
   // text editing controllers
   late TextEditingController amountController;
   late TextEditingController quantityController;
@@ -76,12 +76,11 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final vmState = ref.watch(tradeScreenProvider);
 
     // this will show snack bar message when currency toggle is triggered
     ref.listen<CurrencyToggleState>(
       tradeScreenProvider.select((state) => state.currencyToggleState),
-      (previous, next) {
+          (previous, next) {
         if (previous != null && previous != next) {
           currencyToggleSnackBarMessage();
         }
@@ -114,11 +113,11 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
           TradeTopSection(),
           SecurityDetails(selectedSecurity: widget.selectedSecurity),
           PurchaseSection(
-            amountController: amountController,
-            quantityController: quantityController,
-            amountNode: amountNode,
-            quantityNode: quantityNode,
-            tradeType: widget.tradeType,
+              amountController: amountController,
+              quantityController: quantityController,
+              amountNode: amountNode,
+              quantityNode: quantityNode,
+              tradeType: widget.tradeType,
               selectedSecurity: widget.selectedSecurity
           ),
           TradeFeesSection(

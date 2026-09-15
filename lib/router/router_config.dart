@@ -19,7 +19,8 @@ import "package:aprreciate/features/search_dashboard/view/presentation/search_da
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
-import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
+import "package:aprreciate/features/trade_dashboard/view/presentation/buy_trade_screen.dart";
+import "package:aprreciate/features/trade_dashboard/view/presentation/sell_trade_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/helpers/individual_watchlists_args.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/individual_watchlist_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/search_security_screen.dart";
@@ -61,11 +62,23 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.tradeScreen,
+      path: AppRoutes.sellTradeScreen,
+      name: "sellTradeScreen",
+      builder: (context, state) {
+        final args = state.extra as TradeScreenArgs;
+        return SellTradeScreen(
+          selectedSecurity: args.selectedSecurity,
+          tradeType: args.tradeType,
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.buyTradeScreen,
       name: 'tradeScreen',
       builder: (context, state) {
         final args = state.extra as TradeScreenArgs;
-        return TradeScreen(
+        return BuyTradeScreen(
           selectedSecurity: args.selectedSecurity,
           tradeType: args.tradeType,
         );

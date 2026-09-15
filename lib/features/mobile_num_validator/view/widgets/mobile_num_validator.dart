@@ -20,13 +20,89 @@ class MobileNumValidator extends ConsumerWidget {
     final vmMobileNumProvider = ref.watch(mobileNumProvider);
     final mobileNumValidatorNotifier = ref.read(mobileNumProvider.notifier);
 
-    return Stack(
-      clipBehavior: Clip.none,
+    return Column(
       children: [
+        Container(
+          padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+          height: 120,
+          width: MediaQuery.of(context).size.width * 0.87,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: vmMobileNumProvider.mobileNumValidationState.borderColor,
+                spreadRadius: 3,
+                offset: Offset(0, 0),
+                blurRadius: 20,
+              ),
+            ],
+            color: AppColorsModule.mobileNumColorTextFieldBGColor,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: vmMobileNumProvider.mobileNumValidationState.borderColor,
+              width: 2.5,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.log_mob_label,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
+              ),
+              TextField(
+                maxLength: 10,
+                maxLines: 1,
+                enabled: true,
+                controller: onController,
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  mobileNumValidatorNotifier.userEnteredNum(value);
+                  mobileNumValidatorNotifier.validateNumber(value);
+                },
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+                decoration: InputDecoration(
+                  counterText: "",
+                  prefixIcon: Padding(
+                    padding: EdgeInsets.only(left: 4, top: 4),
+                    child: Text(
+                      "+91",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.symmetric(vertical: 4),
+                ),
+              ),
+
+              if (vmMobileNumProvider.mobileNumValidationState.hasError)
+                Row(
+                  children: [
+                    Text(
+                      vmMobileNumProvider.mobileNumValidationState.errorText,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall!.copyWith(color: Colors.red),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 30),
+
         // this is the info text container
         Container(
-          height: 176,
-          width: MediaQuery.of(context).size.width * 87,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           decoration: BoxDecoration(
             color: AppColorsModule.mobileNumSubTextContainer,
@@ -59,86 +135,6 @@ class MobileNumValidator extends ConsumerWidget {
         ),
 
         // this the number input  textfield
-        Positioned(
-          bottom: 60,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-            height: 120,
-            width: MediaQuery.of(context).size.width * 0.87,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color:
-                      vmMobileNumProvider.mobileNumValidationState.borderColor,
-                  spreadRadius: 3,
-                  offset: Offset(0, 0),
-                  blurRadius: 20
-                ),
-              ],
-              color: AppColorsModule.mobileNumColorTextFieldBGColor,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: vmMobileNumProvider.mobileNumValidationState.borderColor,
-                width: 2.5,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.log_mob_label,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                  ),
-                ),
-                TextField(
-                  maxLength: 10,
-                  maxLines: 1,
-                  enabled: true,
-                  controller: onController,
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    mobileNumValidatorNotifier.userEnteredNum(value);
-                    mobileNumValidatorNotifier.validateNumber(value);
-                  },
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  decoration: InputDecoration(
-                    counterText: "",
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(left: 4, top: 4),
-                      child: Text(
-                        "+91",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 4),
-                  ),
-                ),
-
-                if (vmMobileNumProvider.mobileNumValidationState.hasError)
-                  Row(
-                    children: [
-                      Text(
-                        vmMobileNumProvider.mobileNumValidationState.errorText,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodySmall!.copyWith(color: Colors.red),
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }

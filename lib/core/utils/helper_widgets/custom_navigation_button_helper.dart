@@ -1,16 +1,19 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:flutter/material.dart";
-import "package:go_router/go_router.dart";
 
 class CustomNavigationButtonHelper extends StatelessWidget {
   const CustomNavigationButtonHelper({
     super.key,
     required this.buttonText,
     required this.secondaryButton,
+    this.fontWeight = FontWeight.w700,
+    this.fontSize = 22
   });
 
   final String buttonText;
   final bool secondaryButton;
+  final FontWeight fontWeight;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,8 @@ class CustomNavigationButtonHelper extends StatelessWidget {
           color: secondaryButton
               ? AppColorsCommon.appreciateThemeColor
               : AppColorsCommon.appWhite,
+          fontWeight: fontWeight,
+          fontSize: fontSize
         ),
         textAlign: TextAlign.center,
       ),
