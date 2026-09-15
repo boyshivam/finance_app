@@ -5,14 +5,18 @@ class AppColorsCommon {
   // appreciate theme color
   static const appreciateThemeColor = Color(0xFF6F47EA);
 
+  static const mainHeaderColor = Color(0xFF271559);
+
   // app error color -
   static const appreciateThemeError = Color(0xFFEA3636);
 
   // scaffold background color
-  static const scaffoldBackGroundColor = Color(0xFFEFF1F4);
+  static const scaffoldBackGroundColor = Color(0xFFdfd7f5);
 
   // generic white color for font
   static const appWhite = Color(0xFFFFFFFF);
+
+
 
 
   // snackbar message colors

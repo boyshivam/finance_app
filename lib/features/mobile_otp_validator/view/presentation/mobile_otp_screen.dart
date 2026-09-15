@@ -117,7 +117,6 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                         paddingTop: 15,
                         paddingBottom: 15,
                         fontSize: 18,
-
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -126,22 +125,32 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                       // height: SizeConfig.height(context) * 0.4,
                       // width: SizeConfig.width(context) * 0.87,
                       padding: EdgeInsets.only(left: 25, right: 25),
-                      decoration: BoxDecoration(color: Color(0xFFEFF1F4)),
+                      decoration: BoxDecoration(
+                        color: AppColorsCommon.scaffoldBackGroundColor,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             AppStrings.log_otp_header,
-                            style: Theme.of(context).textTheme.headlineLarge,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(
+                                  color: AppColorsCommon.mainHeaderColor,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w800,
+                                ),
                           ),
                           const SizedBox(height: 20),
                           Wrap(
                             children: [
                               Text(
                                 AppStrings.log_otp_subt,
-                                style: Theme.of(
-                                  context,
-                                ).textTheme.bodySmall!.copyWith(fontSize: 18),
+                                style: Theme.of(context).textTheme.bodySmall!
+                                    .copyWith(
+                                      color:
+                                          AppColorsCommon.appreciateThemeColor,
+                                      fontSize: 18,
+                                    ),
                               ),
                               const SizedBox(width: 3),
 
@@ -192,6 +201,7 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                             otpNavigator: cursorMovementInOtp,
                           ),
 
+                          const SizedBox(height: 15),
                           //resend OTP countdown timer
                           OtpTimer(initialTime: 10, resendText: 'resend OTP'),
                         ],

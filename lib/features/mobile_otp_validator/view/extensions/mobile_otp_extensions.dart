@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart';
 import 'package:aprreciate/features/mobile_otp_validator/enums/mobile_otp_enum.dart';
 
@@ -24,6 +25,23 @@ extension MobileOtpExtensions on MobileOtpValidationState {
         return "";
 
     }
+  }
+
+  Color get colorShadow {
+
+    switch(this) {
+
+      case MobileOtpValidationState.inactive:
+        return AppColorsCommon.inactiveTextFieldBorderColor;
+
+      case MobileOtpValidationState.active:
+        return AppColorsCommon.appreciateThemeColor;
+
+      default:
+        return AppColorsCommon.appreciateThemeError;
+
+    }
+
   }
 
   Color get validationColor {

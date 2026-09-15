@@ -39,7 +39,7 @@ class CompanyTrademark extends StatelessWidget {
         ),
       ),
       child: Text(
-        "TradeGains",
+        "TradeStox",
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
           fontSize: fontSize,
           fontWeight: FontWeight.w900,
