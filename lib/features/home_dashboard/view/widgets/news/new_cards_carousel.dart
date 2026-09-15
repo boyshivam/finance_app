@@ -11,33 +11,36 @@ class NewsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10, horizontal: 25
+    return Container(
+      color: AppColorsCommon.scaffoldBackGroundColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 10, horizontal: 25
+            ),
+            child: Row(
+              children: [
+                Text("News", style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.bold
+                ),),
+                const Spacer(),
+                Text(AppStringsCommon.genericViewAllText, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColorsCommon.appreciateThemeColor,
+                  fontWeight: FontWeight.w300
+                ) ,)
+              ],
+            ),
           ),
-          child: Row(
-            children: [
-              Text("News", style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold
-              ),),
-              const Spacer(),
-              Text(AppStringsCommon.genericViewAllText, style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: AppColorsCommon.appreciateThemeColor,
-                fontWeight: FontWeight.w300
-              ) ,)
-            ],
+          SizedBox(
+            height: 180,
+            child: PageView.builder(
+                itemCount: news.length,
+                itemBuilder: (context, index) => NewsCard(card: news[index])),
           ),
-        ),
-        SizedBox(
-          height: 180,
-          child: PageView.builder(
-              itemCount: news.length,
-              itemBuilder: (context, index) => NewsCard(card: news[index])),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

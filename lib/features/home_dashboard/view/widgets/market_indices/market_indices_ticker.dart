@@ -62,42 +62,47 @@ class _MarketIndicesTickerState extends State<MarketIndicesTicker> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        controller: _scrollController,
-        physics: NeverScrollableScrollPhysics(),
-        separatorBuilder: (_, _) => SizedBox(width: 20),
-        itemCount: loopingList.length,
-        itemBuilder: (context, index) {
-          final item = loopingList[index];
-          return Row(
-            children: [
-              Text(item['name']),
-              const SizedBox(width: 5),
-              item['up']
-                  ? AssetImageHelper.image(
-                      AppAssets.value_growth_icon,
-                      width: 24,
-                      height: 24,
-                    )
-                  : AssetImageHelper.image(
-                      AppAssets.value_fall_icon,
-                      width: 24,
-                      height: 24,
-                    ),
-              const SizedBox(width: 5),
-              Text(
-                item['value'],
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: item["up"]
-                      ? AppColorsCommon.positiveGreen
-                      : AppColorsCommon.negativeRed,
-                  fontWeight: FontWeight.bold,
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColorsCommon.scaffoldBackGroundColor.withValues(alpha: 0.4)
+        ),
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          controller: _scrollController,
+          physics: NeverScrollableScrollPhysics(),
+          separatorBuilder: (_, _) => SizedBox(width: 20),
+          itemCount: loopingList.length,
+          itemBuilder: (context, index) {
+            final item = loopingList[index];
+            return Row(
+              children: [
+                Text(item['name']),
+                const SizedBox(width: 5),
+                item['up']
+                    ? AssetImageHelper.image(
+                        AppAssets.value_growth_icon,
+                        width: 24,
+                        height: 24,
+                      )
+                    : AssetImageHelper.image(
+                        AppAssets.value_fall_icon,
+                        width: 24,
+                        height: 24,
+                      ),
+                const SizedBox(width: 5),
+                Text(
+                  item['value'],
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: item["up"]
+                        ? AppColorsCommon.positiveGreen
+                        : AppColorsCommon.negativeRed,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }

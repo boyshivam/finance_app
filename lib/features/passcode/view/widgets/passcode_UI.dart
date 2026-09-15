@@ -24,7 +24,7 @@ class PasscodeUI extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
       decoration: BoxDecoration(
-        color: AppColorsModule.passcodeContainerBGColor,
+        color: AppColorsCommon.appWhite.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: currentState.validationState.validationColorsContainerBorder,
@@ -56,6 +56,14 @@ class PasscodeUI extends ConsumerWidget {
                   width: MediaQuery.of(context).size.width * 0.056,
                   height: MediaQuery.of(context).size.width * 0.056,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: validationState.passcodeCircleColor,
+                        spreadRadius: 2,
+                        blurRadius: 2,
+                        offset: Offset(0, 0)
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(20),
                     color: circleState.validationColorsCircleBG,
                     border: Border.all(

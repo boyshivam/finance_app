@@ -1,16 +1,41 @@
-
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart';
 import "package:flutter/material.dart";
 import 'package:aprreciate/features/passcode/enums/passcode_enums.dart';
 
-
 extension PasscodeValidationStateExtension on PasscodeValidationState {
+  Color get passcodeCircleColor {
+    switch (this) {
+      case PasscodeValidationState.active:
+        return AppColorsCommon.appreciateThemeError;
+
+      default:
+        return AppColorsCommon.appreciateThemeColor;
+    }
+  }
+
+  Color get passcodeCircleBorderColor {
+    switch (this) {
+      case PasscodeValidationState.active:
+        return AppColorsCommon.appreciateThemeError;
+
+      default:
+        return AppColorsCommon.appreciateThemeColor;
+    }
+  }
+
+  Color get passcodeBorderColor {
+    switch (this) {
+      case PasscodeValidationState.active:
+        return AppColorsCommon.appreciateThemeError;
+
+      default:
+        return AppColorsCommon.appreciateThemeColor;
+    }
+  }
 
   String get errorText {
-
-    switch(this) {
-
+    switch (this) {
       case PasscodeValidationState.incorrect:
         return "Invalid passcode!";
 
@@ -22,15 +47,11 @@ extension PasscodeValidationStateExtension on PasscodeValidationState {
 
       default:
         return "";
-
     }
-
   }
 
   Color get validationColorsContainerBorder {
-
-    switch(this) {
-
+    switch (this) {
       case PasscodeValidationState.active:
         return AppColorsCommon.appreciateThemeColor;
 
@@ -43,33 +64,26 @@ extension PasscodeValidationStateExtension on PasscodeValidationState {
       default:
         return AppColorsCommon.appreciateThemeColor;
     }
-
   }
 
   Color get validationColorsCircleBorder {
-
-    switch(this) {
-
+    switch (this) {
       case PasscodeValidationState.empty:
         return AppColorsModule.passcodeDefaultCircleBorderColor;
 
       case PasscodeValidationState.incorrect:
         return AppColorsModule.passcodeIncorrectCircleBorderColor;
 
-      case  PasscodeValidationState.active:
+      case PasscodeValidationState.active:
         return AppColorsModule.passcodeActiveCircleBorderColor;
 
       case PasscodeValidationState.locked:
         return AppColorsModule.passcodeIncorrectCircleBorderColor;
-
     }
-
   }
 
-
   Color get validationColorsCircleBG {
-
-    switch(this) {
+    switch (this) {
       case PasscodeValidationState.empty:
         return AppColorsModule.passcodeDefaultCircleBGColor;
 
@@ -81,9 +95,6 @@ extension PasscodeValidationStateExtension on PasscodeValidationState {
 
       case PasscodeValidationState.locked:
         return AppColorsModule.passcodeIncorrectCircleBGColor;
-
     }
-
   }
-
 }

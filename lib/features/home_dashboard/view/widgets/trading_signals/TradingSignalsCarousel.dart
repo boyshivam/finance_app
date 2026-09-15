@@ -38,7 +38,7 @@ class _TradingSignalsCarouselState extends State<TradingSignalsCarousel> {
         gradient: LinearGradient(
           colors: [
             AppColorsCommon.scaffoldBackGroundColor,
-            AppColorsHomeDashboard.tradingSignalGradientGreen,
+            AppColorsCommon.mainHeaderColor
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

@@ -11,7 +11,7 @@ class AppColorsCommon {
   static const appreciateThemeError = Color(0xFFEA3636);
 
   // scaffold background color
-  static const scaffoldBackGroundColor = Color(0xFFdfd7f5);
+  static const scaffoldBackGroundColor = Color(0xFFdfdaed);
 
   // generic white color for font
   static const appWhite = Color(0xFFFFFFFF);

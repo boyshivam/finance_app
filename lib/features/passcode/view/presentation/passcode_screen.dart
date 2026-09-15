@@ -71,7 +71,7 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: scaffoldColor,
+      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
