@@ -1,4 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
+import "package:aprreciate/features/trade_dashboard/helper/trade_order_placed_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
@@ -6,7 +8,9 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class OrderSlider extends ConsumerStatefulWidget {
-  const OrderSlider({super.key});
+  const OrderSlider({super.key, required this.tradeOrderType});
+
+  final TradeOrderTypeEnums tradeOrderType;
 
   @override
   ConsumerState<OrderSlider> createState() => _OrderSliderState();
@@ -18,14 +22,18 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
   void placeOrder(double maxWidth, BuildContext context) {
     final vmTradeScreenNotifier = ref.read(tradeScreenProvider.notifier);
 
-    final isValid = vmTradeScreenNotifier.placeTradeOrder();
+    final isValid = vmTradeScreenNotifier.placeTradeOrder(widget.tradeOrderType);
 
     if (offset >= maxWidth - 20) {
-      if(isValid){
-        context.push(AppRoutes.orderPlacedScreen);
+      if (isValid) {
+        if (widget.tradeOrderType == TradeOrderTypeEnums.buyFraction) {
+          context.push(AppRoutes.orderPlacedScreen, extra: TradeOrderPlacedScreenArgs(tradeOrderType: widget.tradeOrderType));
+        }
+        // } else if (widget.tradeType == TradeOrderTypeEnums.sellFraction) {
+        //   context.push(AppRoutes.orderPlacedScreen);
+        // }
       }
-      vmTradeScreenNotifier.validateTradeOrder();
-      setState(() {
+        setState(() {
         offset = 0;
       });
     } else {
@@ -63,13 +71,24 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                Center(
-                  child: Text(
-                    "Slide to buy",
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: AppColorsCommon.appWhite,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if(widget.tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                      Text(
+                      "Slide to buy",
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: AppColorsCommon.appWhite,
+                      ),
                     ),
-                  ),
+                    if(widget.tradeOrderType == TradeOrderTypeEnums.sellFraction)
+                      Text(
+                        "Slide to sell",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: AppColorsCommon.appWhite,
+                        ),
+                      ),
+                  ],
                 ),
                 AnimatedPositioned(
                   duration: Duration(milliseconds: 1),

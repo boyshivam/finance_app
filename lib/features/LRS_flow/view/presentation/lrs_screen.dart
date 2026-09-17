@@ -48,6 +48,7 @@ class _LrsScreenState extends ConsumerState<LrsTransferScreen> {
             childAlignment: MainAxisAlignment.center,
             child: HeaderTextHelper(text: "Transfer to US wallet", fontSize: 24,),
           ),
+          const SizedBox(height: 60,),
           EnterAmountContainer(),
         ],
       ),

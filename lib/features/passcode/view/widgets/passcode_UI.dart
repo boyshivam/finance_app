@@ -1,3 +1,4 @@
+import 'package:aprreciate/app.dart';
 import 'package:aprreciate/core/constants/app_strings/features/app_strings_homedashboard/app_strings.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart';
 import 'package:aprreciate/core/themes/app_theme/app_colors/app_colors_module.dart';
@@ -24,22 +25,26 @@ class PasscodeUI extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
       decoration: BoxDecoration(
-        color: AppColorsCommon.appWhite.withValues(alpha: 0.6),
+        boxShadow: [
+          BoxShadow(
+            color: currentState.validationState.validationColorsContainerBorder,
+            offset: Offset(0, 0),
+            spreadRadius: 3,
+            blurRadius: 6
+          )
+        ],
+        color: Colors.white10.withValues(alpha: 0.9),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: currentState.validationState.validationColorsContainerBorder,
-          width: 2,
-        ),
+        // border: Border.all(
+        //   color: currentState.validationState.validationColorsContainerBorder,
+        //   width: 2,
+        // ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Enter passcode text
-          Text(
-            AppStrings.passcode_enter_pass,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
           const SizedBox(height: 10),
           // Row of passcode circles ie passcode UI
           Row(

@@ -24,6 +24,7 @@ class _PortfolioDashboardScreenState
         PortfolioDashboard(),
         const SizedBox(height: 10),
         Expanded(child: PortfolioHoldingsViewer()),
+
       ],
     );
   }

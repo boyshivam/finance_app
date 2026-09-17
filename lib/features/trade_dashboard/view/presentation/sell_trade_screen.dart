@@ -1,7 +1,7 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
-import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/fees_section/trade_fees_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_placment_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/purchase_section.dart";
@@ -16,11 +16,11 @@ class SellTradeScreen extends ConsumerStatefulWidget {
   const SellTradeScreen({
     super.key,
     required this.selectedSecurity,
-    required this.tradeType,
+    required this.tradeOrderType,
   });
 
   final StockCardModel selectedSecurity;
-  final TradeTypeEnum tradeType;
+  final TradeOrderTypeEnums tradeOrderType;
 
   @override
   ConsumerState<SellTradeScreen> createState() => _TradeScreenState();
@@ -108,24 +108,27 @@ class _TradeScreenState extends ConsumerState<SellTradeScreen> {
 
     return Scaffold(
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
-      body: Column(
-        children: [
-          TradeTopSection(),
-          SecurityDetails(selectedSecurity: widget.selectedSecurity),
-          PurchaseSection(
-              amountController: amountController,
-              quantityController: quantityController,
-              amountNode: amountNode,
-              quantityNode: quantityNode,
-              tradeType: widget.tradeType,
-              selectedSecurity: widget.selectedSecurity
-          ),
-          TradeFeesSection(
-              selectedSecurity: widget.selectedSecurity
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TradeTopSection(),
+            SecurityDetails(selectedSecurity: widget.selectedSecurity),
+            PurchaseSection(
+                amountController: amountController,
+                quantityController: quantityController,
+                amountNode: amountNode,
+                quantityNode: quantityNode,
+                tradeOrderType: widget.tradeOrderType,
+                selectedSecurity: widget.selectedSecurity
+            ),
+            TradeFeesSection(
+                selectedSecurity: widget.selectedSecurity,
+              tradeOrderType: widget.tradeOrderType,
+            ),
+          ],
+        ),
       ),
-      bottomNavigationBar: OrderPlacementSection(),
+      bottomNavigationBar: OrderPlacementSection(tradeOrderType: TradeOrderTypeEnums.sellFraction,),
     );
   }
 }

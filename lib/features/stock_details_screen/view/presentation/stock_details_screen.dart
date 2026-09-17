@@ -52,12 +52,12 @@ class StockDetailsScreen extends ConsumerWidget {
       body: Column(
         children: [
           StockDetailsTopSection(security: selectedSecurity),
-          SecurityInfo(selectedSecurity: selectedSecurity,),
+          SecurityInfo(selectedSecurity: selectedSecurity),
           const SizedBox(height: 30),
           Expanded(child: SecurityData()),
         ],
       ),
-      bottomNavigationBar: TradeButtonsSection(security: selectedSecurity,),
+      bottomNavigationBar: TradeButtonsSection(security: selectedSecurity),
     );
   }
 }

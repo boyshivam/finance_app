@@ -14,6 +14,14 @@ class SecurityDetails extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: Offset(0, 2)
+            )
+          ],
           borderRadius: BorderRadius.circular(20),
           color: AppColorsCommon.appWhite,
         ),

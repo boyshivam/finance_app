@@ -1,4 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
@@ -6,9 +7,14 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeFeesSection extends ConsumerWidget {
-  const TradeFeesSection({super.key, required this.selectedSecurity});
+  const TradeFeesSection({
+    super.key,
+    required this.selectedSecurity,
+    required this.tradeOrderType,
+  });
 
   final StockCardModel selectedSecurity;
+  final TradeOrderTypeEnums tradeOrderType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,6 +24,14 @@ class TradeFeesSection extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       child: Container(
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 6,
+              spreadRadius: 2,
+              offset: Offset(0, 2),
+            ),
+          ],
           border: Border.all(color: AppColorsCommon.appWhite, width: 2),
           borderRadius: BorderRadius.circular(18),
         ),
@@ -27,7 +41,10 @@ class TradeFeesSection extends ConsumerWidget {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               decoration: BoxDecoration(
                 color: AppColorsCommon.inactiveTextFieldBorderColor,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(18),
+                  topRight: Radius.circular(18),
+                ),
               ),
 
               child: Column(
@@ -37,7 +54,9 @@ class TradeFeesSection extends ConsumerWidget {
                       Text("Order value"),
                       const Spacer(),
                       if (vmTradeScreenProvider.amountText.isNotEmpty)
-                        Text("\$${vmTradeScreenProvider.orderValueText}")
+                        Text(
+                          "\$${vmTradeScreenProvider.totalOrderValue.toStringAsFixed(2)}",
+                        )
                       else
                         Text("\$ 0.0"),
                     ],
@@ -56,7 +75,9 @@ class TradeFeesSection extends ConsumerWidget {
                       Row(
                         children: [
                           if (vmTradeScreenProvider.amountText.isNotEmpty)
-                            Text("\$${vmTradeScreenProvider.totalFees}")
+                            Text(
+                              "\$${vmTradeScreenProvider.totalFees.toStringAsFixed(2)}",
+                            )
                           else
                             Text("\$ 0.0"),
                           const SizedBox(width: 5),
@@ -85,7 +106,7 @@ class TradeFeesSection extends ConsumerWidget {
                               const Spacer(),
                               if (vmTradeScreenProvider.amountText.isNotEmpty)
                                 Text(
-                                  "\$${vmTradeScreenProvider.transactionFee}",
+                                  "\$${vmTradeScreenProvider.transactionFee.toStringAsFixed(2)}",
                                 )
                               else
                                 Text("\$ 0.0"),
@@ -96,9 +117,22 @@ class TradeFeesSection extends ConsumerWidget {
                             children: [
                               Text("Platform fee"),
                               const Spacer(),
-                              Text("\$${vmTradeScreenProvider.platformFee}"),
+                              Text(
+                                "\$${vmTradeScreenProvider.platformFee.toStringAsFixed(2)}",
+                              ),
                             ],
                           ),
+                          if (tradeOrderType ==
+                              TradeOrderTypeEnums.sellFraction)
+                            Row(
+                              children: [
+                                Text("IFSC fee"),
+                                const Spacer(),
+                                Text(
+                                  "\$${vmTradeScreenProvider.platformFee.toStringAsFixed(2)}",
+                                ),
+                              ],
+                            ),
                         ],
                       ),
                     ),
@@ -110,7 +144,10 @@ class TradeFeesSection extends ConsumerWidget {
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               decoration: BoxDecoration(
                 color: AppColorsCommon.lightBlueBackground,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(18),
+                  bottomRight: Radius.circular(18),
+                ),
               ),
 
               child: Row(

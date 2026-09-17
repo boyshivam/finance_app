@@ -1,5 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
@@ -8,16 +9,15 @@ import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OrderPlacementSection extends ConsumerWidget {
-  const OrderPlacementSection({
-    super.key,
-  });
+  const OrderPlacementSection({super.key, required this.tradeOrderType});
+
+  final TradeOrderTypeEnums tradeOrderType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     // trade provider
     final vmState = ref.watch(tradeScreenProvider);
-    
+
     // LRS provider to access its state parameters
     final vmLRS = ref.watch(lrsProvider);
 
@@ -35,11 +35,13 @@ class OrderPlacementSection extends ConsumerWidget {
         children: [
           Row(
             children: [
-              Text("US Wallet balance:",
+              Text(
+                "US Wallet balance:",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.w600,
-                  fontSize: 20
-                ),),
+                  fontSize: 20,
+                ),
+              ),
               const Spacer(),
               Row(
                 children: [
@@ -51,7 +53,10 @@ class OrderPlacementSection extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: 5),
-          if (vmState.usWalletFundsState == UsWalletFundsState.insufficientFunds)
+
+          // this will handle the error message text for invalid transaction
+          if (vmState.usWalletFundsState ==
+              UsWalletFundsState.insufficientFunds && tradeOrderType == TradeOrderTypeEnums.buyFraction)
             Row(
               children: [
                 Text(
@@ -63,33 +68,35 @@ class OrderPlacementSection extends ConsumerWidget {
               ],
             ),
           const SizedBox(height: 10),
-          if (vmState.usWalletFundsState == UsWalletFundsState.insufficientFunds)
+          if (vmState.usWalletFundsState ==
+              UsWalletFundsState.insufficientFunds && tradeOrderType == TradeOrderTypeEnums.buyFraction)
             SizedBox(
               height: 50,
               child: InkWell(
-                  onTap: (){
-                    AppNavigators.gotoLrsScreen(context);
-                  },
-                  child:Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10,
+                onTap: () {
+                  AppNavigators.gotoLrsScreen(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColorsCommon.appreciateThemeColor,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Add funds to US wallet",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: AppColorsCommon.appWhite,
+                      ),
                     ),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColorsCommon.appreciateThemeColor,
-                      borderRadius: BorderRadius.circular(16)
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text("Add funds to US wallet", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColorsCommon.appWhite
-                      ),),
-                    ),
-                  )),
+                  ),
+                ),
+              ),
             )
           else
-            OrderSlider(
-            ),
+            OrderSlider(tradeOrderType: tradeOrderType),
         ],
       ),
     );

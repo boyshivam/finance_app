@@ -23,7 +23,7 @@ class TradeScreenState {
     required this.convertedValue,
     required this.amountText,
     required this.quantityText,
-    required this.orderValueText,
+    required this.totalOrderValue,
     required this.transactionFee,
     required this.platformFee,
     required this.amountPayable,
@@ -33,6 +33,7 @@ class TradeScreenState {
     required this.totalFees,
     required this.stockPrice,
     required this.transactionId,
+    required this.sellIFSCAFee,
   });
 
   final String securityName;
@@ -51,13 +52,14 @@ class TradeScreenState {
   final double usWalletBalance;
   final String amountText;
   final String quantityText;
-  final String orderValueText;
-  final String amountPayable;
-  final String transactionFee;
-  final String platformFee;
+  final double totalOrderValue;
+  final double amountPayable;
+  final double transactionFee;
+  final double platformFee;
+  final double sellIFSCAFee;
   final OrderEligibilityStates orderEligibility;
   final FeesViewStates feesViewStates;
-  final String totalFees;
+  final double totalFees;
   final double stockPrice;
   final String transactionId;
 
@@ -79,16 +81,17 @@ class TradeScreenState {
 
     String? amountText,
     String? quantityText,
-    String? orderValueText,
-    String? amountPayable,
-    String? transactionFee,
-    String? platformFee,
+    double? totalOrderValue,
+    double? amountPayable,
+    double? transactionFee,
+    double? platformFee,
 
     OrderEligibilityStates? orderEligibility,
     FeesViewStates? feesViewStates,
-    String? totalFees,
+    double? totalFees,
     double? stockPrice,
     String? transactionId,
+    double? sellIFSCAFee,
   }) {
     return TradeScreenState(
       securityName: securityName ?? this.securityName,
@@ -115,7 +118,7 @@ class TradeScreenState {
       // amount texts
       amountText: amountText ?? this.amountText,
       quantityText: quantityText ?? this.quantityText,
-      orderValueText: orderValueText ?? this.orderValueText,
+      totalOrderValue: totalOrderValue ?? this.totalOrderValue,
       amountPayable: amountPayable ?? this.amountPayable,
       transactionFee: transactionFee ?? this.transactionFee,
       platformFee: platformFee ?? this.platformFee,
@@ -125,6 +128,7 @@ class TradeScreenState {
       totalFees: totalFees ?? this.totalFees,
       stockPrice: stockPrice ?? this.stockPrice,
       transactionId: transactionId ?? this.transactionId,
+      sellIFSCAFee: sellIFSCAFee ?? this.sellIFSCAFee,
     );
   }
 }

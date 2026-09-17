@@ -96,7 +96,9 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
                     children: [
                       Text(
                         AppStrings.passcode_subtext,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.w600
+                        ),
                       ),
                       const SizedBox(width: 10),
                       InkWell(
@@ -113,8 +115,17 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 70),
                   const PasscodeUI(),
+                  const SizedBox(height: 50,),
+                  Text(
+                    AppStrings.passcode_enter_pass,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        fontSize: 20,
+                        color: AppColorsCommon.mainHeaderColor,
+                        fontWeight: FontWeight.w600
+                    ),
+                  ),
                 ],
               ),
             ),

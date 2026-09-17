@@ -20,7 +20,7 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
   TradeScreenState initialState() {
-    final vmLrs = ref.read(lrsProvider);
+    final vmLrs = ref.watch(lrsProvider);
 
     // TODO: implement build
     return TradeScreenState(
@@ -40,15 +40,16 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       convertedValue: 0,
       amountText: "",
       quantityText: "",
-      orderValueText: "",
-      amountPayable: "",
-      transactionFee: "",
-      platformFee: "",
+      totalOrderValue: 0,
+      amountPayable: 0,
+      transactionFee: 0,
+      platformFee: 0,
       orderEligibility: OrderEligibilityStates.invalid,
       feesViewStates: FeesViewStates.partialView,
-      totalFees: "",
+      totalFees: 0,
       stockPrice: AppStringsCommon.stockTeslaPrice,
       transactionId: "",
+      sellIFSCAFee: 0,
     );
   }
 
@@ -109,8 +110,57 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(amountText: securedAmount);
   }
 
-  // check trade amount validity
-  void validateTradeOrder() {
+  // fees for the entered amount
+  void calculateBuyFees() {
+    double platformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
+    final transactionFee = max(0.05, (0.05 / 100) * enteredAmount);
+
+    state = state.copyWith(
+      totalFees: (platformFee + transactionFee),
+      totalOrderValue: enteredAmount,
+      amountPayable: (enteredAmount + transactionFee),
+      transactionFee: transactionFee,
+      platformFee: platformFee,
+    );
+  }
+
+  // calculate sell fees
+  void calculateSellFees(String searchedSecuritySymbol) {
+    final vmPortfolioHoldingsProvider = ref.read(portfolioHoldingsProvider);
+
+    if (searchedSecuritySymbol.trim().isEmpty) {
+      return;
+    }
+
+    // search for the security in portfolio holdings --
+    final security = vmPortfolioHoldingsProvider.firstWhere(
+      (security) => security.securitySymbol == searchedSecuritySymbol,
+    );
+    // final holdingInvestedAmount = security.investedAmount;
+    // final holdingQuantity = security.purchasedQuantity;
+
+    final sellPlatformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
+    final sellTechnologyFee = max(0.0005 * enteredAmount, 0.1); // in dollars
+    final sellIFSCATurnoverFee = max(
+      0.00005 * enteredAmount,
+      0.1,
+    ); // in dollars
+    final sellTotalFees =
+        sellPlatformFee + sellTechnologyFee + sellIFSCATurnoverFee;
+
+    state = state.copyWith(
+      totalFees: sellTotalFees,
+      totalOrderValue: enteredAmount,
+      amountPayable: (enteredAmount + sellTechnologyFee),
+      transactionFee: sellTechnologyFee,
+      platformFee: sellPlatformFee,
+    );
+  }
+
+
+
+  // check buy trade order validity
+  void validateBuyTradeOrder() {
     if (state.amountText.trim().isEmpty) {
       state = state.copyWith(
         amountTextFieldState: TextFieldsStates.empty,
@@ -145,22 +195,34 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     }
   }
 
+  // check sell trade order validity
+  void validateSellTradeOrder(String selectedSecuritySymbol) {
+    if (enteredAmount == 0) {}
+  }
+
+
+
   // place the trade order
-  bool placeTradeOrder() {
+  bool placeTradeOrder(TradeOrderTypeEnums tradeOrderType) {
     final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
 
-    if (enteredAmount <= state.usWalletBalance &&
-        enteredAmount != 0 &&
-        state.orderEligibility == OrderEligibilityStates.valid &&
-        state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
-      vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(enteredAmount);
-      addTradeOrderToOrdersHistory();
-      addSecurityToPortfolio();
+    if (tradeOrderType == TradeOrderTypeEnums.buyFraction) {
+      if (state.orderEligibility == OrderEligibilityStates.valid &&
+          state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
+        vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(enteredAmount);
+        addTradeOrderToOrdersHistory();
+        addSecurityToPortfolio();
 
-      return true;
+        return true;
+      }
+    } else if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
+      if (state.orderEligibility == OrderEligibilityStates.valid) {}
     }
+
     return false;
   }
+
+
 
   // get security details
   void getSecurityDetails(String name, String symbol, String icon) {
@@ -170,6 +232,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       securityIcon: icon,
     );
   }
+
+
 
   // add trade order to orders listing in profile
   void addTradeOrderToOrdersHistory() {
@@ -188,6 +252,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
     vmOrdersNotifier.addOrderDetailsToCard(newOrder);
   }
+
+
 
   // add investment to portfolio or add investment to exiting portfolio
   void addSecurityToPortfolio() {
@@ -213,6 +279,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
+
+
   // fees view dropdown
   void feesViewDropdown() {
     final currentState = state.feesViewStates;
@@ -221,20 +289,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       feesViewStates: currentState == FeesViewStates.partialView
           ? FeesViewStates.fullView
           : FeesViewStates.partialView,
-    );
-  }
-
-  // fees for the entered amount
-  void calculateFees() {
-    double platformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
-    final transactionFee = max(0.05, (0.05 / 100) * enteredAmount);
-
-    state = state.copyWith(
-      totalFees: (platformFee + transactionFee).toStringAsFixed(2),
-      orderValueText: enteredAmount.toString(),
-      amountPayable: (enteredAmount + transactionFee).toStringAsFixed(2),
-      transactionFee: transactionFee.toStringAsFixed(2),
-      platformFee: platformFee.toStringAsFixed(2),
     );
   }
 

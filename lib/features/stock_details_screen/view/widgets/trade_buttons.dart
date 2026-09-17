@@ -1,5 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
@@ -28,17 +28,23 @@ class TradeButtonsSection extends ConsumerWidget {
         children: [
           InkWell(
             onTap: () {
-              final notifier = ref.read(tradeScreenProvider.notifier);
-              notifier.getSecurityDetails(
+
+              final vmTradeScreenNotifier = ref.read(
+                tradeScreenProvider.notifier,
+              );
+
+              vmTradeScreenNotifier.getSecurityDetails(
                 security.stockName,
                 security.stockSymbol,
                 security.stockIcon,
               );
+
+
               context.push(
                 AppRoutes.sellTradeScreen,
                 extra: TradeScreenArgs(
                   selectedSecurity: security,
-                  tradeType: TradeTypeEnum.sellFraction,
+                  tradeType: TradeOrderTypeEnums.sellFraction,
                 ),
               );
             },
@@ -74,7 +80,7 @@ class TradeButtonsSection extends ConsumerWidget {
                 AppRoutes.buyTradeScreen,
                 extra: TradeScreenArgs(
                   selectedSecurity: security,
-                  tradeType: TradeTypeEnum.buyFraction,
+                  tradeType: TradeOrderTypeEnums.buyFraction,
                 ),
               );
             },

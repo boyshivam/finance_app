@@ -1,4 +1,5 @@
 import "package:aprreciate/models/portfolio_holding_model/portfolio_holding_card_model.dart";
+import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class PortfolioHoldingsNotifier
@@ -49,4 +50,14 @@ class PortfolioHoldingsNotifier
       );
     }).toList();
   }
+
+
+
+  void removeHolding({required String securitySoldSymbol}){
+    final holdingExists = state.any((holding) => holding.securitySymbol == securitySoldSymbol);
+    if(holdingExists){
+      return print("It exists");
+    }
+  }
+
 }

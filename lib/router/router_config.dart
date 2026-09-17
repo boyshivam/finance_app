@@ -17,6 +17,7 @@ import "package:aprreciate/features/profile_dashboard/view/presentation/profile_
 import "package:aprreciate/features/search_dashboard/helpers/search_dashboard_arg.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
+import "package:aprreciate/features/trade_dashboard/helper/trade_order_placed_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/buy_trade_screen.dart";
@@ -68,7 +69,7 @@ final appRouter = GoRouter(
         final args = state.extra as TradeScreenArgs;
         return SellTradeScreen(
           selectedSecurity: args.selectedSecurity,
-          tradeType: args.tradeType,
+          tradeOrderType: args.tradeType,
         );
       },
     ),
@@ -134,7 +135,11 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.orderPlacedScreen,
       name: 'orderPlacedScreen',
-      builder: (context, state) => OrderPlacedScreen(),
+      builder: (context, state) {
+        final args = state.extra as TradeOrderPlacedScreenArgs;
+
+        return OrderPlacedScreen(tradeOrderType: args.tradeOrderType);
+      },
     ),
 
     GoRoute(

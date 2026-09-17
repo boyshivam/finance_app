@@ -1,4 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
@@ -14,12 +15,17 @@ class FractionAmountQuantityFields extends ConsumerWidget {
     required this.quantityController,
     required this.amountNode,
     required this.quantityNode,
+    required this.tradeOrderType,
+    required this.security
   });
 
   final TextEditingController amountController;
   final TextEditingController quantityController;
   final FocusNode amountNode;
   final FocusNode quantityNode;
+  final TradeOrderTypeEnums tradeOrderType;
+  final String security;
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,8 +101,15 @@ class FractionAmountQuantityFields extends ConsumerWidget {
                     final notifier = ref.read(tradeScreenProvider.notifier);
                     notifier.deriveAmount(value);
                     notifier.quantityByAmount();
-                    notifier.calculateFees();
-                    notifier.validateTradeOrder();
+
+                    if(tradeOrderType == TradeOrderTypeEnums.buyFraction){
+                      notifier.calculateBuyFees();
+                      notifier.validateBuyTradeOrder();
+                    }
+                    if(tradeOrderType == TradeOrderTypeEnums.sellFraction){
+                      notifier.calculateSellFees(security);
+                      notifier.calculateSellFees(security);
+                    }
                   },
                 ),
                 const SizedBox(height: 5),

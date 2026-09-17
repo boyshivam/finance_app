@@ -1,7 +1,7 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
-import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/fees_section/trade_fees_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_placment_section.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/purchase_section.dart";
@@ -20,7 +20,7 @@ class BuyTradeScreen extends ConsumerStatefulWidget {
   });
 
   final StockCardModel selectedSecurity;
-  final TradeTypeEnum tradeType;
+  final TradeOrderTypeEnums tradeType;
 
   @override
   ConsumerState<BuyTradeScreen> createState() => _TradeScreenState();
@@ -75,8 +75,6 @@ class _TradeScreenState extends ConsumerState<BuyTradeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     // this will show snack bar message when currency toggle is triggered
     ref.listen<CurrencyToggleState>(
       tradeScreenProvider.select((state) => state.currencyToggleState),
@@ -117,15 +115,13 @@ class _TradeScreenState extends ConsumerState<BuyTradeScreen> {
             quantityController: quantityController,
             amountNode: amountNode,
             quantityNode: quantityNode,
-            tradeType: widget.tradeType,
-              selectedSecurity: widget.selectedSecurity
+            tradeOrderType: widget.tradeType,
+            selectedSecurity: widget.selectedSecurity,
           ),
-          TradeFeesSection(
-              selectedSecurity: widget.selectedSecurity
-          ),
+          TradeFeesSection(selectedSecurity: widget.selectedSecurity, tradeOrderType: TradeOrderTypeEnums.buyFraction,),
         ],
       ),
-      bottomNavigationBar: OrderPlacementSection(),
+      bottomNavigationBar: OrderPlacementSection(tradeOrderType: TradeOrderTypeEnums.buyFraction,),
     );
   }
 }

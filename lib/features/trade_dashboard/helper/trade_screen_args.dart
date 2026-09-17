@@ -1,3 +1,4 @@
+import 'package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart';
 import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 
@@ -8,5 +9,5 @@ class TradeScreenArgs {
   });
 
   final StockCardModel selectedSecurity;
-  final TradeTypeEnum tradeType;
+  final TradeOrderTypeEnums tradeType;
 }

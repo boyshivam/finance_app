@@ -13,12 +13,20 @@ class EnterAmountContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final vm = ref.watch(lrsProvider);
     final lrsNotifier = ref.read(lrsProvider.notifier);
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 25),
       child: Container(
+
         padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black54,
+                blurRadius: 6,
+                spreadRadius: 2,
+                offset: Offset(0, 2)
+            )
+          ],
           borderRadius: BorderRadius.circular(18),
           color: AppColorsCommon.appWhite,
         ),

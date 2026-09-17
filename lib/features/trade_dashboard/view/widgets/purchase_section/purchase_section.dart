@@ -1,6 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
-import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/purchase_section/amount_quantity%20_fields.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
@@ -14,7 +14,7 @@ class PurchaseSection extends ConsumerWidget {
     required this.quantityController,
     required this.amountNode,
     required this.quantityNode,
-    required this.tradeType,
+    required this.tradeOrderType,
     required this.selectedSecurity,
   });
 
@@ -22,7 +22,7 @@ class PurchaseSection extends ConsumerWidget {
   final TextEditingController quantityController;
   final FocusNode amountNode;
   final FocusNode quantityNode;
-  final TradeTypeEnum tradeType;
+  final TradeOrderTypeEnums tradeOrderType;
   final StockCardModel selectedSecurity;
 
   @override
@@ -34,6 +34,14 @@ class PurchaseSection extends ConsumerWidget {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: Offset(0, 2),
+            ),
+          ],
           color: AppColorsCommon.appWhite,
           borderRadius: BorderRadius.circular(18),
         ),
@@ -59,6 +67,8 @@ class PurchaseSection extends ConsumerWidget {
               quantityController: quantityController,
               amountNode: amountNode,
               quantityNode: quantityNode,
+              security: selectedSecurity.stockSymbol,
+              tradeOrderType: tradeOrderType,
             ),
           ],
         ),
