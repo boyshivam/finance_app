@@ -127,7 +127,8 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
         ),
       ),
       bottomNavigationBar: OrderPlacementSection(
-        tradeOrderType: TradeOrderTypeEnums.buyFraction,
+        securitySymbol: widget.selectedSecurity.stockSymbol,
+        tradeOrderType: widget.tradeType,
       ),
     );
   }

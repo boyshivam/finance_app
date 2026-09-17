@@ -1,5 +1,4 @@
 import "package:aprreciate/models/portfolio_holding_model/portfolio_holding_card_model.dart";
-import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class PortfolioHoldingsNotifier
@@ -10,7 +9,7 @@ class PortfolioHoldingsNotifier
   }
 
   // on purchase of a new security, a holding for the same will be generated here
-  void addHolding({
+  void manipulateHoldings({
     required String securitySymbol,
     required PortfolioHoldingCardModel newHolding,
   }) {
@@ -59,5 +58,20 @@ class PortfolioHoldingsNotifier
       return print("It exists");
     }
   }
+
+
+  // this will fetch the holding amount when searched by holding symbol
+  double fetchHoldingAmount(String holdingSymbol){
+    final searchedHolding = state.firstWhere((holding) => holding.securitySymbol == holdingSymbol);
+    final holdingAmount = searchedHolding.investedAmount;
+    return holdingAmount;
+  }
+
+  double fetchHoldingQuantity(String holdingSymbol){
+    final searchedHolding = state.firstWhere((holding) => holding.securitySymbol == holdingSymbol);
+    final holdingQuantity = searchedHolding.purchasedQuantity;
+    return holdingQuantity;
+  }
+
 
 }

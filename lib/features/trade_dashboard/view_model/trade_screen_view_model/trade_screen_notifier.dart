@@ -19,7 +19,6 @@ import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
-
   TradeScreenState initialState() {
     final vmLrs = ref.read(lrsProvider);
 
@@ -113,7 +112,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // calculate fees for buy order
   void calculateBuyFees() {
-
     double platformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
     final transactionFee = max(0.05, (0.05 / 100) * enteredAmount);
     final totalFees = platformFee + transactionFee;
@@ -122,7 +120,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(
       totalFees: totalFees,
       orderAmount: enteredAmount,
-      netAmountToPay: netAmountToPay ,
+      netAmountToPay: netAmountToPay,
       transactionFee: transactionFee,
       platformFee: platformFee,
     );
@@ -130,30 +128,19 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
   // calculate fees for sell order
   void calculateSellFees(String searchedSecuritySymbol) {
-    final vmPortfolioHoldingsProvider = ref.read(portfolioHoldingsProvider);
-
-    if (searchedSecuritySymbol.trim().isEmpty) {
-      return;
-    }
-
-    // search for the security in portfolio holdings --
-    final security = vmPortfolioHoldingsProvider.firstWhere(
-      (security) => security.securitySymbol == searchedSecuritySymbol,
-    );
-    // final holdingInvestedAmount = security.investedAmount;
-    // final holdingQuantity = security.purchasedQuantity;
-
     final sellPlatformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
     final sellTechnologyFee = max(0.0005 * enteredAmount, 0.1); // in dollars
-    final sellIFSCATurnoverFee = max(0.00005 * enteredAmount, 0.1,); // in dollars
-    final sellTotalFees = sellPlatformFee + sellTechnologyFee + sellIFSCATurnoverFee;
-
-
+    final sellIFSCATurnoverFee = max(
+      0.00005 * enteredAmount,
+      0.1,
+    ); // in dollars
+    final sellTotalFees =
+        sellPlatformFee + sellTechnologyFee + sellIFSCATurnoverFee;
 
     state = state.copyWith(
       totalFees: sellTotalFees,
       orderAmount: enteredAmount,
-      netAmountToPay: sellTotalFees ,
+      netAmountToPay: sellTotalFees,
       sellIFSCAFee: sellIFSCATurnoverFee,
       transactionFee: sellTechnologyFee,
       platformFee: sellPlatformFee,
@@ -201,8 +188,9 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     if (enteredAmount == 0) {}
   }
 
+
   // place the trade order
-  bool placeTradeOrder(TradeOrderTypeEnums tradeOrderType) {
+  bool placeTradeOrder(TradeOrderTypeEnums tradeOrderType, String securitySymbol) {
     final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
 
     if (tradeOrderType == TradeOrderTypeEnums.buyFraction) {
@@ -210,7 +198,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
           state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
         vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(enteredAmount);
         addTradeOrderToOrdersHistory();
-        addSecurityToPortfolio();
+        manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
         return true;
       }
     } else if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
@@ -228,6 +216,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
+
+
   // add trade order to orders listing in profile
   void addTradeOrderToOrdersHistory() {
     final vmOrdersNotifier = ref.read(ordersProvider.notifier);
@@ -243,31 +233,77 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       transactionID: state.transactionId,
     );
 
-    vmOrdersNotifier.addOrderDetailsToCard(newOrder, );
+    vmOrdersNotifier.addOrderDetailsToCard(newOrder);
   }
 
+
+
   // add investment to portfolio or add investment to exiting portfolio
-  void addSecurityToPortfolio() {
-    double securityPrice = state.stockPrice;
-    double averageCost = enteredAmount / enteredQuantity;
-    double totalPnL = (securityPrice - averageCost) * enteredQuantity;
+  void manipulateSecurityInPortfolio(
+    TradeOrderTypeEnums tradeOrderType,
+    String securitySymbol,
+  ) {
+    if (tradeOrderType == TradeOrderTypeEnums.buyLimit) {
+      double securityPrice = state.stockPrice;
+      double averageCost = enteredAmount / enteredQuantity;
+      double totalPnL = (securityPrice - averageCost) * enteredQuantity;
 
-    final newHolding = PortfolioHoldingCardModel(
-      securityName: state.securityName,
-      securityIcon: state.securityIcon,
-      securitySymbol: state.securitySymbol,
-      securityPrice: securityPrice,
-      investedAmount: enteredAmount,
-      purchasedQuantity: enteredQuantity,
-      average: averageCost,
-      totalPnL: totalPnL,
-    );
+      final buyHolding = PortfolioHoldingCardModel(
+        securityName: state.securityName,
+        securityIcon: state.securityIcon,
+        securitySymbol: state.securitySymbol,
+        securityPrice: securityPrice,
+        investedAmount: enteredAmount,
+        purchasedQuantity: enteredQuantity,
+        average: averageCost,
+        totalPnL: totalPnL,
+      );
 
-    final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
-    holdingsNotifier.addHolding(
-      newHolding: newHolding,
-      securitySymbol: state.securitySymbol,
-    );
+      final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
+      holdingsNotifier.manipulateHoldings(
+        newHolding: buyHolding,
+        securitySymbol: state.securitySymbol,
+      );
+    }
+
+    if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
+      // provider, notifier of portfolio holdings
+      final vmPortfolioHoldingsNotifier = ref.read(
+        portfolioHoldingsProvider.notifier,
+      );
+
+      final holdingAmount = vmPortfolioHoldingsNotifier.fetchHoldingAmount(
+        securitySymbol,
+      );
+      final holdingQuantity = vmPortfolioHoldingsNotifier.fetchHoldingQuantity(
+        securitySymbol,
+      );
+
+      double securityPrice = state.stockPrice;
+      double averageCost = enteredAmount / enteredQuantity;
+      double totalPnL = (securityPrice - averageCost) * enteredQuantity;
+
+      final updatedHoldingAmount =
+          holdingAmount - state.totalFees - enteredAmount;
+      final updatedHoldingQuantity = holdingQuantity - enteredQuantity;
+
+      final sellHolding = PortfolioHoldingCardModel(
+        securityName: state.securityName,
+        securityIcon: state.securityIcon,
+        securitySymbol: state.securitySymbol,
+        securityPrice: securityPrice,
+        investedAmount: updatedHoldingAmount,
+        purchasedQuantity: updatedHoldingQuantity,
+        average: averageCost,
+        totalPnL: totalPnL,
+      );
+
+      final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
+      holdingsNotifier.manipulateHoldings(
+        newHolding: sellHolding,
+        securitySymbol: state.securitySymbol,
+      );
+    }
   }
 
   // fees view dropdown

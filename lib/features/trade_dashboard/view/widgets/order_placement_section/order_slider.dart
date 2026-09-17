@@ -8,9 +8,14 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
 class OrderSlider extends ConsumerStatefulWidget {
-  const OrderSlider({super.key, required this.tradeOrderType});
+  const OrderSlider({
+    super.key,
+    required this.tradeOrderType,
+    required this.securitySymbol,
+  });
 
   final TradeOrderTypeEnums tradeOrderType;
+  final String securitySymbol;
 
   @override
   ConsumerState<OrderSlider> createState() => _OrderSliderState();
@@ -22,18 +27,26 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
   void placeOrder(double maxWidth, BuildContext context) {
     final vmTradeScreenNotifier = ref.read(tradeScreenProvider.notifier);
 
-    final isValid = vmTradeScreenNotifier.placeTradeOrder(widget.tradeOrderType);
+    final isValid = vmTradeScreenNotifier.placeTradeOrder(
+      widget.tradeOrderType,
+      widget.securitySymbol,
+    );
 
     if (offset >= maxWidth - 20) {
       if (isValid) {
         if (widget.tradeOrderType == TradeOrderTypeEnums.buyFraction) {
-          context.push(AppRoutes.orderPlacedScreen, extra: TradeOrderPlacedScreenArgs(tradeOrderType: widget.tradeOrderType));
+          context.push(
+            AppRoutes.orderPlacedScreen,
+            extra: TradeOrderPlacedScreenArgs(
+              tradeOrderType: widget.tradeOrderType,
+            ),
+          );
         }
         // } else if (widget.tradeType == TradeOrderTypeEnums.sellFraction) {
         //   context.push(AppRoutes.orderPlacedScreen);
         // }
       }
-        setState(() {
+      setState(() {
         offset = 0;
       });
     } else {
@@ -74,14 +87,16 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if(widget.tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                    if (widget.tradeOrderType ==
+                        TradeOrderTypeEnums.buyFraction)
                       Text(
-                      "Slide to buy",
-                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: AppColorsCommon.appWhite,
+                        "Slide to buy",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          color: AppColorsCommon.appWhite,
+                        ),
                       ),
-                    ),
-                    if(widget.tradeOrderType == TradeOrderTypeEnums.sellFraction)
+                    if (widget.tradeOrderType ==
+                        TradeOrderTypeEnums.sellFraction)
                       Text(
                         "Slide to sell",
                         style: Theme.of(context).textTheme.bodySmall!.copyWith(

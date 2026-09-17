@@ -1,5 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
+import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_holdings_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
@@ -9,7 +10,13 @@ import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OrderPlacementSection extends ConsumerWidget {
-  const OrderPlacementSection({super.key, required this.tradeOrderType});
+  const OrderPlacementSection({
+    super.key,
+    required this.tradeOrderType,
+    required this.securitySymbol,
+  });
+
+  final String securitySymbol;
 
   final TradeOrderTypeEnums tradeOrderType;
 
@@ -20,6 +27,11 @@ class OrderPlacementSection extends ConsumerWidget {
 
     // LRS provider to access its state parameters
     final vmLRS = ref.watch(lrsProvider);
+
+    // portfolio holdings provider
+    final vmPortfolioHoldingsNotifier = ref.read(
+      portfolioHoldingsProvider.notifier,
+    );
 
     return Container(
       padding: EdgeInsets.fromLTRB(25, 20, 25, 40),
@@ -33,30 +45,61 @@ class OrderPlacementSection extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              Text(
-                "US Wallet balance:",
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20,
+          if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
+            Row(
+              children: [
+                Text(
+                  "US Wallet balance:",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
-                  const SizedBox(width: 5),
-                  Icon(Icons.arrow_drop_down_circle_outlined),
-                ],
-              ),
-            ],
-          ),
+                const Spacer(),
+                Row(
+                  children: [
+                    Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
+                    const SizedBox(width: 5),
+                    Icon(Icons.arrow_drop_down_circle_outlined),
+                  ],
+                ),
+              ],
+            ),
+          if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
+            Row(
+              children: [
+                Text(
+                  "Amount in holding:",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
+                  ),
+                ),
+                const Spacer(),
+                if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                  Row(
+                    children: [
+                      Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
+                      // const SizedBox(width: 5),
+                      // Icon(Icons.arrow_drop_down_circle_outlined),
+                    ],
+                  ),
+                if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
+                  Row(
+                    children: [
+                      Text(
+                        "\$${vmPortfolioHoldingsNotifier.fetchHoldingAmount(securitySymbol).toStringAsFixed(2)}",
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           const SizedBox(height: 5),
 
           // this will handle the error message text for invalid transaction
           if (vmState.usWalletFundsState ==
-              UsWalletFundsState.insufficientFunds && tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                  UsWalletFundsState.insufficientFunds &&
+              tradeOrderType == TradeOrderTypeEnums.buyFraction)
             Row(
               children: [
                 Text(
@@ -69,7 +112,8 @@ class OrderPlacementSection extends ConsumerWidget {
             ),
           const SizedBox(height: 10),
           if (vmState.usWalletFundsState ==
-              UsWalletFundsState.insufficientFunds && tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                  UsWalletFundsState.insufficientFunds &&
+              tradeOrderType == TradeOrderTypeEnums.buyFraction)
             SizedBox(
               height: 50,
               child: InkWell(
@@ -96,7 +140,10 @@ class OrderPlacementSection extends ConsumerWidget {
               ),
             )
           else
-            OrderSlider(tradeOrderType: tradeOrderType),
+            OrderSlider(
+              tradeOrderType: tradeOrderType,
+              securitySymbol: securitySymbol,
+            ),
         ],
       ),
     );
