@@ -1,6 +1,6 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
-import "package:aprreciate/features/search_dashboard/helpers/search_dashboard_arg.dart";
+import "package:aprreciate/features/stock_details_screen/helper/stock_details_args.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/widgets/watchlist_search_and%20_add_widgets/add_to_security_to_watchlist_bottomsheet.dart";
 import "package:aprreciate/features/watchlist_dashboard/view_model/providers/all_watchlists_provider.dart";
 import "package:aprreciate/models/stocks_model/stock_card_model.dart";
@@ -27,7 +27,7 @@ class ItemCard extends ConsumerWidget {
       onTap: () {
         context.push(
           AppRoutes.stockDetailsScreen,
-          extra: SearchDashboardArgs(securitySymbol: security.stockSymbol),
+          extra: StockDetailsScreenArgs(selectedSecuritySymbol: security.stockSymbol),
         );
       },
       child: Container(

@@ -12,21 +12,21 @@ import "package:aprreciate/models/stocks_model/stock_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
-class SellTradeScreen extends ConsumerStatefulWidget {
-  const SellTradeScreen({
+class TradeScreen extends ConsumerStatefulWidget {
+  const TradeScreen({
     super.key,
     required this.selectedSecurity,
-    required this.tradeOrderType,
+    required this.tradeType,
   });
 
   final StockCardModel selectedSecurity;
-  final TradeOrderTypeEnums tradeOrderType;
+  final TradeOrderTypeEnums tradeType;
 
   @override
-  ConsumerState<SellTradeScreen> createState() => _TradeScreenState();
+  ConsumerState<TradeScreen> createState() => _TradeScreenState();
 }
 
-class _TradeScreenState extends ConsumerState<SellTradeScreen> {
+class _TradeScreenState extends ConsumerState<TradeScreen> {
   // text editing controllers
   late TextEditingController amountController;
   late TextEditingController quantityController;
@@ -75,12 +75,10 @@ class _TradeScreenState extends ConsumerState<SellTradeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     // this will show snack bar message when currency toggle is triggered
     ref.listen<CurrencyToggleState>(
       tradeScreenProvider.select((state) => state.currencyToggleState),
-          (previous, next) {
+      (previous, next) {
         if (previous != null && previous != next) {
           currencyToggleSnackBarMessage();
         }
@@ -114,21 +112,23 @@ class _TradeScreenState extends ConsumerState<SellTradeScreen> {
             TradeTopSection(),
             SecurityDetails(selectedSecurity: widget.selectedSecurity),
             PurchaseSection(
-                amountController: amountController,
-                quantityController: quantityController,
-                amountNode: amountNode,
-                quantityNode: quantityNode,
-                tradeOrderType: widget.tradeOrderType,
-                selectedSecurity: widget.selectedSecurity
+              amountController: amountController,
+              quantityController: quantityController,
+              amountNode: amountNode,
+              quantityNode: quantityNode,
+              tradeOrderType: widget.tradeType,
+              selectedSecurity: widget.selectedSecurity,
             ),
             TradeFeesSection(
-                selectedSecurity: widget.selectedSecurity,
-              tradeOrderType: widget.tradeOrderType,
+              selectedSecurity: widget.selectedSecurity,
+              tradeOrderType: TradeOrderTypeEnums.buyFraction,
             ),
           ],
         ),
       ),
-      bottomNavigationBar: OrderPlacementSection(tradeOrderType: TradeOrderTypeEnums.sellFraction,),
+      bottomNavigationBar: OrderPlacementSection(
+        tradeOrderType: TradeOrderTypeEnums.buyFraction,
+      ),
     );
   }
 }

@@ -27,13 +27,15 @@ class PortfolioHoldingsViewer extends ConsumerWidget {
             Expanded(
               child: ListView.builder(
                 itemCount: holdingsData.length,
-                itemBuilder: (context, index) =>
-                    PortfolioHoldingCard(holding: holdingsData[index]),
+                itemBuilder: (context, index) => PortfolioHoldingCard(
+                  holding: holdingsData[index],
+                  selectedSecuritySymbol: holdingsData[index].securitySymbol,
+                ),
               ),
             ),
           ],
           if (holdingsData.isEmpty) ...[
-            const SizedBox(height: 70,),
+            const SizedBox(height: 70),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 40),
               decoration: BoxDecoration(
@@ -65,9 +67,9 @@ class PortfolioHoldingsViewer extends ConsumerWidget {
                           "Make an investment and see it here",
                           style: Theme.of(context).textTheme.headlineLarge!
                               .copyWith(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          ),
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18,
+                              ),
                           textAlign: TextAlign.center,
                         ),
                       ],

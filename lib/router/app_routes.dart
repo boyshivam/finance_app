@@ -26,9 +26,8 @@ class AppRoutes {
   ////// TRADE AND STOCK DETAILS
 
   // Trade screen
-  static const String buyTradeScreen = "/buyTrade";
+  static const String tradeScreen = "/tradeScreen";
 
-  static const String sellTradeScreen = "/sellTrade";
 
   // stock details screen
   static const String stockDetailsScreen = "/stockDetails";

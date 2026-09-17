@@ -41,7 +41,7 @@ class TradeButtonsSection extends ConsumerWidget {
 
 
               context.push(
-                AppRoutes.sellTradeScreen,
+                AppRoutes.tradeScreen,
                 extra: TradeScreenArgs(
                   selectedSecurity: security,
                   tradeType: TradeOrderTypeEnums.sellFraction,
@@ -77,7 +77,7 @@ class TradeButtonsSection extends ConsumerWidget {
                 security.stockIcon,
               );
               context.push(
-                AppRoutes.buyTradeScreen,
+                AppRoutes.tradeScreen,
                 extra: TradeScreenArgs(
                   selectedSecurity: security,
                   tradeType: TradeOrderTypeEnums.buyFraction,

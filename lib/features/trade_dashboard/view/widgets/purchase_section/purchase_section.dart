@@ -49,7 +49,8 @@ class PurchaseSection extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Text(
+                if(tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                 Text(
                   vmState.currencyToggleState == CurrencyToggleState.toggledUsd
                       ? "Buy in dollars"
                       : "Buy in rupees",
@@ -57,6 +58,15 @@ class PurchaseSection extends ConsumerWidget {
                     context,
                   ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
                 ),
+                if(tradeOrderType == TradeOrderTypeEnums.sellFraction)
+                  Text(
+                    vmState.currencyToggleState == CurrencyToggleState.toggledUsd
+                        ? "Sell in dollars"
+                        : "Sell in rupees",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+                  ),
                 const SizedBox(width: 5),
                 Icon(Icons.info_outline, size: 25),
               ],

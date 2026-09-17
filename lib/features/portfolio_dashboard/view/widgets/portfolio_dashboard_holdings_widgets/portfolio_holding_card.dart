@@ -1,74 +1,101 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/stock_details_screen/helper/stock_details_args.dart";
 import "package:aprreciate/models/portfolio_holding_model/portfolio_holding_card_model.dart";
+import "package:aprreciate/router/app_routes.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 class PortfolioHoldingCard extends StatelessWidget {
-  const PortfolioHoldingCard({super.key, required this.holding});
+  const PortfolioHoldingCard({
+    super.key,
+    required this.holding,
+    required this.selectedSecuritySymbol,
+  });
 
   final PortfolioHoldingCardModel holding;
+  final String selectedSecuritySymbol;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
+      child: InkWell(
+        onTap: () {
+          context.push(
+            AppRoutes.stockDetailsScreen,
+            extra: StockDetailsScreenArgs(
+              selectedSecuritySymbol: selectedSecuritySymbol,
+            ),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
               width: 3,
-              color: AppColorsCommon.appreciateThemeColor),
-          color: AppColorsCommon.appWhite,
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Image.asset(holding.securityIcon, width: 40, height: 40),
-                const SizedBox(width: 10),
-                Column(
-                  children: [
-                    Text(holding.securityName, style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 24
-                    ),),
-                    Text(
-                      "${holding.securityPrice}",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-              ],
+              color: AppColorsCommon.appreciateThemeColor,
             ),
-            const Divider(
-              color: AppColorsCommon.inactiveTextFieldBorderColor,
-              thickness: 3,
-            ),
-            Row(
-              children: [
-                Column(
-                  children: [
-                    Text("Invested", style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600
-                    ),),
-                    const SizedBox(height: 10),
-                    Text("${holding.investedAmount}"),
-                    const SizedBox(height: 20),
-                    Text("Avg: ${holding.average.toStringAsFixed(2)}"),
-                  ],
-                ),
-                const Spacer(),
-                Column(
-                  children: [
-                    Text("Total P&L"),
-                    const SizedBox(height: 10),
-                    Text(holding.totalPnL.toStringAsFixed(2)),
-                    const SizedBox(height: 20),
-                    Text("Qty: ${holding.purchasedQuantity.toStringAsFixed(2)}"),
-                  ],
-                ),
-              ],
-            ),
-          ],
+            color: AppColorsCommon.appWhite,
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Image.asset(holding.securityIcon, width: 40, height: 40),
+                  const SizedBox(width: 10),
+                  Column(
+                    children: [
+                      Text(
+                        holding.securityName,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleLarge!.copyWith(fontSize: 24),
+                      ),
+                      Text(
+                        "${holding.securityPrice}",
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const Divider(
+                color: AppColorsCommon.inactiveTextFieldBorderColor,
+                thickness: 3,
+              ),
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "Invested",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text("${holding.investedAmount}"),
+                      const SizedBox(height: 20),
+                      Text("Avg: ${holding.average.toStringAsFixed(2)}"),
+                    ],
+                  ),
+                  const Spacer(),
+                  Column(
+                    children: [
+                      Text("Total P&L"),
+                      const SizedBox(height: 10),
+                      Text(holding.totalPnL.toStringAsFixed(2)),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Qty: ${holding.purchasedQuantity.toStringAsFixed(2)}",
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

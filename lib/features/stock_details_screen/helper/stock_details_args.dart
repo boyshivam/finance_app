@@ -1,7 +1,6 @@
-import 'package:aprreciate/models/stocks_model/stock_card_model.dart';
 
 class StockDetailsScreenArgs {
-  const StockDetailsScreenArgs({required this.selectedSecurity});
+  const StockDetailsScreenArgs({required this.selectedSecuritySymbol});
 
-  final StockCardModel selectedSecurity;
+  final String selectedSecuritySymbol;
 }

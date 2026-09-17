@@ -14,14 +14,13 @@ import "package:aprreciate/features/passcode/view/presentation/passcode_screen.d
 import "package:aprreciate/features/portfolio_dashboard/view/presentation/PortfolioDashboardScreen.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/orders/orders_screen.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/profile_screen.dart";
-import "package:aprreciate/features/search_dashboard/helpers/search_dashboard_arg.dart";
 import "package:aprreciate/features/search_dashboard/view/presentation/search_dashboard.dart";
+import "package:aprreciate/features/stock_details_screen/helper/stock_details_args.dart";
 import "package:aprreciate/features/stock_details_screen/view/presentation/stock_details_screen.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_order_placed_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/helper/trade_screen_args.dart";
 import "package:aprreciate/features/trade_dashboard/view/presentation/order_placed_screen.dart";
-import "package:aprreciate/features/trade_dashboard/view/presentation/buy_trade_screen.dart";
-import "package:aprreciate/features/trade_dashboard/view/presentation/sell_trade_screen.dart";
+import "package:aprreciate/features/trade_dashboard/view/presentation/trade_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/helpers/individual_watchlists_args.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/individual_watchlist_screen.dart";
 import "package:aprreciate/features/watchlist_dashboard/view/presentation/search_security_screen.dart";
@@ -57,34 +56,24 @@ final appRouter = GoRouter(
       path: AppRoutes.stockDetailsScreen,
       name: 'stockDetailsScreen',
       builder: (context, state) {
-        final args = state.extra as SearchDashboardArgs;
+        final args = state.extra as StockDetailsScreenArgs;
 
-        return StockDetailsScreen(securitySymbol: args.securitySymbol);
+        return StockDetailsScreen(securitySymbol: args.selectedSecuritySymbol);
       },
     ),
     GoRoute(
-      path: AppRoutes.sellTradeScreen,
+      path: AppRoutes.tradeScreen,
       name: "sellTradeScreen",
       builder: (context, state) {
         final args = state.extra as TradeScreenArgs;
-        return SellTradeScreen(
-          selectedSecurity: args.selectedSecurity,
-          tradeOrderType: args.tradeType,
-        );
-      },
-    ),
-
-    GoRoute(
-      path: AppRoutes.buyTradeScreen,
-      name: 'tradeScreen',
-      builder: (context, state) {
-        final args = state.extra as TradeScreenArgs;
-        return BuyTradeScreen(
+        return TradeScreen(
           selectedSecurity: args.selectedSecurity,
           tradeType: args.tradeType,
         );
       },
     ),
+
+
 
     // Route to LRS screen
     GoRoute(
