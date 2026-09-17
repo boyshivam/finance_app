@@ -19,8 +19,9 @@ import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class TradeScreenNotifier extends Notifier<TradeScreenState> {
+
   TradeScreenState initialState() {
-    final vmLrs = ref.watch(lrsProvider);
+    final vmLrs = ref.read(lrsProvider);
 
     // TODO: implement build
     return TradeScreenState(
@@ -121,7 +122,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(
       totalFees: totalFees,
       orderAmount: enteredAmount,
-      netAmountToPay: enteredAmount + netAmountToPay ,
+      netAmountToPay: netAmountToPay ,
       transactionFee: transactionFee,
       platformFee: platformFee,
     );

@@ -11,6 +11,7 @@ class OrderDetailsContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final vmTradeScreenProvider = ref.watch(tradeScreenProvider);
 
     return Container(

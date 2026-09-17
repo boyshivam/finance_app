@@ -58,11 +58,7 @@ class _OrderPlacedScreenState extends ConsumerState<OrderPlacedScreen> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      final vmTradeScreenProvider = ref.read(
-                        tradeScreenProvider.notifier,
-                      );
 
-                      // vmTradeScreenProvider.resetState();
                       context.go(AppRoutes.homeDashboardScreen);
                     },
                     child: Text(
