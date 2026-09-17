@@ -11,7 +11,6 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 class OrderPlacedScreen extends ConsumerStatefulWidget {
   const OrderPlacedScreen({super.key, required this.tradeOrderType});
 
-
   final TradeOrderTypeEnums tradeOrderType;
 
   @override
@@ -21,60 +20,63 @@ class OrderPlacedScreen extends ConsumerStatefulWidget {
 class _OrderPlacedScreenState extends ConsumerState<OrderPlacedScreen> {
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(25, 180, 25, 25),
-        child: Column(
-          children: [
-            Image.asset(
-              AssetsOrderPlacedScreen.orderPlacedTickIcon,
-              width: 178,
-              height: 182,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              "Order Placed",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontWeight: FontWeight.bold,
-                fontSize: 40
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(25, 150, 25, 25),
+          child: Column(
+            children: [
+              Image.asset(
+                AssetsOrderPlacedScreen.orderPlacedTickIcon,
+                width: 178,
+                height: 182,
               ),
-            ),
-            const SizedBox(height: 100),
-            OrderDetailsContainer(),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 30
+              const SizedBox(height: 20),
+              Text(
+                "Order Placed",
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
                 ),
-                height: 50,
-                decoration: BoxDecoration(
-                  color: AppColorsCommon.appreciateThemeColor,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: InkWell(
-                  onTap: (){
-                    final vmTradeScreenProvider = ref.read(tradeScreenProvider.notifier);
+              ),
+              const SizedBox(height: 50),
+              Text(
+                "Your order will be processed in market hours",
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 50),
+              OrderDetailsContainer(tradeOrderType: widget.tradeOrderType),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25),
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: AppColorsCommon.appreciateThemeColor,
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      final vmTradeScreenProvider = ref.read(
+                        tradeScreenProvider.notifier,
+                      );
 
-                    // vmTradeScreenProvider.resetState();
-                    context.go(AppRoutes.homeDashboardScreen);
-                  },
-                  child: Text(
-                    "Go to Home Dashboard",
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodyMedium!.copyWith(color: AppColorsCommon.appWhite),
-                    textAlign: TextAlign.center,
+                      // vmTradeScreenProvider.resetState();
+                      context.go(AppRoutes.homeDashboardScreen);
+                    },
+                    child: Text(
+                      "Go to Home Dashboard",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: AppColorsCommon.appWhite,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,

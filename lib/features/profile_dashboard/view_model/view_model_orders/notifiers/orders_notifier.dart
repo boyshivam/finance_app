@@ -29,7 +29,6 @@ class OrdersNotifier extends Notifier<OrdersState> {
       orderType: order.orderType,
       orderQuantity: order.orderQuantity,
     );
-
     ref.read(tradeOrderProvider.notifier).add(newCard);
   }
 }

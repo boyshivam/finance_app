@@ -23,10 +23,10 @@ class TradeScreenState {
     required this.convertedValue,
     required this.amountText,
     required this.quantityText,
-    required this.totalOrderValue,
+    required this.orderAmount,
     required this.transactionFee,
     required this.platformFee,
-    required this.amountPayable,
+    required this.netAmountToPay,
     required this.usWalletBalance,
     required this.orderEligibility,
     required this.feesViewStates,
@@ -52,8 +52,8 @@ class TradeScreenState {
   final double usWalletBalance;
   final String amountText;
   final String quantityText;
-  final double totalOrderValue;
-  final double amountPayable;
+  final double orderAmount;
+  final double netAmountToPay;
   final double transactionFee;
   final double platformFee;
   final double sellIFSCAFee;
@@ -81,8 +81,8 @@ class TradeScreenState {
 
     String? amountText,
     String? quantityText,
-    double? totalOrderValue,
-    double? amountPayable,
+    double? orderAmount,
+    double? netAmountToPay,
     double? transactionFee,
     double? platformFee,
 
@@ -101,12 +101,12 @@ class TradeScreenState {
       usWalletFundsState: usWalletFundsState ?? this.usWalletFundsState,
       amountTextFieldState: amountTextFieldState ?? this.amountTextFieldState,
       quantityTextFieldState:
-          quantityTextFieldState ?? this.quantityTextFieldState,
+      quantityTextFieldState ?? this.quantityTextFieldState,
       amountTextFieldErrorMessageState:
-          amountTextFieldErrorMessageState ??
+      amountTextFieldErrorMessageState ??
           this.amountTextFieldErrorMessageState,
       quantityTextFieldErrorMessageState:
-          quantityTextFieldErrorMessageState ??
+      quantityTextFieldErrorMessageState ??
           this.quantityTextFieldErrorMessageState,
       orderEligibility: orderEligibility ?? this.orderEligibility,
       currencyToggleState: currencyToggleState ?? this.currencyToggleState,
@@ -118,8 +118,8 @@ class TradeScreenState {
       // amount texts
       amountText: amountText ?? this.amountText,
       quantityText: quantityText ?? this.quantityText,
-      totalOrderValue: totalOrderValue ?? this.totalOrderValue,
-      amountPayable: amountPayable ?? this.amountPayable,
+      orderAmount: orderAmount ?? this.orderAmount,
+      netAmountToPay: netAmountToPay ?? this.netAmountToPay,
       transactionFee: transactionFee ?? this.transactionFee,
       platformFee: platformFee ?? this.platformFee,
 

@@ -55,7 +55,7 @@ class TradeFeesSection extends ConsumerWidget {
                       const Spacer(),
                       if (vmTradeScreenProvider.amountText.isNotEmpty)
                         Text(
-                          "\$${vmTradeScreenProvider.totalOrderValue.toStringAsFixed(2)}",
+                          "\$${vmTradeScreenProvider.orderAmount.toStringAsFixed(2)}",
                         )
                       else
                         Text("\$ 0.0"),
@@ -156,7 +156,7 @@ class TradeFeesSection extends ConsumerWidget {
                   const Spacer(),
                   if (vmTradeScreenProvider.amountText.isNotEmpty)
                     Text(
-                      "\$${vmTradeScreenProvider.amountPayable}",
+                      "\$${vmTradeScreenProvider.netAmountToPay.toStringAsFixed(2)}",
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

@@ -106,20 +106,22 @@ class _TradeScreenState extends ConsumerState<BuyTradeScreen> {
 
     return Scaffold(
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
-      body: Column(
-        children: [
-          TradeTopSection(),
-          SecurityDetails(selectedSecurity: widget.selectedSecurity),
-          PurchaseSection(
-            amountController: amountController,
-            quantityController: quantityController,
-            amountNode: amountNode,
-            quantityNode: quantityNode,
-            tradeOrderType: widget.tradeType,
-            selectedSecurity: widget.selectedSecurity,
-          ),
-          TradeFeesSection(selectedSecurity: widget.selectedSecurity, tradeOrderType: TradeOrderTypeEnums.buyFraction,),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TradeTopSection(),
+            SecurityDetails(selectedSecurity: widget.selectedSecurity),
+            PurchaseSection(
+              amountController: amountController,
+              quantityController: quantityController,
+              amountNode: amountNode,
+              quantityNode: quantityNode,
+              tradeOrderType: widget.tradeType,
+              selectedSecurity: widget.selectedSecurity,
+            ),
+            TradeFeesSection(selectedSecurity: widget.selectedSecurity, tradeOrderType: TradeOrderTypeEnums.buyFraction,),
+          ],
+        ),
       ),
       bottomNavigationBar: OrderPlacementSection(tradeOrderType: TradeOrderTypeEnums.buyFraction,),
     );

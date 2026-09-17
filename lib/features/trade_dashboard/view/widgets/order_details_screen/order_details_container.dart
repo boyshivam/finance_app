@@ -1,10 +1,13 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class OrderDetailsContainer extends ConsumerWidget {
-  const OrderDetailsContainer({super.key});
+  const OrderDetailsContainer({super.key, required this.tradeOrderType});
+
+  final TradeOrderTypeEnums tradeOrderType;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,6 +16,14 @@ class OrderDetailsContainer extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black54,
+            spreadRadius: 2,
+            blurRadius: 6,
+            offset: Offset(0, 0),
+          ),
+        ],
         color: AppColorsCommon.appWhite,
         borderRadius: BorderRadius.circular(16),
       ),
@@ -22,9 +33,10 @@ class OrderDetailsContainer extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "orders ID",
+                "Transaction ID",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
+                  fontWeight: FontWeight.w700
                 ),
               ),
               Text(vmTradeScreenProvider.transactionId),
@@ -39,6 +51,7 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Quantity",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
+                    fontWeight: FontWeight.w700
                 ),
               ),
               Text(vmTradeScreenProvider.quantityText),
@@ -53,9 +66,28 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Estimated credit",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
+                    fontWeight: FontWeight.w700
                 ),
               ),
-              Text(vmTradeScreenProvider.totalOrderValue.toStringAsFixed(2)),
+              Text(
+                (vmTradeScreenProvider.netAmountToPay -
+                        vmTradeScreenProvider.totalFees)
+                    .toStringAsFixed(2),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Total fees",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColorsCommon.textGrey,
+                    fontWeight: FontWeight.w700
+                ),
+              ),
+              Text(vmTradeScreenProvider.totalFees.toStringAsFixed(2)),
             ],
           ),
           const SizedBox(height: 10),
@@ -66,9 +98,15 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Order type",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
+                    fontWeight: FontWeight.w700
                 ),
               ),
-              Text("Market"),
+              if(tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                Text("Buy Fraction"),
+              if(tradeOrderType == TradeOrderTypeEnums.sellFraction)
+                Text("Sell Fraction")
+
+
             ],
           ),
           const SizedBox(height: 10),
@@ -78,7 +116,7 @@ class OrderDetailsContainer extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            "view in orders history",
+            "View in orders history",
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: AppColorsCommon.appreciateThemeColor,
             ),

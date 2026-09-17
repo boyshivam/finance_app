@@ -40,8 +40,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       convertedValue: 0,
       amountText: "",
       quantityText: "",
-      totalOrderValue: 0,
-      amountPayable: 0,
+      orderAmount: 0,
+      netAmountToPay: 0,
       transactionFee: 0,
       platformFee: 0,
       orderEligibility: OrderEligibilityStates.invalid,
@@ -74,20 +74,20 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-  // derive quantity from quantity controller
+  // derive entered quantity from quantity controller
   void deriveQuantity(String value) {
     state = state.copyWith(quantityText: value);
   }
 
-  // derive amount from the amount controller
+  // derive entered amount from the amount controller
   void deriveAmount(String value) {
     state = state.copyWith(amountText: value);
   }
 
-  // get amount in double
+  // getter for amount in double
   double get enteredAmount => double.tryParse(state.amountText.trim()) ?? 0;
 
-  // get quantity in double
+  // getter quantity in double
   double get enteredQuantity => double.tryParse(state.quantityText.trim()) ?? 0;
 
   // shown quantity secured for the entered amount in the quantity text field -
@@ -110,21 +110,24 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     state = state.copyWith(amountText: securedAmount);
   }
 
-  // fees for the entered amount
+  // calculate fees for buy order
   void calculateBuyFees() {
+
     double platformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
     final transactionFee = max(0.05, (0.05 / 100) * enteredAmount);
+    final totalFees = platformFee + transactionFee;
+    final netAmountToPay = totalFees + enteredAmount;
 
     state = state.copyWith(
-      totalFees: (platformFee + transactionFee),
-      totalOrderValue: enteredAmount,
-      amountPayable: (enteredAmount + transactionFee),
+      totalFees: totalFees,
+      orderAmount: enteredAmount,
+      netAmountToPay: enteredAmount + netAmountToPay ,
       transactionFee: transactionFee,
       platformFee: platformFee,
     );
   }
 
-  // calculate sell fees
+  // calculate fees for sell order
   void calculateSellFees(String searchedSecuritySymbol) {
     final vmPortfolioHoldingsProvider = ref.read(portfolioHoldingsProvider);
 
@@ -141,27 +144,24 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
 
     final sellPlatformFee = (enteredAmount / state.stockPrice).ceil() * 0.01;
     final sellTechnologyFee = max(0.0005 * enteredAmount, 0.1); // in dollars
-    final sellIFSCATurnoverFee = max(
-      0.00005 * enteredAmount,
-      0.1,
-    ); // in dollars
-    final sellTotalFees =
-        sellPlatformFee + sellTechnologyFee + sellIFSCATurnoverFee;
+    final sellIFSCATurnoverFee = max(0.00005 * enteredAmount, 0.1,); // in dollars
+    final sellTotalFees = sellPlatformFee + sellTechnologyFee + sellIFSCATurnoverFee;
+
+
 
     state = state.copyWith(
       totalFees: sellTotalFees,
-      totalOrderValue: enteredAmount,
-      amountPayable: (enteredAmount + sellTechnologyFee),
+      orderAmount: enteredAmount,
+      netAmountToPay: sellTotalFees ,
+      sellIFSCAFee: sellIFSCATurnoverFee,
       transactionFee: sellTechnologyFee,
       platformFee: sellPlatformFee,
     );
   }
 
-
-
   // check buy trade order validity
   void validateBuyTradeOrder() {
-    if (state.amountText.trim().isEmpty) {
+    if (state.amountText.trim().isEmpty || state.quantityText.trim().isEmpty) {
       state = state.copyWith(
         amountTextFieldState: TextFieldsStates.empty,
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.empty,
@@ -169,7 +169,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         usWalletFundsState: UsWalletFundsState.neutral,
       );
       return;
-    } else if (enteredAmount == 0) {
+    } else if (enteredAmount == 0 || enteredQuantity == 0) {
       state = state.copyWith(
         amountTextFieldState: TextFieldsStates.zero,
         amountTextFieldErrorMessageState: TextFieldErrorMessageState.zero,
@@ -200,8 +200,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     if (enteredAmount == 0) {}
   }
 
-
-
   // place the trade order
   bool placeTradeOrder(TradeOrderTypeEnums tradeOrderType) {
     final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
@@ -212,17 +210,13 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
         vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(enteredAmount);
         addTradeOrderToOrdersHistory();
         addSecurityToPortfolio();
-
         return true;
       }
     } else if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
       if (state.orderEligibility == OrderEligibilityStates.valid) {}
     }
-
     return false;
   }
-
-
 
   // get security details
   void getSecurityDetails(String name, String symbol, String icon) {
@@ -232,8 +226,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       securityIcon: icon,
     );
   }
-
-
 
   // add trade order to orders listing in profile
   void addTradeOrderToOrdersHistory() {
@@ -250,10 +242,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       transactionID: state.transactionId,
     );
 
-    vmOrdersNotifier.addOrderDetailsToCard(newOrder);
+    vmOrdersNotifier.addOrderDetailsToCard(newOrder, );
   }
-
-
 
   // add investment to portfolio or add investment to exiting portfolio
   void addSecurityToPortfolio() {
@@ -278,8 +268,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       securitySymbol: state.securitySymbol,
     );
   }
-
-
 
   // fees view dropdown
   void feesViewDropdown() {
