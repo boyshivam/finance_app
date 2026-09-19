@@ -8,8 +8,8 @@ class PortfolioHoldingsNotifier
     return [];
   }
 
-  // on purchase of a new security, a holding for the same will be generated here
-  void manipulateHoldings({
+  // on purchase of a new security, or adding amount to an existing
+  void addToOrCreateHolding({
     required String securitySymbol,
     required PortfolioHoldingCardModel newHolding,
   }) {
@@ -50,19 +50,53 @@ class PortfolioHoldingsNotifier
     }).toList();
   }
 
-  void removeHolding({required String securitySoldSymbol}) {
-    final holdingExists = state.any(
-      (holding) => holding.securitySymbol == securitySoldSymbol,
-    );
-    if (holdingExists) {
-      return print("It exists");
+
+
+  // for sell trade orders, holding is deduced or entirely removed from the list based on withdraw amount
+  void deductOrRemoveHolding(
+    double withdrawAmount,
+    String searchedSecuritySymbol,
+  ) {
+    final searchedHoldingsList = state
+        .where((holding) => holding.securitySymbol == searchedSecuritySymbol)
+        .toList();
+
+    if (searchedHoldingsList.isEmpty) {
+      return;
     }
+
+    final searchedHolding = searchedHoldingsList[0];
+    final searchedHoldingAmount = searchedHolding.investedAmount;
+
+    final updatedHoldingAmount = searchedHoldingAmount - withdrawAmount;
+
+    if (updatedHoldingAmount <= 0) {
+      state = state
+          .where((holding) => holding.securitySymbol != searchedSecuritySymbol)
+          .toList();
+      return;
+    }
+
+    final updatedHolding = searchedHolding.copyWith(
+      investedAmount: updatedHoldingAmount,
+    );
+
+    state = state.map((holding) {
+      if (holding.securitySymbol == searchedSecuritySymbol) {
+        return updatedHolding;
+      }
+      return holding;
+    }).toList();
   }
 
 
 
+
   // deduct holding amount on sell trade order -
-  double deductHoldingAmount(String searchedSecuritySymbol, double sellAmount) {
+  double updatedHoldingAmount(
+    String searchedSecuritySymbol,
+    double withdrawAmount,
+  ) {
     final holdingsList = state
         .where((holding) => holding.securitySymbol == searchedSecuritySymbol)
         .toList();
@@ -72,13 +106,9 @@ class PortfolioHoldingsNotifier
     }
 
     final currentHoldingAmount = holdingsList[0].investedAmount;
-
-    final updatedHoldingAmount = currentHoldingAmount - sellAmount;
-
+    final updatedHoldingAmount = currentHoldingAmount - withdrawAmount;
     return updatedHoldingAmount;
   }
-
-
 
   // this will search for a specific holding and return its invested amount
   double fetchHoldingAmount(String holdingSymbol) {

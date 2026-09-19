@@ -241,39 +241,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     }
   }
 
-  // place the trade order after checking all validity order requirements
-  bool placeTradeOrder(
-    TradeOrderTypeEnums tradeOrderType,
-    String securitySymbol,
-  ) {
-    final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
-
-    // This is for buy fraction order --
-    if (tradeOrderType == TradeOrderTypeEnums.buyFraction) {
-      if (state.orderEligibility == OrderEligibilityStates.valid &&
-          state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
-        vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(
-          state.netAmountToPay,
-        );
-        addTradeOrderToOrdersHistory(tradeOrderType);
-        manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
-        return true;
-      }
-    }
-
-    // This is for sell fraction order --
-    if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
-      if (state.orderEligibility == OrderEligibilityStates.valid &&
-          state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
-
-         addTradeOrderToOrdersHistory(tradeOrderType);
-        // manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
-      }
-      return true;
-    }
-    return false;
-  }
-
   // get security details from stock details screen and
   // use it where the fetched details are required
   void getSecurityDetails(String name, String symbol, String icon) {
@@ -298,17 +265,6 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       orderType: tradeOrderType,
       transactionID: state.transactionId,
     );
-
-    // if(tradeOrderType == TradeOrderTypeEnums.sellFraction) {
-    //   newOrder = TradeOrderCardModel(
-    //     orderStatus: OrderStageEnums.submitted,
-    //     security: state.securitySymbol,
-    //     orderAmount: enteredAmount,
-    //     orderQuantity: enteredQuantity,
-    //     orderType: TradeOrderTypeEnums.sellFraction,
-    //     transactionID: state.transactionId,
-    //   );
-    // }
 
     vmOrdersNotifier.addOrderDetailsToCard(newOrder);
   }
@@ -336,7 +292,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       );
 
       final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
-      holdingsNotifier.manipulateHoldings(
+      holdingsNotifier.addToOrCreateHolding(
         newHolding: buyHolding,
         securitySymbol: state.securitySymbol,
       );
@@ -348,8 +304,45 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       final vmPortfolioHoldingsNotifier = ref.read(
         portfolioHoldingsProvider.notifier,
       );
-      
+      vmPortfolioHoldingsNotifier.deductOrRemoveHolding(
+        enteredAmount,
+        securitySymbol,
+      );
     }
+  }
+
+  // place the trade order after checking all validity order requirements
+  bool placeTradeOrder(
+    TradeOrderTypeEnums tradeOrderType,
+    String securitySymbol,
+  ) {
+    final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
+
+    // This is for buy fraction order --
+    if (tradeOrderType == TradeOrderTypeEnums.buyFraction) {
+      if (state.orderEligibility == OrderEligibilityStates.valid &&
+          state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
+        vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(
+          state.netAmountToPay,
+        );
+        addTradeOrderToOrdersHistory(tradeOrderType);
+        manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
+        return true;
+      }
+    }
+
+    // This is for sell fraction order --
+    if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
+      if (state.orderEligibility == OrderEligibilityStates.valid &&
+          state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
+        addTradeOrderToOrdersHistory(tradeOrderType);
+        // manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
+        addTradeOrderToOrdersHistory(tradeOrderType);
+        manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
+      }
+      return true;
+    }
+    return false;
   }
 
   // fees view dropdown

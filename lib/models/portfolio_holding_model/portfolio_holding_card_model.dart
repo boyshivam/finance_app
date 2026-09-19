@@ -18,4 +18,29 @@ class PortfolioHoldingCardModel {
   final double purchasedQuantity;
   final double totalPnL;
   final double average;
+
+
+  PortfolioHoldingCardModel copyWith({
+    String? securitySymbol,
+    String? securityName,
+    String? securityIcon,
+    double? securityPrice,
+    double? investedAmount,
+    double? purchasedQuantity,
+    double? totalPnL,
+    double? average,
+  }) {
+    return PortfolioHoldingCardModel(
+      securitySymbol: securitySymbol ?? this.securitySymbol,
+      securityName: securityName ?? this.securityName,
+      securityIcon: securityIcon ?? this.securityIcon,
+      securityPrice: securityPrice ?? this.securityPrice,
+      investedAmount: investedAmount ?? this.investedAmount,
+      totalPnL: totalPnL ?? this.totalPnL,
+      purchasedQuantity: purchasedQuantity ?? this.purchasedQuantity,
+      average: average ?? this.average,
+    );
+  }
 }
+
+
