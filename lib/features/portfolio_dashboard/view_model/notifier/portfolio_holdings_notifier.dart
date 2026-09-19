@@ -50,28 +50,57 @@ class PortfolioHoldingsNotifier
     }).toList();
   }
 
-
-
-  void removeHolding({required String securitySoldSymbol}){
-    final holdingExists = state.any((holding) => holding.securitySymbol == securitySoldSymbol);
-    if(holdingExists){
+  void removeHolding({required String securitySoldSymbol}) {
+    final holdingExists = state.any(
+      (holding) => holding.securitySymbol == securitySoldSymbol,
+    );
+    if (holdingExists) {
       return print("It exists");
     }
   }
 
 
-  // this will fetch the holding amount when searched by holding symbol
-  double fetchHoldingAmount(String holdingSymbol){
-    final searchedHolding = state.firstWhere((holding) => holding.securitySymbol == holdingSymbol);
-    final holdingAmount = searchedHolding.investedAmount;
-    return holdingAmount;
+
+  // deduct holding amount on sell trade order -
+  double deductHoldingAmount(String searchedSecuritySymbol, double sellAmount) {
+    final holdingsList = state
+        .where((holding) => holding.securitySymbol == searchedSecuritySymbol)
+        .toList();
+
+    if (holdingsList.isEmpty) {
+      return 0.0;
+    }
+
+    final currentHoldingAmount = holdingsList[0].investedAmount;
+
+    final updatedHoldingAmount = currentHoldingAmount - sellAmount;
+
+    return updatedHoldingAmount;
   }
 
-  double fetchHoldingQuantity(String holdingSymbol){
-    final searchedHolding = state.firstWhere((holding) => holding.securitySymbol == holdingSymbol);
-    final holdingQuantity = searchedHolding.purchasedQuantity;
-    return holdingQuantity;
+
+
+  // this will search for a specific holding and return its invested amount
+  double fetchHoldingAmount(String holdingSymbol) {
+    final matchingListOfItems = state
+        .where((holding) => holding.securitySymbol == holdingSymbol)
+        .toList();
+
+    if (matchingListOfItems.isEmpty) {
+      return 0.0;
+    }
+    return matchingListOfItems[0].investedAmount;
   }
 
+  // this will search for a specific holding and return its quantity
+  double fetchHoldingQuantity(String holdingSymbol) {
+    final searchedHoldingList = state.where(
+      (holding) => holding.securitySymbol == holdingSymbol,
+    );
 
+    if (searchedHoldingList.isEmpty) {
+      return 0.0;
+    }
+    return searchedHoldingList.first.purchasedQuantity;
+  }
 }

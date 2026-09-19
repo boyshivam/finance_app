@@ -2,6 +2,7 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_holdings_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
+import "package:aprreciate/features/trade_dashboard/enums/sell_trade_negative_order_enum.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
@@ -111,39 +112,74 @@ class OrderPlacementSection extends ConsumerWidget {
               ],
             ),
           const SizedBox(height: 10),
-          if (vmState.usWalletFundsState ==
-                  UsWalletFundsState.insufficientFunds &&
-              tradeOrderType == TradeOrderTypeEnums.buyFraction)
-            SizedBox(
-              height: 50,
-              child: InkWell(
-                onTap: () {
-                  AppNavigators.gotoLrsScreen(context);
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColorsCommon.appreciateThemeColor,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Add funds to US wallet",
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: AppColorsCommon.appWhite,
+          if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
+            if (vmState.usWalletFundsState ==
+                    UsWalletFundsState.insufficientFunds &&
+                tradeOrderType == TradeOrderTypeEnums.buyFraction)
+              SizedBox(
+                height: 50,
+                child: InkWell(
+                  onTap: () {
+                    AppNavigators.gotoLrsScreen(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColorsCommon.appreciateThemeColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Add funds to US wallet",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: AppColorsCommon.appWhite,
+                        ),
                       ),
                     ),
                   ),
                 ),
+              )
+            else
+              OrderSlider(
+                tradeOrderType: tradeOrderType,
+                securitySymbol: securitySymbol,
               ),
-            )
-          else
-            OrderSlider(
-              tradeOrderType: tradeOrderType,
-              securitySymbol: securitySymbol,
-            ),
+          if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
+            if (vmState.sellTradeNegativeOrderState ==
+                    SellTradeNegativeOrderEnum.invalid &&
+                tradeOrderType == TradeOrderTypeEnums.buyFraction)
+              SizedBox(
+                height: 50,
+                child: InkWell(
+                  onTap: () {
+                    AppNavigators.gotoLrsScreen(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColorsCommon.appreciateThemeColor,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Add funds to US wallet",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: AppColorsCommon.appWhite,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            else
+              OrderSlider(
+                tradeOrderType: tradeOrderType,
+                securitySymbol: securitySymbol,
+              ),
         ],
       ),
     );

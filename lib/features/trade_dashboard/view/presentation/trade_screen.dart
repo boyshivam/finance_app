@@ -121,7 +121,7 @@ class _TradeScreenState extends ConsumerState<TradeScreen> {
             ),
             TradeFeesSection(
               selectedSecurity: widget.selectedSecurity,
-              tradeOrderType: TradeOrderTypeEnums.buyFraction,
+              tradeOrderType: widget.tradeType,
             ),
           ],
         ),

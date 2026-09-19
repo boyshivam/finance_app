@@ -9,6 +9,7 @@ import "package:aprreciate/features/profile_dashboard/view_model/view_model_orde
 import "package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart";
+import "package:aprreciate/features/trade_dashboard/enums/sell_trade_negative_order_enum.dart";
 import "package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart";
 import "package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart";
@@ -35,6 +36,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       quantityTextFieldErrorMessageState: TextFieldErrorMessageState.neutral,
       currencyToggleState: CurrencyToggleState.toggledUsd,
       usWalletBalance: vmLrs.usWalletBalance,
+      sellTradeNegativeOrderState: SellTradeNegativeOrderEnum.valid,
       quantityByAmount: 0,
       amountByQuantity: 0,
       convertedValue: 0,
@@ -183,31 +185,97 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     }
   }
 
-  // check sell trade order validity
+  // check sell trade order validity and show appropriate error messages
   void validateSellTradeOrder(String selectedSecuritySymbol) {
-    if (enteredAmount == 0) {}
+    final vmPortfolioHoldingsNotifier = ref.read(
+      portfolioHoldingsProvider.notifier,
+    );
+
+    double totalAmountOfHolding = vmPortfolioHoldingsNotifier
+        .fetchHoldingAmount(selectedSecuritySymbol);
+
+    if (state.amountText.isEmpty || state.quantityText.isEmpty) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.empty,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.empty,
+        orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.neutral,
+      );
+      return;
+    } else if (enteredAmount == 0 || enteredQuantity == 0) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.zero,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.zero,
+        orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.neutral,
+        // sellTradeNegativeOrderState: SellTradeNegativeOrderEnum.invalid,
+      );
+      return;
+    } else if (enteredAmount > totalAmountOfHolding) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.error,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.error,
+        orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.neutral,
+        // sellTradeNegativeOrderState:
+        //     SellTradeNegativeOrderEnum.insufficientHolding,
+      );
+      return;
+    } else if (enteredAmount <= totalAmountOfHolding &&
+        state.totalFees > state.usWalletBalance) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.error,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.error,
+        orderEligibility: OrderEligibilityStates.invalid,
+        usWalletFundsState: UsWalletFundsState.insufficientFunds,
+      );
+      return;
+    } else if (enteredAmount <= totalAmountOfHolding &&
+        state.totalFees <= state.usWalletBalance) {
+      state = state.copyWith(
+        amountTextFieldState: TextFieldsStates.active,
+        amountTextFieldErrorMessageState: TextFieldErrorMessageState.active,
+        orderEligibility: OrderEligibilityStates.valid,
+        usWalletFundsState: UsWalletFundsState.sufficientFunds,
+      );
+    }
   }
 
-
-  // place the trade order
-  bool placeTradeOrder(TradeOrderTypeEnums tradeOrderType, String securitySymbol) {
+  // place the trade order after checking all validity order requirements
+  bool placeTradeOrder(
+    TradeOrderTypeEnums tradeOrderType,
+    String securitySymbol,
+  ) {
     final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
 
+    // This is for buy fraction order --
     if (tradeOrderType == TradeOrderTypeEnums.buyFraction) {
       if (state.orderEligibility == OrderEligibilityStates.valid &&
           state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
-        vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(enteredAmount);
-        addTradeOrderToOrdersHistory();
+        vmLrsScreenNotifier.deductWalletBalanceAfterTradeOrder(
+          state.netAmountToPay,
+        );
+        addTradeOrderToOrdersHistory(tradeOrderType);
         manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
         return true;
       }
-    } else if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
-      if (state.orderEligibility == OrderEligibilityStates.valid) {}
+    }
+
+    // This is for sell fraction order --
+    if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
+      if (state.orderEligibility == OrderEligibilityStates.valid &&
+          state.usWalletFundsState == UsWalletFundsState.sufficientFunds) {
+
+         addTradeOrderToOrdersHistory(tradeOrderType);
+        // manipulateSecurityInPortfolio(tradeOrderType, securitySymbol);
+      }
+      return true;
     }
     return false;
   }
 
-  // get security details
+  // get security details from stock details screen and
+  // use it where the fetched details are required
   void getSecurityDetails(String name, String symbol, String icon) {
     state = state.copyWith(
       securityName: name,
@@ -216,10 +284,8 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     );
   }
 
-
-
   // add trade order to orders listing in profile
-  void addTradeOrderToOrdersHistory() {
+  void addTradeOrderToOrdersHistory(TradeOrderTypeEnums tradeOrderType) {
     final vmOrdersNotifier = ref.read(ordersProvider.notifier);
 
     state = state.copyWith(transactionId: RandomOrderIdGenerator.generateId());
@@ -229,21 +295,31 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       security: state.securitySymbol,
       orderAmount: enteredAmount,
       orderQuantity: enteredQuantity,
-      orderType: TradeOrderTypeEnums.buyFraction,
+      orderType: tradeOrderType,
       transactionID: state.transactionId,
     );
 
+    // if(tradeOrderType == TradeOrderTypeEnums.sellFraction) {
+    //   newOrder = TradeOrderCardModel(
+    //     orderStatus: OrderStageEnums.submitted,
+    //     security: state.securitySymbol,
+    //     orderAmount: enteredAmount,
+    //     orderQuantity: enteredQuantity,
+    //     orderType: TradeOrderTypeEnums.sellFraction,
+    //     transactionID: state.transactionId,
+    //   );
+    // }
+
     vmOrdersNotifier.addOrderDetailsToCard(newOrder);
   }
-
-
 
   // add investment to portfolio or add investment to exiting portfolio
   void manipulateSecurityInPortfolio(
     TradeOrderTypeEnums tradeOrderType,
     String securitySymbol,
   ) {
-    if (tradeOrderType == TradeOrderTypeEnums.buyLimit) {
+    // add the buy trade order to portfolio holdings
+    if (tradeOrderType == TradeOrderTypeEnums.buyFraction) {
       double securityPrice = state.stockPrice;
       double averageCost = enteredAmount / enteredQuantity;
       double totalPnL = (securityPrice - averageCost) * enteredQuantity;
@@ -266,43 +342,13 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       );
     }
 
+    // add the sell trade order to portfolio holdings
     if (tradeOrderType == TradeOrderTypeEnums.sellFraction) {
       // provider, notifier of portfolio holdings
       final vmPortfolioHoldingsNotifier = ref.read(
         portfolioHoldingsProvider.notifier,
       );
-
-      final holdingAmount = vmPortfolioHoldingsNotifier.fetchHoldingAmount(
-        securitySymbol,
-      );
-      final holdingQuantity = vmPortfolioHoldingsNotifier.fetchHoldingQuantity(
-        securitySymbol,
-      );
-
-      double securityPrice = state.stockPrice;
-      double averageCost = enteredAmount / enteredQuantity;
-      double totalPnL = (securityPrice - averageCost) * enteredQuantity;
-
-      final updatedHoldingAmount =
-          holdingAmount - state.totalFees - enteredAmount;
-      final updatedHoldingQuantity = holdingQuantity - enteredQuantity;
-
-      final sellHolding = PortfolioHoldingCardModel(
-        securityName: state.securityName,
-        securityIcon: state.securityIcon,
-        securitySymbol: state.securitySymbol,
-        securityPrice: securityPrice,
-        investedAmount: updatedHoldingAmount,
-        purchasedQuantity: updatedHoldingQuantity,
-        average: averageCost,
-        totalPnL: totalPnL,
-      );
-
-      final holdingsNotifier = ref.read(portfolioHoldingsProvider.notifier);
-      holdingsNotifier.manipulateHoldings(
-        newHolding: sellHolding,
-        securitySymbol: state.securitySymbol,
-      );
+      
     }
   }
 

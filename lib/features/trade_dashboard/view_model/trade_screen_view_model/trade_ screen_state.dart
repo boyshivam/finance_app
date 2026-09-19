@@ -1,6 +1,7 @@
 import 'package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart';
+import 'package:aprreciate/features/trade_dashboard/enums/sell_trade_negative_order_enum.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart';
@@ -13,6 +14,7 @@ class TradeScreenState {
     required this.securityIcon,
     required this.tradeType,
     required this.usWalletFundsState,
+    required this.sellTradeNegativeOrderState,
     required this.amountTextFieldState,
     required this.quantityTextFieldState,
     required this.amountTextFieldErrorMessageState,
@@ -41,6 +43,7 @@ class TradeScreenState {
   final String securityIcon;
   final TradeTypeEnum tradeType;
   final UsWalletFundsState usWalletFundsState;
+  final SellTradeNegativeOrderEnum sellTradeNegativeOrderState;
   final TextFieldsStates amountTextFieldState;
   final TextFieldsStates quantityTextFieldState;
   final TextFieldErrorMessageState amountTextFieldErrorMessageState;
@@ -69,6 +72,7 @@ class TradeScreenState {
     String? securityIcon,
     TradeTypeEnum? tradeType,
     UsWalletFundsState? usWalletFundsState,
+    SellTradeNegativeOrderEnum? sellTradeNegativeOrderState,
     CurrencyToggleState? currencyToggleState,
     TextFieldsStates? amountTextFieldState,
     TextFieldsStates? quantityTextFieldState,
@@ -99,6 +103,7 @@ class TradeScreenState {
       securityIcon: securityIcon ?? this.securityIcon,
       tradeType: tradeType ?? this.tradeType,
       usWalletFundsState: usWalletFundsState ?? this.usWalletFundsState,
+      sellTradeNegativeOrderState: sellTradeNegativeOrderState ?? this.sellTradeNegativeOrderState,
       amountTextFieldState: amountTextFieldState ?? this.amountTextFieldState,
       quantityTextFieldState:
       quantityTextFieldState ?? this.quantityTextFieldState,

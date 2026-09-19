@@ -51,7 +51,12 @@ class TradeFeesSection extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      Text("Order value"),
+                      Text(
+                        "Order value",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                       const Spacer(),
                       if (vmTradeScreenProvider.amountText.isNotEmpty)
                         Text(
@@ -66,7 +71,11 @@ class TradeFeesSection extends ConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          Text("Total Fee"),
+                          Text(
+                            "Total Fee",
+                            style: Theme.of(context).textTheme.bodyMedium!
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
                           const SizedBox(width: 5),
                           Icon(Icons.info_outline),
                         ],
@@ -102,7 +111,11 @@ class TradeFeesSection extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              Text("Transaction fee"),
+                              Text(
+                                "Transaction fee",
+                                style: Theme.of(context).textTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
                               const Spacer(),
                               if (vmTradeScreenProvider.amountText.isNotEmpty)
                                 Text(
@@ -115,22 +128,29 @@ class TradeFeesSection extends ConsumerWidget {
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              Text("Platform fee"),
+                              Text(
+                                "Platform fee",
+                                style: Theme.of(context).textTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
                               const Spacer(),
                               Text(
                                 "\$${vmTradeScreenProvider.platformFee.toStringAsFixed(2)}",
                               ),
                             ],
                           ),
+                          const SizedBox(height: 10),
                           if (tradeOrderType ==
                               TradeOrderTypeEnums.sellFraction)
                             Row(
                               children: [
-                                Text("IFSC fee"),
-                                const Spacer(),
                                 Text(
-                                  "\$${vmTradeScreenProvider.platformFee.toStringAsFixed(2)}",
+                                  "IFSC fee",
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .copyWith(fontWeight: FontWeight.w600),
                                 ),
+                                const Spacer(),
+                                Text("\$${vmTradeScreenProvider.sellIFSCAFee}"),
                               ],
                             ),
                         ],
@@ -139,7 +159,6 @@ class TradeFeesSection extends ConsumerWidget {
                 ],
               ),
             ),
-
             Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               decoration: BoxDecoration(

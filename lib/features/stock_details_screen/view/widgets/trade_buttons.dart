@@ -39,7 +39,6 @@ class TradeButtonsSection extends ConsumerWidget {
                 security.stockIcon,
               );
 
-
               context.push(
                 AppRoutes.tradeScreen,
                 extra: TradeScreenArgs(

@@ -1,5 +1,7 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/core/utils/helper_widgets/order_stage_helper.dart";
+import "package:aprreciate/core/utils/helper_widgets/order_type_helper.dart";
+import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
 import "package:aprreciate/models/profile_models/orders/order_card_model.dart";
 import "package:flutter/material.dart";
 
@@ -23,7 +25,7 @@ class TradeOrderCard extends StatelessWidget {
             ),
           ],
           color: AppColorsCommon.appWhite,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: BorderRadius.all(Radius.circular(22)),
           border: Border.all(
             color: AppColorsCommon.appreciateThemeColor,
             width: 3,
@@ -34,7 +36,10 @@ class TradeOrderCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(item.orderType.name),
+                if(item.orderType == TradeOrderTypeEnums.buyFraction)
+                 OrderTypeTagHelper(text: "Buy Fraction"),
+                if(item.orderType == TradeOrderTypeEnums.sellFraction)
+                  OrderTypeTagHelper(text: "Sell Fraction"),
                 const Spacer(),
                 OrderStageHelper(orderStage: item.orderStatus),
               ],

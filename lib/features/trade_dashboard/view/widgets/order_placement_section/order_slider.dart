@@ -42,6 +42,14 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
             ),
           );
         }
+        if (widget.tradeOrderType == TradeOrderTypeEnums.sellFraction) {
+          context.push(
+            AppRoutes.orderPlacedScreen,
+            extra: TradeOrderPlacedScreenArgs(
+              tradeOrderType: widget.tradeOrderType,
+            ),
+          );
+        }
         // } else if (widget.tradeType == TradeOrderTypeEnums.sellFraction) {
         //   context.push(AppRoutes.orderPlacedScreen);
         // }
