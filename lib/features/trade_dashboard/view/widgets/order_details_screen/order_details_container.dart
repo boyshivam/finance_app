@@ -55,7 +55,7 @@ class OrderDetailsContainer extends ConsumerWidget {
                     fontWeight: FontWeight.w700
                 ),
               ),
-              Text(vmTradeScreenProvider.quantityText),
+              Text(vmTradeScreenProvider.quantityByAmount.toStringAsFixed(2)),
             ],
           ),
           const SizedBox(height: 10),

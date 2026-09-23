@@ -61,9 +61,9 @@ class TradeOrderCard extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               children: [
-                Text("Amount: ${item.orderAmount}"),
+                Text("Amount: ${item.orderAmount.toStringAsFixed(2)}"),
                 const Spacer(),
-                Text("Quantity: ${item.orderQuantity}"),
+                Text("Quantity: ${item.orderQuantity.toStringAsFixed(2)}"),
               ],
             ),
           ],

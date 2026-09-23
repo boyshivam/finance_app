@@ -14,6 +14,10 @@ class CashfreeDashboard extends StatelessWidget {
       body: Column(
         children: [
           CustomTopSection(
+            paddingBottom: 30,
+            paddingTop: 30,
+            paddingRight: 25,
+            paddingLeft: 25,
             childAlignment: MainAxisAlignment.center,
             child: HeaderTextHelper(text: "Bank Transactions", fontSize: 24,),
             showSupportIcon: true,

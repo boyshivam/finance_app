@@ -1,3 +1,4 @@
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
 import "package:aprreciate/data/home_dash_data/continue_where_left_data.dart";
 import "package:aprreciate/data/home_dash_data/news_data/news_data.dart";
 import "package:aprreciate/features/home_dashboard/view/widgets/banners/banner_viewer.dart";
@@ -23,6 +24,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

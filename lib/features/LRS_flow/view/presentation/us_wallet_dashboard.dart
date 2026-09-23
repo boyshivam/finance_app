@@ -15,6 +15,10 @@ class UsWalletDashboard extends ConsumerWidget {
       body: Column(
         children: [
           CustomTopSection(
+            paddingBottom: 30,
+            paddingTop: 30,
+            paddingRight: 25,
+            paddingLeft: 25,
             childAlignment: MainAxisAlignment.center,
             showSupportIcon: true,
             showBackCTA: true,

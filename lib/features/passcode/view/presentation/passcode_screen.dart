@@ -77,6 +77,10 @@ class _PasscodeScreenState extends ConsumerState<PasscodeScreen> {
         children: [
           // top header section with appreciate text and logo
           CustomTopSection(
+            paddingBottom: 10,
+            paddingTop: 10,
+            paddingRight: 25,
+            paddingLeft: 25,
             childAlignment: MainAxisAlignment.start,
             child: CompanyTrademark(
               paddingLeft: 25,

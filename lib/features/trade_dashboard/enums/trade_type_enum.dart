@@ -1,6 +1,7 @@
 
 
 enum TradeTypeEnum {
+
   buyFraction,
   sellFraction
 }

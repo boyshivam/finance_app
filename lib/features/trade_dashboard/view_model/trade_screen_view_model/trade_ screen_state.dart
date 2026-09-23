@@ -1,10 +1,9 @@
 import 'package:aprreciate/features/trade_dashboard/enums/currency_toggle_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/fees_view_states.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/order_eligibility_states.dart';
+import 'package:aprreciate/features/trade_dashboard/enums/sell_security_holding_enum.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/sell_trade_negative_order_enum.dart';
-import 'package:aprreciate/features/trade_dashboard/enums/text_field_error_message_states.dart';
-import 'package:aprreciate/features/trade_dashboard/enums/trade_fields_states.dart';
-import 'package:aprreciate/features/trade_dashboard/enums/trade_type_enum.dart';
+import 'package:aprreciate/features/trade_dashboard/enums/textfield_validation_enums.dart';
 import 'package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart';
 
 class TradeScreenState {
@@ -12,7 +11,6 @@ class TradeScreenState {
     required this.securityName,
     required this.securitySymbol,
     required this.securityIcon,
-    required this.tradeType,
     required this.usWalletFundsState,
     required this.sellTradeNegativeOrderState,
     required this.amountTextFieldState,
@@ -29,30 +27,28 @@ class TradeScreenState {
     required this.transactionFee,
     required this.platformFee,
     required this.netAmountToPay,
-    required this.usWalletBalance,
     required this.orderEligibility,
     required this.feesViewStates,
     required this.totalFees,
     required this.stockPrice,
     required this.transactionId,
     required this.sellIFSCAFee,
+    required this.sellHoldingState,
   });
 
   final String securityName;
   final String securitySymbol;
   final String securityIcon;
-  final TradeTypeEnum tradeType;
   final UsWalletFundsState usWalletFundsState;
   final SellTradeNegativeOrderEnum sellTradeNegativeOrderState;
-  final TextFieldsStates amountTextFieldState;
-  final TextFieldsStates quantityTextFieldState;
-  final TextFieldErrorMessageState amountTextFieldErrorMessageState;
-  final TextFieldErrorMessageState quantityTextFieldErrorMessageState;
+  final TextFieldValidationEnums amountTextFieldState;
+  final TextFieldValidationEnums quantityTextFieldState;
+  final TextFieldValidationEnums amountTextFieldErrorMessageState;
+  final TextFieldValidationEnums quantityTextFieldErrorMessageState;
   final CurrencyToggleState currencyToggleState;
   final double quantityByAmount;
   final double amountByQuantity;
   final double convertedValue;
-  final double usWalletBalance;
   final String amountText;
   final String quantityText;
   final double orderAmount;
@@ -65,20 +61,19 @@ class TradeScreenState {
   final double totalFees;
   final double stockPrice;
   final String transactionId;
+  final SellSecurityHoldingEnum sellHoldingState;
 
   TradeScreenState copyWith({
     String? securityName,
     String? securitySymbol,
     String? securityIcon,
-    TradeTypeEnum? tradeType,
     UsWalletFundsState? usWalletFundsState,
     SellTradeNegativeOrderEnum? sellTradeNegativeOrderState,
     CurrencyToggleState? currencyToggleState,
-    TextFieldsStates? amountTextFieldState,
-    TextFieldsStates? quantityTextFieldState,
-    TextFieldErrorMessageState? amountTextFieldErrorMessageState,
-    TextFieldErrorMessageState? quantityTextFieldErrorMessageState,
-    double? usWalletBalance,
+    TextFieldValidationEnums? amountTextFieldState,
+    TextFieldValidationEnums? quantityTextFieldState,
+    TextFieldValidationEnums? amountTextFieldErrorMessageState,
+    TextFieldValidationEnums? quantityTextFieldErrorMessageState,
     double? quantityByAmount,
     double? amountByQuantity,
     double? convertedValue,
@@ -96,30 +91,29 @@ class TradeScreenState {
     double? stockPrice,
     String? transactionId,
     double? sellIFSCAFee,
+    SellSecurityHoldingEnum? sellHoldingState,
   }) {
     return TradeScreenState(
       securityName: securityName ?? this.securityName,
       securitySymbol: securitySymbol ?? this.securitySymbol,
       securityIcon: securityIcon ?? this.securityIcon,
-      tradeType: tradeType ?? this.tradeType,
       usWalletFundsState: usWalletFundsState ?? this.usWalletFundsState,
-      sellTradeNegativeOrderState: sellTradeNegativeOrderState ?? this.sellTradeNegativeOrderState,
+      sellTradeNegativeOrderState:
+          sellTradeNegativeOrderState ?? this.sellTradeNegativeOrderState,
       amountTextFieldState: amountTextFieldState ?? this.amountTextFieldState,
       quantityTextFieldState:
-      quantityTextFieldState ?? this.quantityTextFieldState,
+          quantityTextFieldState ?? this.quantityTextFieldState,
       amountTextFieldErrorMessageState:
-      amountTextFieldErrorMessageState ??
+          amountTextFieldErrorMessageState ??
           this.amountTextFieldErrorMessageState,
       quantityTextFieldErrorMessageState:
-      quantityTextFieldErrorMessageState ??
+          quantityTextFieldErrorMessageState ??
           this.quantityTextFieldErrorMessageState,
       orderEligibility: orderEligibility ?? this.orderEligibility,
       currencyToggleState: currencyToggleState ?? this.currencyToggleState,
       quantityByAmount: quantityByAmount ?? this.quantityByAmount,
       amountByQuantity: amountByQuantity ?? this.amountByQuantity,
       convertedValue: convertedValue ?? this.convertedValue,
-      usWalletBalance: usWalletBalance ?? this.usWalletBalance,
-
       // amount texts
       amountText: amountText ?? this.amountText,
       quantityText: quantityText ?? this.quantityText,
@@ -134,6 +128,7 @@ class TradeScreenState {
       stockPrice: stockPrice ?? this.stockPrice,
       transactionId: transactionId ?? this.transactionId,
       sellIFSCAFee: sellIFSCAFee ?? this.sellIFSCAFee,
+      sellHoldingState: sellHoldingState ?? this.sellHoldingState,
     );
   }
 }

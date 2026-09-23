@@ -1,3 +1,6 @@
+import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
+import "package:aprreciate/core/utils/helper_widgets/header_text_helper.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dashboard_holdings_widgets/portfolio_holdings_viewer.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dashboard_tabs.dart";
 import "package:aprreciate/features/portfolio_dashboard/view/widgets/portfolio_dash_viewer_widgets/portfolio_status_viewer.dart";
@@ -17,15 +20,25 @@ class _PortfolioDashboardScreenState
     extends ConsumerState<PortfolioDashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PortfolioDashTopSection(),
-        PortfolioDashboardTabs(),
-        PortfolioDashboard(),
-        const SizedBox(height: 10),
-        Expanded(child: PortfolioHoldingsViewer()),
-
-      ],
+    return Scaffold(
+      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
+      body: Column(
+        children: [
+          CustomTopSection(
+            paddingBottom: 10,
+            paddingTop: 10,
+            paddingRight: 25,
+            paddingLeft: 25,
+            child: HeaderTextHelper(text: "Portfolio", fontSize: 32),
+            childAlignment: MainAxisAlignment.center
+            ,
+          ),
+          PortfolioDashboardTabs(),
+          PortfolioDashboard(),
+          const SizedBox(height: 10),
+          Expanded(child: PortfolioHoldingsViewer()),
+        ],
+      ),
     );
   }
 }

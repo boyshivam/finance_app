@@ -6,8 +6,7 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
 class PortfolioDashboardTabs extends ConsumerWidget {
-  const PortfolioDashboardTabs({super.key,});
-
+  const PortfolioDashboardTabs({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,11 +27,11 @@ class PortfolioDashboardTabs extends ConsumerWidget {
           return InkWell(
             onTap: () {
               final portfolioNotifier = ref.read(portfolioProvider.notifier);
-              portfolioNotifier.selectPortfolioTab(tab);
+              portfolioNotifier.selectPortfolioTab(tab.product);
             },
             child: PortfolioTabPill(
               tab: portfolioTabs[index],
-              selectedIndex: selectedTab == tab,
+              selectedIndex: selectedTab == tab.product,
             ),
           );
         },

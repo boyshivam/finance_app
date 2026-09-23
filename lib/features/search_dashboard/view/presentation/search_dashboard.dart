@@ -1,4 +1,6 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
+import "package:aprreciate/core/utils/helper_widgets/header_text_helper.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/recently%20viewed/recently_viewed_section.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_bar.dart";
 import "package:aprreciate/features/search_dashboard/view/widgets/search_dash_top_section.dart";
@@ -49,7 +51,7 @@ class _SearchDashboardScreenState extends ConsumerState<SearchDashboardScreen> {
 
     ref.listenManual(
       (allWatchListsProvider.select((state) => state.watchlistMessage)),
-      (previous, next) {
+          (previous, next) {
         if (next == WatchlistSnackbarTextEnum.added) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -89,9 +91,16 @@ class _SearchDashboardScreenState extends ConsumerState<SearchDashboardScreen> {
     final vm = ref.watch(searchDashboardProvider);
 
     return Scaffold(
+      backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
       body: Column(
         children: [
-          SearchDashTopSection(),
+          CustomTopSection(
+              paddingBottom: 10,
+              paddingTop: 10,
+              paddingRight: 25,
+              paddingLeft: 25,
+              child: HeaderTextHelper(text: "Search", fontSize: 32),
+              childAlignment: MainAxisAlignment.start),
           SearchTabs(
             scrollController: tabScrollControl,
             onSelectTab: onSelectTab,

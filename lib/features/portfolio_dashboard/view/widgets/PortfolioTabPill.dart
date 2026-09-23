@@ -1,4 +1,5 @@
 import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.dart";
+import "package:aprreciate/features/portfolio_dashboard/models/portfolio_tab_model.dart";
 import "package:aprreciate/features/portfolio_dashboard/view_model/enums/portfolio_tabs.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
@@ -10,7 +11,7 @@ class PortfolioTabPill extends ConsumerWidget {
     required this.selectedIndex,
   });
 
-  final PortfolioTabsEnums tab;
+  final PortfolioTabModel tab;
   final bool selectedIndex;
 
   @override

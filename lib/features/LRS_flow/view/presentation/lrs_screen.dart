@@ -43,6 +43,10 @@ class _LrsScreenState extends ConsumerState<LrsTransferScreen> {
       body: Column(
         children: [
           CustomTopSection(
+            paddingBottom: 30,
+            paddingTop: 30,
+            paddingRight: 25,
+            paddingLeft: 25,
             showBackCTA: true,
             showSupportIcon: true,
             childAlignment: MainAxisAlignment.center,

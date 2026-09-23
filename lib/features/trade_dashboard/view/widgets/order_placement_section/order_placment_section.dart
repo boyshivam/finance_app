@@ -2,7 +2,6 @@ import "package:aprreciate/core/themes/app_theme/app_colors/app_colors_common.da
 import "package:aprreciate/features/LRS_flow/view_model/lrs_view_model/lrs_screen/lrs_provider.dart";
 import "package:aprreciate/features/portfolio_dashboard/view_model/provider/portfolio_holdings_provider.dart";
 import "package:aprreciate/features/profile_dashboard/enums/trade_order_type_enums.dart";
-import "package:aprreciate/features/trade_dashboard/enums/sell_trade_negative_order_enum.dart";
 import "package:aprreciate/features/trade_dashboard/enums/us_wallet_funds_state.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/order_placement_section/order_slider.dart";
 import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
@@ -46,76 +45,95 @@ class OrderPlacementSection extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
-            Row(
-              children: [
-                Text(
-                  "US Wallet balance:",
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
-                    const SizedBox(width: 5),
-                    Icon(Icons.arrow_drop_down_circle_outlined),
-                  ],
-                ),
-              ],
-            ),
-          if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
-            Row(
-              children: [
-                Text(
-                  "Amount in holding:",
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
-                ),
-                const Spacer(),
-                if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
-                  Row(
-                    children: [
-                      Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
-                      // const SizedBox(width: 5),
-                      // Icon(Icons.arrow_drop_down_circle_outlined),
-                    ],
-                  ),
-                if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
-                  Row(
-                    children: [
-                      Text(
-                        "\$${vmPortfolioHoldingsNotifier.fetchHoldingAmount(securitySymbol).toStringAsFixed(2)}",
-                      ),
-                    ],
-                  ),
-              ],
-            ),
-          const SizedBox(height: 5),
 
-          // this will handle the error message text for invalid transaction
-          if (vmState.usWalletFundsState ==
-                  UsWalletFundsState.insufficientFunds &&
-              tradeOrderType == TradeOrderTypeEnums.buyFraction)
-            Row(
-              children: [
+
+
+          // this is handling the error message in case of insufficient us wallet balance or holdin
+          Row(
+            children: [
+              if (tradeOrderType == TradeOrderTypeEnums.buyFraction &&
+                  vmState.usWalletFundsState ==
+                      UsWalletFundsState.insufficientFunds)
                 Text(
-                  "insufficient Funds",
+                  "Insufficient Funds in wallet",
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: AppColorsCommon.negativeRed,
                   ),
                 ),
-              ],
-            ),
+              if (tradeOrderType == TradeOrderTypeEnums.sellFraction &&
+                  vmState.usWalletFundsState ==
+                      UsWalletFundsState.insufficientFunds)
+                Text(
+                  "Insufficient Funds in wallet",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppColorsCommon.negativeRed,
+                  ),
+                ),
+              // if (tradeOrderType == TradeOrderTypeEnums.sellFraction &&
+              //     vmState.usWalletFundsState ==
+              //         UsWalletFundsState.insufficientFunds)
+              //   Expanded(
+              //     child: Text(
+              //       "Amount entered is greater than holdings",
+              //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              //         color: AppColorsCommon.negativeRed,
+              //       ),
+              //     ),
+              //   ),
+
+            ],
+          ),
+
+
+
+          // this will show the us wallet balance for buy and sell, and holdings for sell
+          Row(
+            children: [
+              Text(
+                "US Wallet balance:",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Text("\$${vmLRS.usWalletBalance.toStringAsFixed(2)}"),
+                  const SizedBox(width: 5),
+                  Icon(Icons.arrow_drop_down_circle_outlined),
+                ],
+              ),
+            ],
+          ),
+          if(tradeOrderType == TradeOrderTypeEnums.sellFraction)
+          Row(
+            children: [
+              Text(
+                "Amount in holding:",
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                ),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Text("\$${vmPortfolioHoldingsNotifier.fetchHoldingAmount(securitySymbol).toStringAsFixed(2)}"),
+                  const SizedBox(width: 5),
+                  Icon(Icons.arrow_drop_down_circle_outlined),
+                ],
+              ),
+            ],
+          ),
           const SizedBox(height: 10),
+
+
+
+          // incase of buy orders, order placement slider or add funds CTA will be shown
           if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
             if (vmState.usWalletFundsState ==
-                    UsWalletFundsState.insufficientFunds &&
-                tradeOrderType == TradeOrderTypeEnums.buyFraction)
+                UsWalletFundsState.insufficientFunds)
               SizedBox(
                 height: 50,
                 child: InkWell(
@@ -146,40 +164,45 @@ class OrderPlacementSection extends ConsumerWidget {
                 tradeOrderType: tradeOrderType,
                 securitySymbol: securitySymbol,
               ),
+
+
+          // incase of sell orders, order placement slider or add funds CTA will be shown
           if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
-            if (vmState.sellTradeNegativeOrderState ==
-                    SellTradeNegativeOrderEnum.invalid &&
-                tradeOrderType == TradeOrderTypeEnums.buyFraction)
-              SizedBox(
-                height: 50,
-                child: InkWell(
-                  onTap: () {
-                    AppNavigators.gotoLrsScreen(context);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColorsCommon.appreciateThemeColor,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Add funds to US wallet",
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: AppColorsCommon.appWhite,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            else
+            // if (vmState.usWalletFundsState ==
+            //     UsWalletFundsState.insufficientFunds)
+            //   SizedBox(
+            //     height: 50,
+            //     child: InkWell(
+            //       onTap: () {
+            //         AppNavigators.gotoLrsScreen(context);
+            //       },
+            //       child: Container(
+            //         padding: EdgeInsets.symmetric(vertical: 10),
+            //         width: double.infinity,
+            //         decoration: BoxDecoration(
+            //           color: AppColorsCommon.appreciateThemeColor,
+            //           borderRadius: BorderRadius.circular(16),
+            //         ),
+            //         child: Align(
+            //           alignment: Alignment.center,
+            //           child: Text(
+            //             "Add funds to US wallet",
+            //             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            //               color: AppColorsCommon.appWhite,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   )
+            // else
               OrderSlider(
                 tradeOrderType: tradeOrderType,
                 securitySymbol: securitySymbol,
               ),
+
+
+
         ],
       ),
     );

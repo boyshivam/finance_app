@@ -10,28 +10,38 @@ class CustomTopSection extends StatelessWidget {
     this.showBackCTA,
     required this.child,
     required this.childAlignment,
+    required this.paddingTop,
+    required this.paddingLeft,
+    required this.paddingRight,
+    required this.paddingBottom
   });
 
   final bool? showSupportIcon;
   final bool? showBackCTA;
   final MainAxisAlignment childAlignment;
   final Widget child;
+  final double paddingTop;
+  final double paddingBottom;
+  final double paddingLeft;
+  final double paddingRight;
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(
-        25,
-        MediaQuery.of(context).padding.top + 20,
-        25,
-        35,
+        paddingLeft,
+        MediaQuery.of(context).padding.top + 10,
+        paddingRight,
+        paddingBottom,
       ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            AppColorsCommon.appreciateThemeColor,
             AppColorsCommon.snackBarMsgBlue,
+            AppColorsCommon.appreciateThemeColor,
+            AppColorsCommon.scaffoldBackGroundColor
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

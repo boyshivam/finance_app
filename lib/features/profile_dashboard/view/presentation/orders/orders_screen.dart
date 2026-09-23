@@ -1,3 +1,5 @@
+import "package:aprreciate/core/utils/helper_widgets/custom_top_section.dart";
+import "package:aprreciate/core/utils/helper_widgets/header_text_helper.dart";
 import "package:aprreciate/features/profile_dashboard/enums/order_tab_selected_enum.dart";
 import "package:aprreciate/features/profile_dashboard/view/presentation/orders/trade_order_card.dart";
 import "package:aprreciate/features/profile_dashboard/view/widgets/orders_widgets/orders_tabs.dart";
@@ -24,7 +26,14 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
     return Scaffold(
       body: Column(
         children: [
-          OrdersTopSection(),
+          CustomTopSection(
+              showBackCTA: true,
+              child: HeaderTextHelper(text: "Orders", fontSize: 26),
+              childAlignment: MainAxisAlignment.center,
+              paddingTop: 30,
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingBottom: 30),
           const SizedBox(height: 2),
           OrdersTabs(),
           if (vmState.orderTabSelected == OrderTabSelectedEnum.usStocks)

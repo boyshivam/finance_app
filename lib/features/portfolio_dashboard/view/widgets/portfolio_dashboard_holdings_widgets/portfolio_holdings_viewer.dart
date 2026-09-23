@@ -64,7 +64,7 @@ class PortfolioHoldingsViewer extends ConsumerWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          "Make an investment and see it here",
+                          "Investments will be visible here",
                           style: Theme.of(context).textTheme.headlineLarge!
                               .copyWith(
                                 fontWeight: FontWeight.w500,

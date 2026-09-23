@@ -110,6 +110,10 @@ class _MobileOtpScreenState extends ConsumerState<MobileOtpScreen> {
                   children: [
                     // top section with appreciate logo and support icon
                     CustomTopSection(
+                      paddingBottom: 10,
+                      paddingTop: 10,
+                      paddingRight: 25,
+                      paddingLeft: 25,
                       childAlignment: MainAxisAlignment.start,
                       child: CompanyTrademark(
                         paddingLeft: 25,
