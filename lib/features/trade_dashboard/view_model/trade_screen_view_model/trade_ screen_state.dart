@@ -18,8 +18,8 @@ class TradeScreenState {
     required this.amountTextFieldErrorMessageState,
     required this.quantityTextFieldErrorMessageState,
     required this.currencyToggleState,
-    required this.quantityByAmount,
-    required this.amountByQuantity,
+    // required this.quantityByAmount,
+    // required this.amountByQuantity,
     required this.convertedValue,
     required this.amountText,
     required this.quantityText,
@@ -46,8 +46,8 @@ class TradeScreenState {
   final TextFieldValidationEnums amountTextFieldErrorMessageState;
   final TextFieldValidationEnums quantityTextFieldErrorMessageState;
   final CurrencyToggleState currencyToggleState;
-  final double quantityByAmount;
-  final double amountByQuantity;
+  // final double quantityByAmount;
+  // final double amountByQuantity;
   final double convertedValue;
   final String amountText;
   final String quantityText;
@@ -74,8 +74,8 @@ class TradeScreenState {
     TextFieldValidationEnums? quantityTextFieldState,
     TextFieldValidationEnums? amountTextFieldErrorMessageState,
     TextFieldValidationEnums? quantityTextFieldErrorMessageState,
-    double? quantityByAmount,
-    double? amountByQuantity,
+    // double? quantityByAmount,
+    // double? amountByQuantity,
     double? convertedValue,
 
     String? amountText,
@@ -111,8 +111,8 @@ class TradeScreenState {
           this.quantityTextFieldErrorMessageState,
       orderEligibility: orderEligibility ?? this.orderEligibility,
       currencyToggleState: currencyToggleState ?? this.currencyToggleState,
-      quantityByAmount: quantityByAmount ?? this.quantityByAmount,
-      amountByQuantity: amountByQuantity ?? this.amountByQuantity,
+      // quantityByAmount: quantityByAmount ?? this.quantityByAmount,
+      // amountByQuantity: amountByQuantity ?? this.amountByQuantity,
       convertedValue: convertedValue ?? this.convertedValue,
       // amount texts
       amountText: amountText ?? this.amountText,

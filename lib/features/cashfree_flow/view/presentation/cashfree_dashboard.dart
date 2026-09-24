@@ -11,25 +11,26 @@ class CashfreeDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          CustomTopSection(
-            paddingBottom: 30,
-            paddingTop: 30,
-            paddingRight: 25,
-            paddingLeft: 25,
-            childAlignment: MainAxisAlignment.center,
-            child: HeaderTextHelper(text: "Bank Transactions", fontSize: 24,),
-            showSupportIcon: true,
-            showBackCTA: true,
-          ),
-          const SizedBox(height: 30),
-          CashfreeBalanceSection(),
-          const SizedBox(height: 30),
-          CashFreeOrdersSection(),
-          Spacer(),
-          ProceedCtaCashfree(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomTopSection(
+              paddingBottom: 30,
+              paddingTop: 30,
+              paddingRight: 25,
+              paddingLeft: 25,
+              childAlignment: MainAxisAlignment.center,
+              child: HeaderTextHelper(text: "Bank Transactions", fontSize: 24,),
+              showSupportIcon: true,
+              showBackCTA: true,
+            ),
+            const SizedBox(height: 30),
+            CashfreeBalanceSection(),
+            const SizedBox(height: 30),
+            CashFreeOrdersSection(),
+            ProceedCtaCashfree(),
+          ],
+        ),
       ),
     );
   }

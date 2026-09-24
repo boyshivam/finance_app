@@ -18,16 +18,18 @@ class CashFreeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-        child: Column(
-          children: [
-            CashFreeTopSection(),
-            const Spacer(),
-            TransactionDetailsSection(checkUpiValidity: checkUpiValidity),
-            // const Spacer(),
-            // ProceedPayCta(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+          child: Column(
+            children: [
+              CashFreeTopSection(),
+              const SizedBox(height: 100,),
+              TransactionDetailsSection(checkUpiValidity: checkUpiValidity),
+              // const Spacer(),
+              // ProceedPayCta(),
+            ],
+          ),
         ),
       ),
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,

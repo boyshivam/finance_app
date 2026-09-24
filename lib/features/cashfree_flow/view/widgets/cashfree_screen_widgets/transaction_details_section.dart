@@ -34,12 +34,12 @@ class _TransactionDetailsSectionState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       child: Column(
         children: [
           _buildTransactionForm(context),
 
-          const SizedBox(height: 250),
+          const SizedBox(height: 150),
 
           _buildProceedButton(context),
         ],
@@ -49,8 +49,16 @@ class _TransactionDetailsSectionState
 
   Widget _buildTransactionForm(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+      padding: EdgeInsets.fromLTRB(25, 20, 25, MediaQuery.of(context).padding.bottom + 10),
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            spreadRadius: 2,
+            blurRadius: 8,
+            color: Colors.black54,
+            offset: Offset(0, 0)
+          )
+        ],
         color: AppColorsCommon.appWhite,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(width: 2.5, color: AppColorsCommon.textGrey),

@@ -28,6 +28,14 @@ class PortfolioDashboard extends ConsumerWidget {
             child: Container(
               height: 200,
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 8,
+                    color: Colors.black45,
+                    spreadRadius: 2,
+                    offset: Offset(0, 0)
+                  )
+                ],
                 borderRadius: BorderRadius.circular(18),
                 color: AppColorsCommon.lightGreen,
                 border: Border.all(

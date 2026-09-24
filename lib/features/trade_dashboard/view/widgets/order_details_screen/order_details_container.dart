@@ -11,8 +11,14 @@ class OrderDetailsContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final vmTradeScreenProvider = ref.watch(tradeScreenProvider);
+
+    // entered quantity in double
+    double enteredQuantity =
+        double.tryParse(vmTradeScreenProvider.quantityText) ?? 0;
+
+    double amountToCredit =
+        double.tryParse(vmTradeScreenProvider.amountText) ?? 0;
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
@@ -37,7 +43,7 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Transaction ID",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
-                  fontWeight: FontWeight.w700
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Text(vmTradeScreenProvider.transactionId),
@@ -52,10 +58,10 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Quantity",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
-                    fontWeight: FontWeight.w700
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              Text(vmTradeScreenProvider.quantityByAmount.toStringAsFixed(2)),
+              Text(enteredQuantity.toStringAsFixed(3)),
             ],
           ),
           const SizedBox(height: 10),
@@ -67,14 +73,10 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Estimated credit",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
-                    fontWeight: FontWeight.w700
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              Text(
-                (vmTradeScreenProvider.netAmountToPay -
-                        vmTradeScreenProvider.totalFees)
-                    .toStringAsFixed(2),
-              ),
+              Text(amountToCredit.toStringAsFixed(2)),
             ],
           ),
           const SizedBox(height: 10),
@@ -85,7 +87,7 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Total fees",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
-                    fontWeight: FontWeight.w700
+                  fontWeight: FontWeight.w700,
                 ),
               ),
               Text(vmTradeScreenProvider.totalFees.toStringAsFixed(2)),
@@ -99,15 +101,13 @@ class OrderDetailsContainer extends ConsumerWidget {
                 "Order type",
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: AppColorsCommon.textGrey,
-                    fontWeight: FontWeight.w700
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              if(tradeOrderType == TradeOrderTypeEnums.buyFraction)
+              if (tradeOrderType == TradeOrderTypeEnums.buyFraction)
                 Text("Buy Fraction"),
-              if(tradeOrderType == TradeOrderTypeEnums.sellFraction)
-                Text("Sell Fraction")
-
-
+              if (tradeOrderType == TradeOrderTypeEnums.sellFraction)
+                Text("Sell Fraction"),
             ],
           ),
           const SizedBox(height: 10),

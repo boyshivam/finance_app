@@ -92,34 +92,36 @@ class _SearchDashboardScreenState extends ConsumerState<SearchDashboardScreen> {
 
     return Scaffold(
       backgroundColor: AppColorsCommon.scaffoldBackGroundColor,
-      body: Column(
-        children: [
-          CustomTopSection(
-              paddingBottom: 10,
-              paddingTop: 10,
-              paddingRight: 25,
-              paddingLeft: 25,
-              child: HeaderTextHelper(text: "Search", fontSize: 32),
-              childAlignment: MainAxisAlignment.start),
-          SearchTabs(
-            scrollController: tabScrollControl,
-            onSelectTab: onSelectTab,
-            selectedTabIndex: vm.selectedTabIndex,
-          ),
-          SearchBarCustom(
-            iconFocusNode: selectTabFocus,
-            searchBarController: searchBarTextControl,
-            showSearchResults: () {
-              checkSearchResult();
-            },
-            clearText: clearEnteredText,
-          ),
-          RecentlyViewedSection(
-            searchState: vm.searchState,
-            userInput: vm.userInputState,
-            results: vm.searchResults,
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CustomTopSection(
+                paddingBottom: 10,
+                paddingTop: 10,
+                paddingRight: 25,
+                paddingLeft: 25,
+                child: HeaderTextHelper(text: "Search", fontSize: 32),
+                childAlignment: MainAxisAlignment.start),
+            SearchTabs(
+              scrollController: tabScrollControl,
+              onSelectTab: onSelectTab,
+              selectedTabIndex: vm.selectedTabIndex,
+            ),
+            SearchBarCustom(
+              iconFocusNode: selectTabFocus,
+              searchBarController: searchBarTextControl,
+              showSearchResults: () {
+                checkSearchResult();
+              },
+              clearText: clearEnteredText,
+            ),
+            RecentlyViewedSection(
+              searchState: vm.searchState,
+              userInput: vm.userInputState,
+              results: vm.searchResults,
+            ),
+          ],
+        ),
       ),
     );
   }
