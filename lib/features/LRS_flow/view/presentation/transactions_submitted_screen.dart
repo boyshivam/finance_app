@@ -58,6 +58,8 @@ class TransactionsSubmittedScreen extends ConsumerWidget {
                 ),
                 child: InkWell(
                   onTap: () {
+                    final vmLrsScreenNotifier = ref.read(lrsProvider.notifier);
+                    vmLrsScreenNotifier.resetState();
                     context.go(AppRoutes.homeDashboardScreen);
                   },
                   child: Text(

@@ -139,6 +139,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
       transactionFee: sellTransactionFee,
       platformFee: sellPlatformFee,
     );
+
   }
 
   // check buy trade order validity
@@ -196,7 +197,7 @@ class TradeScreenNotifier extends Notifier<TradeScreenState> {
     print(enteredAmount);
     print(state.sellIFSCAFee);
     print(state.transactionFee);
-    print(totalAmountOfHolding);
+
 
     if (state.amountText.isEmpty) {
       state = state.copyWith(

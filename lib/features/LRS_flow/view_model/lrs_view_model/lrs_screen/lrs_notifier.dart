@@ -35,8 +35,20 @@ class LrsNotifier extends Notifier<LrsScreenState> {
     );
   }
 
+  // reset the lRS screen when exiting the LRS flow
   void resetState() {
-    state = _initialState();
+    state = state.copyWith(
+      enteredAmount: "",
+      submitClicked: false,
+      enteredAmountDouble: 0,
+      amountFieldStates: TextFieldStates.neutral,
+      remittanceValidityCheck: RemittanceValidityCheck.unchecked,
+      orderValidityStates: OrderValidityStates.neutral,
+      selectedFundSource: SourceOfFundsEnums.none,
+      isFundsSourceNone: false,
+      orderType: UsWalletOrderEnum.neutral,
+      transactionID: "",
+    );
   }
 
   @override

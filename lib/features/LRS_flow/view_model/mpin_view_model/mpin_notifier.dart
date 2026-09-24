@@ -67,6 +67,7 @@ class MpinNotifier extends Notifier<MpinState> {
         offset: 0,
       );
       completeLrsTransaction();
+
     }
   }
 

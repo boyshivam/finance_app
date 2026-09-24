@@ -29,7 +29,6 @@ class _MpinSliderState extends ConsumerState<MpinSlider> {
           return GestureDetector(
             onHorizontalDragEnd: (_) {
               ref.read(mpinProvider.notifier).submitMpin(max);
-
             },
             onHorizontalDragUpdate: (details) {
               ref.read(mpinProvider.notifier).sliderMovement(details, 0, max);

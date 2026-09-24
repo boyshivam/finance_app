@@ -41,6 +41,7 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
               tradeOrderType: widget.tradeOrderType,
             ),
           );
+          vmTradeScreenNotifier.validateBuyTradeOrder();
         }
         if (widget.tradeOrderType == TradeOrderTypeEnums.sellFraction) {
           context.push(
@@ -49,6 +50,7 @@ class _OrderSliderState extends ConsumerState<OrderSlider> {
               tradeOrderType: widget.tradeOrderType,
             ),
           );
+          vmTradeScreenNotifier.validateSellTradeOrder(widget.securitySymbol);
         }
         // } else if (widget.tradeType == TradeOrderTypeEnums.sellFraction) {
         //   context.push(AppRoutes.orderPlacedScreen);

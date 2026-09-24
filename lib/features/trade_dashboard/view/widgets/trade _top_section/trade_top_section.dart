@@ -1,20 +1,25 @@
 import "package:aprreciate/core/constants/app_assets/app_assets_common.dart";
 import "package:aprreciate/features/trade_dashboard/view/widgets/trade%20_top_section/trade_currency_toggle.dart";
-import "package:aprreciate/router/app_navigators.dart";
+import "package:aprreciate/features/trade_dashboard/view_model/trade_screen_view_model/trade_screen_provider.dart";
 import "package:flutter/material.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 
-class TradeTopSection extends StatelessWidget {
+class TradeTopSection extends ConsumerWidget {
   const TradeTopSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: EdgeInsets.fromLTRB(25, 70, 25, 10),
       child: Row(
         children: [
           InkWell(
             onTap: () {
+
+              final vmTradeScreenNotifier = ref.read(tradeScreenProvider.notifier);
+
+              vmTradeScreenNotifier.resetState();
               context.pop();
             },
             child: Image.asset(
